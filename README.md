@@ -1,4 +1,4 @@
-# Duke project template
+# Budget Tracker project template
 
 This is a project template for a greenfield Java project. It's named after the Java mascot _Duke_. Given below are instructions on how to use it.
 
@@ -16,11 +16,7 @@ Prerequisites: JDK 17 (use the exact version), update Intellij to the most recen
    
    > Task :Duke.main()
    Hello from
-    ____        _        
-   |  _ \ _   _| | _____ 
-   | | | | | | | |/ / _ \
-   | |_| | |_| |   <  __/
-   |____/ \__,_|_|\_\___|
+   Budget Tracker
    
    What is your name?
    ```
