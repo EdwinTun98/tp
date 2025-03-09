@@ -11,21 +11,33 @@ public class MoneyTrail {
     }
 
     public void run() {
+        printWelcomeMsg();
+
+        Scanner in = new Scanner(System.in);
+        System.out.println("Hello " + in.nextLine());
+    }
+
+    public void print(String str) {
+        System.out.println(str);
+    }
+
+    public void printAppLogo() {
         String logo = " __  __ _______ \n"
                 + "|  \\/  |__  __|\n"
                 + "| \\  / |  | |  \n"
                 + "| |\\/| |  | |  \n"
                 + "| |  | |  | |  \n"
                 + "|_|  |_|  |_|  \n";
-        System.out.println("Hello from\n" + logo);
-        System.out.println("What is your name?");
+        print("Welcome user to\n" + logo);
+    }
 
-        Scanner in = new Scanner(System.in);
-        System.out.println("Hello " + in.nextLine());
+    public void printWelcomeMsg() {
+        printAppLogo();
+        print("What do you want to do today?");
     }
 
     /**
-     * Main entry-point for the java.duke.Duke application.
+     * Main entry-point for the MoneyTrail budget tracker application.
      */
     public static void main(String[] args) {
         new MoneyTrail().run();
