@@ -1,12 +1,16 @@
 package seedu.duke;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class MoneyTrail {
-    /**
-     * Main entry-point for the java.duke.Duke application.
-     */
-    public static void main(String[] args) {
+    private final ArrayList<String> moneyList;
+
+    public MoneyTrail() {
+        this.moneyList = new ArrayList<>();
+    }
+
+    public void run() {
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
                 + "| | | | | | | |/ / _ \\\n"
@@ -17,5 +21,12 @@ public class MoneyTrail {
 
         Scanner in = new Scanner(System.in);
         System.out.println("Hello " + in.nextLine());
+    }
+
+    /**
+     * Main entry-point for the java.duke.Duke application.
+     */
+    public static void main(String[] args) {
+        new MoneyTrail().run();
     }
 }
