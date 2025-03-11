@@ -7,9 +7,8 @@ public class MoneyTrail {
     private final ArrayList<String> moneyList;
     private final Scanner in;
 
-    private static final String LINE_DIVIDER = "----------------------------" +
-            "---------------------------------------------------------------";
     private static final int INDEX_OFFSET = 1;
+    private static final String LINE_DIVIDER = "----------------------------";
 
     public MoneyTrail() {
         this.moneyList = new ArrayList<>();
