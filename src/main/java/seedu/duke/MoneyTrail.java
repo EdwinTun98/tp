@@ -28,10 +28,16 @@ public class MoneyTrail {
                 break;
             }
         }
+
+        printExitMsg();
     }
 
     public void print(String str) {
         System.out.println(str);
+    }
+
+    public void addLineDivider() {
+        print(LINE_DIVIDER);
     }
 
     public void printAppLogo() {
@@ -47,6 +53,11 @@ public class MoneyTrail {
     public void printWelcomeMsg() {
         printAppLogo();
         print("What do you want to do today?");
+    }
+
+    public void printExitMsg() {
+        addLineDivider();
+        print("Exiting program... Thank you for using MoneyTrail! :)");
     }
 
     /**
