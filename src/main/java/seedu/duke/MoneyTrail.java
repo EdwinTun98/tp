@@ -14,7 +14,10 @@ public class MoneyTrail {
         printWelcomeMsg();
 
         Scanner in = new Scanner(System.in);
-        System.out.println("Hello " + in.nextLine());
+        String input = in.nextLine();
+        if (input.startsWith("delete")) {
+            return;
+        }
     }
 
     public void print(String str) {
