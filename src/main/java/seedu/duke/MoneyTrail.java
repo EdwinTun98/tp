@@ -5,18 +5,24 @@ import java.util.Scanner;
 
 public class MoneyTrail {
     private final ArrayList<String> moneyList;
+    private final Scanner in;
+
+    private static final String LINE_DIVIDER = "----------------------------" +
+            "---------------------------------------------------------------";
 
     public MoneyTrail() {
         this.moneyList = new ArrayList<>();
+        this.in = new Scanner(System.in);
     }
 
     public void run() {
         printWelcomeMsg();
 
-        Scanner in = new Scanner(System.in);
-        String input = in.nextLine();
-        if (input.startsWith("delete")) {
-            return;
+        while (true) {
+            String input = this.in.nextLine();
+            if (input.startsWith("delete")) {
+                return;
+            }
         }
     }
 
