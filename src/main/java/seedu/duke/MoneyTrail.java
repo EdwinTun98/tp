@@ -21,7 +21,11 @@ public class MoneyTrail {
         while (true) {
             String input = this.in.nextLine();
             if (input.startsWith("delete")) {
-                return;
+                continue;
+            }
+
+            if (input.equalsIgnoreCase("exit")) {
+                break;
             }
         }
     }
