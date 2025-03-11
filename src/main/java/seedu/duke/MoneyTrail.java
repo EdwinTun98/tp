@@ -4,12 +4,14 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class MoneyTrail {
+    private static final String LINE_DIVIDER = "----------------------" +
+            "-----------------------------------";
+    private static final int INDEX_OFFSET = 1;
+
     private final ArrayList<String> moneyList;
     private final Scanner in;
 
-    private final static int INDEX_OFFSET = 1;
-    private final static String LINE_DIVIDER = "-------------------------" +
-            "------------------------------------------------------------";
+
 
     public MoneyTrail() {
         this.moneyList = new ArrayList<>();
