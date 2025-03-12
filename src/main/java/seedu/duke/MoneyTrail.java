@@ -11,8 +11,6 @@ public class MoneyTrail {
     private final ArrayList<String> moneyList;
     private final Scanner in;
 
-
-
     public MoneyTrail() {
         this.moneyList = new ArrayList<>();
         this.in = new Scanner(System.in);
