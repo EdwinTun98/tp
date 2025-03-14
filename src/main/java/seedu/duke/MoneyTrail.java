@@ -4,19 +4,29 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class MoneyTrail {
+    // relative path of 'F:\repos\tp\mt.txt' directory
+    private static final String FILE_PATH = "mt.txt";
     private static final String LINE_DIVIDER = "----------------------" +
             "-----------------------------------";
     private static final int INDEX_OFFSET = 1;
 
     private final ArrayList<String> moneyList;
     private final Scanner in;
+    private final Storage storage;
 
     public MoneyTrail() {
         this.moneyList = new ArrayList<>();
         this.in = new Scanner(System.in);
+        this.storage = new Storage(FILE_PATH);
     }
 
     public void run() {
+        try {
+            loadEntriesFromFile();
+        } catch (MTException error) {
+            printErrorMsg(error);
+        }
+
         printWelcomeMsg();
 
         while (true) {
@@ -82,7 +92,7 @@ public class MoneyTrail {
     }
 
     private void validateIndex(int index) throws MTException {
-        if (index < 0 || index >= this.moneyList.size()) {
+        if (index < 0 || index >= moneyList.size()) {
             throw new MTException("Invalid or unavailable entry number.");
         }
     }
@@ -96,15 +106,25 @@ public class MoneyTrail {
             // display entry before deletion
 
             print("This entry will be permanently deleted:\n");
-            print(this.moneyList.get(deleteIndex));
+            print(moneyList.get(deleteIndex));
 
             // remove entry from moneyList
-            this.moneyList.remove(this.moneyList.get(deleteIndex));
+            moneyList.remove(deleteIndex);
+            // save updated list
+            storage.saveEntries(moneyList);
             // print out number of items left in moneyList
             printNumItems();
         } catch (NumberFormatException error) {
             throw new MTException("Use: delete <ENTRY_NUMBER>");
         }
+    }
+
+    private void loadEntriesFromFile() throws MTException {
+        ArrayList<String> loadedEntries = storage.loadEntries();
+        if (loadedEntries != null) {
+            moneyList.addAll(loadedEntries);
+        }
+        print("Loaded " + moneyList.size() + " entries from file.");
     }
 
     /**
