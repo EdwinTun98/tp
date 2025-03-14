@@ -10,7 +10,7 @@ public class MoneyTrail {
             "-----------------------------------";
     private static final int INDEX_OFFSET = 1;
 
-    private final ArrayList<String> moneyList;
+    public ArrayList<String> moneyList;
     private final Scanner in;
     private final Storage storage;
 
