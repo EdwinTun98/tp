@@ -29,5 +29,3 @@ public class Expense {
                 this.getDescription(), this.getAmount(), this.getDate());
     }
 }
-
-
