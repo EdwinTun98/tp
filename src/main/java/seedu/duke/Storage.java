@@ -8,36 +8,32 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Storage {
+    // relative path of 'F:\repos\tp\mt.txt' directory
+    private static final String FILE_PATH = "mt.txt";
     private final MTLogger logger;
-    private final String filePath;
 
-    public Storage(String path) {
-        this.filePath = path;
+    public Storage() {
         this.logger = new MTLogger(Storage.class.getName());
     }
 
     public void saveEntries(ArrayList<String> moneyList) throws MTException {
-        assert filePath.equals("mt.txt") : "Relative file path should be 'mt.txt'";
+        logger.logInfo("Saving entries into " + FILE_PATH);
 
-        logger.logInfo("Saving entries into " + filePath);
-
-        try (FileWriter writer = new FileWriter(filePath)) {
+        try (FileWriter writer = new FileWriter(FILE_PATH)) {
             for (String entry: moneyList) {
                 writer.write(entry + "\n");
             }
         } catch (IOException error) {
-            logger.logSevere("Error saving entries into " + filePath, error);
+            logger.logSevere("Error saving entries into " + FILE_PATH, error);
             throw new MTException("Error saving entries: " + error.getMessage());
         }
     }
 
     public ArrayList<String> loadEntries() throws MTException {
-        assert filePath.equals("mt.txt") : "Relative file path should be 'mt.txt'";
-
-        logger.logInfo("Loading previous entries from " + filePath);
+        logger.logInfo("Loading previous entries from " + FILE_PATH);
 
         ArrayList<String> entries = new ArrayList<>();
-        File file = new File(filePath);
+        File file = new File(FILE_PATH);
 
         if (!file.exists()) {
             return entries;
@@ -48,7 +44,7 @@ public class Storage {
                 entries.add(scanner.nextLine());
             }
         } catch (FileNotFoundException error) {
-            logger.logSevere("Failed to find file at " + filePath, error);
+            logger.logSevere("Failed to find file at " + FILE_PATH, error);
             throw new MTException("File not found. Starting with an empty list.");
         }
 
