@@ -1,0 +1,18 @@
+Mar 16, 2025 9:35:21 AM seedu.duke.MoneyTrail run
+INFO: Starting CLI program.
+Mar 16, 2025 9:35:21 AM seedu.duke.MoneyTrail loadEntriesFromFile
+INFO: Loaded 1 entries from file.
+Mar 16, 2025 9:35:42 AM seedu.duke.MoneyTrail deleteEntry
+INFO: Deleted entry at index: 0
+Mar 16, 2025 9:35:51 AM seedu.duke.MoneyTrail run
+INFO: Exiting CLI program.
+Mar 16, 2025 9:50:00 AM seedu.duke.MTLogger logInfo
+INFO: Starting CLI program.
+Mar 16, 2025 9:50:00 AM seedu.duke.MTLogger logInfo
+INFO: Loaded 0 entries from file.
+Mar 16, 2025 9:50:10 AM seedu.duke.MTLogger logWarning
+WARNING: Invalid index provided: 0
+Mar 16, 2025 9:50:10 AM seedu.duke.MTLogger logWarning
+WARNING: Error deleting entry: Invalid or unavailable entry number.
+Mar 16, 2025 9:50:27 AM seedu.duke.MTLogger logInfo
+INFO: Exiting CLI program.

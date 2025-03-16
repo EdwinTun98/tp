@@ -9,6 +9,8 @@ public class MoneyTrail {
     private static final int INDEX_OFFSET = 1;
 
     public ArrayList<String> moneyList;
+    // logger instance for MoneyTrail class
+    private final MTLogger logger;
     private final Scanner in;
     private final Storage storage;
     private final TextUI ui;
@@ -18,12 +20,18 @@ public class MoneyTrail {
         this.in = new Scanner(System.in);
         this.storage = new Storage(FILE_PATH);
         this.ui = new TextUI();
+
+        this.logger = new MTLogger(MoneyTrail.class.getName());
     }
 
     public void run() {
+        logger.logInfo("Starting CLI program.");
+
         try {
             loadEntriesFromFile();
         } catch (MTException error) {
+            logger.logSevere("Error loading entries from file: "
+                    + error.getMessage(), error);
             ui.printErrorMsg(error);
         }
 
@@ -35,6 +43,8 @@ public class MoneyTrail {
                 try {
                     deleteEntry(input);
                 } catch (MTException error) {
+                    logger.logWarning("Error deleting entry: "
+                            + error.getMessage());
                     ui.printErrorMsg(error);
                 } finally {
                     ui.addLineDivider();
@@ -43,6 +53,7 @@ public class MoneyTrail {
             }
 
             if (input.equalsIgnoreCase("exit")) {
+                logger.logInfo("Exiting CLI program.");
                 break;
             }
         }
@@ -57,6 +68,7 @@ public class MoneyTrail {
 
     private void validateIndex(int index) throws MTException {
         if (index < 0 || index >= moneyList.size()) {
+            logger.logWarning("Invalid index provided: " + index);
             throw new MTException("Invalid or unavailable entry number.");
         }
     }
@@ -73,11 +85,14 @@ public class MoneyTrail {
 
             // remove entry from moneyList
             moneyList.remove(deleteIndex);
+            logger.logInfo("Deleted entry at index: " + deleteIndex);
+
             // save updated list
             storage.saveEntries(moneyList);
             // print out number of items left in moneyList
             ui.printNumItems(moneyList.size());
         } catch (NumberFormatException error) {
+            logger.logSevere("Invalid delete command format: " + input, error);
             throw new MTException("Use: delete <ENTRY_NUMBER>");
         }
     }
@@ -87,6 +102,8 @@ public class MoneyTrail {
         if (loadedEntries != null) {
             moneyList.addAll(loadedEntries);
         }
+
+        logger.logInfo("Loaded " + moneyList.size() + " entries from file.");
 
         ui.print("Loaded " + moneyList.size() + " entries from file.");
     }
