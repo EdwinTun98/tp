@@ -17,6 +17,8 @@ public class Storage {
     }
 
     public void saveEntries(ArrayList<String> moneyList) throws MTException {
+        assert filePath.equals("mt.txt") : "Relative file path should be 'mt.txt'";
+
         logger.logInfo("Saving entries into " + filePath);
 
         try (FileWriter writer = new FileWriter(filePath)) {
@@ -30,6 +32,8 @@ public class Storage {
     }
 
     public ArrayList<String> loadEntries() throws MTException {
+        assert filePath.equals("mt.txt") : "Relative file path should be 'mt.txt'";
+
         logger.logInfo("Loading previous entries from " + filePath);
 
         ArrayList<String> entries = new ArrayList<>();

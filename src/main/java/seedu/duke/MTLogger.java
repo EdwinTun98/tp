@@ -7,6 +7,8 @@ import java.util.logging.SimpleFormatter;
 import java.io.IOException;
 
 public class MTLogger {
+    private static final String LOG_FILE_NAME = "mt.log";
+
     private final Logger logger;
 
     public MTLogger(String className) {
@@ -17,8 +19,7 @@ public class MTLogger {
     private void configureLogger() {
         try {
             // Create a FileHandler to write logs to a file; true = append to existing file
-            FileHandler fileHandler = new FileHandler("mt.log",
-                    true);
+            FileHandler fileHandler = new FileHandler(LOG_FILE_NAME, true);
             // Use simple text format for logs
             fileHandler.setFormatter(new SimpleFormatter());
             // Add the FileHandler to the logger
