@@ -104,7 +104,6 @@ public class MoneyTrail {
         }
 
         logger.logInfo("Loaded " + moneyList.size() + " entries from file.");
-
         ui.print("Loaded " + moneyList.size() + " entries from file.");
     }
 
