@@ -43,4 +43,3 @@ public class Storage {
         return entries;
     }
 }
-

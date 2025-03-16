@@ -1,7 +1,8 @@
 package seedu.duke;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -27,11 +28,11 @@ class DukeTest {
         moneyTrail.deleteEntry("delete 2");
 
         // Verify the size has decreased by 1
-        assertTrue(moneyTrail.moneyList.size() == initialSize - 1,
+        assertEquals(moneyTrail.moneyList.size(), initialSize - 1,
                 "The size of moneyList should decrease by 1 after deletion.");
 
         // Verify the correct entry was deleted
-        assertTrue(!moneyTrail.moneyList.contains("Entry 2: $50"),
+        assertFalse(moneyTrail.moneyList.contains("Entry 2: $50"),
                 "Entry 2 should be deleted from moneyList.");
     }
 
@@ -43,7 +44,7 @@ class DukeTest {
         });
 
         // Verify the exception message
-        assertTrue(thrown.getMessage().equals("Invalid or unavailable entry number."),
+        assertEquals("Invalid or unavailable entry number.", thrown.getMessage(),
                 "The exception message should indicate an invalid entry number.");
     }
 }
