@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class MoneyTrail {
-    // relative path of 'F:\repos\tp\mt.txt' directory
-    private static final String FILE_PATH = "mt.txt";
     private static final int INDEX_OFFSET = 1;
 
     public ArrayList<String> moneyList;
@@ -18,7 +16,7 @@ public class MoneyTrail {
     public MoneyTrail() {
         this.moneyList = new ArrayList<>();
         this.in = new Scanner(System.in);
-        this.storage = new Storage(FILE_PATH);
+        this.storage = new Storage();
         this.ui = new TextUI();
 
         this.logger = new MTLogger(MoneyTrail.class.getName());
