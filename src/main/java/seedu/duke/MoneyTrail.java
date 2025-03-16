@@ -75,6 +75,10 @@ public class MoneyTrail {
 
     public void deleteEntry(String input) throws MTException {
         try {
+            // Assert that the input is not null and starts with "delete"
+            assert input != null : "Input should not be null";
+            assert input.startsWith("delete") : "Input should start with 'delete'";
+
             // obtain the index to search for entry to be deleted
             int deleteIndex = extractIndex(input);
             validateIndex(deleteIndex);
@@ -102,6 +106,9 @@ public class MoneyTrail {
         if (loadedEntries != null) {
             moneyList.addAll(loadedEntries);
         }
+
+        // Assert that moneyList is not null
+        assert moneyList != null : "moneyList should not be null";
 
         logger.logInfo("Loaded " + moneyList.size() + " entries from file.");
         ui.print("Loaded " + moneyList.size() + " entries from file.");
