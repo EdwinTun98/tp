@@ -54,3 +54,24 @@ Mar 18, 2025 6:08:23 PM seedu.duke.MTLogger logWarning
 WARNING: No matching entries found for: i
 Mar 18, 2025 6:08:23 PM seedu.duke.MTLogger logWarning
 WARNING: Error processing command: enter a valid keyword to search.
+Mar 18, 2025 6:18:01 PM seedu.duke.MTLogger logInfo
+INFO: Starting CLI program.
+Mar 18, 2025 6:18:01 PM seedu.duke.MTLogger logInfo
+INFO: Loaded 2 entries from file.
+Mar 18, 2025 6:18:14 PM seedu.duke.MTLogger logWarning
+WARNING: No matching entries found for: i
+Mar 18, 2025 6:18:14 PM seedu.duke.MTLogger logWarning
+WARNING: Error processing command: enter a valid keyword to search.
+Mar 18, 2025 6:19:22 PM seedu.duke.MTLogger logSevere
+SEVERE: Invalid delete command format: delete
+java.lang.NumberFormatException: For input string: ""
+	at java.base/java.lang.NumberFormatException.forInputString(NumberFormatException.java:67)
+	at java.base/java.lang.Integer.parseInt(Integer.java:678)
+	at java.base/java.lang.Integer.parseInt(Integer.java:786)
+	at seedu.duke.MoneyTrail.extractIndex(MoneyTrail.java:71)
+	at seedu.duke.MoneyTrail.deleteEntry(MoneyTrail.java:89)
+	at seedu.duke.MoneyTrail.run(MoneyTrail.java:53)
+	at seedu.duke.MoneyTrail.main(MoneyTrail.java:171)
+
+Mar 18, 2025 6:19:22 PM seedu.duke.MTLogger logWarning
+WARNING: Error processing command: Use: delete <ENTRY_NUMBER>
