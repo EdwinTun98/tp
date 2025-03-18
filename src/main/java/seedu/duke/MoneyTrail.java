@@ -22,7 +22,7 @@ public class MoneyTrail {
         this.logger = new MTLogger(MoneyTrail.class.getName());
     }
 
-    public void run() {
+    public void run() throws MTException {
         logger.logInfo("Starting CLI program.");
 
         try {
@@ -36,24 +36,54 @@ public class MoneyTrail {
         ui.printWelcomeMsg();
 
         while (true) {
-            String input = in.nextLine();
-            if (input.startsWith("delete")) {
-                try {
-                    deleteEntry(input);
-                } catch (MTException error) {
-                    logger.logWarning("Error deleting entry: "
-                            + error.getMessage());
-                    ui.printErrorMsg(error);
-                } finally {
-                    ui.addLineDivider();
+            String input = in.nextLine().trim();
+
+            try {
+                if (input.equalsIgnoreCase("list")) {
+                    listSummary();
+                    continue;
                 }
-                continue;
+
+                if (input.startsWith("find ")) {
+                    findEntry(input.substring(5));
+                    continue;
+                }
+
+                if (input.startsWith("delete")) {
+                    deleteEntry(input);
+                    continue;
+                }
+            } catch (MTException error) {
+                logger.logWarning("Error processing command: " + error.getMessage());
+                ui.printErrorMsg(error);
             }
 
             if (input.equalsIgnoreCase("exit")) {
                 logger.logInfo("Exiting CLI program.");
                 break;
             }
+            if (input.startsWith("addExpense")) {
+                try {
+                    addExpense(input);
+                } catch (MTException error) {
+                    logger.logWarning("Error adding expense: " + error.getMessage());
+                    ui.printErrorMsg(error);
+                } finally {
+                    ui.addLineDivider();
+                }
+                continue;
+            }
+            if (input.equalsIgnoreCase("help")) {
+                // Display all available commands and their descriptions
+                ui.print("List of available commands:");
+                ui.print("1. addExpense <description> $/ <value> - Adds a new expense.");
+                ui.print("2. delete <ENTRY_NUMBER> - Deletes the specified expense entry.");
+                ui.print("3. help - Displays this list of commands.");
+                ui.print("4. exit - Exits the program.");
+                ui.addLineDivider();
+                continue;
+            }
+
         }
 
         ui.printExitMsg();
@@ -112,10 +142,91 @@ public class MoneyTrail {
         ui.print("Loaded " + moneyList.size() + " entries from file.");
     }
 
+    public void addExpense(String input ) throws MTException {
+        try {
+
+            // Assert that the input is not null and starts with "addExpense"
+            assert input != null : "Input should not be null";
+            assert input.startsWith("addExpense") : "Input should start with 'addExpense'";
+
+            //remove all trailing , leading and spaces between input;
+            input = input.replaceAll("\\s","");
+            String[] parts = input.substring(10).split("\\$/", 2);
+            if (parts.length < 2 || parts[0].trim().isEmpty() || parts[1].trim().isEmpty()) {
+                throw new MTException("Your addExpense needs a description and a value.\n" +
+                        "Format: addExpense <description> $/ <value>");
+            } else{
+                String description = parts[0].trim();
+                Double amount = Double.parseDouble(parts[1].trim());
+                Expense newExpense = new Expense(description, amount);
+                // Add expense to moneyList (as a String representation)
+                moneyList.add(newExpense.toString());
+
+                // Log that the expense was added
+                logger.logInfo("Added expense: " + newExpense);
+
+                // Inform the user via the UI
+                ui.print("Expense added: " + newExpense);
+
+                // Save the updated list of entries
+                storage.saveEntries(moneyList);
+
+            }
+        } catch (Exception error) {
+            logger.logSevere("Error adding expense: " + error.getMessage(), error);
+            throw new MTException("Failed to add expense: " + error.getMessage());
+        }
+    }
+
+
+    /**
+     * Lists all stored money trail entries.
+     */
+    private void listSummary() throws MTException {
+        if (moneyList.isEmpty()) {
+            logger.logWarning("Expense list is empty.");
+            throw new MTException("No entries available to display.");
+        }
+        else {
+            ui.print("Expense list:");
+            for (int i = 0; i < moneyList.size(); i++) {
+                ui.print((i+ INDEX_OFFSET) + ": " + moneyList.get(i));
+            }
+        }
+    }
+
+    /**
+     * Finds and displays entries containing a specific keyword.
+     */
+    private void findEntry(String input) throws MTException {
+        if (input.isEmpty()) {
+            logger.logWarning("Invalid entry provided.");
+            throw new MTException("Please enter a keyword to search.");
+        }
+
+        ArrayList<String> results = new ArrayList<>();
+        for (String entry : moneyList) {
+            if (entry.toLowerCase().contains(input.toLowerCase())) {
+                results.add(entry);
+            }
+        }
+
+        if (results.isEmpty()) {
+            logger.logWarning("No matching entries found for: " + input);
+            throw new MTException("enter a valid keyword to search.");
+        }
+        else {
+            ui.print("Found Matching entries for: " + input);
+            for (int i = 0; i < results.size(); i++) {
+                ui.print((i+ INDEX_OFFSET) + ": " + results.get(i));
+            }
+        }
+    }
+
     /**
      * Main entry-point for the MoneyTrail budget tracker application.
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws MTException {
         new MoneyTrail().run();
     }
 }
