@@ -3,12 +3,12 @@ package seedu.duke;
 public class Expense {
     protected String description;
     protected double amount;
-    protected String date;
+    //protected String date;
 
-    public Expense(String description, double amount, String date) {
+    public Expense(String description, double amount) {
         this.description = description;
         this.amount = amount;
-        this.date = date;
+        //this.date = date;
     }
 
     public String getDescription() {
@@ -19,13 +19,13 @@ public class Expense {
         return this.amount;
     }
 
-    public String getDate() {
+    /*public String getDate() {
         return this.date;
-    }
+    }*/
 
     @Override
     public String toString() {
-        return String.format("[Expense] %s Value=$%f Date=%s",
-                this.getDescription(), this.getAmount(), this.getDate());
+        return String.format("[Expense] %s Value=$%f ", //rmb to add back in date
+                this.getDescription(), this.getAmount());
     }
 }
