@@ -54,6 +54,28 @@ public class MoneyTrail {
                 logger.logInfo("Exiting CLI program.");
                 break;
             }
+            if (input.startsWith("addExpense")) {
+                try {
+                    addExpense(input);
+                } catch (MTException error) {
+                    logger.logWarning("Error adding expense: " + error.getMessage());
+                    ui.printErrorMsg(error);
+                } finally {
+                    ui.addLineDivider();
+                }
+                continue;
+            }
+            if (input.equalsIgnoreCase("help")) {
+                // Display all available commands and their descriptions
+                ui.print("List of available commands:");
+                ui.print("1. addExpense <description> $/ <value> - Adds a new expense.");
+                ui.print("2. delete <ENTRY_NUMBER> - Deletes the specified expense entry.");
+                ui.print("3. help - Displays this list of commands.");
+                ui.print("4. exit - Exits the program.");
+                ui.addLineDivider();
+                continue;
+            }
+
         }
 
         ui.printExitMsg();
@@ -111,6 +133,43 @@ public class MoneyTrail {
         logger.logInfo("Loaded " + moneyList.size() + " entries from file.");
         ui.print("Loaded " + moneyList.size() + " entries from file.");
     }
+
+    public void addExpense(String input ) throws MTException {
+        try {
+
+            // Assert that the input is not null and starts with "addExpense"
+            assert input != null : "Input should not be null";
+            assert input.startsWith("addExpense") : "Input should start with 'addExpense'";
+
+            //remove all trailing , leading and spaces between input;
+            input = input.replaceAll("\\s","");
+            String[] parts = input.substring(10).split("\\$/", 2);
+            if (parts.length < 2 || parts[0].trim().isEmpty() || parts[1].trim().isEmpty()) {
+                throw new MTException("Your addExpense needs a description and a value.\n" +
+                        "Format: addExpense <description> $/ <value>");
+            } else{
+                String description = parts[0].trim();
+                Double amount = Double.parseDouble(parts[1].trim());
+                Expense newExpense = new Expense(description, amount);
+                // Add expense to moneyList (as a String representation)
+                moneyList.add(newExpense.toString());
+
+                // Log that the expense was added
+                logger.logInfo("Added expense: " + newExpense);
+
+                // Inform the user via the UI
+                ui.print("Expense added: " + newExpense);
+
+                // Save the updated list of entries
+                storage.saveEntries(moneyList);
+
+            }
+        } catch (Exception error) {
+            logger.logSevere("Error adding expense: " + error.getMessage(), error);
+            throw new MTException("Failed to add expense: " + error.getMessage());
+        }
+    }
+
 
     /**
      * Main entry-point for the MoneyTrail budget tracker application.
