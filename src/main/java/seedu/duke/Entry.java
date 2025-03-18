@@ -1,3 +1,5 @@
+package seedu.duke;
+
 public class Entry {
     protected String type; // income or expense
     protected String description;
@@ -8,5 +10,4 @@ public class Entry {
         this.description = description;
         this.value = value;
     }
-
 }
