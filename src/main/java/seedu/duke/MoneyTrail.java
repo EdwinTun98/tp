@@ -145,7 +145,8 @@ public class MoneyTrail {
             input = input.replaceAll("\\s","");
             String[] parts = input.substring(10).split("\\$/", 2);
             if (parts.length < 2 || parts[0].trim().isEmpty() || parts[1].trim().isEmpty()) {
-                throw new MTException("Your addExpense needs a description and a value.\nFormat: addExpense <description> $/ <value>");
+                throw new MTException("Your addExpense needs a description and a value.\n" +
+                        "Format: addExpense <description> $/ <value>");
             } else{
                 String description = parts[0].trim();
                 Double amount = Double.parseDouble(parts[1].trim());
