@@ -12,12 +12,14 @@ public class MoneyTrail {
     private final Scanner in;
     private final Storage storage;
     private final TextUI ui;
+    private double totalBudget;
 
     public MoneyTrail() {
         this.moneyList = new ArrayList<>();
         this.in = new Scanner(System.in);
         this.storage = new Storage();
         this.ui = new TextUI();
+        this.totalBudget = 0.0;
 
         this.logger = new MTLogger(MoneyTrail.class.getName());
     }
@@ -53,6 +55,17 @@ public class MoneyTrail {
                     deleteEntry(input);
                     continue;
                 }
+
+                if (input.startsWith("totalExpense")) {
+                    totalExpense();
+                    continue;
+                }
+
+                if (input.startsWith("setTotalBudget")) {
+                    setTotalBudget(input);
+                    continue;
+                }
+
             } catch (MTException error) {
                 logger.logWarning("Error processing command: " + error.getMessage());
                 ui.printErrorMsg(error);
@@ -76,10 +89,12 @@ public class MoneyTrail {
             if (input.equalsIgnoreCase("help")) {
                 // Display all available commands and their descriptions
                 ui.print("List of available commands:");
-                ui.print("1. addExpense <description> $/ <value> - Adds a new expense.");
+                ui.print("1. addExpense <DESCRIPTION> $/ <value> - Adds a new expense.");
                 ui.print("2. delete <ENTRY_NUMBER> - Deletes the specified expense entry.");
-                ui.print("3. help - Displays this list of commands.");
-                ui.print("4. exit - Exits the program.");
+                ui.print("3. totalExpense - Displays the total expense accumulated from all entries.");
+                ui.print("4. setTotalBudget <BUDGET> - Sets a total budget to adhere to.");
+                ui.print("5. help - Displays this list of commands.");
+                ui.print("6. exit - Exits the program.");
                 ui.addLineDivider();
                 continue;
             }
@@ -222,6 +237,59 @@ public class MoneyTrail {
             }
         }
     }
+
+    public double totalExpense() {
+        double total = 0.0;
+
+        for (String entry : moneyList) {
+            try {
+                // Parse the amount from the entry string
+                String[] parts = entry.split("Value=\\$");
+                if (parts.length == 2) {
+                    double amount = Double.parseDouble(parts[1].trim());
+                    total += amount;
+                }
+            } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
+                logger.logWarning("Error parsing amount from entry: " + entry);
+            }
+        }
+
+        logger.logInfo("Total expense calculated: " + total);
+        return total;
+    }
+
+    // Updated method to process String input for setting the total budget
+    public void setTotalBudget(String input) {
+        try {
+            assert input != null : "Input should not be null";
+            assert input.startsWith("setTotalBudget") : "Input should start with 'setTotalBudget'";
+
+            // Remove the command and extract the budget value
+            String budgetString = input.substring("setTotalBudget".length()).trim();
+
+            // Parse the budget value from the string
+            double budget = Double.parseDouble(budgetString);
+
+            // Validate that the budget is not negative
+            if (budget < 0) {
+                logger.logWarning("Attempted to set a negative budget: " + budget);
+                ui.print("Budget cannot be negative.");
+                return;
+            }
+
+            // Set the total budget
+            this.totalBudget = budget;
+            logger.logInfo("Total budget set to: " + totalBudget);
+            ui.print("Budget set to: $" + totalBudget);
+        } catch (NumberFormatException e) {
+            logger.logSevere("Invalid budget format: " + input, e);
+            ui.print("Invalid budget format. Please enter a valid number (e.g., setTotalBudget 500.00).");
+        } catch (Exception e) {
+            logger.logSevere("Error setting budget: " + e.getMessage(), e);
+            ui.print("An error occurred while setting the budget.");
+        }
+    }
+
 
     /**
      * Main entry-point for the MoneyTrail budget tracker application.
