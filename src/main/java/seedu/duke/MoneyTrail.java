@@ -244,7 +244,7 @@ public class MoneyTrail {
         for (String entry : moneyList) {
             try {
                 // Parse the amount from the entry string
-                String[] parts = entry.split("Value=\\$"); // Assuming string format "[Expense] Description Value=$<amount>"
+                String[] parts = entry.split("Value=\\$");
                 if (parts.length == 2) {
                     double amount = Double.parseDouble(parts[1].trim());
                     total += amount;
