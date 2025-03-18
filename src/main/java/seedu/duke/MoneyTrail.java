@@ -22,7 +22,7 @@ public class MoneyTrail {
         this.logger = new MTLogger(MoneyTrail.class.getName());
     }
 
-    public void run() {
+    public void run() throws MTException {
         logger.logInfo("Starting CLI program.");
 
         try {
@@ -36,18 +36,26 @@ public class MoneyTrail {
         ui.printWelcomeMsg();
 
         while (true) {
-            String input = in.nextLine();
-            if (input.startsWith("delete")) {
-                try {
-                    deleteEntry(input);
-                } catch (MTException error) {
-                    logger.logWarning("Error deleting entry: "
-                            + error.getMessage());
-                    ui.printErrorMsg(error);
-                } finally {
-                    ui.addLineDivider();
+            String input = in.nextLine().trim();
+
+            try {
+                if (input.equalsIgnoreCase("list")) {
+                    listSummary();
+                    continue;
                 }
-                continue;
+
+                if (input.startsWith("find ")) {
+                    findEntry(input.substring(5));
+                    continue;
+                }
+
+                if (input.startsWith("delete")) {
+                    deleteEntry(input);
+                    continue;
+                }
+            } catch (MTException error) {
+                logger.logWarning("Error processing command: " + error.getMessage());
+                ui.printErrorMsg(error);
             }
 
             if (input.equalsIgnoreCase("exit")) {
@@ -172,9 +180,53 @@ public class MoneyTrail {
 
 
     /**
+     * Lists all stored money trail entries.
+     */
+    private void listSummary() throws MTException {
+        if (moneyList.isEmpty()) {
+            logger.logWarning("Expense list is empty.");
+            throw new MTException("No entries available to display.");
+        }
+        else {
+            ui.print("Expense list:");
+            for (int i = 0; i < moneyList.size(); i++) {
+                ui.print((i+ INDEX_OFFSET) + ": " + moneyList.get(i));
+            }
+        }
+    }
+
+    /**
+     * Finds and displays entries containing a specific keyword.
+     */
+    private void findEntry(String input) throws MTException {
+        if (input.isEmpty()) {
+            logger.logWarning("Invalid entry provided.");
+            throw new MTException("Please enter a keyword to search.");
+        }
+
+        ArrayList<String> results = new ArrayList<>();
+        for (String entry : moneyList) {
+            if (entry.toLowerCase().contains(input.toLowerCase())) {
+                results.add(entry);
+            }
+        }
+
+        if (results.isEmpty()) {
+            logger.logWarning("No matching entries found for: " + input);
+            throw new MTException("enter a valid keyword to search.");
+        }
+        else {
+            ui.print("Found Matching entries for: " + input);
+            for (int i = 0; i < results.size(); i++) {
+                ui.print((i+ INDEX_OFFSET) + ": " + results.get(i));
+            }
+        }
+    }
+
+    /**
      * Main entry-point for the MoneyTrail budget tracker application.
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws MTException {
         new MoneyTrail().run();
     }
 }
