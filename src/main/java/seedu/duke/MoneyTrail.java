@@ -46,7 +46,7 @@ public class MoneyTrail {
                     continue;
                 }
 
-                if (input.startsWith("find ")) {
+                if (input.startsWith("find")) {
                     findEntry(input.substring(5));
                     continue;
                 }
@@ -75,6 +75,7 @@ public class MoneyTrail {
                 logger.logInfo("Exiting CLI program.");
                 break;
             }
+
             if (input.startsWith("addExpense")) {
                 try {
                     addExpense(input);
@@ -86,6 +87,7 @@ public class MoneyTrail {
                 }
                 continue;
             }
+
             if (input.equalsIgnoreCase("help")) {
                 // Display all available commands and their descriptions
                 ui.print("List of available commands:");
@@ -98,7 +100,6 @@ public class MoneyTrail {
                 ui.addLineDivider();
                 continue;
             }
-
         }
 
         ui.printExitMsg();
@@ -159,18 +160,18 @@ public class MoneyTrail {
 
     public void addExpense(String input ) throws MTException {
         try {
-
             // Assert that the input is not null and starts with "addExpense"
             assert input != null : "Input should not be null";
             assert input.startsWith("addExpense") : "Input should start with 'addExpense'";
 
-            //remove all trailing , leading and spaces between input;
+            // remove all trailing , leading and spaces between input;
             input = input.replaceAll("\\s","");
             String[] parts = input.substring(10).split("\\$/", 2);
+
             if (parts.length < 2 || parts[0].trim().isEmpty() || parts[1].trim().isEmpty()) {
                 throw new MTException("Your addExpense needs a description and a value.\n" +
                         "Format: addExpense <description> $/ <value>");
-            } else{
+            } else {
                 String description = parts[0].trim();
                 Double amount = Double.parseDouble(parts[1].trim());
                 Expense newExpense = new Expense(description, amount);
@@ -193,7 +194,6 @@ public class MoneyTrail {
         }
     }
 
-
     /**
      * Lists all stored money trail entries.
      */
@@ -201,8 +201,7 @@ public class MoneyTrail {
         if (moneyList.isEmpty()) {
             logger.logWarning("Expense list is empty.");
             throw new MTException("No entries available to display.");
-        }
-        else {
+        } else {
             ui.print("Expense list:");
             for (int i = 0; i < moneyList.size(); i++) {
                 ui.print((i+ INDEX_OFFSET) + ": " + moneyList.get(i));
@@ -229,8 +228,7 @@ public class MoneyTrail {
         if (results.isEmpty()) {
             logger.logWarning("No matching entries found for: " + input);
             throw new MTException("enter a valid keyword to search.");
-        }
-        else {
+        } else {
             ui.print("Found Matching entries for: " + input);
             for (int i = 0; i < results.size(); i++) {
                 ui.print((i+ INDEX_OFFSET) + ": " + results.get(i));
@@ -289,7 +287,6 @@ public class MoneyTrail {
             ui.print("An error occurred while setting the budget.");
         }
     }
-
 
     /**
      * Main entry-point for the MoneyTrail budget tracker application.
