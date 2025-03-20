@@ -1,5 +1,2 @@
-Entry 1: $100
 Entry 3: $75
-[Expense] apple Value=$0.100000 
-[Expense] mango Value=$1.000000 
-[Expense] rent Value=$100.000000 
+[Expense] foodstuff Value=$20.000000 
