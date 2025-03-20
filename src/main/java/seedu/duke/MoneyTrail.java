@@ -66,9 +66,18 @@ public class MoneyTrail {
                     continue;
                 }
 
+                if (input.startsWith("addExpense")) {
+                    addExpense(input);
+                    continue;
+                }
+
             } catch (MTException error) {
-                logger.logWarning("Error processing command: " + error.getMessage());
+                logger.logWarning("Error processing command: " + 
+                        error.getMessage());
                 ui.printErrorMsg(error);
+            } finally {
+                ui.addLineDivider();
+                ui.printPromptMsg();
             }
 
             if (input.equalsIgnoreCase("exit")) {
@@ -76,29 +85,10 @@ public class MoneyTrail {
                 break;
             }
 
-            if (input.startsWith("addExpense")) {
-                try {
-                    addExpense(input);
-                } catch (MTException error) {
-                    logger.logWarning("Error adding expense: " + error.getMessage());
-                    ui.printErrorMsg(error);
-                } finally {
-                    ui.addLineDivider();
-                }
-                continue;
-            }
-
             if (input.equalsIgnoreCase("help")) {
                 // Display all available commands and their descriptions
-                ui.print("List of available commands:");
-                ui.print("1. addExpense <DESCRIPTION> $/ <value> - Adds a new expense.");
-                ui.print("2. delete <ENTRY_NUMBER> - Deletes the specified expense entry.");
-                ui.print("3. totalExpense - Displays the total expense accumulated from all entries.");
-                ui.print("4. setTotalBudget <BUDGET> - Sets a total budget to adhere to.");
-                ui.print("5. help - Displays this list of commands.");
-                ui.print("6. exit - Exits the program.");
+                ui.showAllAvailableCommands();
                 ui.addLineDivider();
-                continue;
             }
         }
 
@@ -158,7 +148,7 @@ public class MoneyTrail {
         ui.print("Loaded " + moneyList.size() + " entries from file.");
     }
 
-    public void addExpense(String input ) throws MTException {
+    public void addExpense(String input) throws MTException {
         try {
             // Assert that the input is not null and starts with "addExpense"
             assert input != null : "Input should not be null";
@@ -292,6 +282,7 @@ public class MoneyTrail {
      * Main entry-point for the MoneyTrail budget tracker application.
      */
     public static void main(String[] args) throws MTException {
+        // assert false : "dummy assertion set to fail";
         new MoneyTrail().run();
     }
 }
