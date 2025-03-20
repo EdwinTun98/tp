@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class MoneyList {
     private static final int INDEX_OFFSET = 1;
 
-    private ArrayList<String> moneyList;
+    private final ArrayList<String> moneyList;
     private final MTLogger logger;
     private final Storage storage;
     private final TextUI ui;
@@ -21,18 +21,6 @@ public class MoneyList {
 
     public ArrayList<String> getMoneyList() {
         return moneyList;
-    }
-
-    public void setMoneyList(ArrayList<String> moneyList) {
-        this.moneyList = moneyList;
-    }
-
-    public double getTotalBudget() {
-        return totalBudget;
-    }
-
-    public void setTotalBudget(double totalBudget) {
-        this.totalBudget = totalBudget;
     }
 
     private int extractIndex(String input) {
@@ -158,7 +146,7 @@ public class MoneyList {
         }
     }
 
-    public double totalExpense() {
+    public void getTotalExpense() {
         double total = 0.0;
 
         for (String entry : moneyList) {
@@ -174,8 +162,8 @@ public class MoneyList {
             }
         }
 
+        ui.print("Total expenses: " + total);
         logger.logInfo("Total expense calculated: " + total);
-        return total;
     }
 
     public void setTotalBudget(String input) {
@@ -202,7 +190,8 @@ public class MoneyList {
             ui.print("Budget set to: $" + totalBudget);
         } catch (NumberFormatException e) {
             logger.logSevere("Invalid budget format: " + input, e);
-            ui.print("Invalid budget format. Please enter a valid number (e.g., setTotalBudget 500.00).");
+            ui.print("Invalid budget format. Please enter a valid number " +
+                    "(e.g., setTotalBudget 500.00).");
         } catch (Exception e) {
             logger.logSevere("Error setting budget: " + e.getMessage(), e);
             ui.print("An error occurred while setting the budget.");

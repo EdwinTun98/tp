@@ -2,7 +2,7 @@ package seedu.duke;
 
 public class TextUI {
     private static final String LINE_DIVIDER = "----------------------" +
-            "-----------------------------------";
+            "---------------------------------------------------------";
 
     public void print(String str) {
         System.out.println(str);

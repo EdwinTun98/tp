@@ -49,7 +49,7 @@ public class MoneyTrail {
                 }
 
                 if (input.startsWith("totalExpense")) {
-                    moneyList.totalExpense();
+                    moneyList.getTotalExpense();
                     continue;
                 }
 

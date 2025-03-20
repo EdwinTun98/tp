@@ -83,3 +83,13 @@ Mar 20, 2025 3:24:08 PM seedu.duke.MTLogger logInfo
 INFO: Loaded 2 entries from file.
 Mar 20, 2025 3:24:28 PM seedu.duke.MTLogger logInfo
 INFO: Exiting CLI program.
+Mar 20, 2025 3:30:55 PM seedu.duke.MTLogger logInfo
+INFO: Starting CLI program.
+Mar 20, 2025 3:30:55 PM seedu.duke.MTLogger logInfo
+INFO: Loaded 2 entries from file.
+Mar 20, 2025 3:31:26 PM seedu.duke.MTLogger logInfo
+INFO: Total budget set to: 1000.0
+Mar 20, 2025 3:31:54 PM seedu.duke.MTLogger logInfo
+INFO: Added expense: [Expense] fees Value=$80.000000 
+Mar 20, 2025 3:31:59 PM seedu.duke.MTLogger logInfo
+INFO: Exiting CLI program.
