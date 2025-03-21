@@ -43,13 +43,53 @@ Mar 18, 2025 10:00:26 PM seedu.duke.MTLogger logInfo
 INFO: Loading previous entries from mt.txt
 Mar 18, 2025 10:07:11 PM seedu.duke.MTLogger logInfo
 INFO: Loading previous entries from mt.txt
-Mar 18, 2025 11:27:18 PM seedu.duke.MTLogger logInfo
+Mar 19, 2025 8:29:18 PM seedu.duke.MTLogger logInfo
 INFO: Loading previous entries from mt.txt
-Mar 18, 2025 11:31:58 PM seedu.duke.MTLogger logInfo
+Mar 19, 2025 8:37:44 PM seedu.duke.MTLogger logInfo
 INFO: Loading previous entries from mt.txt
-Mar 18, 2025 11:32:39 PM seedu.duke.MTLogger logInfo
+Mar 19, 2025 8:37:55 PM seedu.duke.MTLogger logInfo
+INFO: Saving entries into mt.txt
+Mar 19, 2025 8:39:36 PM seedu.duke.MTLogger logInfo
 INFO: Loading previous entries from mt.txt
-Mar 18, 2025 11:33:44 PM seedu.duke.MTLogger logInfo
+Mar 19, 2025 8:41:30 PM seedu.duke.MTLogger logInfo
 INFO: Loading previous entries from mt.txt
-Mar 18, 2025 11:35:00 PM seedu.duke.MTLogger logInfo
+Mar 20, 2025 3:11:37 PM seedu.duke.MTLogger logInfo
 INFO: Loading previous entries from mt.txt
+Mar 20, 2025 3:12:03 PM seedu.duke.MTLogger logWarning
+WARNING: Invalid index provided: 4
+Mar 20, 2025 3:12:04 PM seedu.duke.MTLogger logInfo
+INFO: Deleted entry at index: 1
+Mar 20, 2025 3:15:18 PM seedu.duke.MTLogger logInfo
+INFO: Loading previous entries from mt.txt
+Mar 20, 2025 3:15:33 PM seedu.duke.MTLogger logInfo
+INFO: Loading previous entries from mt.txt
+Mar 20, 2025 3:16:42 PM seedu.duke.MTLogger logInfo
+INFO: Saving entries into mt.txt
+Mar 20, 2025 3:17:31 PM seedu.duke.MTLogger logInfo
+INFO: Loading previous entries from mt.txt
+Mar 20, 2025 3:17:50 PM seedu.duke.MTLogger logInfo
+INFO: Saving entries into mt.txt
+Mar 20, 2025 3:18:53 PM seedu.duke.MTLogger logInfo
+INFO: Loading previous entries from mt.txt
+Mar 20, 2025 3:23:38 PM seedu.duke.MTLogger logInfo
+INFO: Starting CLI program.
+Mar 20, 2025 3:23:38 PM seedu.duke.MTLogger logInfo
+INFO: Loaded 2 entries from file.
+Mar 20, 2025 3:23:59 PM seedu.duke.MTLogger logInfo
+INFO: Exiting CLI program.
+Mar 20, 2025 3:24:08 PM seedu.duke.MTLogger logInfo
+INFO: Starting CLI program.
+Mar 20, 2025 3:24:08 PM seedu.duke.MTLogger logInfo
+INFO: Loaded 2 entries from file.
+Mar 20, 2025 3:24:28 PM seedu.duke.MTLogger logInfo
+INFO: Exiting CLI program.
+Mar 20, 2025 3:30:55 PM seedu.duke.MTLogger logInfo
+INFO: Starting CLI program.
+Mar 20, 2025 3:30:55 PM seedu.duke.MTLogger logInfo
+INFO: Loaded 2 entries from file.
+Mar 20, 2025 3:31:26 PM seedu.duke.MTLogger logInfo
+INFO: Total budget set to: 1000.0
+Mar 20, 2025 3:31:54 PM seedu.duke.MTLogger logInfo
+INFO: Added expense: [Expense] fees Value=$80.000000 
+Mar 20, 2025 3:31:59 PM seedu.duke.MTLogger logInfo
+INFO: Exiting CLI program.
