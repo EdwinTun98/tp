@@ -1,6 +1,7 @@
 package seedu.duke;
 
 import java.util.ArrayList;
+import java.text.DecimalFormat;
 
 public class MoneyList {
     private static final int INDEX_OFFSET = 1;
@@ -83,27 +84,58 @@ public class MoneyList {
 
             // remove all trailing, leading, and spaces between input
             input = input.replaceAll("\\s", "");
-            String[] parts = input.substring(10).split("\\$/", 2);
 
-            if (parts.length < 2 || parts[0].trim().isEmpty() || parts[1].trim().isEmpty()) {
-                throw new MTException("Your addExpense needs a description and a value.\n" +
-                        "Format: addExpense <description> $/ <value>");
+            //input = addExpenseMilk$/10
+            //new_input = addExpenseMilk$/10c/Food
+
+            // Default parameters
+            String description = "";
+            Double amount = 0.00;
+            String category = "Uncategorised";
+
+            // Split parameters to extract description, amount, and category
+            if (input.contains("$/") && input.contains("c/")) {
+                String[] parts1 = input.substring(10).split("\\$/", 2);
+                description = parts1[0]; // Get the description
+
+                String[] parts2 = parts1[1].split("c/", 2);
+                String amountString = parts2[0]; // Get the amount as a string
+                category = parts2[1]; // Get the category
+
+                // Validate and parse the amount
+                if (amountString.matches("-?\\d+(\\.\\d+)?")) { // Regex for numeric values
+                    amount = Double.parseDouble(amountString); // Safely convert to double
+                } else {
+                    throw new NumberFormatException("Invalid amount format: " + amountString);
+                }
+
+                // Format the amount to 2 decimal places
+                DecimalFormat df = new DecimalFormat("#.00");
+                amount = Double.valueOf(df.format(amount));
+                logger.logInfo("Amount after df formatting: " + amount);
+
             } else {
-                String description = parts[0].trim();
-                Double amount = Double.parseDouble(parts[1].trim());
-                Expense newExpense = new Expense(description, amount);
-                // Add expense to moneyList (as a String representation)
-                moneyList.add(newExpense.toString());
-
-                // Log that the expense was added
-                logger.logInfo("Added expense: " + newExpense);
-
-                // Inform the user via the UI
-                ui.print("Expense added: " + newExpense);
-
-                // Save the updated list of entries
-                storage.saveEntries(moneyList);
+                throw new MTException("Invalid format. Use: addExpense <description> $/<amount> c/<category>");
             }
+
+            // Create and add the new expense
+            Expense newExpense = new Expense(description, amount, category);
+
+            // Add expense to moneyList (as a String representation)
+            moneyList.add(newExpense.toString());
+
+            // Log that the expense was added
+            logger.logInfo("Added expense: " + newExpense);
+
+            // Inform the user via the UI
+            ui.print("Expense added: " + newExpense);
+
+            // Save the updated list of entries
+            storage.saveEntries(moneyList);
+
+        } catch (NumberFormatException error) {
+            logger.logSevere("Invalid amount format: " + input, error);
+            throw new MTException("Invalid amount format. Please ensure it is a numeric value.");
         } catch (Exception error) {
             logger.logSevere("Error adding expense: " + error.getMessage(), error);
             throw new MTException("Failed to add expense: " + error.getMessage());
