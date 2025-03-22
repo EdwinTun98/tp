@@ -8,9 +8,20 @@
 
 {Describe the design and implementation of the product. Use UML diagrams and short code snippets where applicable.}
 
-### Architecture
+### Architecture Overview
 
-Below is an overview of the main components and their interactions with one another.
+Below is an overview of the main components and their interactions with one another:
+
+The application is divided into several classes, each with a specific responsibility:
+- `MoneyTrail`: The **main** class that initializes the application and handles user input.
+- `MoneyList`: Manages the list of expenses and provides methods for adding, deleting, listing, and finding expenses.
+- `Storage`: Handles loading and saving data to a file.
+- `TextUI`: Manages user interface interactions, such as displaying messages and errors.
+- `MTLogger`: Logs application events and errors for debugging and monitoring.
+- `MTException`: A custom exception class for handling application-specific errors.
+- `Expense`: Represents an expense entry with a description and amount.
+
+NOTE: Additional classes may be required in the future.
 
 ## Product scope
 ### Target user profile
