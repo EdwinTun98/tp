@@ -63,6 +63,11 @@ public class MoneyTrail {
                     continue;
                 }
 
+                if (input.equalsIgnoreCase("listCats")) {
+                    moneyList.listCats();
+                    continue;
+                }
+
                 if (input.equalsIgnoreCase("help")) {
                     // Display all available commands and their descriptions
                     ui.showAllAvailableCommands();

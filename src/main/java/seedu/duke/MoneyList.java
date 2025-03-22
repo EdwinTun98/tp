@@ -2,6 +2,7 @@ package seedu.duke;
 
 import java.util.ArrayList;
 import java.text.DecimalFormat;
+import java.util.LinkedHashSet;
 
 public class MoneyList {
     private static final int INDEX_OFFSET = 1;
@@ -233,6 +234,51 @@ public class MoneyList {
         } catch (Exception e) {
             logger.logSevere("Error setting budget: " + e.getMessage(), e);
             ui.print("An error occurred while setting the budget.");
+        }
+    }
+
+    public void listCats() {
+        try {
+            if (moneyList.isEmpty()) {
+                ui.print("No entries available to display categories.");
+                logger.logWarning("The money list is empty. No categories to display.");
+                return;
+            }
+
+            // Use a LinkedHashSet to store unique categories while preserving order
+            LinkedHashSet<String> categories = new LinkedHashSet<>();
+
+
+            for (String entry : moneyList) {
+                try {
+                    // Look for the keyword "Category=" in the entry
+                    // Look for the keyword "Category=" in the entry
+                    if (entry.contains("Category=")) {
+                        // Extract the category value after "Category="
+                        String category = entry.substring(entry.indexOf("Category=") + 9).trim();
+                        categories.add(category);
+                    }
+                } catch (Exception e) {
+                    logger.logWarning("Error extracting category from entry: " + entry);
+                }
+            }
+
+            if (categories.isEmpty()) {
+                ui.print("No categories found.");
+                logger.logWarning("No categories could be extracted from the money list.");
+                return;
+            }
+
+            // Display the unique categories in the order they were added
+            ui.print("Categories (in order of appearance):");
+            for (String category : categories) {
+                ui.print("- " + category);
+            }
+
+            logger.logInfo("Displayed " + categories.size() + " unique categories.");
+        } catch (Exception e) {
+            logger.logSevere("An error occurred while listing categories: " + e.getMessage(), e);
+            ui.print("An error occurred while listing categories. Please try again.");
         }
     }
 }
