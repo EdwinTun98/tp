@@ -238,3 +238,85 @@ Mar 22, 2025 3:13:11 PM seedu.duke.MTLogger logInfo
 INFO: Added expense: [Expense] Eggs Value=$5.12  Category=Food
 Mar 22, 2025 3:13:13 PM seedu.duke.MTLogger logInfo
 INFO: Exiting CLI program.
+Mar 22, 2025 3:31:06 PM seedu.duke.MTLogger logInfo
+INFO: Starting CLI program.
+Mar 22, 2025 3:31:06 PM seedu.duke.MTLogger logInfo
+INFO: Loaded 5 entries from file.
+Mar 22, 2025 3:31:33 PM seedu.duke.MTLogger logSevere
+SEVERE: Error adding expense: Invalid format. Use: addExpense <description> $/<amount> c/<category>
+seedu.duke.MTException: Invalid format. Use: addExpense <description> $/<amount> c/<category>
+	at seedu.duke.MoneyList.addExpense(MoneyList.java:118)
+	at seedu.duke.MoneyTrail.run(MoneyTrail.java:62)
+	at seedu.duke.MoneyTrail.main(MoneyTrail.java:95)
+
+Mar 22, 2025 3:31:33 PM seedu.duke.MTLogger logWarning
+WARNING: Error processing command: Failed to add expense: Invalid format. Use: addExpense <description> $/<amount> c/<category>
+Mar 22, 2025 3:35:20 PM seedu.duke.MTLogger logInfo
+INFO: Exiting CLI program.
+Mar 22, 2025 3:35:57 PM seedu.duke.MTLogger logInfo
+INFO: Starting CLI program.
+Mar 22, 2025 3:35:57 PM seedu.duke.MTLogger logInfo
+INFO: Loaded 5 entries from file.
+Mar 22, 2025 3:36:01 PM seedu.duke.MTLogger logSevere
+SEVERE: Error adding expense: Invalid format. Use: addExpense <description> $/<amount> c/<category>
+seedu.duke.MTException: Invalid format. Use: addExpense <description> $/<amount> c/<category>
+	at seedu.duke.MoneyList.addExpense(MoneyList.java:122)
+	at seedu.duke.MoneyTrail.run(MoneyTrail.java:62)
+	at seedu.duke.MoneyTrail.main(MoneyTrail.java:95)
+
+Mar 22, 2025 3:36:01 PM seedu.duke.MTLogger logWarning
+WARNING: Error processing command: Failed to add expense: Invalid format. Use: addExpense <description> $/<amount> c/<category>
+Mar 22, 2025 3:38:53 PM seedu.duke.MTLogger logInfo
+INFO: Exiting CLI program.
+Mar 22, 2025 3:42:33 PM seedu.duke.MTLogger logInfo
+INFO: Starting CLI program.
+Mar 22, 2025 3:42:33 PM seedu.duke.MTLogger logInfo
+INFO: Loaded 5 entries from file.
+Mar 22, 2025 3:42:53 PM seedu.duke.MTLogger logInfo
+INFO: Description: IceCream
+Mar 22, 2025 3:42:53 PM seedu.duke.MTLogger logInfo
+INFO: Amount after df formatting: 15.23
+Mar 22, 2025 3:42:53 PM seedu.duke.MTLogger logInfo
+INFO: Added expense: [Expense] IceCream Value=$15.23  Category=Uncategorised
+Mar 22, 2025 3:43:09 PM seedu.duke.MTLogger logInfo
+INFO: Deleted entry at index: 3
+Mar 22, 2025 3:43:14 PM seedu.duke.MTLogger logInfo
+INFO: Exiting CLI program.
+Mar 22, 2025 4:04:57 PM seedu.duke.MTLogger logInfo
+INFO: Starting CLI program.
+Mar 22, 2025 4:04:57 PM seedu.duke.MTLogger logInfo
+INFO: Loaded 5 entries from file.
+Mar 22, 2025 4:05:18 PM seedu.duke.MTLogger logWarning
+WARNING: No categories could be extracted from the money list.
+Mar 22, 2025 4:05:46 PM seedu.duke.MTLogger logInfo
+INFO: Exiting CLI program.
+Mar 22, 2025 4:05:52 PM seedu.duke.MTLogger logInfo
+INFO: Starting CLI program.
+Mar 22, 2025 4:05:52 PM seedu.duke.MTLogger logInfo
+INFO: Loaded 5 entries from file.
+Mar 22, 2025 4:06:03 PM seedu.duke.MTLogger logWarning
+WARNING: No categories could be extracted from the money list.
+Mar 22, 2025 4:10:19 PM seedu.duke.MTLogger logInfo
+INFO: Exiting CLI program.
+Mar 22, 2025 4:10:31 PM seedu.duke.MTLogger logInfo
+INFO: Starting CLI program.
+Mar 22, 2025 4:10:31 PM seedu.duke.MTLogger logInfo
+INFO: Loaded 5 entries from file.
+Mar 22, 2025 4:10:36 PM seedu.duke.MTLogger logInfo
+INFO: Displayed 2 unique categories.
+Mar 22, 2025 4:12:37 PM seedu.duke.MTLogger logInfo
+INFO: Description: Toothbrush
+Mar 22, 2025 4:12:37 PM seedu.duke.MTLogger logInfo
+INFO: Amount after df formatting: 4.16
+Mar 22, 2025 4:12:37 PM seedu.duke.MTLogger logInfo
+INFO: Added expense: [Expense] Toothbrush Value=$4.16  Category=Toiletries
+Mar 22, 2025 4:12:48 PM seedu.duke.MTLogger logInfo
+INFO: Displayed 3 unique categories.
+Mar 22, 2025 4:16:04 PM seedu.duke.MTLogger logInfo
+INFO: Starting CLI program.
+Mar 22, 2025 4:16:04 PM seedu.duke.MTLogger logInfo
+INFO: Loaded 6 entries from file.
+Mar 22, 2025 4:16:11 PM seedu.duke.MTLogger logInfo
+INFO: Displayed 3 unique categories.
+Mar 22, 2025 4:16:26 PM seedu.duke.MTLogger logInfo
+INFO: Exiting CLI program.

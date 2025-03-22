@@ -73,7 +73,10 @@ Coming soon...
 
 Coming soon...
 
-Format: `Coming soon...`
+Format: `addExpense <description> $/<amount> c/<category>`
+
+#### Notes:
+- Category parameter is optional! If no category is given, the expense will be tagged as "uncategorised".
 
 Example: `Coming soon...`
 
