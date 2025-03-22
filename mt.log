@@ -93,3 +93,148 @@ Mar 20, 2025 3:31:54 PM seedu.duke.MTLogger logInfo
 INFO: Added expense: [Expense] fees Value=$80.000000 
 Mar 20, 2025 3:31:59 PM seedu.duke.MTLogger logInfo
 INFO: Exiting CLI program.
+Mar 21, 2025 5:31:08 PM seedu.duke.MTLogger logInfo
+INFO: Starting CLI program.
+Mar 21, 2025 5:31:08 PM seedu.duke.MTLogger logInfo
+INFO: Loaded 3 entries from file.
+Mar 21, 2025 5:31:25 PM seedu.duke.MTLogger logSevere
+SEVERE: Error adding expense: begin 3, end -2, length 18
+java.lang.StringIndexOutOfBoundsException: begin 3, end -2, length 18
+	at java.base/java.lang.String.checkBoundsBeginEnd(String.java:4608)
+	at java.base/java.lang.String.substring(String.java:2711)
+	at seedu.duke.MoneyList.addExpense(MoneyList.java:104)
+	at seedu.duke.MoneyTrail.run(MoneyTrail.java:62)
+	at seedu.duke.MoneyTrail.main(MoneyTrail.java:95)
+
+Mar 21, 2025 5:31:25 PM seedu.duke.MTLogger logWarning
+WARNING: Error processing command: Failed to add expense: begin 3, end -2, length 18
+Mar 21, 2025 8:01:14 PM seedu.duke.MTLogger logInfo
+INFO: Starting CLI program.
+Mar 21, 2025 8:01:14 PM seedu.duke.MTLogger logInfo
+INFO: Loaded 3 entries from file.
+Mar 21, 2025 8:02:08 PM seedu.duke.MTLogger logSevere
+SEVERE: Error adding expense: begin 13, end -2, length 21
+java.lang.StringIndexOutOfBoundsException: begin 13, end -2, length 21
+	at java.base/java.lang.String.checkBoundsBeginEnd(String.java:4608)
+	at java.base/java.lang.String.substring(String.java:2711)
+	at seedu.duke.MoneyList.addExpense(MoneyList.java:106)
+	at seedu.duke.MoneyTrail.run(MoneyTrail.java:62)
+	at seedu.duke.MoneyTrail.main(MoneyTrail.java:95)
+
+Mar 21, 2025 8:02:08 PM seedu.duke.MTLogger logWarning
+WARNING: Error processing command: Failed to add expense: begin 13, end -2, length 21
+Mar 22, 2025 9:24:49 AM seedu.duke.MTLogger logInfo
+INFO: Starting CLI program.
+Mar 22, 2025 9:24:49 AM seedu.duke.MTLogger logInfo
+INFO: Loaded 3 entries from file.
+Mar 22, 2025 9:28:06 AM seedu.duke.MTLogger logInfo
+INFO: Parts[0]: Milk$/10c/Food
+Mar 22, 2025 9:28:06 AM seedu.duke.MTLogger logSevere
+SEVERE: Error adding expense: Index 1 out of bounds for length 1
+java.lang.ArrayIndexOutOfBoundsException: Index 1 out of bounds for length 1
+	at seedu.duke.MoneyList.addExpense(MoneyList.java:98)
+	at seedu.duke.MoneyTrail.run(MoneyTrail.java:62)
+	at seedu.duke.MoneyTrail.main(MoneyTrail.java:95)
+
+Mar 22, 2025 9:28:06 AM seedu.duke.MTLogger logWarning
+WARNING: Error processing command: Failed to add expense: Index 1 out of bounds for length 1
+Mar 22, 2025 9:29:08 AM seedu.duke.MTLogger logInfo
+INFO: Starting CLI program.
+Mar 22, 2025 9:29:08 AM seedu.duke.MTLogger logInfo
+INFO: Loaded 3 entries from file.
+Mar 22, 2025 9:29:13 AM seedu.duke.MTLogger logInfo
+INFO: Parts[0]: Milk
+Mar 22, 2025 9:29:13 AM seedu.duke.MTLogger logInfo
+INFO: Parts[1]: 10c/Food
+Mar 22, 2025 9:29:13 AM seedu.duke.MTLogger logInfo
+INFO: Added expense: [Expense]  Value=$0.000000  Category=Uncategorised
+Mar 22, 2025 9:32:30 AM seedu.duke.MTLogger logInfo
+INFO: Starting CLI program.
+Mar 22, 2025 9:32:30 AM seedu.duke.MTLogger logInfo
+INFO: Loaded 4 entries from file.
+Mar 22, 2025 9:32:39 AM seedu.duke.MTLogger logInfo
+INFO: Parts[0]: Milk
+Mar 22, 2025 9:32:39 AM seedu.duke.MTLogger logInfo
+INFO: Parts[1]: 10c/Food
+Mar 22, 2025 9:32:39 AM seedu.duke.MTLogger logInfo
+INFO: Parts2[0]: addExpenseMilk$/10
+Mar 22, 2025 9:32:39 AM seedu.duke.MTLogger logInfo
+INFO: Parts2[1]: Food
+Mar 22, 2025 9:32:39 AM seedu.duke.MTLogger logSevere
+SEVERE: Error adding expense: For input string: "addExpenseMilk$/10"
+java.lang.NumberFormatException: For input string: "addExpenseMilk$/10"
+	at java.base/jdk.internal.math.FloatingDecimal.readJavaFormatString(FloatingDecimal.java:2054)
+	at java.base/jdk.internal.math.FloatingDecimal.parseDouble(FloatingDecimal.java:110)
+	at java.base/java.lang.Double.parseDouble(Double.java:651)
+	at seedu.duke.MoneyList.addExpense(MoneyList.java:107)
+	at seedu.duke.MoneyTrail.run(MoneyTrail.java:62)
+	at seedu.duke.MoneyTrail.main(MoneyTrail.java:95)
+
+Mar 22, 2025 9:32:39 AM seedu.duke.MTLogger logWarning
+WARNING: Error processing command: Failed to add expense: For input string: "addExpenseMilk$/10"
+Mar 22, 2025 2:54:18 PM seedu.duke.MTLogger logInfo
+INFO: Starting CLI program.
+Mar 22, 2025 2:54:18 PM seedu.duke.MTLogger logInfo
+INFO: Loaded 4 entries from file.
+Mar 22, 2025 2:55:03 PM seedu.duke.MTLogger logInfo
+INFO: Deleted entry at index: 3
+Mar 22, 2025 2:55:46 PM seedu.duke.MTLogger logInfo
+INFO: Added expense: [Expense] Milk Value=$10.000000  Category=Food
+Mar 22, 2025 2:57:46 PM seedu.duke.MTLogger logInfo
+INFO: Exiting CLI program.
+Mar 22, 2025 3:04:48 PM seedu.duke.MTLogger logInfo
+INFO: Starting CLI program.
+Mar 22, 2025 3:04:48 PM seedu.duke.MTLogger logInfo
+INFO: Loaded 4 entries from file.
+Mar 22, 2025 3:07:10 PM seedu.duke.MTLogger logInfo
+INFO: Added expense: [Expense] Eggs Value=$5.000000  Category=Food
+Mar 22, 2025 3:08:28 PM seedu.duke.MTLogger logInfo
+INFO: Deleted entry at index: 4
+Mar 22, 2025 3:08:37 PM seedu.duke.MTLogger logInfo
+INFO: Exiting CLI program.
+Mar 22, 2025 3:08:43 PM seedu.duke.MTLogger logInfo
+INFO: Starting CLI program.
+Mar 22, 2025 3:08:43 PM seedu.duke.MTLogger logInfo
+INFO: Loaded 4 entries from file.
+Mar 22, 2025 3:08:46 PM seedu.duke.MTLogger logInfo
+INFO: Amount after df formatting: 5.0
+Mar 22, 2025 3:08:46 PM seedu.duke.MTLogger logInfo
+INFO: Added expense: [Expense] Eggs Value=$5.000000  Category=Food
+Mar 22, 2025 3:09:43 PM seedu.duke.MTLogger logInfo
+INFO: Exiting CLI program.
+Mar 22, 2025 3:09:46 PM seedu.duke.MTLogger logInfo
+INFO: Starting CLI program.
+Mar 22, 2025 3:09:46 PM seedu.duke.MTLogger logInfo
+INFO: Loaded 5 entries from file.
+Mar 22, 2025 3:09:52 PM seedu.duke.MTLogger logInfo
+INFO: Deleted entry at index: 4
+Mar 22, 2025 3:09:58 PM seedu.duke.MTLogger logInfo
+INFO: Amount after df formatting: 5.12
+Mar 22, 2025 3:09:58 PM seedu.duke.MTLogger logInfo
+INFO: Added expense: [Expense] Eggs Value=$5.12  Category=Food
+Mar 22, 2025 3:10:23 PM seedu.duke.MTLogger logInfo
+INFO: Deleted entry at index: 4
+Mar 22, 2025 3:10:29 PM seedu.duke.MTLogger logInfo
+INFO: Exiting CLI program.
+Mar 22, 2025 3:10:32 PM seedu.duke.MTLogger logInfo
+INFO: Starting CLI program.
+Mar 22, 2025 3:10:32 PM seedu.duke.MTLogger logInfo
+INFO: Loaded 4 entries from file.
+Mar 22, 2025 3:10:39 PM seedu.duke.MTLogger logInfo
+INFO: Amount after df formatting: 5.12
+Mar 22, 2025 3:10:39 PM seedu.duke.MTLogger logInfo
+INFO: Added expense: [Expense] Eggs Value=$5.120000  Category=Food
+Mar 22, 2025 3:10:47 PM seedu.duke.MTLogger logInfo
+INFO: Exiting CLI program.
+Mar 22, 2025 3:12:51 PM seedu.duke.MTLogger logInfo
+INFO: Starting CLI program.
+Mar 22, 2025 3:12:51 PM seedu.duke.MTLogger logInfo
+INFO: Loaded 5 entries from file.
+Mar 22, 2025 3:13:03 PM seedu.duke.MTLogger logInfo
+INFO: Deleted entry at index: 4
+Mar 22, 2025 3:13:11 PM seedu.duke.MTLogger logInfo
+INFO: Amount after df formatting: 5.12
+Mar 22, 2025 3:13:11 PM seedu.duke.MTLogger logInfo
+INFO: Added expense: [Expense] Eggs Value=$5.12  Category=Food
+Mar 22, 2025 3:13:13 PM seedu.duke.MTLogger logInfo
+INFO: Exiting CLI program.

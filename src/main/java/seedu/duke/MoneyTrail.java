@@ -91,7 +91,7 @@ public class MoneyTrail {
      * Main entry-point for the MoneyTrail budget tracker application.
      */
     public static void main(String[] args) throws MTException {
-        // assert false : "dummy assertion set to fail";
+        // assert false : "dummy assertion set to fail";z
         new MoneyTrail().run();
     }
 }
