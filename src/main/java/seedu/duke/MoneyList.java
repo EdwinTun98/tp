@@ -94,19 +94,25 @@ public class MoneyList {
             String category = "Uncategorised";
 
             // Split parameters to extract description, amount, and category
-            if (input.contains("$/") && input.contains("c/")) {
+            if (input.contains("$/")) {
                 String[] parts1 = input.substring(10).split("\\$/", 2);
                 description = parts1[0]; // Get the description
 
+                logger.logInfo("Description: " + description);
+
                 String[] parts2 = parts1[1].split("c/", 2);
                 String amountString = parts2[0]; // Get the amount as a string
-                category = parts2[1]; // Get the category
 
                 // Validate and parse the amount
                 if (amountString.matches("-?\\d+(\\.\\d+)?")) { // Regex for numeric values
                     amount = Double.parseDouble(amountString); // Safely convert to double
                 } else {
                     throw new NumberFormatException("Invalid amount format: " + amountString);
+                }
+
+                // Check if category is provided
+                if (parts2.length > 1) { // If "c/" exists, fetch the category
+                    category = parts2[1];
                 }
 
                 // Format the amount to 2 decimal places
