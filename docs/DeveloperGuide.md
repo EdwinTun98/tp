@@ -8,6 +8,9 @@
 
 {Describe the design and implementation of the product. Use UML diagrams and short code snippets where applicable.}
 
+### Architecture
+
+Below is an overview of the main components and their interactions with one another.
 
 ## Product scope
 ### Target user profile
