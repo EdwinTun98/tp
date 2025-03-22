@@ -16,7 +16,7 @@ public class MoneyTrail {
         this.moneyList = new MoneyList(logger, storage, ui);
     }
 
-    public void run() throws MTException {
+    public void run() {
         logger.logInfo("Starting CLI program.");
 
         try {
@@ -95,8 +95,8 @@ public class MoneyTrail {
     /**
      * Main entry-point for the MoneyTrail budget tracker application.
      */
-    public static void main(String[] args) throws MTException {
-        // assert false : "dummy assertion set to fail";z
+    public static void main(String[] args) {
+        // assert false : "dummy assertion set to fail";
         new MoneyTrail().run();
     }
 }
