@@ -214,6 +214,11 @@ public class MoneyList {
             // Parse the budget value from the string
             double budget = Double.parseDouble(budgetString);
 
+            // Format the budget to 2 decimal places
+            DecimalFormat df = new DecimalFormat("#.00");
+            budget = Double.valueOf(df.format(budget));
+            logger.logInfo("Total budget after df formatting: " + budget);
+
             // Validate that the budget is not negative
             if (budget < 0) {
                 logger.logWarning("Attempted to set a negative budget: " + budget);
@@ -224,7 +229,7 @@ public class MoneyList {
             // Set the total budget
             this.totalBudget = budget;
             logger.logInfo("Total budget set to: " + totalBudget);
-            ui.print("Budget set to: $" + totalBudget);
+            ui.print("Total budget set to: $" + totalBudget);
         } catch (NumberFormatException e) {
             logger.logSevere("Invalid budget format: " + input, e);
             ui.print("Invalid budget format. Please enter a valid number " +
