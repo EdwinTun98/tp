@@ -53,6 +53,7 @@ public class TextUI {
         print("5. setTotalBudget <budget>: Sets a total spending budget to adhere to.");
         print("6. delete <entry_number>: Deletes an entry.");
         print("7. find <keyword>: Finds an entry based on the given keyword.");
-        print("8. exit: Exits the program.");
+        print("8. listCats: Lists out all entry categories in order of appearance.");
+        print("9. exit: Exits the program.");
     }
 }
