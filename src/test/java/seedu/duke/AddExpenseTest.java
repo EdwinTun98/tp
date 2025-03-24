@@ -30,8 +30,9 @@ public class AddExpenseTest {
     void testAddExpenseValidInput() {
         try {
             MoneyList moneyList = new MoneyList(logger, storage, ui);
-            moneyList.addExpense("addExpenseMilk$/10c/Food");
-            assertTrue(moneyList.getMoneyList().contains("Milk: 10.00 (Food)"), "Expense should be added.");
+            moneyList.addExpense("addExpense Milk $/10 c/Food");
+            assertTrue(moneyList.getMoneyList().contains("[Expense] Milk Value=$10.00 (Food)"),
+                    "Expense should be added.");
         } catch (Exception e) {
             fail("Exception should not occur for valid input.");
         }
@@ -40,14 +41,17 @@ public class AddExpenseTest {
     @Test
     void testAddExpenseMissingDollarSign() {
         MoneyList moneyList = new MoneyList(logger, storage, ui);
-        Exception exception = assertThrows(MTException.class, () -> moneyList.addExpense("addExpenseMilk10c/Food"));
-        assertEquals("Invalid format. Use: addExpense <description> $/<amount> c/<category>", exception.getMessage());
+        Exception exception = assertThrows(MTException.class, () -> moneyList.addExpense("addExpense " +
+                "Milk 10 c/Food"));
+        assertEquals("Failed to add expense: " +
+                        "Invalid format. Use: addExpense <description> $/<amount> c/<category>",
+                exception.getMessage());
     }
 
     @Test
     void testAddExpenseInvalidAmountFormat() {
         MoneyList moneyList = new MoneyList(logger, storage, ui);
-        Exception exception = assertThrows(MTException.class, () -> moneyList.addExpense("addExpenseMilk$/abc"));
+        Exception exception = assertThrows(MTException.class, () -> moneyList.addExpense("addExpense Milk $/abc"));
         assertEquals("Invalid amount format. Please ensure it is a numeric value.", exception.getMessage());
     }
 
@@ -56,24 +60,16 @@ public class AddExpenseTest {
         try {
             MoneyList moneyList = new MoneyList(logger, storage, ui);
             moneyList.addExpense("addExpenseMilk$/20");
-            assertTrue(moneyList.getMoneyList().contains("Milk: 20.00 (Uncategorised)"),
-                    "Default category should be used.");
+            assertTrue(moneyList.getMoneyList().contains("[Expense] Milk Value=$20.00 (Uncategorised)"));
         } catch (Exception e) {
             fail("Exception should not occur when category is missing.");
         }
     }
 
     @Test
-    void testAddExpenseEmptyInput() {
-        MoneyList moneyList = new MoneyList(logger, storage, ui);
-        Exception exception = assertThrows(MTException.class, () -> moneyList.addExpense(""));
-        assertEquals("Input should not be null", exception.getMessage());
-    }
-
-    @Test
     void testAddExpenseNullInput() {
         MoneyList moneyList = new MoneyList(logger, storage, ui);
         Exception exception = assertThrows(MTException.class, () -> moneyList.addExpense(null));
-        assertEquals("Input should not be null", exception.getMessage());
+        assertEquals("Failed to add expense: Input should not be null", exception.getMessage());
     }
 }

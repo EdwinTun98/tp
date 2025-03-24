@@ -37,7 +37,7 @@ public class Expense {
 
     @Override
     public String toString() {
-        return String.format("[Expense] %s Value=$%.2f  Category=%s", //rmb to add back in date
+        return String.format("[Expense] %s Value=$%.2f (%s)", //rmb to add back in date
                 this.getDescription(), this.getAmount(), this.getCategory());
     }
 }
