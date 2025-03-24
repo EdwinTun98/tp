@@ -79,15 +79,13 @@ public class MoneyList {
 
     public void addExpense(String input) throws MTException {
         try {
-            // Assert that the input is not null and starts with "addExpense"
-            assert input != null : "Input should not be null";
-            assert input.startsWith("addExpense") : "Input should start with 'addExpense'";
+            // Check that the input is not null and starts with "addExpense"
+            if (input == null) {
+                throw new MTException("Input should not be null");
+            }
 
             // remove all trailing, leading, and spaces between input
             input = input.replaceAll("\\s", "");
-
-            //input = addExpenseMilk$/10
-            //new_input = addExpenseMilk$/10c/Food
 
             // Default parameters
             String description = "";
