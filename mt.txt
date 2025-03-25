@@ -1,19 +1,2 @@
+Entry 1: $100
 Entry 3: $75
-[Expense] foodstuff Value=$20.000000 
-[Expense] Eggs Value=$5.12  Category=Food
-[Expense] IceCream Value=$15.23  Category=Uncategorised
-[Expense] Toothbrush Value=$4.16  Category=Toiletries
-[Expense] food Value=$7.09 (Uncategorised)
-[Expense] food Value=$7.00 (Uncategorised)
-[Expense] food Value=$9.00 (Uncategorised)
-[Expense] mos burger Value=$9.00 (Uncategorised)
-[Expense] mos burger Value=$9.00 (Uncategorised)
-[Expense] mosburger Value=$9.00 (Uncategorised)
-[Expense] mod burger Value=$68.00 (Uncategorised)
-[Expense] mos burger Value=$7.90 (ejb)
-[Expense] ice cream Value = $0.60 (treat)
-[Expense] ice Value = $0.50 (treat)
-[Expense] ed Value = $0.90 (Uncategorised, 25 march)
-[Expense] mos burger Value = $0.90 (treat, no date)
-[Expense] mango Value = $7.90 (treat, 13 march)
-[Expense] catfood Value = $2.30 (Uncategorised, 9 march)

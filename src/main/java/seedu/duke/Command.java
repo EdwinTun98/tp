@@ -118,7 +118,7 @@ class AddExpenseCommand implements Command {
         // Reconstruct the command string expected by MoneyList.addExpense.
 
         String expenseCommand = "addExpense " + description + " $/" + amount;
-        if (!category.equals("Uncategorized")) {
+        if (!category.equals("Uncategorizned")) {
             expenseCommand += " c/" + category;
         }
         // Include the date if it's provided (i.e., not the default "no date").

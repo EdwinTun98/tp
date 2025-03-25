@@ -89,7 +89,7 @@ public class MoneyList {
             // Default parameters
             String description = "";
             Double amount = 0.00;
-            String category = "Uncategorised";
+            String category = "Uncategorized";
             String date = "no date"; // default date
 
             // Ensure the input contains the amount marker "$/"
@@ -150,7 +150,7 @@ public class MoneyList {
                 logger.logInfo("Amount after formatting: " + amount);
             } else {
                 throw new MTException("Invalid format. Use: addExpense" +
-                        " <description> $/<amount> c/<category> d/<date>");
+                        " <description> $/<amount> [c/<category>] [d/<date>]");
             }
 
             // amount cannot be negative
