@@ -14,3 +14,23 @@ java.lang.NumberFormatException: For input string: "3.5"
 
 Mar 18, 2025 4:45:12 PM seedu.duke.MTLogger logWarning
 WARNING: Error adding expense: Failed to add expense: For input string: "3.5"
+Mar 25, 2025 4:17:21 PM seedu.duke.MTLogger logWarning
+WARNING: Invalid index provided: 4
+Mar 25, 2025 4:17:21 PM seedu.duke.MTLogger logInfo
+INFO: Deleted entry at index: 1
+Mar 25, 2025 4:25:43 PM seedu.duke.MTLogger logWarning
+WARNING: Invalid index provided: 4
+Mar 25, 2025 4:25:43 PM seedu.duke.MTLogger logInfo
+INFO: Deleted entry at index: 1
+Mar 25, 2025 4:26:34 PM seedu.duke.MTLogger logWarning
+WARNING: Invalid index provided: 4
+Mar 25, 2025 4:26:34 PM seedu.duke.MTLogger logInfo
+INFO: Deleted entry at index: 1
+Mar 25, 2025 4:33:11 PM seedu.duke.MTLogger logWarning
+WARNING: Invalid index provided: 4
+Mar 25, 2025 4:33:11 PM seedu.duke.MTLogger logInfo
+INFO: Deleted entry at index: 1
+Mar 25, 2025 4:34:16 PM seedu.duke.MTLogger logWarning
+WARNING: Invalid index provided: 4
+Mar 25, 2025 4:34:16 PM seedu.duke.MTLogger logInfo
+INFO: Deleted entry at index: 1

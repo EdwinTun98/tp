@@ -18,3 +18,13 @@ Format: addExpense <description> $/ <value>
 Mar 18, 2025 4:47:21 PM seedu.duke.MTLogger logWarning
 WARNING: Error adding expense: Failed to add expense: Your addExpense needs a description and a value.
 Format: addExpense <description> $/ <value>
+Mar 25, 2025 4:17:21 PM seedu.duke.MTLogger logInfo
+INFO: Deleted entry at index: 1
+Mar 25, 2025 4:25:43 PM seedu.duke.MTLogger logInfo
+INFO: Deleted entry at index: 1
+Mar 25, 2025 4:26:34 PM seedu.duke.MTLogger logInfo
+INFO: Deleted entry at index: 1
+Mar 25, 2025 4:33:11 PM seedu.duke.MTLogger logInfo
+INFO: Deleted entry at index: 1
+Mar 25, 2025 4:34:16 PM seedu.duke.MTLogger logInfo
+INFO: Deleted entry at index: 1

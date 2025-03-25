@@ -320,3 +320,186 @@ Mar 22, 2025 4:16:11 PM seedu.duke.MTLogger logInfo
 INFO: Displayed 3 unique categories.
 Mar 22, 2025 4:16:26 PM seedu.duke.MTLogger logInfo
 INFO: Exiting CLI program.
+Mar 25, 2025 1:06:28 PM seedu.duke.MTLogger logInfo
+INFO: Starting CLI program.
+Mar 25, 2025 1:06:28 PM seedu.duke.MTLogger logInfo
+INFO: Loaded 6 entries from file.
+Mar 25, 2025 1:06:43 PM seedu.duke.MTLogger logSevere
+SEVERE: Error adding expense: Invalid format. Use: addExpense <description> $/<amount> c/<category>
+seedu.duke.MTException: Invalid format. Use: addExpense <description> $/<amount> c/<category>
+	at seedu.duke.MoneyList.addExpense(MoneyList.java:123)
+	at seedu.duke.MoneyTrail.run(MoneyTrail.java:62)
+	at seedu.duke.MoneyTrail.main(MoneyTrail.java:100)
+
+Mar 25, 2025 1:06:43 PM seedu.duke.MTLogger logWarning
+WARNING: Error processing command: Failed to add expense: Invalid format. Use: addExpense <description> $/<amount> c/<category>
+Mar 25, 2025 1:36:24 PM seedu.duke.MTLogger logInfo
+INFO: Starting CLI program.
+Mar 25, 2025 1:36:24 PM seedu.duke.MTLogger logInfo
+INFO: Loaded 6 entries from file.
+Mar 25, 2025 1:36:31 PM seedu.duke.MTLogger logWarning
+WARNING: Error processing command: Unknown command. Type 'help' for a list of available commands.
+Mar 25, 2025 1:38:27 PM seedu.duke.MTLogger logInfo
+INFO: Starting CLI program.
+Mar 25, 2025 1:38:27 PM seedu.duke.MTLogger logInfo
+INFO: Loaded 6 entries from file.
+Mar 25, 2025 1:38:31 PM seedu.duke.MTLogger logWarning
+WARNING: Error processing command: Unknown command. Type 'help' for a list of available commands.
+Mar 25, 2025 1:38:33 PM seedu.duke.MTLogger logWarning
+WARNING: Error processing command: Unknown command. Type 'help' for a list of available commands.
+Mar 25, 2025 1:38:39 PM seedu.duke.MTLogger logWarning
+WARNING: Error processing command: Invalid format. Use: addExpense <description> $/<amount> c/<category>
+Mar 25, 2025 1:40:41 PM seedu.duke.MTLogger logInfo
+INFO: Deleted entry at index: 2
+Mar 25, 2025 2:13:41 PM seedu.duke.MTLogger logInfo
+INFO: Starting CLI program.
+Mar 25, 2025 2:13:41 PM seedu.duke.MTLogger logInfo
+INFO: Loaded 5 entries from file.
+Mar 25, 2025 2:13:47 PM seedu.duke.MTLogger logWarning
+WARNING: Error processing command: Please enter a valid command.
+Mar 25, 2025 2:14:06 PM seedu.duke.MTLogger logInfo
+INFO: Description: food
+Mar 25, 2025 2:14:06 PM seedu.duke.MTLogger logInfo
+INFO: Amount after df formatting: 7.09
+Mar 25, 2025 2:14:06 PM seedu.duke.MTLogger logInfo
+INFO: Added expense: [Expense] food Value=$7.09 (Uncategorised)
+Mar 25, 2025 2:15:53 PM seedu.duke.MTLogger logInfo
+INFO: Starting CLI program.
+Mar 25, 2025 2:15:53 PM seedu.duke.MTLogger logInfo
+INFO: Loaded 6 entries from file.
+Mar 25, 2025 2:15:56 PM seedu.duke.MTLogger logWarning
+WARNING: Error processing command: Please enter a valid command.
+Mar 25, 2025 2:16:06 PM seedu.duke.MTLogger logInfo
+INFO: Description: food
+Mar 25, 2025 2:16:06 PM seedu.duke.MTLogger logInfo
+INFO: Amount after df formatting: 7.0
+Mar 25, 2025 2:16:06 PM seedu.duke.MTLogger logInfo
+INFO: Added expense: [Expense] food Value=$7.00 (Uncategorised)
+Mar 25, 2025 2:16:26 PM seedu.duke.MTLogger logInfo
+INFO: Description: food
+Mar 25, 2025 2:16:26 PM seedu.duke.MTLogger logInfo
+INFO: Amount after df formatting: 9.0
+Mar 25, 2025 2:16:26 PM seedu.duke.MTLogger logInfo
+INFO: Added expense: [Expense] food Value=$9.00 (Uncategorised)
+Mar 25, 2025 2:16:56 PM seedu.duke.MTLogger logInfo
+INFO: Description: mos burger
+Mar 25, 2025 2:16:56 PM seedu.duke.MTLogger logInfo
+INFO: Amount after df formatting: 9.0
+Mar 25, 2025 2:16:56 PM seedu.duke.MTLogger logInfo
+INFO: Added expense: [Expense] mos burger Value=$9.00 (Uncategorised)
+Mar 25, 2025 2:17:19 PM seedu.duke.MTLogger logInfo
+INFO: Description: mos burger
+Mar 25, 2025 2:17:19 PM seedu.duke.MTLogger logInfo
+INFO: Amount after df formatting: 9.0
+Mar 25, 2025 2:17:19 PM seedu.duke.MTLogger logInfo
+INFO: Added expense: [Expense] mos burger Value=$9.00 (Uncategorised)
+Mar 25, 2025 2:17:26 PM seedu.duke.MTLogger logInfo
+INFO: Starting CLI program.
+Mar 25, 2025 2:17:26 PM seedu.duke.MTLogger logInfo
+INFO: Loaded 10 entries from file.
+Mar 25, 2025 2:17:42 PM seedu.duke.MTLogger logInfo
+INFO: Description: mosburger
+Mar 25, 2025 2:17:42 PM seedu.duke.MTLogger logInfo
+INFO: Amount after df formatting: 9.0
+Mar 25, 2025 2:17:42 PM seedu.duke.MTLogger logInfo
+INFO: Added expense: [Expense] mosburger Value=$9.00 (Uncategorised)
+Mar 25, 2025 2:18:06 PM seedu.duke.MTLogger logInfo
+INFO: Starting CLI program.
+Mar 25, 2025 2:18:06 PM seedu.duke.MTLogger logInfo
+INFO: Loaded 11 entries from file.
+Mar 25, 2025 2:18:10 PM seedu.duke.MTLogger logWarning
+WARNING: Error processing command: Please enter a valid command.
+Mar 25, 2025 2:18:15 PM seedu.duke.MTLogger logWarning
+WARNING: Error processing command: Unknown command. Type 'help' for a list of available commands.
+Mar 25, 2025 2:18:25 PM seedu.duke.MTLogger logWarning
+WARNING: Error processing command: Invalid format. Use: addExpense <description> $/<amount> c/<category>
+Mar 25, 2025 2:34:42 PM seedu.duke.MTLogger logInfo
+INFO: Description: mod burger
+Mar 25, 2025 2:34:42 PM seedu.duke.MTLogger logInfo
+INFO: Amount after df formatting: 68.0
+Mar 25, 2025 2:34:42 PM seedu.duke.MTLogger logInfo
+INFO: Added expense: [Expense] mod burger Value=$68.00 (Uncategorised)
+Mar 25, 2025 2:35:16 PM seedu.duke.MTLogger logInfo
+INFO: Description: mos burger
+Mar 25, 2025 2:35:16 PM seedu.duke.MTLogger logInfo
+INFO: Amount after df formatting: 7.9
+Mar 25, 2025 2:35:16 PM seedu.duke.MTLogger logInfo
+INFO: Added expense: [Expense] mos burger Value=$7.90 (ejb)
+Mar 25, 2025 2:52:57 PM seedu.duke.MTLogger logInfo
+INFO: Starting CLI program.
+Mar 25, 2025 2:52:57 PM seedu.duke.MTLogger logInfo
+INFO: Loaded 13 entries from file.
+Mar 25, 2025 2:53:32 PM seedu.duke.MTLogger logInfo
+INFO: Description: ice cream
+Mar 25, 2025 2:53:32 PM seedu.duke.MTLogger logInfo
+INFO: Amount after formatting: 0.6
+Mar 25, 2025 2:53:32 PM seedu.duke.MTLogger logInfo
+INFO: Added expense: [Expense] ice cream Value = $0.60 (treat)
+Mar 25, 2025 2:54:09 PM seedu.duke.MTLogger logInfo
+INFO: Starting CLI program.
+Mar 25, 2025 2:54:09 PM seedu.duke.MTLogger logInfo
+INFO: Loaded 14 entries from file.
+Mar 25, 2025 2:54:35 PM seedu.duke.MTLogger logInfo
+INFO: Description: ice
+Mar 25, 2025 2:54:35 PM seedu.duke.MTLogger logInfo
+INFO: Amount after formatting: 0.5
+Mar 25, 2025 2:54:35 PM seedu.duke.MTLogger logInfo
+INFO: Added expense: [Expense] ice Value = $0.50 (treat)
+Mar 25, 2025 2:56:41 PM seedu.duke.MTLogger logInfo
+INFO: Starting CLI program.
+Mar 25, 2025 2:56:41 PM seedu.duke.MTLogger logInfo
+INFO: Loaded 15 entries from file.
+Mar 25, 2025 2:56:58 PM seedu.duke.MTLogger logWarning
+WARNING: Error processing command: Invalid format. Use: addExpense <description> $/<amount> [c/<category>] [d/<date>]
+Mar 25, 2025 2:57:24 PM seedu.duke.MTLogger logInfo
+INFO: Description: ice
+Mar 25, 2025 2:57:24 PM seedu.duke.MTLogger logInfo
+INFO: Amount after formatting: 0.7
+Mar 25, 2025 2:57:24 PM seedu.duke.MTLogger logInfo
+INFO: Added expense: [Expense] ice Value = $0.70 (treat, 13 march)
+Mar 25, 2025 2:57:47 PM seedu.duke.MTLogger logWarning
+WARNING: Error processing command: Unknown command. Type 'help' for a list of available commands.
+Mar 25, 2025 2:57:52 PM seedu.duke.MTLogger logInfo
+INFO: Deleted entry at index: 15
+Mar 25, 2025 2:58:20 PM seedu.duke.MTLogger logInfo
+INFO: Description: ed
+Mar 25, 2025 2:58:20 PM seedu.duke.MTLogger logInfo
+INFO: Amount after formatting: 0.9
+Mar 25, 2025 2:58:20 PM seedu.duke.MTLogger logInfo
+INFO: Added expense: [Expense] ed Value = $0.90 (Uncategorised, 25 march)
+Mar 25, 2025 2:58:37 PM seedu.duke.MTLogger logWarning
+WARNING: Error processing command: Unknown command. Type 'help' for a list of available commands.
+Mar 25, 2025 2:59:55 PM seedu.duke.MTLogger logWarning
+WARNING: Error processing command: Please enter a valid command.
+Mar 25, 2025 2:59:55 PM seedu.duke.MTLogger logWarning
+WARNING: Error processing command: Unknown command. Type 'help' for a list of available commands.
+Mar 25, 2025 3:00:18 PM seedu.duke.MTLogger logInfo
+INFO: Description: mos burger
+Mar 25, 2025 3:00:18 PM seedu.duke.MTLogger logInfo
+INFO: Amount after formatting: 0.9
+Mar 25, 2025 3:00:18 PM seedu.duke.MTLogger logInfo
+INFO: Added expense: [Expense] mos burger Value = $0.90 (treat, no date)
+Mar 25, 2025 3:04:46 PM seedu.duke.MTLogger logInfo
+INFO: Starting CLI program.
+Mar 25, 2025 3:04:46 PM seedu.duke.MTLogger logInfo
+INFO: Loaded 17 entries from file.
+Mar 25, 2025 3:05:18 PM seedu.duke.MTLogger logInfo
+INFO: Description: mango
+Mar 25, 2025 3:05:18 PM seedu.duke.MTLogger logInfo
+INFO: Amount after formatting: 7.9
+Mar 25, 2025 3:05:18 PM seedu.duke.MTLogger logInfo
+INFO: Added expense: [Expense] mango Value = $7.90 (treat, 13 march)
+Mar 25, 2025 3:07:36 PM seedu.duke.MTLogger logInfo
+INFO: Starting CLI program.
+Mar 25, 2025 3:07:36 PM seedu.duke.MTLogger logInfo
+INFO: Loaded 18 entries from file.
+Mar 25, 2025 3:08:00 PM seedu.duke.MTLogger logWarning
+WARNING: Error processing command: Invalid format. Use: addExpense <description> $/<amount> [c/<category>] [d/<date>]
+Mar 25, 2025 3:08:17 PM seedu.duke.MTLogger logInfo
+INFO: Description: catfood
+Mar 25, 2025 3:08:17 PM seedu.duke.MTLogger logInfo
+INFO: Amount after formatting: 2.3
+Mar 25, 2025 3:08:17 PM seedu.duke.MTLogger logInfo
+INFO: Added expense: [Expense] catfood Value = $2.30 (Uncategorised, 9 march)
+Mar 25, 2025 3:09:07 PM seedu.duke.MTLogger logWarning
+WARNING: Error processing command: Please enter a valid command.

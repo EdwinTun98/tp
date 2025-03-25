@@ -1,0 +1,6 @@
+Mar 19, 2025 12:26:37 PM seedu.duke.MTLogger logInfo
+INFO: Starting CLI program.
+Mar 19, 2025 12:26:37 PM seedu.duke.MTLogger logInfo
+INFO: Loaded 4 entries from file.
+Mar 19, 2025 12:27:12 PM seedu.duke.MTLogger logInfo
+INFO: Added expense: [Expense] apple Value=$2.000000 

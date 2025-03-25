@@ -1,6 +1,2 @@
+Entry 1: $100
 Entry 3: $75
-[Expense] foodstuff Value=$20.000000 
-[Expense] fees Value=$80.000000 
-[Expense] Eggs Value=$5.12  Category=Food
-[Expense] IceCream Value=$15.23  Category=Uncategorised
-[Expense] Toothbrush Value=$4.16  Category=Toiletries
