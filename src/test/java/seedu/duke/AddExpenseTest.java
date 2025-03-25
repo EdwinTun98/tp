@@ -31,7 +31,7 @@ public class AddExpenseTest {
         try {
             MoneyList moneyList = new MoneyList(logger, storage, ui);
             moneyList.addExpense("addExpense Milk $/10 c/Food");
-            assertTrue(moneyList.getMoneyList().contains("[Expense] Milk Value = $10.00 (Food, no date)"),
+            assertTrue(moneyList.getMoneyList().contains("[Expense] Milk Value = $10.00 |Food| (no date)"),
                     "Expense should be added.");
         } catch (Exception e) {
             fail("Exception should not occur for valid input.");
@@ -60,7 +60,7 @@ public class AddExpenseTest {
         try {
             MoneyList moneyList = new MoneyList(logger, storage, ui);
             moneyList.addExpense("addExpenseMilk$/20");
-            assertTrue(moneyList.getMoneyList().contains("[Expense] Milk Value = $20.00 (Uncategorized, no date)"));
+            assertTrue(moneyList.getMoneyList().contains("[Expense] Milk Value = $20.00 |Uncategorized| (no date)"));
         } catch (Exception e) {
             fail("Exception should not occur when category is missing.");
         }

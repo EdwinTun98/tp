@@ -232,7 +232,7 @@ public class MoneyList {
         logger.logInfo("Total expense calculated: " + total);
     }
 
-    public void setTotalBudget(String input) {
+    public void setTotalBudget(String input) throws MTException {
         try {
             assert input != null : "Input should not be null";
             assert input.startsWith("setTotalBudget") : "Input should start with 'setTotalBudget'";
@@ -240,8 +240,12 @@ public class MoneyList {
             // Remove the command and extract the budget value
             String budgetString = input.substring("setTotalBudget".length()).trim();
 
+            System.out.println("Input received: " + input);
+
             // Parse the budget value from the string
-            double budget = Double.parseDouble(budgetString);
+            Double budget = Double.parseDouble(budgetString);
+
+            System.out.println("Budget string extracted: " + budgetString);
 
             // Format the budget to 2 decimal places
             DecimalFormat df = new DecimalFormat("#.00");
@@ -261,12 +265,15 @@ public class MoneyList {
             ui.print("Total budget set to: $" + totalBudget);
         } catch (NumberFormatException e) {
             logger.logSevere("Invalid budget format: " + input, e);
-            ui.print("Invalid budget format. Please enter a valid number " +
-                    "(e.g., setTotalBudget 500.00).");
+            throw new MTException("Invalid amount format. Please ensure it is a numeric value.");
         } catch (Exception e) {
             logger.logSevere("Error setting budget: " + e.getMessage(), e);
             ui.print("An error occurred while setting the budget.");
         }
+    }
+
+    public double getTotalBudget() {
+        return this.totalBudget;
     }
 
     public void listCats() {
@@ -283,11 +290,17 @@ public class MoneyList {
 
             for (String entry : moneyList) {
                 try {
+
                     // Look for the keyword "Category=" in the entry
-                    // Look for the keyword "Category=" in the entry
-                    if (entry.contains("Category=")) {
-                        // Extract the category value after "Category="
-                        String category = entry.substring(entry.indexOf("Category=") + 9).trim();
+                    if (entry.contains("|")) {
+                        // Filter off the string value until after |
+                        String beforeCat = entry.substring(entry.indexOf("|") + 1).trim();
+
+                        // Extract the string value before next |
+                        String [] parts = beforeCat.split("\\|", 2);
+
+                        String category = parts[0];
+
                         categories.add(category);
                     }
                 } catch (Exception e) {

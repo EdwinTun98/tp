@@ -87,7 +87,7 @@ class BudgetCommand implements Command {
     }
 
     @Override
-    public void execute(MoneyList moneyList) {
+    public void execute(MoneyList moneyList) throws MTException {
         String budgetCommand = "setTotalBudget " + budget;
         moneyList.setTotalBudget(budgetCommand);
     }
@@ -118,7 +118,7 @@ class AddExpenseCommand implements Command {
         // Reconstruct the command string expected by MoneyList.addExpense.
 
         String expenseCommand = "addExpense " + description + " $/" + amount;
-        if (!category.equals("Uncategorizned")) {
+        if (!category.equals("Uncategorized")) {
             expenseCommand += " c/" + category;
         }
         // Include the date if it's provided (i.e., not the default "no date").
