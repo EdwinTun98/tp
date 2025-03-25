@@ -297,7 +297,7 @@ public class MoneyList {
                         String beforeCat = entry.substring(entry.indexOf("|") + 1).trim();
 
                         // Extract the string value before next |
-                        String parts[] = beforeCat.split("\\|", 2);
+                        String [] parts = beforeCat.split("\\|", 2);
 
                         String category = parts[0];
 
