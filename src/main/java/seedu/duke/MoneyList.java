@@ -26,7 +26,8 @@ public class MoneyList {
     }
 
     private int extractIndex(String input) {
-        return Integer.parseInt(input.replaceAll("[^0-9]", "")) - INDEX_OFFSET;
+        return Integer.parseInt(input.replaceAll("[^0-9]", ""))
+                - INDEX_OFFSET;
     }
 
     private void validateIndex(int index) throws MTException {
@@ -79,63 +80,92 @@ public class MoneyList {
 
     public void addExpense(String input) throws MTException {
         try {
-            // Check that the input is not null and starts with "addExpense"
+            // Check that the input is not null and trim it.
             if (input == null) {
                 throw new MTException("Input should not be null");
             }
-
-            // remove all trailing, leading, and spaces between input
-            input = input.replaceAll("\\s", "");
+            input = input.trim();
 
             // Default parameters
             String description = "";
             Double amount = 0.00;
             String category = "Uncategorised";
+            String date = "no date"; // default date
 
-            // Split parameters to extract description, amount, and category
+            // Ensure the input contains the amount marker "$/"
             if (input.contains("$/")) {
+                // Extract everything after "addExpense "
                 String[] parts1 = input.substring(10).split("\\$/", 2);
-                description = parts1[0]; // Get the description
-
+                description = parts1[0].trim();
                 logger.logInfo("Description: " + description);
 
-                String[] parts2 = parts1[1].split("c/", 2);
-                String amountString = parts2[0]; // Get the amount as a string
+                // parts1[1] contains the rest (amount, maybe category and date)
+                // First, check if it contains the date marker "d/"
+                String afterAmountPart = parts1[1];
+                // We'll now check if the user provided a category using "c/".
+                if (afterAmountPart.contains("c/")) {
+                    // Split on "c/" to separate the amount from the category (and possibly date)
+                    String[] parts2 = afterAmountPart.split("c/", 2);
+                    String amountString = parts2[0].trim();
+                    // Validate and parse the amount
+                    if (amountString.matches("-?\\d+(\\.\\d+)?")) {
+                        amount = Double.parseDouble(amountString);
+                    } else {
+                        throw new NumberFormatException("Invalid amount format: " + amountString);
+                    }
 
-                // Validate and parse the amount
-                if (amountString.matches("-?\\d+(\\.\\d+)?")) { // Regex for numeric values
-                    amount = Double.parseDouble(amountString); // Safely convert to double
+                    // check if the category part contains the date marker "d/"
+                    if (parts2[1].contains("d/")) {
+                        String[] parts3 = parts2[1].split("d/", 2);
+                        category = parts3[0].trim();
+                        date = parts3[1].trim();
+                    } else {
+                        // No date provided; just use the category
+                        category = parts2[1].trim();
+                    }
+                } else if (afterAmountPart.contains("d/")) {
+                    // If there's no category marker but there is a date marker,
+                    // split on "d/" to get the amount and date.
+                    String[] parts2 = afterAmountPart.split("d/", 2);
+                    String amountString = parts2[0].trim();
+                    if (amountString.matches("-?\\d+(\\.\\d+)?")) {
+                        amount = Double.parseDouble(amountString);
+                    } else {
+                        throw new NumberFormatException("Invalid amount format: " + amountString);
+                    }
+                    date = parts2[1].trim();
                 } else {
-                    throw new NumberFormatException("Invalid amount format: " + amountString);
+                    // If neither category nor date is provided, treat the entire string as the amount.
+                    String amountString = afterAmountPart.trim();
+                    if (amountString.matches("-?\\d+(\\.\\d+)?")) {
+                        amount = Double.parseDouble(amountString);
+                    } else {
+                        throw new NumberFormatException("Invalid amount format: " + amountString);
+                    }
                 }
 
-                // Check if category is provided
-                if (parts2.length > 1) { // If "c/" exists, fetch the category
-                    category = parts2[1];
-                }
 
-                // Format the amount to 2 decimal places
                 DecimalFormat df = new DecimalFormat("#.00");
                 amount = Double.valueOf(df.format(amount));
-                logger.logInfo("Amount after df formatting: " + amount);
-
+                logger.logInfo("Amount after formatting: " + amount);
             } else {
-                throw new MTException("Invalid format. Use: addExpense <description> $/<amount> c/<category>");
+                throw new MTException("Invalid format. Use: addExpense" +
+                        " <description> $/<amount> c/<category> d/<date>");
             }
 
-            // Create and add the new expense
-            Expense newExpense = new Expense(description, amount, category);
+            // amount cannot be negative
+            if (amount <= 0) {
+                throw new MTException("Amount must be greater than zero.");
+            }
 
-            // Add expense to moneyList (as a String representation)
+
+
+            Expense newExpense = new Expense(description, amount, category, date);
+
+
             moneyList.add(newExpense.toString());
-
-            // Log that the expense was added
             logger.logInfo("Added expense: " + newExpense);
-
-            // Inform the user via the UI
             ui.print("Expense added: " + newExpense);
-
-            // Save the updated list of entries
             storage.saveEntries(moneyList);
 
         } catch (NumberFormatException error) {
@@ -146,7 +176,6 @@ public class MoneyList {
             throw new MTException("Failed to add expense: " + error.getMessage());
         }
     }
-
     public void listSummary() throws MTException {
         if (moneyList.isEmpty()) {
             logger.logWarning("Expense list is empty.");

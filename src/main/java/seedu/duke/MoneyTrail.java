@@ -7,6 +7,7 @@ public class MoneyTrail {
     private final MTLogger logger;
     private final Scanner in;
     private final TextUI ui;
+    private final Parser parser;
 
     public MoneyTrail() {
         this.in = new Scanner(System.in);
@@ -14,6 +15,7 @@ public class MoneyTrail {
         this.logger = new MTLogger(MoneyTrail.class.getName());
         Storage storage = new Storage();
         this.moneyList = new MoneyList(logger, storage, ui);
+        this.parser = new Parser();
     }
 
     public void run() {
@@ -29,63 +31,30 @@ public class MoneyTrail {
 
         ui.printWelcomeMsg();
 
-        while (true) {
+        boolean isExit = false;
+        while (!isExit) {
             String input = in.nextLine().trim();
 
             try {
-                if (input.equalsIgnoreCase("list")) {
-                    moneyList.listSummary();
-                    continue;
-                }
+                Command command = parser.parseCommand(input);
 
-                if (input.startsWith("find")) {
-                    moneyList.findEntry(input.substring(5));
-                    continue;
-                }
-
-                if (input.startsWith("delete")) {
-                    moneyList.deleteEntry(input);
-                    continue;
-                }
-
-                if (input.startsWith("totalExpense")) {
-                    moneyList.getTotalExpense();
-                    continue;
-                }
-
-                if (input.startsWith("setTotalBudget")) {
-                    moneyList.setTotalBudget(input);
-                    continue;
-                }
-
-                if (input.startsWith("addExpense")) {
-                    moneyList.addExpense(input);
-                    continue;
-                }
-
-                if (input.equalsIgnoreCase("listCats")) {
-                    moneyList.listCats();
-                    continue;
-                }
-
-                if (input.equalsIgnoreCase("help")) {
-                    // Display all available commands and their descriptions
+                // Handle the HelpCommand specifically since it needs UI access
+                if (command instanceof HelpCommand) {
                     ui.showAllAvailableCommands();
-                    continue;
+                } else {
+                    command.execute(moneyList);
                 }
 
+                isExit = command.isExit();
             } catch (MTException error) {
-                logger.logWarning("Error processing command: " + 
+                logger.logWarning("Error processing command: " +
                         error.getMessage());
                 ui.printErrorMsg(error);
             } finally {
-                ui.addLineDivider();
-                ui.printPromptMsg();
-            }
-
-            if (input.equalsIgnoreCase("exit")) {
-                logger.logInfo("Exiting CLI program.");
-                break;
+                if (!isExit) {
+                    ui.addLineDivider();
+                    ui.printPromptMsg();
+                }
             }
         }
 
