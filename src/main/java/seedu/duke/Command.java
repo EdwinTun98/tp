@@ -87,7 +87,7 @@ class BudgetCommand implements Command {
     }
 
     @Override
-    public void execute(MoneyList moneyList) {
+    public void execute(MoneyList moneyList) throws MTException {
         String budgetCommand = "setTotalBudget " + budget;
         moneyList.setTotalBudget(budgetCommand);
     }

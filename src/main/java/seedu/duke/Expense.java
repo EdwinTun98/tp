@@ -37,7 +37,7 @@ public class Expense {
 
     @Override
     public String toString() {
-        return String.format("[Expense] %s Value = $%.2f (%s, %s)",
+        return String.format("[Expense] %s Value = $%.2f |%s| (%s)",
                 this.getDescription(), this.getAmount(), this.getCategory(), this.getDate());
     }
 }

@@ -290,11 +290,17 @@ public class MoneyList {
 
             for (String entry : moneyList) {
                 try {
+
                     // Look for the keyword "Category=" in the entry
-                    // Look for the keyword "Category=" in the entry
-                    if (entry.contains("Category=")) {
-                        // Extract the category value after "Category="
-                        String category = entry.substring(entry.indexOf("Category=") + 9).trim();
+                    if (entry.contains("|")) {
+                        // Filter off the string value until after |
+                        String beforeCat = entry.substring(entry.indexOf("|") + 1).trim();
+
+                        // Extract the string value before next |
+                        String parts[] = beforeCat.split("\\|", 2);
+
+                        String category = parts[0];
+
                         categories.add(category);
                     }
                 } catch (Exception e) {
