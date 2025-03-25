@@ -18,6 +18,8 @@ public class MTLogger {
 
     private void configureLogger() {
         try {
+            // This prevents log messages from being sent to the console
+            logger.setUseParentHandlers(false);
             // Create a FileHandler to write logs to a file; true = append to existing file
             FileHandler fileHandler = new FileHandler(LOG_FILE_NAME, true);
             // Use simple text format for logs
