@@ -320,3 +320,55 @@ Mar 22, 2025 4:16:11 PM seedu.duke.MTLogger logInfo
 INFO: Displayed 3 unique categories.
 Mar 22, 2025 4:16:26 PM seedu.duke.MTLogger logInfo
 INFO: Exiting CLI program.
+Mar 25, 2025 6:08:52 PM seedu.duke.MTLogger logInfo
+INFO: Starting CLI program.
+Mar 25, 2025 6:08:52 PM seedu.duke.MTLogger logInfo
+INFO: Loaded 2 entries from file.
+Mar 25, 2025 6:09:12 PM seedu.duke.MTLogger logWarning
+WARNING: Error processing command: Unknown command. Type 'help' for a list of available commands.
+Mar 25, 2025 6:09:25 PM seedu.duke.MTLogger logInfo
+INFO: Description: Z
+Mar 25, 2025 6:09:25 PM seedu.duke.MTLogger logInfo
+INFO: Amount after formatting: 9.0
+Mar 25, 2025 6:09:25 PM seedu.duke.MTLogger logInfo
+INFO: Added expense: [Expense] Z Value = $9.00 || (May)
+Mar 25, 2025 6:11:18 PM seedu.duke.MTLogger logInfo
+INFO: Starting CLI program.
+Mar 25, 2025 6:11:18 PM seedu.duke.MTLogger logInfo
+INFO: Loaded 3 entries from file.
+Mar 25, 2025 6:11:22 PM seedu.duke.MTLogger logInfo
+INFO: Description: Z
+Mar 25, 2025 6:11:22 PM seedu.duke.MTLogger logInfo
+INFO: Amount after formatting: 9.0
+Mar 25, 2025 6:11:22 PM seedu.duke.MTLogger logInfo
+INFO: Added expense: [Expense] Z Value = $9.00 |Uncategorized| (May)
+Mar 25, 2025 6:18:19 PM seedu.duke.MTLogger logInfo
+INFO: Starting CLI program.
+Mar 25, 2025 6:18:19 PM seedu.duke.MTLogger logInfo
+INFO: Loaded 4 entries from file.
+Mar 25, 2025 6:18:24 PM seedu.duke.MTLogger logInfo
+INFO: Description: Z
+Mar 25, 2025 6:18:24 PM seedu.duke.MTLogger logInfo
+INFO: Amount after formatting: 9.0
+Mar 25, 2025 6:18:24 PM seedu.duke.MTLogger logInfo
+INFO: Added expense: [Expense] Z Value = $9.00 |Uncategorized| (May)
+Mar 25, 2025 6:18:32 PM seedu.duke.MTLogger logInfo
+INFO: Description: Z
+Mar 25, 2025 6:18:32 PM seedu.duke.MTLogger logInfo
+INFO: Amount after formatting: 9.0
+Mar 25, 2025 6:18:32 PM seedu.duke.MTLogger logInfo
+INFO: Added expense: [Expense] Z Value = $9.00 |May| (no date)
+Mar 25, 2025 6:19:13 PM seedu.duke.MTLogger logWarning
+WARNING: Error processing command: Unknown command. Type 'help' for a list of available commands.
+Mar 25, 2025 6:19:20 PM seedu.duke.MTLogger logInfo
+INFO: Deleted entry at index: 0
+Mar 25, 2025 6:19:21 PM seedu.duke.MTLogger logInfo
+INFO: Deleted entry at index: 0
+Mar 25, 2025 6:19:23 PM seedu.duke.MTLogger logInfo
+INFO: Deleted entry at index: 0
+Mar 25, 2025 6:19:24 PM seedu.duke.MTLogger logInfo
+INFO: Deleted entry at index: 0
+Mar 25, 2025 6:19:26 PM seedu.duke.MTLogger logInfo
+INFO: Deleted entry at index: 0
+Mar 25, 2025 6:19:27 PM seedu.duke.MTLogger logInfo
+INFO: Deleted entry at index: 0

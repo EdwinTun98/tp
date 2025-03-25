@@ -6,17 +6,12 @@ public class Expense {
     protected String date;
     protected String category;
 
-    // Constructor with Category parameter and date parameter
+    // Constructor with optional parameters handling
     public Expense(String description, double amount, String category, String date) {
         this.description = description;
         this.amount = amount;
-        this.date = date;
-        this.category = category;
-    }
-
-    // Constructor without category and date (optional parameters)
-    public Expense(String description, double amount) {
-        this(description, amount, "Uncategorized", "no date");
+        this.category = (category == null || category.isEmpty()) ? "Uncategorized" : category;
+        this.date = (date == null || date.isEmpty()) ? "no date" : date;
     }
 
     public String getDescription() {
