@@ -1,5 +1,2 @@
-Entry 3: $75
-[Expense] foodstuff Value=$20.000000 
-[Expense] fees Value=$80.000000 
-[Expense] Milk Value=$10.000000  Category=Food
-[Expense] Eggs Value=$5.12  Category=Food
+[Expense] X Value = $5.00 |Uncategorized| (no date)
+[Expense] Y Value = $7.00 |GGG| (no date)

@@ -58,29 +58,28 @@ Coming soon...
 
 ### Setting the total budget: `setTotalBudget`
 
-Coming soon...
+Format: `setTotalBudget <amount>`
 
-Format: `Coming soon...`
+Example: `setTotalBudget 500`
 
-Example: `Coming soon...`
-
-Outcome:
+Outcome: `Total budget set to: $500.00`
 ```
 Coming soon...
 ```
 
 ### Adding expense entries: `addExpense`
 
-Coming soon...
+Format: `addExpense <description> $/<amount> c/<category>`
 
-Format: `Coming soon...`
+#### Notes:
+- Category parameter is optional! If no category is given, the expense will be tagged as "uncategorised".
 
-Example: `Coming soon...`
+Example 1: `addExpense Honey $/20.25 c/Food`
+Example 2: `addExpense Honey $/20.25`   
 
-Outcome:
-```
-Coming soon...
-```
+Outcome 1: `Expense added: [Expense] Honey Value=$20.12 (Food)`
+Outcome 2: `Expense added: [Expense] Honey Value=$20.12 (Uncategorised)`
+
 ### Adding up expenses: `totalExpense`
 
 Coming soon...
@@ -113,10 +112,7 @@ Exits the MoneyTrail Budget Tracker application.
 
 Format: `exit`
 
-Outcome:
-```
-Coming soon...
-```
+Outcome: `Exiting program... Thank you for using MoneyTrail! :)`
 
 ## FAQ
 
