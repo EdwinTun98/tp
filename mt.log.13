@@ -14,3 +14,5 @@ java.lang.NumberFormatException: For input string: "3.5"
 
 Mar 18, 2025 4:45:12 PM seedu.duke.MTLogger logWarning
 WARNING: Error adding expense: Failed to add expense: For input string: "3.5"
+Mar 26, 2025 12:10:23 PM seedu.duke.MTLogger logInfo
+INFO: Saving entries into mt.txt

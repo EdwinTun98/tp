@@ -1,2 +1,2 @@
-[Expense] X Value = $5.00 |Uncategorized| (no date)
-[Expense] Y Value = $7.00 |GGG| (no date)
+Entry 1: $100
+Entry 3: $75
