@@ -1,0 +1,67 @@
+@startuml DeleteExpenseSequenceDiagram
+
+actor User
+participant MoneyTrail
+participant Parser
+participant DeleteCommand
+participant MoneyList
+participant Storage
+participant TextUI
+
+User -> MoneyTrail: "delete 2"
+activate MoneyTrail
+
+MoneyTrail -> Parser: parseCommand("delete 2")
+activate Parser
+
+Parser -> DeleteCommand: new DeleteCommand(1)
+activate DeleteCommand
+Parser --> MoneyTrail: DeleteCommand instance
+deactivate Parser
+
+MoneyTrail -> DeleteCommand: execute(moneyList)
+activate DeleteCommand
+
+DeleteCommand -> MoneyList: deleteEntry("delete 2")
+activate MoneyList
+
+MoneyList -> MoneyList: extractIndex("delete 2")
+activate MoneyList
+MoneyList --> MoneyList: returns 1
+deactivate MoneyList
+
+MoneyList -> MoneyList: validateIndex(1)
+activate MoneyList
+MoneyList --> MoneyList:
+deactivate MoneyList
+
+MoneyList -> TextUI: print("This entry will be...")
+activate TextUI
+TextUI --> MoneyList:
+deactivate TextUI
+
+MoneyList -> MoneyList: remove(1)
+activate MoneyList
+MoneyList --> MoneyList:
+deactivate MoneyList
+
+MoneyList -> Storage: saveEntries()
+activate Storage
+Storage --> MoneyList:
+deactivate Storage
+
+MoneyList -> TextUI: printNumItems()
+activate TextUI
+TextUI --> MoneyList:
+deactivate TextUI
+
+MoneyList --> DeleteCommand:
+deactivate MoneyList
+
+DeleteCommand --> MoneyTrail:
+deactivate DeleteCommand
+
+MoneyTrail --> User: Shows confirmation
+deactivate MoneyTrail
+
+@enduml

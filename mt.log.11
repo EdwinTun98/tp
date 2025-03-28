@@ -20,3 +20,5 @@ Format: addExpense <description> $/ <value>
 Mar 18, 2025 4:35:50 PM seedu.duke.MTLogger logWarning
 WARNING: Error adding expense: Failed to add expense: Your addExpense needs a description and a value.
 Format: addExpense <description> $/ <value>
+Mar 26, 2025 12:10:23 PM seedu.duke.MTLogger logInfo
+INFO: Saving entries into mt.txt

@@ -7,10 +7,8 @@ public interface Command {
 
     void execute(MoneyList moneyList) throws MTException;
 
-
     boolean isExit();
 }
-
 
 class ListCommand implements Command {
     @Override
@@ -23,7 +21,6 @@ class ListCommand implements Command {
         return false;
     }
 }
-
 
 class FindCommand implements Command {
     private final String keyword;
@@ -42,7 +39,6 @@ class FindCommand implements Command {
         return false;
     }
 }
-
 
 class DeleteCommand implements Command {
     private final int index;
@@ -65,7 +61,6 @@ class DeleteCommand implements Command {
     }
 }
 
-
 class TotalExpenseCommand implements Command {
     @Override
     public void execute(MoneyList moneyList) {
@@ -77,7 +72,6 @@ class TotalExpenseCommand implements Command {
         return false;
     }
 }
-
 
 class BudgetCommand implements Command {
     private final double budget;
@@ -97,8 +91,6 @@ class BudgetCommand implements Command {
         return false;
     }
 }
-
-
 
 class AddExpenseCommand implements Command {
     private final String description;
@@ -134,7 +126,6 @@ class AddExpenseCommand implements Command {
     }
 }
 
-
 class ListCatsCommand implements Command {
     @Override
     public void execute(MoneyList moneyList) {
@@ -147,7 +138,6 @@ class ListCatsCommand implements Command {
     }
 }
 
-
 class HelpCommand implements Command {
     @Override
     public void execute(MoneyList moneyList) {
@@ -159,7 +149,6 @@ class HelpCommand implements Command {
         return false;
     }
 }
-
 
 class ExitCommand implements Command {
     @Override
