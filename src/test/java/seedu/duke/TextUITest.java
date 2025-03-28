@@ -113,4 +113,115 @@ public class TextUITest {
 
         System.setOut(System.out);
     }
+
+    /**
+     * Tests that {@link TextUI#printPromptMsg} correctly outputs
+     * the standard prompt message.
+     */
+    @Test
+    void printPromptMsg_outputsCorrectPrompt() {
+        TextUI textUI = new TextUI();
+        String expectedPrompt = "What do you want to do next?";
+
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outputStream));
+
+        textUI.printPromptMsg();
+
+        assertEquals(expectedPrompt + System.lineSeparator(),
+                outputStream.toString(),
+                "Should output the standard prompt message");
+
+        System.setOut(System.out);
+    }
+
+    /**
+     * Tests that {@link TextUI#printExitMsg} correctly outputs
+     * the exit message with divider.
+     */
+    @Test
+    void printExitMsg_outputsCorrectExitMessage() {
+        TextUI textUI = new TextUI();
+        String lineDivider = "--------------------------" +
+                "-----------------------------------------------------";
+        String expectedExitMsg = "Exiting program... Thank you for using MoneyTrail! :)";
+
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outputStream));
+
+        textUI.printExitMsg();
+
+        String output = outputStream.toString();
+        assertTrue(output.contains(lineDivider) &&
+                        output.contains(expectedExitMsg),
+                "Should output divider followed by exit message");
+
+        System.setOut(System.out);
+    }
+
+    /**
+     * Tests that {@link TextUI#printNumItems} correctly formats
+     * and outputs the item count message.
+     */
+    @Test
+    void printNumItems_outputsCorrectCount() {
+        TextUI textUI = new TextUI();
+        int testCount = 5;
+        String expectedOutput = "You now have 5 entries.";
+
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outputStream));
+
+        textUI.printNumItems(testCount);
+
+        assertEquals(expectedOutput + System.lineSeparator(),
+                outputStream.toString(),
+                "Should output correctly formatted count message");
+
+        System.setOut(System.out);
+    }
+
+    /**
+     * Tests that {@link TextUI#showAllAvailableCommands} outputs
+     * all commands in the correct format.
+     */
+    @Test
+    void showAllAvailableCommands_outputsCompleteList() {
+        TextUI textUI = new TextUI();
+
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outputStream));
+
+        textUI.showAllAvailableCommands();
+
+        String output = outputStream.toString();
+        assertTrue(output.contains("List of available commands:") &&
+                        output.contains("1. help") &&
+                        output.contains("2. list") &&
+                        output.contains("3. addExpense") &&
+                        output.contains("9. exit"),
+                "Should output complete command list with numbering");
+
+        System.setOut(System.out);
+    }
+
+    /**
+     * Tests that {@link TextUI#printNumItems} handles pluralization
+     * correctly for single entry.
+     */
+    @Test
+    void printNumItems_withSingleEntry_usesSingularForm() {
+        TextUI textUI = new TextUI();
+        int testCount = 1;
+
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outputStream));
+
+        textUI.printNumItems(testCount);
+
+        assertTrue(outputStream.toString().contains("1 entry"),
+                "Should use singular 'entry' for count of 1");
+
+        System.setOut(System.out);
+    }
 }
