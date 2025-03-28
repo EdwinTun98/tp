@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * Contains unit tests for the text-based user interface components.
  */
 public class TextUITest {
-
+    //@@author rchlai
     /**
      * Tests that {@link TextUI#print} correctly outputs messages
      * to standard output.

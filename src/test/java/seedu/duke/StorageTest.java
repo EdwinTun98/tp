@@ -26,6 +26,7 @@ class StorageTest {
     private Storage storage;
     private Path originalFilePath;
 
+    //@@author rchlai
     /**
      * Sets up the test environment before each test method execution.
      * Backs up the original data file if it exists and
@@ -34,7 +35,6 @@ class StorageTest {
      * @param tempDir The temporary directory provided by JUnit for test isolation
      * @throws IOException If an I/O error occurs during file operations
      *
-     * @author rchlai
      */
     @BeforeEach
     void setUp(@TempDir Path tempDir) throws IOException {
@@ -54,7 +54,6 @@ class StorageTest {
      * an empty list.
      * Verifies the Storage class handles missing files gracefully.
      *
-     * @author rchlai
      */
     @Test
     void loadEntries_noFileExists_returnsEmptyList() {
@@ -77,7 +76,6 @@ class StorageTest {
      *
      * @throws Exception If any unexpected error occurs during test execution
      *
-     * @author rchlai
      */
     @Test
     void saveAndLoadEntries_roundTrip_success() throws Exception {
