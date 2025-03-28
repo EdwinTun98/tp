@@ -6,11 +6,9 @@ package seedu.duke;
 public class Parser {
     private final MTLogger logger;
 
-
     public Parser() {
         this.logger = new MTLogger(Parser.class.getName());
     }
-
 
     public Command parseCommand(String input) throws MTException {
         logger.logInfo("Parsing input: " + input);
@@ -26,35 +24,53 @@ public class Parser {
         // Handle different commands based on input
         if (trimmedInput.equalsIgnoreCase("list")) {
             return new ListCommand();
-        } else if (trimmedInput.equalsIgnoreCase("exit")) {
-            return new ExitCommand();
-        } else if (trimmedInput.startsWith("find")) {
-            return parseFindCommand(trimmedInput);
-        } else if (trimmedInput.startsWith("delete")) {
-            return parseDeleteCommand(trimmedInput);
-        } else if (trimmedInput.startsWith("totalExpense")) {
-            return new TotalExpenseCommand();
-        } else if (trimmedInput.startsWith("setTotalBudget")) {
-            return parseBudgetCommand(trimmedInput);
-        } else if (trimmedInput.startsWith("addExpense")) {
-            return parseAddExpenseCommand(trimmedInput);
-        } else if (trimmedInput.equalsIgnoreCase("listCats")) {
-            return new ListCatsCommand();
-        } else if (trimmedInput.equalsIgnoreCase("help")) {
-            return new HelpCommand();
-        } else {
-            logger.logWarning("Unknown command: " + trimmedInput);
-            throw new MTException("Unknown command. Type 'help' for a list of available commands.");
         }
+
+        if (trimmedInput.equalsIgnoreCase("exit")) {
+            return new ExitCommand();
+        }
+
+        if (trimmedInput.startsWith("find")) {
+            return parseFindCommand(trimmedInput);
+        }
+
+        if (trimmedInput.startsWith("delete")) {
+            return parseDeleteCommand(trimmedInput);
+        }
+
+        if (trimmedInput.startsWith("totalExpense")) {
+            return new TotalExpenseCommand();
+        }
+
+        if (trimmedInput.startsWith("setTotalBudget")) {
+            return parseBudgetCommand(trimmedInput);
+        }
+
+        if (trimmedInput.startsWith("addExpense")) {
+            return parseAddExpenseCommand(trimmedInput);
+        }
+
+        if (trimmedInput.equalsIgnoreCase("listCats")) {
+            return new ListCatsCommand();
+        }
+
+        if (trimmedInput.equalsIgnoreCase("help")) {
+            return new HelpCommand();
+        }
+
+        logger.logWarning("Unknown command: " + trimmedInput);
+        throw new MTException("Unknown command. Type 'help' for a list of available commands.");
     }
 
 
     private FindCommand parseFindCommand(String input) throws MTException {
         String keyword = input.substring(5).trim();
+
         if (keyword.isEmpty()) {
             logger.logWarning("Empty keyword for find command.");
             throw new MTException("Please enter a keyword to search.");
         }
+
         return new FindCommand(keyword);
     }
 

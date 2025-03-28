@@ -65,7 +65,6 @@ public class MoneyTrail {
      * Main entry-point for the MoneyTrail budget tracker application.
      */
     public static void main(String[] args) {
-        // assert false : "dummy assertion set to fail";
         new MoneyTrail().run();
     }
 }
