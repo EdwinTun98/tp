@@ -1,11 +1,19 @@
 package seedu.duke;
 
+import java.util.ArrayList;
+import java.util.List;
+
+
 public class TextUI {
     private static final String LINE_DIVIDER = "----------------------" +
             "---------------------------------------------------------";
 
+    // List to track printed messages for testing
+    private final List<String> printedMessages = new ArrayList<>();
+
     public void print(String str) {
-        System.out.println(str);
+        System.out.println(str); // Print to console
+        printedMessages.add(str); // Store the message in the list
     }
 
     public void addLineDivider() {
@@ -55,5 +63,15 @@ public class TextUI {
         print("7. find <keyword>: Finds an entry based on the given keyword.");
         print("8. listCats: Lists out all entry categories in order of appearance.");
         print("9. exit: Exits the program.");
+    }
+
+    // Method to retrieve printed messages (for testing purposes)
+    public List<String> getPrintedMessages() {
+        return new ArrayList<>(printedMessages);
+    }
+
+    // Method to clear printed messages (useful for resetting state between tests)
+    public void clearPrintedMessages() {
+        printedMessages.clear();
     }
 }
