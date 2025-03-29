@@ -1,0 +1,24 @@
+Mar 18, 2025 4:34:40 PM seedu.duke.MTLogger logInfo
+INFO: Starting CLI program.
+Mar 18, 2025 4:34:40 PM seedu.duke.MTLogger logInfo
+INFO: Loaded 2 entries from file.
+Mar 18, 2025 4:35:19 PM seedu.duke.MTLogger logInfo
+INFO: Exiting CLI program.
+Mar 18, 2025 4:35:30 PM seedu.duke.MTLogger logInfo
+INFO: Starting CLI program.
+Mar 18, 2025 4:35:30 PM seedu.duke.MTLogger logInfo
+INFO: Loaded 2 entries from file.
+Mar 18, 2025 4:35:50 PM seedu.duke.MTLogger logSevere
+SEVERE: Error adding expense: Your addExpense needs a description and a value.
+Format: addExpense <description> $/ <value>
+seedu.duke.MTException: Your addExpense needs a description and a value.
+Format: addExpense <description> $/ <value>
+	at seedu.duke.MoneyTrail.addExpense(MoneyTrail.java:138)
+	at seedu.duke.MoneyTrail.run(MoneyTrail.java:59)
+	at seedu.duke.MoneyTrail.main(MoneyTrail.java:167)
+
+Mar 18, 2025 4:35:50 PM seedu.duke.MTLogger logWarning
+WARNING: Error adding expense: Failed to add expense: Your addExpense needs a description and a value.
+Format: addExpense <description> $/ <value>
+Mar 26, 2025 12:10:23 PM seedu.duke.MTLogger logInfo
+INFO: Saving entries into mt.txt

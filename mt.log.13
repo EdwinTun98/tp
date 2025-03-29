@@ -1,0 +1,18 @@
+Mar 18, 2025 4:44:40 PM seedu.duke.MTLogger logInfo
+INFO: Starting CLI program.
+Mar 18, 2025 4:44:40 PM seedu.duke.MTLogger logInfo
+INFO: Loaded 2 entries from file.
+Mar 18, 2025 4:45:12 PM seedu.duke.MTLogger logSevere
+SEVERE: Error adding expense: For input string: "3.5"
+java.lang.NumberFormatException: For input string: "3.5"
+	at java.base/java.lang.NumberFormatException.forInputString(NumberFormatException.java:67)
+	at java.base/java.lang.Integer.parseInt(Integer.java:668)
+	at java.base/java.lang.Integer.parseInt(Integer.java:786)
+	at seedu.duke.MoneyTrail.addExpense(MoneyTrail.java:151)
+	at seedu.duke.MoneyTrail.run(MoneyTrail.java:59)
+	at seedu.duke.MoneyTrail.main(MoneyTrail.java:177)
+
+Mar 18, 2025 4:45:12 PM seedu.duke.MTLogger logWarning
+WARNING: Error adding expense: Failed to add expense: For input string: "3.5"
+Mar 26, 2025 12:10:23 PM seedu.duke.MTLogger logInfo
+INFO: Saving entries into mt.txt
