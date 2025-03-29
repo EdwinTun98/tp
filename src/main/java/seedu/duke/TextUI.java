@@ -1,8 +1,13 @@
 package seedu.duke;
 
+import java.util.List;
+import java.util.ArrayList;
+
 public class TextUI {
     private static final String LINE_DIVIDER = "----------------------" +
             "---------------------------------------------------------";
+
+    private final List<String> printedMessages = new ArrayList<>(); // Store printed messages
 
     /**
      * Prints a string input.
@@ -10,6 +15,16 @@ public class TextUI {
      */
     public void print(String str) {
         System.out.println(str);
+        printedMessages.add(str); // Add the message to the list
+    }
+
+    /**
+     * Returns the list of all printed messages for testing.
+     *
+     * @return A list of printed messages
+     */
+    public List<String> getPrintedMessages() {
+        return printedMessages;
     }
 
     /**
