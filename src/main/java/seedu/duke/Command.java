@@ -2,13 +2,26 @@ package seedu.duke;
 
 /**
  * Represents a command to be executed by the MoneyTrail application.
+ * Commands can perform actions and indicate if they should terminate
+ * the program.
  */
 public interface Command {
+    /**
+     * Executes the command's primary operation.
+     * @param moneyList The MoneyList to operate on
+     * @throws MTException If command execution fails
+     */
     void execute(MoneyList moneyList) throws MTException;
 
+    /**
+     * @return true if the application should exit after this command
+     */
     boolean shouldExit();
 }
 
+/**
+ * Lists all entries in the MoneyList.
+ */
 class ListCommand implements Command {
     @Override
     public void execute(MoneyList moneyList) throws MTException {
@@ -21,6 +34,9 @@ class ListCommand implements Command {
     }
 }
 
+/**
+ * Finds entries containing the specified keyword.
+ */
 class FindCommand implements Command {
     private final String keyword;
 
@@ -39,6 +55,9 @@ class FindCommand implements Command {
     }
 }
 
+/**
+ * Deletes an entry at the specified index.
+ */
 class DeleteCommand implements Command {
     private final int index;
 
@@ -60,6 +79,9 @@ class DeleteCommand implements Command {
     }
 }
 
+/**
+ * Calculates and displays total expenses.
+ */
 class TotalExpenseCommand implements Command {
     @Override
     public void execute(MoneyList moneyList) {
@@ -72,6 +94,9 @@ class TotalExpenseCommand implements Command {
     }
 }
 
+/**
+ * Sets the total budget amount.
+ */
 class BudgetCommand implements Command {
     private final double budget;
 
@@ -91,6 +116,9 @@ class BudgetCommand implements Command {
     }
 }
 
+/**
+ * Adds a new expense entry.
+ */
 class AddExpenseCommand implements Command {
     private final String description;
     private final double amount;
@@ -127,6 +155,9 @@ class AddExpenseCommand implements Command {
     }
 }
 
+/**
+ * Lists all available categories.
+ */
 class ListCatsCommand implements Command {
     @Override
     public void execute(MoneyList moneyList) {
@@ -139,6 +170,9 @@ class ListCatsCommand implements Command {
     }
 }
 
+/**
+ * Displays help information.
+ */
 class HelpCommand implements Command {
     @Override
     public void execute(MoneyList moneyList) {
@@ -151,6 +185,9 @@ class HelpCommand implements Command {
     }
 }
 
+/**
+ * Terminates the application.
+ */
 class ExitCommand implements Command {
     @Override
     public void execute(MoneyList moneyList) {
