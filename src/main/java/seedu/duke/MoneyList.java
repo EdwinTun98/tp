@@ -230,19 +230,24 @@ public class MoneyList {
 
         for (String entry : moneyList) {
             try {
-                // Parse the amount from the entry string
-                String[] parts = entry.split("Value=\\$");
-                if (parts.length == 2) {
-                    double amount = Double.parseDouble(parts[1].trim());
-                    total += amount;
+
+                // Split entry data to get entry amount
+                String[] parts1 = entry.split("\\$");
+                String[] parts2 = parts1[1].split("\\{");
+
+                if (parts1.length == 2 && parts2.length == 2) {
+                    double expenseAmount = Double.parseDouble(parts2[0].trim());
+                    logger.logInfo("Expense amount: " + expenseAmount);
+
+                    total += expenseAmount;
                 }
             } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
                 logger.logWarning("Error parsing amount from entry: " + entry);
             }
         }
 
-        ui.print("Total expenses: " + total);
-        logger.logInfo("Total expense calculated: " + total);
+        ui.print(String.format("Total expenses: $%.2f", total));
+        logger.logInfo("Total expense calculated: " + String.format("%.2f", total));
     }
 
     public void setTotalBudget(String input) throws MTException {
