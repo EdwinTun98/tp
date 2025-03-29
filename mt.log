@@ -2347,3 +2347,19 @@ Mar 29, 2025 11:49:42 AM seedu.duke.MTLogger logInfo
 INFO: Displayed 1 unique categories.
 Mar 29, 2025 11:49:56 AM seedu.duke.MTLogger logInfo
 INFO: Total expense calculated: 0.0
+Mar 29, 2025 12:13:34 PM seedu.duke.MTLogger logInfo
+INFO: Starting CLI program.
+Mar 29, 2025 12:13:34 PM seedu.duke.MTLogger logInfo
+INFO: Loaded 1 entries from file.
+Mar 29, 2025 12:15:38 PM seedu.duke.MTLogger logInfo
+INFO: Total budget after df formatting: 500.0
+Mar 29, 2025 12:15:38 PM seedu.duke.MTLogger logInfo
+INFO: Total budget set to: 500.0
+Mar 29, 2025 12:16:59 PM seedu.duke.MTLogger logInfo
+INFO: Description: Honey
+Mar 29, 2025 12:16:59 PM seedu.duke.MTLogger logInfo
+INFO: Amount after formatting: 20.25
+Mar 29, 2025 12:16:59 PM seedu.duke.MTLogger logInfo
+INFO: Added expense: [Expense] Honey $20.25 |Food| (no date)
+Mar 29, 2025 12:19:47 PM seedu.duke.MTLogger logInfo
+INFO: Deleted entry at index: 0

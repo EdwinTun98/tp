@@ -1,1 +1,1 @@
-[Expense] fuel $10.00 |transportation| (no date)
+[Expense] Honey $20.25 |Food| (no date)
