@@ -103,6 +103,79 @@ public class Parser {
 
     private AddExpenseCommand parseAddExpenseCommand(String input) throws MTException {
         try {
+            if (input == null) {
+                throw new MTException("Input should not be null");
+            }
+
+            String processedInput = input.trim();
+            String description = "No description";  // Default description
+            double amount = 0.00;
+            String category = "Uncategorized";
+            String date = "no date";
+
+            if (!processedInput.startsWith("addExpense") || !processedInput.contains("$/")) {
+                throw new MTException("Invalid format. Use: addExpense <description> " +
+                        "$/<amount> [c/<category>] [d/<date>]");
+            }
+
+            String contentAfterCommand = processedInput.substring("addExpense".length()).trim();
+
+            // Modified parsing to handle missing description
+            int dollarSlashIndex = contentAfterCommand.indexOf("$/");
+            if (dollarSlashIndex == 0) {
+                // Case where description is missing (immediately after addExpense comes $/)
+                description = "No description";
+            } else if (dollarSlashIndex > 0) {
+                // Case where description exists
+                description = contentAfterCommand.substring(0, dollarSlashIndex).trim();
+            }
+
+            String afterDescription = contentAfterCommand.substring(dollarSlashIndex + 2).trim();
+
+            // Rest of the parsing logic remains the same
+            int categoryIndex = afterDescription.indexOf("c/");
+            int dateIndex = afterDescription.indexOf("d/");
+
+            String amountString = "";
+            if (categoryIndex != -1 && dateIndex != -1) {
+                if (categoryIndex < dateIndex) {
+                    amountString = afterDescription.substring(0, categoryIndex).trim();
+                    category = afterDescription.substring(categoryIndex + 2, dateIndex).trim();
+                    date = afterDescription.substring(dateIndex + 2).trim();
+                } else {
+                    amountString = afterDescription.substring(0, dateIndex).trim();
+                    date = afterDescription.substring(dateIndex + 2, categoryIndex).trim();
+                    category = afterDescription.substring(categoryIndex + 2).trim();
+                }
+            } else if (categoryIndex != -1) {
+                amountString = afterDescription.substring(0, categoryIndex).trim();
+                category = afterDescription.substring(categoryIndex + 2).trim();
+            } else if (dateIndex != -1) {
+                amountString = afterDescription.substring(0, dateIndex).trim();
+                date = afterDescription.substring(dateIndex + 2).trim();
+            } else {
+                amountString = afterDescription.trim();
+            }
+
+            amount = Double.parseDouble(amountString);
+            if (amount <= 0) {
+                throw new MTException("Amount must be greater than zero.");
+            }
+
+            return new AddExpenseCommand(description, amount, category, date);
+
+        } catch (NumberFormatException e) {
+            logger.logWarning("Invalid amount format: " + input);
+            throw new MTException("Invalid amount format. Please ensure it is a numeric value.");
+        } catch (IndexOutOfBoundsException e) {
+            logger.logWarning("Invalid command format: " + input);
+            throw new MTException("Invalid format. Use: addExpense <description> " +
+                    "$/<amount> [c/<category>] [d/<date>]");
+        }
+    }
+    /*
+    private AddExpenseCommand parseAddExpenseCommand(String input) throws MTException {
+        try {
             // Check that the input is not null.
             if (input == null) {
                 throw new MTException("Input should not be null");
@@ -184,4 +257,5 @@ public class Parser {
                     "$/<amount> [c/<category>] [d/<date>]");
         }
     }
+     */
 }
