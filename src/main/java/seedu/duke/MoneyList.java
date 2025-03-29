@@ -84,6 +84,7 @@ public class MoneyList {
             if (input == null) {
                 throw new MTException("Input should not be null");
             }
+
             input = input.trim();
 
             // Default parameters
@@ -104,6 +105,7 @@ public class MoneyList {
                 if (afterAmountPart.split("c/").length - 1 > 1) {
                     throw new MTException("Invalid format. Multiple category markers detected.");
                 }
+
                 if (afterAmountPart.split("d/").length - 1 > 1) {
                     throw new MTException("Invalid format. Multiple date markers detected.");
                 }
@@ -139,6 +141,7 @@ public class MoneyList {
                     } else {
                         throw new NumberFormatException("Invalid amount format: " + amountString);
                     }
+
                     date = parts2[1].trim();
                 } else {
                     // If neither category nor date is provided, treat the entire string as the amount.
@@ -150,9 +153,9 @@ public class MoneyList {
                     }
                 }
 
-
                 DecimalFormat df = new DecimalFormat("#.00");
                 amount = Double.valueOf(df.format(amount));
+
                 logger.logInfo("Amount after formatting: " + amount);
             } else {
                 throw new MTException("Invalid format. Use: addExpense" +
@@ -180,16 +183,16 @@ public class MoneyList {
         }
     }
 
-    // @@author EdwinTun98
+    //@@author EdwinTun98
     public void listSummary() throws MTException {
         if (moneyList.isEmpty()) {
             logger.logWarning("Expense list is empty.");
             throw new MTException("No entries available to display.");
-        } else {
-            ui.print("Expense list:");
-            for (int i = 0; i < moneyList.size(); i++) {
-                ui.print((i + INDEX_OFFSET) + ": " + moneyList.get(i));
-            }
+        }
+
+        ui.print("Expense list:");
+        for (int i = 0; i < moneyList.size(); i++) {
+            ui.print((i + INDEX_OFFSET) + ": " + moneyList.get(i));
         }
     }
 
@@ -213,15 +216,14 @@ public class MoneyList {
         if (results.isEmpty()) {
             logger.logWarning("No matching entries found for: " + input);
             throw new MTException("Please enter a valid keyword to search.");
-        } else {
-            // Print matching entries
-            ui.print("Found Matching entries for: " + input);
-            for (int i = 0; i < results.size(); i++) {
-                ui.print((i + INDEX_OFFSET) + ": " + results.get(i));
-            }
+        }
+
+        // Print matching entries
+        ui.print("Found Matching entries for: " + input);
+        for (int i = 0; i < results.size(); i++) {
+            ui.print((i + INDEX_OFFSET) + ": " + results.get(i));
         }
     }
-    // @@author
 
     public void getTotalExpense() {
         double total = 0.0;
@@ -298,10 +300,8 @@ public class MoneyList {
             // Use a LinkedHashSet to store unique categories while preserving order
             LinkedHashSet<String> categories = new LinkedHashSet<>();
 
-
             for (String entry : moneyList) {
                 try {
-
                     // Look for the keyword "Category=" in the entry
                     if (entry.contains("|")) {
                         // Filter off the string value until after |

@@ -62,7 +62,6 @@ public class Parser {
         throw new MTException("Unknown command. Type 'help' for a list of available commands.");
     }
 
-
     private FindCommand parseFindCommand(String input) throws MTException {
         String keyword = input.substring(5).trim();
 
@@ -74,7 +73,6 @@ public class Parser {
         return new FindCommand(keyword);
     }
 
-
     private DeleteCommand parseDeleteCommand(String input) throws MTException {
         try {
             int index = Integer.parseInt(input.replaceAll("[^0-9]", "")) - 1;
@@ -84,7 +82,6 @@ public class Parser {
             throw new MTException("Use: delete <ENTRY_NUMBER>");
         }
     }
-
 
     private BudgetCommand parseBudgetCommand(String input) throws MTException {
         try {
@@ -103,7 +100,6 @@ public class Parser {
                     "Please enter a valid number (e.g., setTotalBudget 500.00).");
         }
     }
-
 
     private AddExpenseCommand parseAddExpenseCommand(String input) throws MTException {
         try {

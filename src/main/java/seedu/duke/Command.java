@@ -4,10 +4,9 @@ package seedu.duke;
  * Represents a command to be executed by the MoneyTrail application.
  */
 public interface Command {
-
     void execute(MoneyList moneyList) throws MTException;
 
-    boolean isExit();
+    boolean shouldExit();
 }
 
 class ListCommand implements Command {
@@ -17,7 +16,7 @@ class ListCommand implements Command {
     }
 
     @Override
-    public boolean isExit() {
+    public boolean shouldExit() {
         return false;
     }
 }
@@ -35,7 +34,7 @@ class FindCommand implements Command {
     }
 
     @Override
-    public boolean isExit() {
+    public boolean shouldExit() {
         return false;
     }
 }
@@ -56,7 +55,7 @@ class DeleteCommand implements Command {
     }
 
     @Override
-    public boolean isExit() {
+    public boolean shouldExit() {
         return false;
     }
 }
@@ -68,7 +67,7 @@ class TotalExpenseCommand implements Command {
     }
 
     @Override
-    public boolean isExit() {
+    public boolean shouldExit() {
         return false;
     }
 }
@@ -87,7 +86,7 @@ class BudgetCommand implements Command {
     }
 
     @Override
-    public boolean isExit() {
+    public boolean shouldExit() {
         return false;
     }
 }
@@ -113,15 +112,17 @@ class AddExpenseCommand implements Command {
         if (!category.equals("Uncategorized")) {
             expenseCommand += " c/" + category;
         }
+
         // Include the date if it's provided (i.e., not the default "no date").
         if (!date.equals("no date")) {
             expenseCommand += " d/" + date;
         }
+
         moneyList.addExpense(expenseCommand);
     }
 
     @Override
-    public boolean isExit() {
+    public boolean shouldExit() {
         return false;
     }
 }
@@ -133,7 +134,7 @@ class ListCatsCommand implements Command {
     }
 
     @Override
-    public boolean isExit() {
+    public boolean shouldExit() {
         return false;
     }
 }
@@ -145,7 +146,7 @@ class HelpCommand implements Command {
     }
 
     @Override
-    public boolean isExit() {
+    public boolean shouldExit() {
         return false;
     }
 }
@@ -157,7 +158,7 @@ class ExitCommand implements Command {
     }
 
     @Override
-    public boolean isExit() {
+    public boolean shouldExit() {
         return true;
     }
 }

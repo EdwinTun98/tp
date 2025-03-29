@@ -2,6 +2,10 @@ package seedu.duke;
 
 import java.util.Scanner;
 
+/**
+ * Serves as the Main class for the MoneyTrail budget tracking application.
+ * Handles program initialization and the main command loop.
+ */
 public class MoneyTrail {
     private final MoneyList moneyList;
     private final MTLogger logger;
@@ -9,6 +13,9 @@ public class MoneyTrail {
     private final TextUI ui;
     private final Parser parser;
 
+    /**
+     * Initializes the core program components.
+     */
     public MoneyTrail() {
         this.in = new Scanner(System.in);
         this.ui = new TextUI();
@@ -18,6 +25,10 @@ public class MoneyTrail {
         this.parser = new Parser();
     }
 
+    /**
+     * Runs the main program loop.
+     * Loads saved data and processes user commands until exit is requested.
+     */
     public void run() {
         logger.logInfo("Starting CLI program.");
 
@@ -31,8 +42,8 @@ public class MoneyTrail {
 
         ui.printWelcomeMsg();
 
-        boolean isExit = false;
-        while (!isExit) {
+        boolean shouldExit = false;
+        while (!shouldExit) {
             String input = in.nextLine().trim();
 
             try {
@@ -45,13 +56,13 @@ public class MoneyTrail {
                     command.execute(moneyList);
                 }
 
-                isExit = command.isExit();
+                shouldExit = command.shouldExit();
             } catch (MTException error) {
                 logger.logWarning("Error processing command: " +
                         error.getMessage());
                 ui.printErrorMsg(error);
             } finally {
-                if (!isExit) {
+                if (!shouldExit) {
                     ui.addLineDivider();
                     ui.printPromptMsg();
                 }
@@ -62,7 +73,8 @@ public class MoneyTrail {
     }
 
     /**
-     * Main entry-point for the MoneyTrail budget tracker application.
+     * Application entry point.
+     * @param args Command-line arguments (unused)
      */
     public static void main(String[] args) {
         new MoneyTrail().run();

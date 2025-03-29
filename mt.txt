@@ -1,0 +1,1 @@
+[Expense] fuel $10.00 |transportation| (no date)

@@ -2303,3 +2303,47 @@ java.lang.NumberFormatException: For input string: "abc"
 	at worker.org.gradle.process.internal.worker.GradleWorkerMain.run(GradleWorkerMain.java:69)
 	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
 
+Mar 29, 2025 11:46:40 AM seedu.duke.MTLogger logInfo
+INFO: Starting CLI program.
+Mar 29, 2025 11:46:40 AM seedu.duke.MTLogger logInfo
+INFO: Loaded 0 entries from file.
+Mar 29, 2025 11:47:00 AM seedu.duke.MTLogger logWarning
+WARNING: Expense list is empty.
+Mar 29, 2025 11:47:00 AM seedu.duke.MTLogger logWarning
+WARNING: Error processing command: No entries available to display.
+Mar 29, 2025 11:47:36 AM seedu.duke.MTLogger logInfo
+INFO: Description: lunch
+Mar 29, 2025 11:47:36 AM seedu.duke.MTLogger logInfo
+INFO: Amount after formatting: 20.0
+Mar 29, 2025 11:47:36 AM seedu.duke.MTLogger logInfo
+INFO: Added expense: [Expense] lunch $20.00 |Uncategorized| (no date)
+Mar 29, 2025 11:47:36 AM seedu.duke.MTLogger logWarning
+WARNING: Error processing command: Please enter a valid command.
+Mar 29, 2025 11:48:03 AM seedu.duke.MTLogger logInfo
+INFO: Description: fuel
+Mar 29, 2025 11:48:03 AM seedu.duke.MTLogger logInfo
+INFO: Amount after formatting: 10.0
+Mar 29, 2025 11:48:03 AM seedu.duke.MTLogger logInfo
+INFO: Added expense: [Expense] fuel $10.00 |transportation| (no date)
+Mar 29, 2025 11:48:17 AM seedu.duke.MTLogger logInfo
+INFO: Total expense calculated: 0.0
+Mar 29, 2025 11:48:34 AM seedu.duke.MTLogger logInfo
+INFO: Total expense calculated: 0.0
+Mar 29, 2025 11:48:50 AM seedu.duke.MTLogger logInfo
+INFO: Total budget after df formatting: 100.0
+Mar 29, 2025 11:48:50 AM seedu.duke.MTLogger logInfo
+INFO: Total budget set to: 100.0
+Mar 29, 2025 11:49:05 AM seedu.duke.MTLogger logInfo
+INFO: Deleted entry at index: 0
+Mar 29, 2025 11:49:15 AM seedu.duke.MTLogger logWarning
+WARNING: No matching entries found for: lun
+Mar 29, 2025 11:49:15 AM seedu.duke.MTLogger logWarning
+WARNING: Error processing command: Please enter a valid keyword to search.
+Mar 29, 2025 11:49:18 AM seedu.duke.MTLogger logWarning
+WARNING: No matching entries found for: lunch
+Mar 29, 2025 11:49:18 AM seedu.duke.MTLogger logWarning
+WARNING: Error processing command: Please enter a valid keyword to search.
+Mar 29, 2025 11:49:42 AM seedu.duke.MTLogger logInfo
+INFO: Displayed 1 unique categories.
+Mar 29, 2025 11:49:56 AM seedu.duke.MTLogger logInfo
+INFO: Total expense calculated: 0.0
