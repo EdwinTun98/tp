@@ -99,10 +99,16 @@ public class MoneyList {
                 description = parts1[0].trim();
                 logger.logInfo("Description: " + description);
 
-                // parts1[1] contains the rest (amount, maybe category and date)
-                // First, check if it contains the date marker "d/"
+                // Check for duplicate markers
                 String afterAmountPart = parts1[1];
-                // We'll now check if the user provided a category using "c/".
+                if (afterAmountPart.split("c/").length - 1 > 1) {
+                    throw new MTException("Invalid format. Multiple category markers detected.");
+                }
+                if (afterAmountPart.split("d/").length - 1 > 1) {
+                    throw new MTException("Invalid format. Multiple date markers detected.");
+                }
+
+                // Process the amount, category, and date as before
                 if (afterAmountPart.contains("c/")) {
                     // Split on "c/" to separate the amount from the category (and possibly date)
                     String[] parts2 = afterAmountPart.split("c/", 2);
@@ -114,7 +120,7 @@ public class MoneyList {
                         throw new NumberFormatException("Invalid amount format: " + amountString);
                     }
 
-                    // check if the category part contains the date marker "d/"
+                    // Check if the category part contains the date marker "d/"
                     if (parts2[1].contains("d/")) {
                         String[] parts3 = parts2[1].split("d/", 2);
                         category = parts3[0].trim();
@@ -158,10 +164,7 @@ public class MoneyList {
                 throw new MTException("Amount must be greater than zero.");
             }
 
-
-
             Expense newExpense = new Expense(description, amount, category, date);
-
 
             moneyList.add(newExpense.toString());
             logger.logInfo("Added expense: " + newExpense);
@@ -176,6 +179,8 @@ public class MoneyList {
             throw new MTException("Failed to add expense: " + error.getMessage());
         }
     }
+
+    // @@author EdwinTun98
     public void listSummary() throws MTException {
         if (moneyList.isEmpty()) {
             logger.logWarning("Expense list is empty.");
@@ -189,28 +194,34 @@ public class MoneyList {
     }
 
     public void findEntry(String input) throws MTException {
-        if (input.isEmpty()) {
+        // Validate the input for null, empty, or whitespace-only
+        if (input == null || input.trim().isEmpty()) {
             logger.logWarning("Invalid entry provided.");
             throw new MTException("Please enter a keyword to search.");
         }
 
         ArrayList<String> results = new ArrayList<>();
+
+        // Iterate through the moneyList to find case-insensitive matches
         for (String entry : moneyList) {
             if (entry.toLowerCase().contains(input.toLowerCase())) {
                 results.add(entry);
             }
         }
 
+        // Handle the case when no matches are found
         if (results.isEmpty()) {
             logger.logWarning("No matching entries found for: " + input);
-            throw new MTException("enter a valid keyword to search.");
+            throw new MTException("Please enter a valid keyword to search.");
         } else {
+            // Print matching entries
             ui.print("Found Matching entries for: " + input);
             for (int i = 0; i < results.size(); i++) {
                 ui.print((i + INDEX_OFFSET) + ": " + results.get(i));
             }
         }
     }
+    // @@author
 
     public void getTotalExpense() {
         double total = 0.0;
@@ -325,5 +336,11 @@ public class MoneyList {
             logger.logSevere("An error occurred while listing categories: " + e.getMessage(), e);
             ui.print("An error occurred while listing categories. Please try again.");
         }
+    }
+
+    public void clearEntries() {
+        moneyList.clear();
+        logger.logInfo("All entries have been cleared from the money list.");
+        ui.print("All entries have been cleared.");
     }
 }
