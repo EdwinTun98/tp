@@ -29,8 +29,8 @@ public class AddExpenseTest {
     void testAddExpense_validInput() {
         try {
             MoneyList moneyList = new MoneyList(logger, storage, ui);
-            moneyList.addExpense("addExpense Milk $/10 c/Food");
-            assertTrue(moneyList.getMoneyList().contains("Expense: Milk = $10.00 {Food} [no date]"),
+            moneyList.addExpense("addExp Milk $/10 c/Food");
+            assertTrue(moneyList.getMoneyList().contains("Expense: Milk $10.00 {Food} [no date]"),
                     "Expense should be added.");
         } catch (Exception e) {
             fail("Exception should not occur for valid input.");
@@ -40,10 +40,10 @@ public class AddExpenseTest {
     @Test
     void testAddExpense_missingDollarSign() {
         MoneyList moneyList = new MoneyList(logger, storage, ui);
-        Exception exception = assertThrows(MTException.class, () -> moneyList.addExpense("addExpense " +
+        Exception exception = assertThrows(MTException.class, () -> moneyList.addExpense("addExp " +
                 "Milk 10 c/Food"));
         assertEquals("Failed to add expense: " +
-                        "Invalid format. Use: addExpense <description> $/<amount> [c/<category>] [d/<date>]",
+                        "Invalid format. Use: addExp <description> $/<amount> [c/<category>] [d/<date>]",
                 exception.getMessage());
     }
 
@@ -51,7 +51,7 @@ public class AddExpenseTest {
     void testAddExpense_invalidAmountFormat() {
         MoneyList moneyList = new MoneyList(logger, storage, ui);
         Exception exception = assertThrows(MTException.class,
-                () -> moneyList.addExpense("addExpense Milk $/abc"));
+                () -> moneyList.addExpense("addExp Milk $/abc"));
         assertEquals("Invalid amount format. Please ensure it is a numeric value.", exception.getMessage());
     }
 
@@ -59,8 +59,8 @@ public class AddExpenseTest {
     void testAddExpense_noCategoryProvided() {
         try {
             MoneyList moneyList = new MoneyList(logger, storage, ui);
-            moneyList.addExpense("addExpenseMilk$/20");
-            assertTrue(moneyList.getMoneyList().contains("Expense: Milk = $20.00 {Uncategorized} [no date]"));
+            moneyList.addExpense("addExpMilk$/20");
+            assertTrue(moneyList.getMoneyList().contains("Expense: Milk $20.00 {Uncategorized} [no date]"));
         } catch (Exception e) {
             fail("Exception should not occur when category is missing.");
         }
@@ -78,7 +78,7 @@ public class AddExpenseTest {
         MoneyList moneyList = new MoneyList(logger, storage, ui);
         Exception exception = assertThrows(MTException.class, () -> moneyList.addExpense(""));
         assertEquals("Failed to add expense: Invalid format. " +
-                        "Use: addExpense <description> $/<amount> [c/<category>] [d/<date>]",
+                        "Use: addExp <description> $/<amount> [c/<category>] [d/<date>]",
                 exception.getMessage());
     }
 
@@ -86,7 +86,7 @@ public class AddExpenseTest {
     void testAddExpense_negativeAmount() {
         MoneyList moneyList = new MoneyList(logger, storage, ui);
         Exception exception = assertThrows(MTException.class,
-                () -> moneyList.addExpense("addExpense Milk $/-5 c/Food"));
+                () -> moneyList.addExpense("addExp Milk $/-5 c/Food"));
         assertEquals("Failed to add expense: Amount must be greater than zero.", exception.getMessage());
     }
 
@@ -95,7 +95,7 @@ public class AddExpenseTest {
         MoneyList moneyList = new MoneyList(logger, storage, ui);
         Exception exception = assertThrows(MTException.class, () -> moneyList.addExpense("       "));
         assertEquals("Failed to add expense: Invalid format. " +
-                        "Use: addExpense <description> $/<amount> [c/<category>] [d/<date>]",
+                        "Use: addExp <description> $/<amount> [c/<category>] [d/<date>]",
                 exception.getMessage());
     }
 
@@ -103,7 +103,7 @@ public class AddExpenseTest {
     void testAddExpense_noDescription() {
         try {
             MoneyList moneyList = new MoneyList(logger, storage, ui);
-            moneyList.addExpense("addExpense $/50 c/Food d/2025-03-28");
+            moneyList.addExpense("addExp $/50 c/Food d/2025-03-28");
             // Verify both the default behavior and proper parsing:
             assertTrue(moneyList.getMoneyList().stream()
                             .anyMatch(entry -> entry.contains("$50.00")
@@ -119,7 +119,7 @@ public class AddExpenseTest {
     void testAddExpense_zeroAmount() {
         MoneyList moneyList = new MoneyList(logger, storage, ui);
         Exception exception = assertThrows(MTException.class,
-                () -> moneyList.addExpense("addExpense Milk $/0 c/Food"));
+                () -> moneyList.addExpense("addExp Milk $/0 c/Food"));
         assertEquals("Failed to add expense: Amount must be greater than zero.", exception.getMessage());
     }
 
@@ -127,8 +127,8 @@ public class AddExpenseTest {
     void testAddExpense_largeAmount() {
         try {
             MoneyList moneyList = new MoneyList(logger, storage, ui);
-            moneyList.addExpense("addExpense Milk $/999999999 c/Food");
-            assertTrue(moneyList.getMoneyList().contains("Expense: Milk = $999999999.00 {Food} [no date]"),
+            moneyList.addExpense("addExp Milk $/999999999 c/Food");
+            assertTrue(moneyList.getMoneyList().contains("Expense: Milk $999999999.00 {Food} [no date]"),
                     "Expense with large amount should be added.");
         } catch (Exception e) {
             fail("Exception should not occur for a large amount.");
@@ -139,7 +139,7 @@ public class AddExpenseTest {
     void testAddExpense_multipleCategories() {
         MoneyList moneyList = new MoneyList(logger, storage, ui);
         Exception exception = assertThrows(MTException.class,
-                () -> moneyList.addExpense("addExpense Milk $/10 c/Food c/Extra d/2025-03-28"));
+                () -> moneyList.addExpense("addExp Milk $/10 c/Food c/Extra d/2025-03-28"));
         assertEquals("Failed to add expense: Invalid format. Multiple category markers detected.",
                 exception.getMessage());
     }
@@ -148,7 +148,7 @@ public class AddExpenseTest {
     void testAddExpense_multipleDates() {
         MoneyList moneyList = new MoneyList(logger, storage, ui);
         Exception exception = assertThrows(MTException.class,
-                () -> moneyList.addExpense("addExpense Milk $/10 c/Food d/2025-03-28 d/2025-03-29"));
+                () -> moneyList.addExpense("addExp Milk $/10 c/Food d/2025-03-28 d/2025-03-29"));
         assertEquals("Failed to add expense: Invalid format. Multiple date markers detected.",
                 exception.getMessage());
     }
@@ -158,8 +158,8 @@ public class AddExpenseTest {
     void testAddExpense_specialCharacters() {
         try {
             MoneyList moneyList = new MoneyList(logger, storage, ui);
-            moneyList.addExpense("addExpense Milky-Way!@# $/50 c/Gr#oc!ery");
-            assertTrue(moneyList.getMoneyList().contains("Expense: Milky-Way!@# = $50.00 {Gr#oc!ery} [no date]"),
+            moneyList.addExpense("addExp Milky-Way!@# $/50 c/Gr#oc!ery");
+            assertTrue(moneyList.getMoneyList().contains("Expense: Milky-Way!@# $50.00 {Gr#oc!ery} [no date]"),
                     "Expense with special characters should be added.");
         } catch (Exception e) {
             fail("Exception should not occur for special characters.");
@@ -170,9 +170,9 @@ public class AddExpenseTest {
     void testAddExpense_onlyDate() {
         MoneyList moneyList = new MoneyList(logger, storage, ui);
         Exception exception = assertThrows(MTException.class,
-                () -> moneyList.addExpense("addExpense d/2025-03-28"));
+                () -> moneyList.addExpense("addExp d/2025-03-28"));
         assertEquals("Failed to add expense: Invalid format. " +
-                        "Use: addExpense <description> $/<amount> [c/<category>] [d/<date>]",
+                        "Use: addExp <description> $/<amount> [c/<category>] [d/<date>]",
                 exception.getMessage());
     }
 }
