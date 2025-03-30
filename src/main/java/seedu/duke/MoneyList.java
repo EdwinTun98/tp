@@ -96,7 +96,7 @@ public class MoneyList {
             // Ensure the input contains the amount marker "$/"
             if (input.contains("$/")) {
                 // Extract everything after "addExpense "
-                String[] parts1 = input.substring(10).split("\\$/", 2);
+                String[] parts1 = input.substring(6).split("\\$/", 2);
                 description = parts1[0].trim();
                 logger.logInfo("Description: " + description);
 
@@ -158,7 +158,7 @@ public class MoneyList {
 
                 logger.logInfo("Amount after formatting: " + amount);
             } else {
-                throw new MTException("Invalid format. Use: addExpense" +
+                throw new MTException("Invalid format. Use: addExp" +
                         " <description> $/<amount> [c/<category>] [d/<date>]");
             }
 
@@ -230,19 +230,24 @@ public class MoneyList {
 
         for (String entry : moneyList) {
             try {
-                // Parse the amount from the entry string
-                String[] parts = entry.split("Value=\\$");
-                if (parts.length == 2) {
-                    double amount = Double.parseDouble(parts[1].trim());
-                    total += amount;
+
+                // Split entry data to get entry amount
+                String[] parts1 = entry.split("\\$");
+                String[] parts2 = parts1[1].split("\\{");
+
+                if (parts1.length == 2 && parts2.length == 2) {
+                    double expenseAmount = Double.parseDouble(parts2[0].trim());
+                    logger.logInfo("Expense amount: " + expenseAmount);
+
+                    total += expenseAmount;
                 }
             } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
                 logger.logWarning("Error parsing amount from entry: " + entry);
             }
         }
 
-        ui.print("Total expenses: " + total);
-        logger.logInfo("Total expense calculated: " + total);
+        ui.print(String.format("Total expenses: $%.2f", total));
+        logger.logInfo("Total expense calculated: " + String.format("%.2f", total));
     }
 
     public void setTotalBudget(String input) throws MTException {
@@ -253,12 +258,8 @@ public class MoneyList {
             // Remove the command and extract the budget value
             String budgetString = input.substring("setTotalBudget".length()).trim();
 
-            System.out.println("Input received: " + input);
-
             // Parse the budget value from the string
             Double budget = Double.parseDouble(budgetString);
-
-            System.out.println("Budget string extracted: " + budgetString);
 
             // Format the budget to 2 decimal places
             DecimalFormat df = new DecimalFormat("#.00");
@@ -274,8 +275,8 @@ public class MoneyList {
 
             // Set the total budget
             this.totalBudget = budget;
-            logger.logInfo("Total budget set to: " + totalBudget);
-            ui.print("Total budget set to: $" + totalBudget);
+            logger.logInfo(String.format("Total budget set to: $%.2f", totalBudget));
+            ui.print(String.format("Total budget set to: $%.2f", totalBudget));
         } catch (NumberFormatException e) {
             logger.logSevere("Invalid budget format: " + input, e);
             throw new MTException("Invalid amount format. Please ensure it is a numeric value.");

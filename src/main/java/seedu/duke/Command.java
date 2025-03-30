@@ -136,7 +136,7 @@ class AddExpenseCommand implements Command {
     public void execute(MoneyList moneyList) throws MTException {
         // Reconstruct the command string expected by MoneyList.addExpense.
 
-        String expenseCommand = "addExpense " + description + " $/" + amount;
+        String expenseCommand = "addExp " + description + " $/" + amount;
         if (!category.equals("Uncategorized")) {
             expenseCommand += " c/" + category;
         }
