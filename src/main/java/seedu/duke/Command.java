@@ -18,7 +18,7 @@ public interface Command {
      */
     boolean shouldExit();
 }
-
+//@@author EdwinTun98
 /**
  * Lists all entries in the MoneyList.
  */
@@ -54,6 +54,7 @@ class FindCommand implements Command {
         return false;
     }
 }
+//@@author
 
 /**
  * Deletes an entry at the specified index.
@@ -78,6 +79,7 @@ class DeleteCommand implements Command {
         return false;
     }
 }
+
 
 /**
  * Calculates and displays total expenses.
@@ -154,7 +156,7 @@ class AddExpenseCommand implements Command {
         return false;
     }
 }
-
+//@@author EdwinTun98
 class EditExpenseCommand implements Command {
     private final int index;
     private final String newDescription;
@@ -162,12 +164,13 @@ class EditExpenseCommand implements Command {
     private final String newCategory;
     private final String newDate;
 
-    public EditExpenseCommand(int index, String newDescription, double newAmount, String newCategory, String newDate) {
+    public EditExpenseCommand(int index, String newDescription, double newAmount,
+                              String newCategory, String newDate) {
         this.index = index;
+        this.newDescription = newDescription;
         this.newAmount = newAmount;
         this.newCategory = newCategory;
         this.newDate = newDate;
-        this.newDescription = newDescription;
     }
 
     @Override
@@ -176,10 +179,11 @@ class EditExpenseCommand implements Command {
     }
 
     @Override
-    public boolean isExit() {
+    public boolean shouldExit() {
         return false;
     }
 }
+//@@author
 
 /**
  * Lists all available categories.

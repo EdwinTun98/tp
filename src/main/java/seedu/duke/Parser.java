@@ -48,10 +48,10 @@ public class Parser {
 
         if (trimmedInput.startsWith("addExp")) {
             return parseAddExpenseCommand(trimmedInput);
-        } else if (trimmedInput.startsWith("edit")) {
-            return parseEditExpenseCommand(trimmedInput);
         }
-        else if (trimmedInput.equalsIgnoreCase("listCats")) {
+
+        if (trimmedInput.startsWith("edit")) {
+            return parseEditExpenseCommand(trimmedInput);
         }
 
         if (trimmedInput.equalsIgnoreCase("listCats")) {
@@ -66,6 +66,7 @@ public class Parser {
         throw new MTException("Unknown command. Type 'help' for a list of available commands.");
     }
 
+    //@@author EdwinTun98
     private FindCommand parseFindCommand(String input) throws MTException {
         String keyword = input.substring(5).trim();
 
@@ -76,7 +77,7 @@ public class Parser {
 
         return new FindCommand(keyword);
     }
-
+    //@@author
     private DeleteCommand parseDeleteCommand(String input) throws MTException {
         try {
             int index = Integer.parseInt(input.replaceAll("[^0-9]", "")) - 1;
@@ -178,48 +179,124 @@ public class Parser {
         }
     }
 
+    //@@author EdwinTun98
     private EditExpenseCommand parseEditExpenseCommand(String input) throws MTException {
         try {
-            String[] processedInput = input.substring("edit".length()).trim().split(" ", 2);
-            if (processedInput.length < 1) {
-                throw new MTException("Invalid format. Missing or missing separator.");
+            String afterEdit = input.substring("edit".length()).trim();
+            int firstSpaceIndex = afterEdit.indexOf(' ');
+
+            if (firstSpaceIndex == -1) {
+                throw new MTException("Invalid format. Use: edit <entry_number> [options]");
             }
-            int index = Integer.parseInt(processedInput[0]) -1;
-            if (processedInput.length == 1){
-                throw new MTException("Invalid format. Missing or missing separator.");
-            }
-            String restOfInput = processedInput[1];
-            String description = null, category = null, date = null;
-            Double amount = null;
 
-            if (restOfInput.contains("$/")) {
-                String[] parts = restOfInput.split("\\$/", 2);
-                description = parts[0].trim();
+            int index = Integer.parseInt(afterEdit.substring(0, firstSpaceIndex)) - 1;
+            String restOfString = afterEdit.substring(firstSpaceIndex + 1).trim();
 
-                String remainingOfPart = parts[1];
-                int categoryIndex = remainingOfPart.indexOf("/c");
-                int dateIndex = remainingOfPart.indexOf("d/");
+            String desc = null;
+            double amount = 0.00;
+            String cat = null;
+            String date = null;
 
-                if (categoryIndex != -1) {
-                    amount = Double.parseDouble(remainingOfPart.substring(0, categoryIndex).trim());
-                    if (dateIndex != -1) {
-                        category = remainingOfPart.substring(categoryIndex + 2, dateIndex).trim();
-                        date = remainingOfPart.substring(dateIndex + 2).trim();
-                    } else {
-                        category = remainingOfPart.substring(categoryIndex + 2).trim();
-                    }
-                } else if (dateIndex != -1) {
-                    amount = Double.parseDouble(remainingOfPart.substring(0, dateIndex).trim());
-                    date = remainingOfPart.substring(dateIndex + 2).trim();
-                } else {
-                    amount = Double.parseDouble(remainingOfPart.trim());
-                }
+            int dollarSlash = restOfString.indexOf("$/");
+
+            String beforeDollar;
+            String afterDollar;
+
+            if (dollarSlash == -1) {
+                beforeDollar = restOfString;
+                afterDollar = "";
             } else {
-                throw new MTException("Invalid format. Missing amount.");
+                beforeDollar = restOfString.substring(0, dollarSlash).trim();
+                afterDollar = restOfString.substring(dollarSlash + 2).trim();
             }
-            return new EditExpenseCommand(index, description, amount, category, date);
+
+            if (!beforeDollar.isEmpty()) {
+                desc = beforeDollar;
+            }
+
+            if (!afterDollar.isEmpty()) {
+                int cIndex = afterDollar.indexOf("c/");
+                int dIndex = afterDollar.indexOf("d/");
+
+                double parsedAmount;
+                if (cIndex != -1 && dIndex != -1) {
+                    if (cIndex < dIndex) {
+                        parsedAmount = Double.parseDouble(afterDollar.substring(0, cIndex).trim());
+                        cat = afterDollar.substring(cIndex + 2, dIndex).trim();
+                        date = afterDollar.substring(dIndex + 2).trim();
+                    } else {
+                        parsedAmount = Double.parseDouble(afterDollar.substring(0, dIndex).trim());
+                        date = afterDollar.substring(dIndex + 2, cIndex).trim();
+                        cat = afterDollar.substring(cIndex + 2).trim();
+                    }
+                    amount = parsedAmount;
+                } else if (cIndex != -1) {
+                    parsedAmount = Double.parseDouble(afterDollar.substring(0, cIndex).trim());
+                    cat = afterDollar.substring(cIndex + 2).trim();
+                    amount = parsedAmount;
+                } else if (dIndex != -1) {
+                    parsedAmount = Double.parseDouble(afterDollar.substring(0, dIndex).trim());
+                    date = afterDollar.substring(dIndex + 2).trim();
+                    amount = parsedAmount;
+                } else {
+                    parsedAmount = Double.parseDouble(afterDollar.trim());
+                    amount = parsedAmount;
+                }
+
+                if (cat != null && cat.isEmpty()) {
+                    cat = null;
+                }
+
+                if (date != null && date.isEmpty()) {
+                    date = null;
+                }
+            }
+
+            if (dollarSlash == -1) {
+                int cIndex = beforeDollar.indexOf("c/");
+                int dIndex = beforeDollar.indexOf("d/");
+
+                if (cIndex != -1 || dIndex != -1) {
+                    desc = null;
+
+                    if (cIndex != -1 && (dIndex == -1 || cIndex < dIndex)) {
+
+                        String possibleAmountPart = beforeDollar.substring(0, cIndex).trim();
+                        if (!possibleAmountPart.isEmpty()) {
+                            desc = possibleAmountPart;
+                        }
+
+                        int catEnd = (dIndex != -1) ? dIndex : beforeDollar.length();
+                        cat = beforeDollar.substring(cIndex + 2, catEnd).trim();
+
+                        if (dIndex != -1) {
+                            date = beforeDollar.substring(dIndex + 2).trim();
+                        }
+                    }
+                    else if (dIndex != -1 && (cIndex == -1 || dIndex < cIndex)) {
+                        String possibleAmountPart = beforeDollar.substring(0, dIndex).trim();
+                        if (!possibleAmountPart.isEmpty()) {
+                            desc = possibleAmountPart;
+                        }
+                        int dateEnd = (cIndex != -1) ? cIndex : beforeDollar.length();
+                        date = beforeDollar.substring(dIndex + 2, dateEnd).trim();
+                        if (cIndex != -1) {
+                            cat = beforeDollar.substring(cIndex + 2).trim();
+                        }
+                    }
+                }
+            }
+
+            return new EditExpenseCommand(index, desc, amount, cat, date);
+
+        } catch (NumberFormatException e) {
+            throw new MTException("Invalid number format in edit command: " + e.getMessage());
+        } catch (MTException e) {
+            throw e;
         } catch (Exception e) {
-            throw new MTException("Invalid edit format: " + input);
+            throw new MTException("Invalid edit format: " + e.getMessage());
         }
     }
+    //@@author
 }
+
