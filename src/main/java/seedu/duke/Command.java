@@ -134,6 +134,31 @@ class AddExpenseCommand implements Command {
     }
 }
 
+class EditExpenseCommand implements Command {
+    private final int index;
+    private final String newDescription;
+    private final double newAmount;
+    private final String newCategory;
+    private final String newDate;
+
+    public EditExpenseCommand(int index, String newDescription, double newAmount, String newCategory, String newDate) {
+        this.index = index;
+        this.newAmount = newAmount;
+        this.newCategory = newCategory;
+        this.newDate = newDate;
+        this.newDescription = newDescription;
+    }
+
+    @Override
+    public void execute(MoneyList moneyList) throws MTException {
+        moneyList.editExpense(index, newDescription, newAmount, newCategory, newDate);
+    }
+
+    @Override
+    public boolean isExit() {
+        return false;
+    }
+}
 
 class ListCatsCommand implements Command {
     @Override

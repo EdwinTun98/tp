@@ -6,11 +6,9 @@ package seedu.duke;
 public class Parser {
     private final MTLogger logger;
 
-
     public Parser() {
         this.logger = new MTLogger(Parser.class.getName());
     }
-
 
     public Command parseCommand(String input) throws MTException {
         logger.logInfo("Parsing input: " + input);
@@ -38,7 +36,10 @@ public class Parser {
             return parseBudgetCommand(trimmedInput);
         } else if (trimmedInput.startsWith("addExpense")) {
             return parseAddExpenseCommand(trimmedInput);
-        } else if (trimmedInput.equalsIgnoreCase("listCats")) {
+        } else if (trimmedInput.startsWith("edit")) {
+            return parseEditExpenseCommand(trimmedInput);
+        }
+        else if (trimmedInput.equalsIgnoreCase("listCats")) {
             return new ListCatsCommand();
         } else if (trimmedInput.equalsIgnoreCase("help")) {
             return new HelpCommand();
@@ -170,6 +171,51 @@ public class Parser {
             logger.logWarning("Invalid command format: " + input);
             throw new MTException("Invalid format. Use: addExpense <description> " +
                     "$/<amount> [c/<category>] [d/<date>]");
+        }
+    }
+
+    private EditExpenseCommand parseEditExpenseCommand(String input) throws MTException {
+        try {
+            String[] processedInput = input.substring("edit".length()).trim().split(" ", 2);
+            if (processedInput.length < 1) {
+                throw new MTException("Invalid format. Missing or missing separator.");
+            }
+            int index = Integer.parseInt(processedInput[0]) -1;
+            if (processedInput.length == 1){
+                throw new MTException("Invalid format. Missing or missing separator.");
+            }
+            String restOfInput = processedInput[1];
+            String description = null, category = null, date = null;
+            Double amount = null;
+
+            if (restOfInput.contains("$/")) {
+                String[] parts = restOfInput.split("\\$/", 2);
+                description = parts[0].trim();
+
+                String remainingOfPart = parts[1];
+                int categoryIndex = remainingOfPart.indexOf("/c");
+                int dateIndex = remainingOfPart.indexOf("d/");
+
+                if (categoryIndex != -1) {
+                    amount = Double.parseDouble(remainingOfPart.substring(0, categoryIndex).trim());
+                    if (dateIndex != -1) {
+                        category = remainingOfPart.substring(categoryIndex + 2, dateIndex).trim();
+                        date = remainingOfPart.substring(dateIndex + 2).trim();
+                    } else {
+                        category = remainingOfPart.substring(categoryIndex + 2).trim();
+                    }
+                } else if (dateIndex != -1) {
+                    amount = Double.parseDouble(remainingOfPart.substring(0, dateIndex).trim());
+                    date = remainingOfPart.substring(dateIndex + 2).trim();
+                } else {
+                    amount = Double.parseDouble(remainingOfPart.trim());
+                }
+            } else {
+                throw new MTException("Invalid format. Missing amount.");
+            }
+            return new EditExpenseCommand(index, description, amount, category, date);
+        } catch (Exception e) {
+            throw new MTException("Invalid edit format: " + input);
         }
     }
 }

@@ -158,10 +158,7 @@ public class MoneyList {
                 throw new MTException("Amount must be greater than zero.");
             }
 
-
-
             Expense newExpense = new Expense(description, amount, category, date);
-
 
             moneyList.add(newExpense.toString());
             logger.logInfo("Added expense: " + newExpense);
@@ -176,6 +173,56 @@ public class MoneyList {
             throw new MTException("Failed to add expense: " + error.getMessage());
         }
     }
+
+    public void editExpense(int index, String newDesc, Double newAmount,
+                            String newCat, String newDate) throws MTException {
+        validateIndex(index);
+
+        try {
+            String oldEntry = moneyList.get(index);
+            String[] parts = oldEntry.split("Value = \\$| \\(|, |\\)");
+
+            String desc;
+            if (newDesc != null) {
+                desc = newDesc;
+            } else {
+                desc = parts[0].replace("[Expense] ", "").trim();
+            }
+
+            double amount;
+            if (newAmount != null) {
+                amount = newAmount;
+            } else {
+                amount = Double.parseDouble(parts[1]);
+            }
+
+            String cat;
+            if (newCat != null) {
+                cat = newCat;
+            } else {
+                cat = parts[2];
+            }
+
+            String date;
+            if (newDate != null) {
+                date = newDate;
+            } else {
+                date = parts[3];
+            }
+
+            Expense updated = new Expense(desc, amount, cat, date);
+            moneyList.set(index, updated.toString());
+
+            ui.print("Entry updated to: " + updated);
+            logger.logInfo("Updated entry at index " + index + ": " + updated);
+            storage.saveEntries(moneyList);
+
+        } catch (ArrayIndexOutOfBoundsException | NumberFormatException e) {
+            logger.logWarning("Failed to edit entry at index " + index + ": " + e.getMessage());
+            throw new MTException("Failed to edit entry: data may be corrupted or incomplete.");
+        }
+    }
+
     public void listSummary() throws MTException {
         if (moneyList.isEmpty()) {
             logger.logWarning("Expense list is empty.");
