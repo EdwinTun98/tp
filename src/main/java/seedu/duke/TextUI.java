@@ -95,13 +95,15 @@ public class TextUI {
     public void showAllAvailableCommands() {
         print("List of available commands:");
         print("1. help: Displays this list of available commands.");
-        print("2. listAll: Lists out all entries.");
-        print("3. addExp <description> $/<value> c/<category> <: Adds a new expense entry. Category is optional.");
+        print("2. list: Lists out all entries.");
+        print("3. addExp <description> $/<value> c/<category> d/<date>: "
+                + "\n" + "Adds a new expense entry. Category and date are optional.");
         print("4. totalExp: Displays the total expense accumulated from all entries.");
-        print("5. setTotalBudget <budget>: Sets a total spending budget to adhere to.");
+        print("5. setTotalBudget <amount>: Sets a total spending budget to adhere to.");
         print("6. del <entry_number>: Deletes an entry.");
         print("7. find <keyword>: Finds an entry based on the given keyword.");
-        print("8. listCats: Lists out all entry categories in order of appearance.");
-        print("9. exit: Exits the program.");
+        print("8. listCat: Lists out all entry categories in order of appearance.");
+        print("9. clear: Clear all existing entries.");
+        print("10. exit: Exits the program.");
     }
 }

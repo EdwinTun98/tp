@@ -74,3 +74,33 @@ Mar 31, 2025 11:14:43 AM seedu.duke.MTLogger logWarning
 WARNING: Expense list is empty.
 Mar 31, 2025 11:14:43 AM seedu.duke.MTLogger logWarning
 WARNING: Error processing command: No entries available to display.
+Mar 31, 2025 11:27:08 AM seedu.duke.MTLogger logInfo
+INFO: Starting CLI program.
+Mar 31, 2025 11:27:08 AM seedu.duke.MTLogger logInfo
+INFO: Loaded 1 entries from file.
+Mar 31, 2025 11:27:34 AM seedu.duke.MTLogger logWarning
+WARNING: No categories could be extracted from the money list.
+Mar 31, 2025 11:28:34 AM seedu.duke.MTLogger logInfo
+INFO: Starting CLI program.
+Mar 31, 2025 11:28:34 AM seedu.duke.MTLogger logInfo
+INFO: Loaded 1 entries from file.
+Mar 31, 2025 11:28:43 AM seedu.duke.MTLogger logInfo
+INFO: Total budget after df formatting: 100.0
+Mar 31, 2025 11:28:43 AM seedu.duke.MTLogger logInfo
+INFO: Total budget set to: $100.00
+Mar 31, 2025 11:28:49 AM seedu.duke.MTLogger logInfo
+INFO: All entries have been cleared from the money list.
+Mar 31, 2025 11:28:51 AM seedu.duke.MTLogger logWarning
+WARNING: Expense list is empty.
+Mar 31, 2025 11:28:51 AM seedu.duke.MTLogger logWarning
+WARNING: Error processing command: No entries available to display.
+Mar 31, 2025 11:34:43 AM seedu.duke.MTLogger logInfo
+INFO: Starting CLI program.
+Mar 31, 2025 11:34:44 AM seedu.duke.MTLogger logInfo
+INFO: Loaded 1 entries from file.
+Mar 31, 2025 11:34:49 AM seedu.duke.MTLogger logInfo
+INFO: All entries have been cleared from the money list.
+Mar 31, 2025 11:53:34 AM seedu.duke.MTLogger logInfo
+INFO: Saving entries into mt.txt
+Mar 31, 2025 11:57:42 AM seedu.duke.MTLogger logInfo
+INFO: Saving entries into mt.txt

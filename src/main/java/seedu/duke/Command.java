@@ -205,7 +205,7 @@ class ExitCommand implements Command {
  */
 class ClearListCommand implements Command {
     @Override
-    public void execute(MoneyList moneyList) {
+    public void execute(MoneyList moneyList) throws MTException {
         moneyList.clearEntries();
     }
 
@@ -214,4 +214,3 @@ class ClearListCommand implements Command {
         return false;
     }
 }
-

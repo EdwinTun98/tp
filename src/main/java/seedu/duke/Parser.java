@@ -22,7 +22,7 @@ public class Parser {
         String trimmedInput = input.trim();
 
         // Handle different commands based on input
-        if (trimmedInput.equalsIgnoreCase("listAll")) {
+        if (trimmedInput.equalsIgnoreCase("list")) {
             return new ListCommand();
         }
 
@@ -50,7 +50,7 @@ public class Parser {
             return parseAddExpenseCommand(trimmedInput);
         }
 
-        if (trimmedInput.equalsIgnoreCase("listCats")) {
+        if (trimmedInput.equalsIgnoreCase("listCat")) {
             return new ListCatsCommand();
         }
 
@@ -63,7 +63,8 @@ public class Parser {
         }
 
         logger.logWarning("Unknown command: " + trimmedInput);
-        throw new MTException("Unknown command. Type 'help' for a list of available commands.");
+        throw new MTException("Unknown command. Type 'help' for a " +
+                "list of available commands.");
     }
 
     private FindCommand parseFindCommand(String input) throws MTException {

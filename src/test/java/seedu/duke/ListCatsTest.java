@@ -7,7 +7,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
 
-
 public class ListCatsTest {
     private MoneyList moneyList;
     private MTLogger logger;
@@ -26,9 +25,9 @@ public class ListCatsTest {
     }
 
     @Test
-    public void testListCats_emptyList () {
+    public void testListCats_emptyList () throws MTException {
         // Ensure the money list is empty
-        moneyList.clearEntries(); // Assuming there's a method to clear entries
+        moneyList.clearEntries();
 
         // Call listCats() method
         moneyList.listCats();
