@@ -198,7 +198,7 @@ public class TextUITest {
         assertTrue(output.contains("List of available commands:") &&
                         output.contains("1. help") &&
                         output.contains("2. list") &&
-                        output.contains("3. addExpense") &&
+                        output.contains("3. addExp") &&
                         output.contains("9. exit"),
                 "Should output complete command list with numbering");
 
