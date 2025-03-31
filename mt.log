@@ -1,0 +1,76 @@
+Mar 31, 2025 11:02:03 AM seedu.duke.MTLogger logInfo
+INFO: Starting CLI program.
+Mar 31, 2025 11:02:03 AM seedu.duke.MTLogger logInfo
+INFO: Loaded 0 entries from file.
+Mar 31, 2025 11:02:21 AM seedu.duke.MTLogger logWarning
+WARNING: Expense list is empty.
+Mar 31, 2025 11:02:21 AM seedu.duke.MTLogger logWarning
+WARNING: Error processing command: No entries available to display.
+Mar 31, 2025 11:03:09 AM seedu.duke.MTLogger logInfo
+INFO: Description: food
+Mar 31, 2025 11:03:09 AM seedu.duke.MTLogger logInfo
+INFO: Amount after formatting: 70.0
+Mar 31, 2025 11:03:09 AM seedu.duke.MTLogger logInfo
+INFO: Added expense: Expense: food $70.00 {daily expenses} [2025-10-23]
+Mar 31, 2025 11:03:41 AM seedu.duke.MTLogger logInfo
+INFO: Expense amount: 70.0
+Mar 31, 2025 11:03:41 AM seedu.duke.MTLogger logInfo
+INFO: Total expense calculated: 70.00
+Mar 31, 2025 11:03:41 AM seedu.duke.MTLogger logWarning
+WARNING: Error processing command: Please enter a valid command.
+Mar 31, 2025 11:04:13 AM seedu.duke.MTLogger logInfo
+INFO: Description: fuel
+Mar 31, 2025 11:04:13 AM seedu.duke.MTLogger logInfo
+INFO: Amount after formatting: 20.0
+Mar 31, 2025 11:04:13 AM seedu.duke.MTLogger logInfo
+INFO: Added expense: Expense: fuel $20.00 {transportation} [no date]
+Mar 31, 2025 11:04:18 AM seedu.duke.MTLogger logInfo
+INFO: Expense amount: 70.0
+Mar 31, 2025 11:04:18 AM seedu.duke.MTLogger logInfo
+INFO: Expense amount: 20.0
+Mar 31, 2025 11:04:18 AM seedu.duke.MTLogger logInfo
+INFO: Total expense calculated: 90.00
+Mar 31, 2025 11:04:48 AM seedu.duke.MTLogger logInfo
+INFO: Deleted entry at index: 0
+Mar 31, 2025 11:04:57 AM seedu.duke.MTLogger logWarning
+WARNING: No categories could be extracted from the money list.
+Mar 31, 2025 11:05:16 AM seedu.duke.MTLogger logWarning
+WARNING: No matching entries found for: daily
+Mar 31, 2025 11:05:16 AM seedu.duke.MTLogger logWarning
+WARNING: Error processing command: Please enter a valid keyword to search.
+Mar 31, 2025 11:05:23 AM seedu.duke.MTLogger logWarning
+WARNING: No matching entries found for: foo
+Mar 31, 2025 11:05:23 AM seedu.duke.MTLogger logWarning
+WARNING: Error processing command: Please enter a valid keyword to search.
+Mar 31, 2025 11:05:25 AM seedu.duke.MTLogger logWarning
+WARNING: No matching entries found for: food
+Mar 31, 2025 11:05:25 AM seedu.duke.MTLogger logWarning
+WARNING: Error processing command: Please enter a valid keyword to search.
+Mar 31, 2025 11:05:50 AM seedu.duke.MTLogger logWarning
+WARNING: No categories could be extracted from the money list.
+Mar 31, 2025 11:06:09 AM seedu.duke.MTLogger logInfo
+INFO: Total budget after df formatting: 100.0
+Mar 31, 2025 11:06:09 AM seedu.duke.MTLogger logInfo
+INFO: Total budget set to: $100.00
+Mar 31, 2025 11:13:30 AM seedu.duke.MTLogger logInfo
+INFO: Starting CLI program.
+Mar 31, 2025 11:13:30 AM seedu.duke.MTLogger logInfo
+INFO: Loaded 1 entries from file.
+Mar 31, 2025 11:13:38 AM seedu.duke.MTLogger logInfo
+INFO: All entries have been cleared from the money list.
+Mar 31, 2025 11:13:44 AM seedu.duke.MTLogger logWarning
+WARNING: Expense list is empty.
+Mar 31, 2025 11:13:44 AM seedu.duke.MTLogger logWarning
+WARNING: Error processing command: No entries available to display.
+Mar 31, 2025 11:14:28 AM seedu.duke.MTLogger logInfo
+INFO: Description: fuel
+Mar 31, 2025 11:14:28 AM seedu.duke.MTLogger logInfo
+INFO: Amount after formatting: 20.0
+Mar 31, 2025 11:14:28 AM seedu.duke.MTLogger logInfo
+INFO: Added expense: Expense: fuel $20.00 {Uncategorized} [no date]
+Mar 31, 2025 11:14:39 AM seedu.duke.MTLogger logInfo
+INFO: All entries have been cleared from the money list.
+Mar 31, 2025 11:14:43 AM seedu.duke.MTLogger logWarning
+WARNING: Expense list is empty.
+Mar 31, 2025 11:14:43 AM seedu.duke.MTLogger logWarning
+WARNING: Error processing command: No entries available to display.

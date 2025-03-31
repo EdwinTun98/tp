@@ -58,6 +58,10 @@ public class Parser {
             return new HelpCommand();
         }
 
+        if (trimmedInput.equalsIgnoreCase("clear")) {
+            return new ClearListCommand();
+        }
+
         logger.logWarning("Unknown command: " + trimmedInput);
         throw new MTException("Unknown command. Type 'help' for a list of available commands.");
     }

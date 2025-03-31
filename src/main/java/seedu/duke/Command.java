@@ -199,3 +199,19 @@ class ExitCommand implements Command {
         return true;
     }
 }
+
+/**
+ * Clears the entry list.
+ */
+class ClearListCommand implements Command {
+    @Override
+    public void execute(MoneyList moneyList) {
+        moneyList.clearEntries();
+    }
+
+    @Override
+    public boolean shouldExit() {
+        return false;
+    }
+}
+

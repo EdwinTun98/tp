@@ -1,0 +1,19 @@
+Expense added: Expense: Lunch Value = $12.50 {Food} [no date]
+Expense added: Expense: Textbook Value = $59.99 {Education} [no date]
+Expense list:
+1: Expense: Lunch Value = $12.50 {Food} [no date]
+2: Expense: Textbook Value = $59.99 {Education} [no date]
+This entry will be permanently deleted:
+Expense: Lunch Value = $12.50 {Food} [no date]
+You now have 1 entry.
+Found Matching entries for: book
+1: Expense: Textbook Value = $59.99 {Education} [no date]
+Total expenses: 59.99
+Total budget set to: $500.00
+Categories (in order of appearance):
+- Education
+List of available commands:
+1. help: Displays this list of available commands.
+2. list: Lists out all entries.
+[... other commands ...]s
+Exiting program... Thank you for using MoneyTrail! :)
