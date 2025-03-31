@@ -12,24 +12,24 @@ and achieve your financial goals.
 Here are the steps to get started quickly:
 
 1. Ensure that you have Java 17 or above installed.
-2. Download the latest version of `MoneyTrail` from [here](http://link.to/duke).
+2. Download the latest version of `MoneyTrail` from [here](https://github.com/AY2425S2-CS2113-W12-4/tp/releases/download/v1.0/tp.jar).
 3. Copy the file to the folder you want to use as the *home folder* for your application.
 4. Open a command terminal, `cd`, into the folder you put the jar file in, and use the `java -jar tp.jar` command to run the application.
 
 ## Features 
 
-### Listing all tasks: `listAll`
+### Listing all tasks: `list`
 
 Prints out a list of all recorded entries.
 
-Format: `listAll`
+Format: `list`
 
 Outcome:
 ```
 What do you want to do today?
 list
 Expense list:
-1: [Expense] fuel $10.00 {transportation} [no date]
+1: Expense: fuel $10.00 {transportation} [no date]
 -------------------------------------------------------------------------------
 What do you want to do next?
 ```
@@ -50,7 +50,7 @@ Outcome:
 What do you want to do next?
 find fuel
 Found Matching entries for: fuel
-1: [Expense] fuel $10.00 {transportation} [no date]
+1: Expense: fuel $10.00 {transportation} [no date]
 -------------------------------------------------------------------------------
 What do you want to do next?
 ```
@@ -67,14 +67,15 @@ What do you want to do next?
 help
 List of available commands:
 1. help: Displays this list of available commands.
-2. listAll: Lists out all entries.
+2. list: Lists out all entries.
 3. addExp <description> $/<value> c/<category> <: Adds a new expense entry. Category is optional.
 4. totalExp: Displays the total expense accumulated from all entries.
 5. setTotalBudget <budget>: Sets a total spending budget to adhere to.
 6. del <entry_number>: Deletes an entry.
 7. find <keyword>: Finds an entry based on the given keyword.
-8. listCats: Lists out all entry categories in order of appearance.
-9. exit: Exits the program.
+8. listCat: Lists out all entry categories in order of appearance.
+9. clear: Clear all existing entries.
+10. exit: Exits the program.
 -------------------------------------------------------------------------------
 What do you want to do next?
 ```
@@ -96,11 +97,11 @@ Total budget set to: $500.00
 What do you want to do next?
 ```
 
-### Adding expense entries: `addExpense`
+### Adding expense entries: `addExp`
 
 Adds an expense entry to the list.
 
-Format: `addExpense <description> $/<amount> c/<category> d/<date>`
+Format: `addExp <description> $/<amount> c/<category> d/<date>`
 
 #### Notes:
 - Category and date parameters are optional!
@@ -111,19 +112,17 @@ Example 1: `addExp Honey $/20.25 c/Food d/30-03-25`
 Example 2: `addExp Honey $/20.25` 
 Example 3: `addExp Honey $/20.25 d/30-03-25`
 
-Outcome 1: `Expense added: [Expense] Honey $20.25 {Food} [2025-03-30]`
-Outcome 2: `Expense added: [Expense] Honey $20.25 {Uncategorised} [no date]`
-Outcome 3: `Expense added: [Expense] Honey $20.25 {Uncategorised} [2025-03-30]`
+Outcome 1: `Expense added: Expense: Honey $20.25 {Food} [2025-03-30]`
+
+Outcome 2: `Expense added: Expense: Honey $20.25 {Uncategorised} [no date]`
+
+Outcome 3: `Expense added: Expense: Honey $20.25 {Uncategorised} [2025-03-30]`
 
 ### Adding up expenses: `totalExp`
 
 Adds the monetary value of all expense entries and displays the result.
 
-Coming soon...
-
 Format: `totalExp`
-
-Example: `totalExp`
 
 Outcome:
 ```
@@ -146,8 +145,23 @@ Outcome:
 What do you want to do next?
 del 1
 This entry will be permanently deleted:
-[Expense] fuel $10.00 {transportation} [no date]
+Expense: fuel $10.00 {transportation} [no date]
 You now have 1 entry.
+-------------------------------------------------------------------------------
+What do you want to do next?
+```
+
+### Clearing entries: `clear`
+
+Clears all existing entries in the list.
+
+Format: `clear`
+
+Outcome:
+```
+What do you want to do today?
+clear
+All entries have been cleared.
 -------------------------------------------------------------------------------
 What do you want to do next?
 ```
@@ -175,17 +189,18 @@ any command that changes the data. You can copy this file in a pen drive.
 
 ## 💰 MoneyTrail Command Cheat Sheet
 
-| Command          | Format                                          | Example                                    | Description                                  |
-|------------------|-------------------------------------------------|--------------------------------------------|----------------------------------------------|
-| `help`           | `help`                                          | `help`                                     | Shows all available commands                 |
-| `listAll`        | `listAll`                                       | `listAll`                                  | Displays all expense entries                 |
-| `addExp`         | `addExp <desc> $/<amount> [c/<cat>] [d/<date>]` | `addExp Lunch $/12.50 c/Food d/2023-10-15` | Add new expense (category/date optional)     |
-| `del`            | `del <index>`                                   | `del 3`                                    | Removes entry #3 from list                   |
-| `find`           | `find <keyword>`                                | `find coffee`                              | Searches entries by keyword                  |
-| `totalExp`       | `totalExp`                                      | `totalExp`                                 | Shows sum of all expenses                    |
-| `setTotalBudget` | `setTotalBudget <amount>`                       | `setTotalBudget 500.00`                    | Sets spending limit                          |
-| `listCats`       | `listCats`                                      | `listCats`                                 | Shows all used categories                    |
-| `exit`           | `exit`                                          | `exit`                                     | Closes the application                       |
+| Command          | Format                                          | Example                                    | Description                              |
+|------------------|-------------------------------------------------|--------------------------------------------|------------------------------------------|
+| `help`           | `help`                                          | `help`                                     | Shows all available commands             |
+| `list`           | `list`                                          | `list`                                     | Displays all expense entries             |
+| `addExp`         | `addExp <desc> $/<amount> [c/<cat>] [d/<date>]` | `addExp Lunch $/12.50 c/Food d/2023-10-15` | Add new expense (category/date optional) |
+| `del`            | `del <index>`                                   | `del 3`                                    | Removes entry #3 from list               |
+| `find`           | `find <keyword>`                                | `find coffee`                              | Searches entries by keyword              |
+| `totalExp`       | `totalExp`                                      | `totalExp`                                 | Shows sum of all expenses                |
+| `setTotalBudget` | `setTotalBudget <amount>`                       | `setTotalBudget 500.00`                    | Sets spending limit                      |
+| `listCat`        | `listCat`                                       | `listCat`                                  | Shows all used categories                |
+| `clear`          | `clear`                                         | `clear`                                    | Clears all entries                       |
+| `exit`           | `exit`                                          | `exit`                                     | Closes the application                   |
 
 #### 📝 Usage Notes
 ```bash
