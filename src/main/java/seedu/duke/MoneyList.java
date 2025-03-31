@@ -84,6 +84,7 @@ public class MoneyList {
             if (input == null) {
                 throw new MTException("Input should not be null");
             }
+
             input = input.trim();
 
             // Default parameters
@@ -95,14 +96,21 @@ public class MoneyList {
             // Ensure the input contains the amount marker "$/"
             if (input.contains("$/")) {
                 // Extract everything after "addExpense "
-                String[] parts1 = input.substring(10).split("\\$/", 2);
+                String[] parts1 = input.substring(("addExp").length()).split("\\$/", 2);
                 description = parts1[0].trim();
                 logger.logInfo("Description: " + description);
 
-                // parts1[1] contains the rest (amount, maybe category and date)
-                // First, check if it contains the date marker "d/"
+                // Check for duplicate markers
                 String afterAmountPart = parts1[1];
-                // We'll now check if the user provided a category using "c/".
+                if (afterAmountPart.split("c/").length - 1 > 1) {
+                    throw new MTException("Invalid format. Multiple category markers detected.");
+                }
+
+                if (afterAmountPart.split("d/").length - 1 > 1) {
+                    throw new MTException("Invalid format. Multiple date markers detected.");
+                }
+
+                // Process the amount, category, and date as before
                 if (afterAmountPart.contains("c/")) {
                     // Split on "c/" to separate the amount from the category (and possibly date)
                     String[] parts2 = afterAmountPart.split("c/", 2);
@@ -114,7 +122,7 @@ public class MoneyList {
                         throw new NumberFormatException("Invalid amount format: " + amountString);
                     }
 
-                    // check if the category part contains the date marker "d/"
+                    // Check if the category part contains the date marker "d/"
                     if (parts2[1].contains("d/")) {
                         String[] parts3 = parts2[1].split("d/", 2);
                         category = parts3[0].trim();
@@ -133,6 +141,7 @@ public class MoneyList {
                     } else {
                         throw new NumberFormatException("Invalid amount format: " + amountString);
                     }
+
                     date = parts2[1].trim();
                 } else {
                     // If neither category nor date is provided, treat the entire string as the amount.
@@ -144,12 +153,12 @@ public class MoneyList {
                     }
                 }
 
-
                 DecimalFormat df = new DecimalFormat("#.00");
                 amount = Double.valueOf(df.format(amount));
+
                 logger.logInfo("Amount after formatting: " + amount);
             } else {
-                throw new MTException("Invalid format. Use: addExpense" +
+                throw new MTException("Invalid format. Use: addExp" +
                         " <description> $/<amount> [c/<category>] [d/<date>]");
             }
 
@@ -173,6 +182,8 @@ public class MoneyList {
             throw new MTException("Failed to add expense: " + error.getMessage());
         }
     }
+
+    //@@author EdwinTun98
 
     public void editExpense(int index, String newDesc, Double newAmount,
                             String newCat, String newDate) throws MTException {
@@ -227,35 +238,40 @@ public class MoneyList {
         if (moneyList.isEmpty()) {
             logger.logWarning("Expense list is empty.");
             throw new MTException("No entries available to display.");
-        } else {
-            ui.print("Expense list:");
-            for (int i = 0; i < moneyList.size(); i++) {
-                ui.print((i + INDEX_OFFSET) + ": " + moneyList.get(i));
-            }
+        }
+
+        ui.print("Expense list:");
+        for (int i = 0; i < moneyList.size(); i++) {
+            ui.print((i + INDEX_OFFSET) + ": " + moneyList.get(i));
         }
     }
 
     public void findEntry(String input) throws MTException {
-        if (input.isEmpty()) {
+        // Validate the input for null, empty, or whitespace-only
+        if (input == null || input.trim().isEmpty()) {
             logger.logWarning("Invalid entry provided.");
             throw new MTException("Please enter a keyword to search.");
         }
 
         ArrayList<String> results = new ArrayList<>();
+
+        // Iterate through the moneyList to find case-insensitive matches
         for (String entry : moneyList) {
             if (entry.toLowerCase().contains(input.toLowerCase())) {
                 results.add(entry);
             }
         }
 
+        // Handle the case when no matches are found
         if (results.isEmpty()) {
             logger.logWarning("No matching entries found for: " + input);
-            throw new MTException("enter a valid keyword to search.");
-        } else {
-            ui.print("Found Matching entries for: " + input);
-            for (int i = 0; i < results.size(); i++) {
-                ui.print((i + INDEX_OFFSET) + ": " + results.get(i));
-            }
+            throw new MTException("Please enter a valid keyword to search.");
+        }
+
+        // Print matching entries
+        ui.print("Found Matching entries for: " + input);
+        for (int i = 0; i < results.size(); i++) {
+            ui.print((i + INDEX_OFFSET) + ": " + results.get(i));
         }
     }
 
@@ -264,31 +280,36 @@ public class MoneyList {
 
         for (String entry : moneyList) {
             try {
-                // Parse the amount from the entry string
-                String[] parts = entry.split("Value=\\$");
-                if (parts.length == 2) {
-                    double amount = Double.parseDouble(parts[1].trim());
-                    total += amount;
+
+                // Split entry data to get entry amount
+                String[] parts1 = entry.split("\\$");
+                String[] parts2 = parts1[1].split("\\{");
+
+                if (parts1.length == 2 && parts2.length == 2) {
+                    double expenseAmount = Double.parseDouble(parts2[0].trim());
+                    logger.logInfo("Expense amount: " + expenseAmount);
+
+                    total += expenseAmount;
                 }
             } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
                 logger.logWarning("Error parsing amount from entry: " + entry);
             }
         }
 
-        ui.print("Total expenses: " + total);
-        logger.logInfo("Total expense calculated: " + total);
+        ui.print(String.format("Total expenses: $%.2f", total));
+        logger.logInfo("Total expense calculated: " + String.format("%.2f", total));
     }
 
-    public void setTotalBudget(String input) {
+    public void setTotalBudget(String input) throws MTException {
         try {
             assert input != null : "Input should not be null";
-            assert input.startsWith("setTotalBudget") : "Input should start with 'setTotalBudget'";
+            assert input.startsWith("setTotBgt") : "Input should start with 'setBgt'";
 
             // Remove the command and extract the budget value
-            String budgetString = input.substring("setTotalBudget".length()).trim();
+            String budgetString = input.substring("setTotBgt".length()).trim();
 
             // Parse the budget value from the string
-            double budget = Double.parseDouble(budgetString);
+            Double budget = Double.parseDouble(budgetString);
 
             // Format the budget to 2 decimal places
             DecimalFormat df = new DecimalFormat("#.00");
@@ -304,16 +325,19 @@ public class MoneyList {
 
             // Set the total budget
             this.totalBudget = budget;
-            logger.logInfo("Total budget set to: " + totalBudget);
-            ui.print("Total budget set to: $" + totalBudget);
+            logger.logInfo(String.format("Total budget set to: $%.2f", totalBudget));
+            ui.print(String.format("Total budget set to: $%.2f", totalBudget));
         } catch (NumberFormatException e) {
             logger.logSevere("Invalid budget format: " + input, e);
-            ui.print("Invalid budget format. Please enter a valid number " +
-                    "(e.g., setTotalBudget 500.00).");
+            throw new MTException("Invalid amount format. Please ensure it is a numeric value.");
         } catch (Exception e) {
             logger.logSevere("Error setting budget: " + e.getMessage(), e);
             ui.print("An error occurred while setting the budget.");
         }
+    }
+
+    public double getTotalBudget() {
+        return this.totalBudget;
     }
 
     public void listCats() {
@@ -327,16 +351,18 @@ public class MoneyList {
             // Use a LinkedHashSet to store unique categories while preserving order
             LinkedHashSet<String> categories = new LinkedHashSet<>();
 
-
             for (String entry : moneyList) {
                 try {
-                    // Look for the keyword "Category=" in the entry
-                    // Look for the keyword "Category=" in the entry
-                    if (entry.contains("Category=")) {
-                        // Extract the category value after "Category="
-                        String category = entry.substring(entry.indexOf("Category=") + 9).trim();
-                        categories.add(category);
-                    }
+                    // Filter off the string value until after {
+                    String beforeCat = entry.substring(entry.indexOf("{") + 1).trim();
+
+                    // Extract the string value before }
+                    String [] parts = beforeCat.split("}", 2);
+
+                    String category = parts[0];
+
+                    categories.add(category);
+
                 } catch (Exception e) {
                     logger.logWarning("Error extracting category from entry: " + entry);
                 }
@@ -359,5 +385,11 @@ public class MoneyList {
             logger.logSevere("An error occurred while listing categories: " + e.getMessage(), e);
             ui.print("An error occurred while listing categories. Please try again.");
         }
+    }
+
+    public void clearEntries() {
+        moneyList.clear();
+        logger.logInfo("All entries have been cleared from the money list.");
+        ui.print("All entries have been cleared.");
     }
 }

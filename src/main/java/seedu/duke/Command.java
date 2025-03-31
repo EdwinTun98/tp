@@ -2,16 +2,26 @@ package seedu.duke;
 
 /**
  * Represents a command to be executed by the MoneyTrail application.
+ * Commands can perform actions and indicate if they should terminate
+ * the program.
  */
 public interface Command {
-
+    /**
+     * Executes the command's primary operation.
+     * @param moneyList The MoneyList to operate on
+     * @throws MTException If command execution fails
+     */
     void execute(MoneyList moneyList) throws MTException;
 
-
-    boolean isExit();
+    /**
+     * @return true if the application should exit after this command
+     */
+    boolean shouldExit();
 }
 
-
+/**
+ * Lists all entries in the MoneyList.
+ */
 class ListCommand implements Command {
     @Override
     public void execute(MoneyList moneyList) throws MTException {
@@ -19,12 +29,14 @@ class ListCommand implements Command {
     }
 
     @Override
-    public boolean isExit() {
+    public boolean shouldExit() {
         return false;
     }
 }
 
-
+/**
+ * Finds entries containing the specified keyword.
+ */
 class FindCommand implements Command {
     private final String keyword;
 
@@ -38,12 +50,14 @@ class FindCommand implements Command {
     }
 
     @Override
-    public boolean isExit() {
+    public boolean shouldExit() {
         return false;
     }
 }
 
-
+/**
+ * Deletes an entry at the specified index.
+ */
 class DeleteCommand implements Command {
     private final int index;
 
@@ -60,12 +74,14 @@ class DeleteCommand implements Command {
     }
 
     @Override
-    public boolean isExit() {
+    public boolean shouldExit() {
         return false;
     }
 }
 
-
+/**
+ * Calculates and displays total expenses.
+ */
 class TotalExpenseCommand implements Command {
     @Override
     public void execute(MoneyList moneyList) {
@@ -73,12 +89,14 @@ class TotalExpenseCommand implements Command {
     }
 
     @Override
-    public boolean isExit() {
+    public boolean shouldExit() {
         return false;
     }
 }
 
-
+/**
+ * Sets the total budget amount.
+ */
 class BudgetCommand implements Command {
     private final double budget;
 
@@ -87,19 +105,20 @@ class BudgetCommand implements Command {
     }
 
     @Override
-    public void execute(MoneyList moneyList) {
-        String budgetCommand = "setTotalBudget " + budget;
+    public void execute(MoneyList moneyList) throws MTException {
+        String budgetCommand = "setTotBgt " + budget;
         moneyList.setTotalBudget(budgetCommand);
     }
 
     @Override
-    public boolean isExit() {
+    public boolean shouldExit() {
         return false;
     }
 }
 
-
-
+/**
+ * Adds a new expense entry.
+ */
 class AddExpenseCommand implements Command {
     private final String description;
     private final double amount;
@@ -117,19 +136,21 @@ class AddExpenseCommand implements Command {
     public void execute(MoneyList moneyList) throws MTException {
         // Reconstruct the command string expected by MoneyList.addExpense.
 
-        String expenseCommand = "addExpense " + description + " $/" + amount;
-        if (!category.equals("Uncategorizned")) {
+        String expenseCommand = "addExp " + description + " $/" + amount;
+        if (!category.equals("Uncategorized")) {
             expenseCommand += " c/" + category;
         }
+
         // Include the date if it's provided (i.e., not the default "no date").
         if (!date.equals("no date")) {
             expenseCommand += " d/" + date;
         }
+
         moneyList.addExpense(expenseCommand);
     }
 
     @Override
-    public boolean isExit() {
+    public boolean shouldExit() {
         return false;
     }
 }
@@ -160,6 +181,9 @@ class EditExpenseCommand implements Command {
     }
 }
 
+/**
+ * Lists all available categories.
+ */
 class ListCatsCommand implements Command {
     @Override
     public void execute(MoneyList moneyList) {
@@ -167,12 +191,14 @@ class ListCatsCommand implements Command {
     }
 
     @Override
-    public boolean isExit() {
+    public boolean shouldExit() {
         return false;
     }
 }
 
-
+/**
+ * Displays help information.
+ */
 class HelpCommand implements Command {
     @Override
     public void execute(MoneyList moneyList) {
@@ -180,12 +206,14 @@ class HelpCommand implements Command {
     }
 
     @Override
-    public boolean isExit() {
+    public boolean shouldExit() {
         return false;
     }
 }
 
-
+/**
+ * Terminates the application.
+ */
 class ExitCommand implements Command {
     @Override
     public void execute(MoneyList moneyList) {
@@ -193,7 +221,7 @@ class ExitCommand implements Command {
     }
 
     @Override
-    public boolean isExit() {
+    public boolean shouldExit() {
         return true;
     }
 }

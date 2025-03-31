@@ -1,0 +1,60 @@
+@startuml MoneyTrail_Simplified
+
+skinparam {
+  defaultFontName Arial
+  classFontStyle bold
+  arrowFontSize 10
+}
+
+' === Core Classes ===
+class MoneyTrail {
+  +run()
+}
+
+class MoneyList {
+  +addExpense()
+  +listEntries()
+}
+
+interface Command {
+  +execute()
+  +isExit()
+}
+
+class Parser {
+  +parseCommand()
+}
+
+class TextUI {
+  +print()
+}
+
+class Storage {
+  +save()
+  +load()
+}
+
+' === Key Relationships ===
+MoneyTrail --> MoneyList : manages
+MoneyTrail --> Parser : uses
+MoneyTrail --> TextUI : updates
+MoneyTrail --> Storage : persists
+
+Parser --> Command : creates
+
+MoneyList --> Storage : saves/loads
+MoneyList --> TextUI : displays
+
+Command <|-- AddExpenseCommand
+Command <|-- ListCommand
+Command <|-- ExitCommand
+' (Other commands omitted for simplicity)
+
+' === Legend ===
+legend top
+  <b>Architecture Flow</b>:
+  1. User → TextUI → Parser → Command
+  2. Command → MoneyList → Storage/TextUI
+endlegend
+
+@enduml

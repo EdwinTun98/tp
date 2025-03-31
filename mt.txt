@@ -1,3 +1,0 @@
-Entry 1: $100
-Entry 3: $75
-[Expense] lunch Value = $10.00 (food, no date)
