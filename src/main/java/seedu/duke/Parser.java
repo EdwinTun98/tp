@@ -77,6 +77,7 @@ public class Parser {
 
         return new FindCommand(keyword);
     }
+
     //@@author
     private DeleteCommand parseDeleteCommand(String input) throws MTException {
         try {
@@ -260,7 +261,6 @@ public class Parser {
                     desc = null;
 
                     if (cIndex != -1 && (dIndex == -1 || cIndex < dIndex)) {
-
                         String possibleAmountPart = beforeDollar.substring(0, cIndex).trim();
                         if (!possibleAmountPart.isEmpty()) {
                             desc = possibleAmountPart;
@@ -272,8 +272,7 @@ public class Parser {
                         if (dIndex != -1) {
                             date = beforeDollar.substring(dIndex + 2).trim();
                         }
-                    }
-                    else if (dIndex != -1 && (cIndex == -1 || dIndex < cIndex)) {
+                    } else if (dIndex != -1 && (cIndex == -1 || dIndex < cIndex)) {
                         String possibleAmountPart = beforeDollar.substring(0, dIndex).trim();
                         if (!possibleAmountPart.isEmpty()) {
                             desc = possibleAmountPart;

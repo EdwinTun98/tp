@@ -21,7 +21,9 @@ public class MoneyList {
         this.totalBudget = 0.0;
     }
 
-    public ArrayList<String> getMoneyList() {return moneyList;
+    public ArrayList<String> getMoneyList()
+    {
+        return moneyList;
     }
 
     private int extractIndex(String input) {
@@ -228,7 +230,7 @@ public class MoneyList {
         if (newDesc == null || newDesc.isEmpty()) {
             newDesc = oldDescription;
         }
-        if (newAmount <=0.00) {
+        if (newAmount <= 0.00) {
             newAmount = oldAmount;
         }
         if (newCat == null || newCat.isEmpty()) {
