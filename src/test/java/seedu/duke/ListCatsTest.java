@@ -41,9 +41,9 @@ public class ListCatsTest {
     @Test
     public void testListCats_nonEmptyList () {
         // Populate the money list with sample entries
-        moneyList.getMoneyList().add("[Expense] Entry 1 $25.25 |Cat 1| (no date)");
-        moneyList.getMoneyList().add("[Expense] Entry 2 $50.505 |Cat 2| (28-3-25)");
-        moneyList.getMoneyList().add("[Expense] Entry 3 $75.075 |Uncategorized| (no date)");
+        moneyList.getMoneyList().add("[Expense] Entry 1 $25.25 {Cat 1} (no date)");
+        moneyList.getMoneyList().add("[Expense] Entry 2 $50.505 {Cat 2} (28-3-25)");
+        moneyList.getMoneyList().add("[Expense] Entry 3 $75.075 {Uncategorized} (no date)");
 
         // Call listCats() method
         moneyList.listCats();
