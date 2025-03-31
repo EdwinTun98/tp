@@ -134,9 +134,9 @@ class AddExpenseCommand implements Command {
 
     @Override
     public void execute(MoneyList moneyList) throws MTException {
-        // Reconstruct the command string expected by MoneyList.addExpense.
-
+        // Reconstruct the command string expected by MoneyList.addExpense
         String expenseCommand = "addExp " + description + " $/" + amount;
+
         if (!category.equals("Uncategorized")) {
             expenseCommand += " c/" + category;
         }

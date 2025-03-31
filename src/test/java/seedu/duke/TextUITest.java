@@ -199,7 +199,7 @@ public class TextUITest {
                         output.contains("1. help") &&
                         output.contains("2. list") &&
                         output.contains("3. addExp") &&
-                        output.contains("9. exit"),
+                        output.contains("10. exit"),
                 "Should output complete command list with numbering");
 
         System.setOut(System.out);

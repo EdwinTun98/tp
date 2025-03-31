@@ -230,7 +230,6 @@ public class MoneyList {
 
         for (String entry : moneyList) {
             try {
-
                 // Split entry data to get entry amount
                 String[] parts1 = entry.split("\\$");
                 String[] parts2 = parts1[1].split("\\{");

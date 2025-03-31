@@ -1,0 +1,2 @@
+Expense: ense fuel $20.00 {Uncategorized} [no date]
+Expense: food $30.00 {Food} [no date]
