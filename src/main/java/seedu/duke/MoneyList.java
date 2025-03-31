@@ -96,7 +96,7 @@ public class MoneyList {
             // Ensure the input contains the amount marker "$/"
             if (input.contains("$/")) {
                 // Extract everything after "addExpense "
-                String[] parts1 = input.substring(6).split("\\$/", 2);
+                String[] parts1 = input.substring(("addExp").length()).split("\\$/", 2);
                 description = parts1[0].trim();
                 logger.logInfo("Description: " + description);
 
@@ -253,10 +253,10 @@ public class MoneyList {
     public void setTotalBudget(String input) throws MTException {
         try {
             assert input != null : "Input should not be null";
-            assert input.startsWith("setTotalBudget") : "Input should start with 'setTotalBudget'";
+            assert input.startsWith("setTotBgt") : "Input should start with 'setBgt'";
 
             // Remove the command and extract the budget value
-            String budgetString = input.substring("setTotalBudget".length()).trim();
+            String budgetString = input.substring("setTotBgt".length()).trim();
 
             // Parse the budget value from the string
             Double budget = Double.parseDouble(budgetString);
@@ -303,18 +303,16 @@ public class MoneyList {
 
             for (String entry : moneyList) {
                 try {
-                    // Look for the keyword "Category=" in the entry
-                    if (entry.contains("|")) {
-                        // Filter off the string value until after |
-                        String beforeCat = entry.substring(entry.indexOf("|") + 1).trim();
+                    // Filter off the string value until after {
+                    String beforeCat = entry.substring(entry.indexOf("{") + 1).trim();
 
-                        // Extract the string value before next |
-                        String [] parts = beforeCat.split("\\|", 2);
+                    // Extract the string value before }
+                    String [] parts = beforeCat.split("}", 2);
 
-                        String category = parts[0];
+                    String category = parts[0];
 
-                        categories.add(category);
-                    }
+                    categories.add(category);
+
                 } catch (Exception e) {
                     logger.logWarning("Error extracting category from entry: " + entry);
                 }

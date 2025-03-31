@@ -32,7 +32,7 @@ public class SetTotalBudgetTest {
     @Test
     public void testSetTotalBudget_valid() throws MTException {
         // Simulate valid input for setting the total budget
-        String input = "setTotalBudget 500.00";
+        String input = "setTotBgt 500.00";
 
         // Invoke the setTotalBudget method
         moneyList.setTotalBudget(input);
@@ -53,7 +53,7 @@ public class SetTotalBudgetTest {
     @Test
     public void testSetTotalBudget_invalidFormat() {
         // Simulate invalid input with a non-numeric budget
-        String input = "setTotalBudget abc";
+        String input = "setTotBgt abc";
 
         // Assert that a NumberFormatException is thrown
         assertThrows(MTException.class, () -> {
@@ -64,7 +64,7 @@ public class SetTotalBudgetTest {
     @Test
     public void testSetTotalBudget_negativeBudget() throws MTException {
         // Simulate invalid input for setting a negative budget
-        String input = "setTotalBudget -100.00";
+        String input = "setTotBgt -100.00";
 
         // Invoke the setTotalBudget method
         moneyList.setTotalBudget(input);

@@ -42,7 +42,7 @@ public class Parser {
             return new TotalExpenseCommand();
         }
 
-        if (trimmedInput.startsWith("setTotalBudget")) {
+        if (trimmedInput.startsWith("setTotBgt")) {
             return parseBudgetCommand(trimmedInput);
         }
 
@@ -85,7 +85,7 @@ public class Parser {
 
     private BudgetCommand parseBudgetCommand(String input) throws MTException {
         try {
-            String budgetString = input.substring("setTotalBudget".length()).trim();
+            String budgetString = input.substring("setTotBdt".length()).trim();
             double budget = Double.parseDouble(budgetString);
 
             if (budget < 0) {
