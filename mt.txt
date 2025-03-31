@@ -1,0 +1,2 @@
+Expense: dinner $10.00 {food} [2025-05-15]
+Expense: ball $6.00 {} [no date]
