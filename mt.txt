@@ -1,2 +1,7 @@
+<<<<<<< HEAD
 Expense: ense fuel $20.00 {Uncategorized} [no date]
 Expense: food $30.00 {Food} [no date]
+=======
+Expense: dinner $10.00 {food} [2025-05-15]
+Expense: ball $6.00 {} [no date]
+>>>>>>> master

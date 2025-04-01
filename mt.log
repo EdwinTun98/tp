@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 Mar 31, 2025 11:02:03 AM seedu.duke.MTLogger logInfo
 INFO: Starting CLI program.
 Mar 31, 2025 11:02:03 AM seedu.duke.MTLogger logInfo
@@ -3543,3 +3544,9 @@ Mar 31, 2025 8:18:18 PM seedu.duke.MTLogger logInfo
 INFO: Total expense calculated: 50.00
 Mar 31, 2025 8:18:26 PM seedu.duke.MTLogger logInfo
 INFO: Displayed 2 unique categories.
+=======
+Apr 01, 2025 1:12:35 AM seedu.duke.MTLogger logInfo
+INFO: Starting CLI program.
+Apr 01, 2025 1:12:35 AM seedu.duke.MTLogger logInfo
+INFO: Loaded 2 entries from file.
+>>>>>>> master
