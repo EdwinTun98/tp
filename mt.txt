@@ -1,2 +1,2 @@
-Expense: dinner $10.00 {food} [2025-05-15]
-Expense: ball $6.00 {} [no date]
+Income: wages $3000.00 [2025-04-01]
+Expense: rent $250.00 {Uncategorized} [2025-06-05]

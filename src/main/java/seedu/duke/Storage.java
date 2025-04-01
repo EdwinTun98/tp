@@ -18,13 +18,16 @@ public class Storage {
     private static final String BUDGET_FILE_PATH = "budgets.txt";
     private final MTLogger logger;
 
+    //@@author rchlai
     /**
      * Initializes a new Storage instance with a logger.
      */
     public Storage() {
         this.logger = new MTLogger(Storage.class.getName());
     }
+    //@@author
 
+    //@@author rchlai
     /**
      * Saves all entries to the storage file.
      *
@@ -43,6 +46,7 @@ public class Storage {
             throw new MTException("Error saving entries: " + error.getMessage());
         }
     }
+    //@@author
 
     //@@author EdwinTun98
     public void saveBudgets(HashMap<String, Double> budgetList) throws MTException {
@@ -57,6 +61,7 @@ public class Storage {
     }
     //@@author
 
+    //@@author rchlai
     /**
      * Loads all entries from the storage file.
      *
@@ -111,5 +116,6 @@ public class Storage {
 
         return budgets;
     }
+    //@@author
     //@@author
 }
