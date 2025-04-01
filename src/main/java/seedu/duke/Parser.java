@@ -12,112 +12,87 @@ public class Parser {
     }
     //@@author
 
+    //@@author limleyhooi
     public Command parseCommand(String input) throws MTException {
         logger.logInfo("Parsing input: " + input);
 
-        // Handle empty input
-        if (input == null || input.trim().isEmpty()) {
-            logger.logWarning("Empty input received.");
+        if (isNullOrEmpty(input)) {
             throw new MTException("Please enter a valid command.");
         }
 
         String trimmedInput = input.trim();
 
-        // Handle different commands based on input
-        if (trimmedInput.equalsIgnoreCase("list")) {
+        return createCommandFromInput(trimmedInput);
+    }
+    //@@author
+
+    //@@author limleyhooi
+    private boolean isNullOrEmpty(String input) {
+        return input == null || input.trim().isEmpty();
+    }
+    //@@author
+
+    //@@author limleyhooi
+    private Command createCommandFromInput(String input) throws MTException {
+        if (input.equalsIgnoreCase("list")) {
             return new ListCommand();
         }
 
-        if (trimmedInput.equalsIgnoreCase("exit")) {
+        if (input.equalsIgnoreCase("exit")) {
             return new ExitCommand();
         }
 
-        if (trimmedInput.startsWith("find")) {
-            return parseFindCommand(trimmedInput);
-        }
-
-        if (trimmedInput.startsWith("del")) {
-            return parseDeleteCommand(trimmedInput);
-        }
-
-        if (trimmedInput.startsWith("totalExp")) {
-            return new TotalExpenseCommand();
-        }
-
-        if (trimmedInput.startsWith("setTotBgt")) {
-            return parseBudgetCommand(trimmedInput);
-        }
-
-        if (trimmedInput.startsWith("addExp")) {
-            return parseAddExpenseCommand(trimmedInput);
-        }
-
-        if (trimmedInput.startsWith("edit")) {
-            return parseEditExpenseCommand(trimmedInput);
-        }
-
-        if (trimmedInput.equalsIgnoreCase("listCat")) {
+        if (input.equalsIgnoreCase("listCat")) {
             return new ListCatsCommand();
         }
 
-        if (trimmedInput.equalsIgnoreCase("help")) {
+        if (input.equalsIgnoreCase("help")) {
             return new HelpCommand();
         }
 
-        if (trimmedInput.equalsIgnoreCase("clear")) {
+        if (input.equalsIgnoreCase("clear")) {
             return new ClearListCommand();
         }
 
-        if (trimmedInput.startsWith("addIncome")) {
-            return parseAddIncomeCommand(trimmedInput);
+        if (input.startsWith("totalExp")) {
+            return new TotalExpenseCommand();
         }
 
-        logger.logWarning("Unknown command: " + trimmedInput);
+        if (input.startsWith("find")) {
+            return createFindCommand(input);
+        }
+
+        if (input.startsWith("del")) {
+            return createDeleteCommand(input);
+        }
+
+        if (input.startsWith("setTotBgt")) {
+            return createBudgetCommand(input);
+        }
+
+        if (input.startsWith("addExp")) {
+            return createAddExpenseCommand(input);
+        }
+
+        if (input.startsWith("edit")) {
+            return createEditExpenseCommand(input);
+        }
+
+        if (input.startsWith("addIncome")) {
+            return createAddIncomeCommand(input);
+        }
+
+        logger.logWarning("Unknown command: " + input);
         throw new MTException("Unknown command. Type 'help' for a " +
                 "list of available commands.");
-    }
-
-    //@@author limleyhooi
-    private AddIncomeCommand parseAddIncomeCommand(String input) throws MTException {
-        try {
-            // Remove the command prefix "addIncome" and trim the input.
-            String content = input.substring("addIncome".length()).trim();
-
-            // Split on "$/" to separate description from amount (and optional date)
-            String[] parts = content.split("\\$/", 2);
-            if (parts.length < 2) {
-                throw new MTException("Invalid format. Use: addIncome <description> $/<amount> [d/<date>]");
-            }
-
-            String description = parts[0].trim();
-            String remainder = parts[1].trim();
-
-            double amount = 0.0;
-            String date = "no date";
-
-            // Check if there's a date marker "d/" in the remainder.
-            if (remainder.contains("d/")) {
-                String[] parts2 = remainder.split("d/", 2);
-                String amountString = parts2[0].trim();
-                amount = Double.parseDouble(amountString);
-                date = parts2[1].trim();
-            } else {
-                amount = Double.parseDouble(remainder.trim());
-            }
-
-            return new AddIncomeCommand(description, amount, date);
-        } catch (NumberFormatException error) {
-            throw new MTException("Invalid amount format in addIncome command: " + error.getMessage());
-        }
     }
     //@@author
 
     //@@author EdwinTun98
-    private FindCommand parseFindCommand(String input) throws MTException {
+    private FindCommand createFindCommand(String input) throws MTException {
         String keyword = input.substring(5).trim();
 
         if (keyword.isEmpty()) {
-            logger.logWarning("Empty keyword for find command.");
             throw new MTException("Please enter a keyword to search.");
         }
 
@@ -126,301 +101,320 @@ public class Parser {
     //@@author
 
     //@@author limleyhooi
-    private DeleteCommand parseDeleteCommand(String input) throws MTException {
+    private DeleteCommand createDeleteCommand(String input) throws MTException {
         try {
-            int index = Integer.parseInt(input.replaceAll("[^0-9]", "")) - 1;
+            int index = Integer.parseInt(input.replaceAll(
+                    "[^0-9]", "")) - 1;
+
             return new DeleteCommand(index);
-        } catch (NumberFormatException e) {
-            logger.logWarning("Invalid delete command format: " + input);
+        } catch (NumberFormatException error) {
             throw new MTException("Use: delete <ENTRY_NUMBER>");
         }
     }
     //@@author
 
     //@@author limleyhooi
-    private BudgetCommand parseBudgetCommand(String input) throws MTException {
+    private BudgetCommand createBudgetCommand(String input) throws MTException {
         try {
             String budgetString = input.substring("setTotBdt".length()).trim();
             double budget = Double.parseDouble(budgetString);
 
             if (budget < 0) {
-                logger.logWarning("Attempted to set a negative budget: " + budget);
                 throw new MTException("Budget cannot be negative.");
             }
 
             return new BudgetCommand(budget);
-        } catch (NumberFormatException e) {
-            logger.logWarning("Invalid budget format: " + input);
+        } catch (NumberFormatException error) {
             throw new MTException("Invalid budget format. " +
-                    "Please enter a valid number (e.g., setTotalBudget 500.00).");
+                    "Please enter a valid number.");
         }
     }
     //@@author
 
     //@@author EdwinTun98
-    private AddExpenseCommand parseAddExpenseCommand(String input) throws MTException {
+    private AddExpenseCommand createAddExpenseCommand(String input) throws MTException {
         try {
-            validateInput(input);
-            String processedInput = input.trim();
+            validateAddExpenseFormat(input);
+            ExpenseData expenseData = parseExpenseData(input);
 
-            validateCommandFormat(processedInput);
-
-            String contentAfterCommand = getContentAfterCommand(processedInput);
-            String description = extractDescription(contentAfterCommand);
-
-            String afterDescription = getAfterDescription(contentAfterCommand);
-            double amount = extractAmount(afterDescription);
-            String category = extractCategory(afterDescription);
-            String date = extractDate(afterDescription);
-
-            validateAmount(amount);
-
-            return new AddExpenseCommand(description, amount, category, date);
-        } catch (NumberFormatException e) {
-            logger.logWarning("Invalid amount format: " + input);
+            return new AddExpenseCommand(
+                    expenseData.description,
+                    expenseData.amount,
+                    expenseData.category,
+                    expenseData.date
+            );
+        } catch (NumberFormatException error) {
             throw new MTException("Invalid amount format. " +
                     "Please ensure it is a numeric value.");
-        } catch (IndexOutOfBoundsException e) {
-            logger.logWarning("Invalid command format: " + input);
-            throw new MTException("Invalid format. Use: addExpense <description> " +
-                    "$/<amount> [c/<category>] [d/<date>]");
+        } catch (IndexOutOfBoundsException error) {
+            throw new MTException("Invalid format. " +
+                    "Use: addExpense <description> $/<amount> [c/<category>] [d/<date>]");
         }
     }
     //@@author
 
     //@@author EdwinTun98
-    private void validateInput(String input) throws MTException {
-        if (input == null) {
-            throw new MTException("Input should not be null");
-        }
-    }
-    //@@author
-
-    //@@author EdwinTun98
-    private void validateCommandFormat(String input) throws MTException {
+    private void validateAddExpenseFormat(String input) throws MTException {
         if (!input.startsWith("addExp") || !input.contains("$/")) {
-            throw new MTException("Invalid format. Use: addExp <description> " +
-                    "$/<amount> [c/<category>] [d/<date>]");
+            throw new MTException("Invalid format. " +
+                    "Use: addExp <description> $/<amount> [c/<category>] [d/<date>]");
         }
     }
     //@@author
 
     //@@author EdwinTun98
-    private String getContentAfterCommand(String input) {
-        return input.substring("addExp".length()).trim();
+    private ExpenseData parseExpenseData(String input) {
+        String content = input.substring("addExp".length()).trim();
+        String description = extractDescription(content);
+        String remainder = content.substring(
+                content.indexOf("$/") + 2).trim();
+
+        return new ExpenseData(
+                description,
+                extractAmount(remainder),
+                extractCategory(remainder),
+                extractDate(remainder)
+        );
     }
     //@@author
 
-    //@@author EdwinTun98
-    private String extractDescription(String contentAfterCommand) {
-        int dollarSlashIndex = contentAfterCommand.indexOf("$/");
+    //@@author limleyhooi, EdwinTun98
+    private String extractDescription(String content) {
+        int amountIndex = content.indexOf("$/");
 
-        if (dollarSlashIndex == 0) {
-            return "No description";
-        } else if (dollarSlashIndex > 0) {
-            return contentAfterCommand.substring(0, dollarSlashIndex).trim();
-        }
-
-        return "No description";
+        return amountIndex > 0 ? content.substring(0, amountIndex)
+                .trim() : "No description";
     }
     //@@author
 
-    //@@author EdwinTun98
-    private String getAfterDescription(String contentAfterCommand) {
-        int dollarSlashIndex = contentAfterCommand.indexOf("$/");
+    //@@author limleyhooi, EdwinTun98
+    private double extractAmount(String remainder) {
+        int categoryIndex = remainder.indexOf("c/");
+        int dateIndex = remainder.indexOf("d/");
 
-        return contentAfterCommand.substring(dollarSlashIndex + 2).trim();
-    }
-    //@@author
-
-    //@@author EdwinTun98
-    private double extractAmount(String afterDescription) throws NumberFormatException {
-        int categoryIndex = afterDescription.indexOf("c/");
-        int dateIndex = afterDescription.indexOf("d/");
-
-        String amountString = determineAmountString(afterDescription, categoryIndex, dateIndex);
+        String amountString = remainder.substring(
+                0,
+                Math.min(
+                        categoryIndex != -1 ? categoryIndex : remainder.length(),
+                        dateIndex != -1 ? dateIndex : remainder.length()
+                )
+        ).trim();
 
         return Double.parseDouble(amountString);
     }
     //@@author
 
-    //@@author EdwinTun98
-    private String determineAmountString(String input, int categoryIndex, int dateIndex) {
-        if (categoryIndex != -1 && dateIndex != -1) {
-            return input.substring(0, Math.min(categoryIndex, dateIndex)).trim();
-        } else if (categoryIndex != -1) {
-            return input.substring(0, categoryIndex).trim();
-        } else if (dateIndex != -1) {
-            return input.substring(0, dateIndex).trim();
-        }
-
-        return input.trim();
-    }
-    //@@author
-
-    //@@author EdwinTun98
-    private String extractCategory(String afterDescription) {
-        int categoryIndex = afterDescription.indexOf("c/");
+    //@@author EdwinTun98, limleyhooi
+    private String extractCategory(String remainder) {
+        int categoryIndex = remainder.indexOf("c/");
 
         if (categoryIndex == -1) {
             return "Uncategorized";
         }
 
-        int dateIndex = afterDescription.indexOf("d/");
+        int dateIndex = remainder.indexOf("d/");
+        int endIndex = dateIndex != -1 && dateIndex > categoryIndex ?
+                dateIndex : remainder.length();
 
-        if (dateIndex == -1 || categoryIndex < dateIndex) {
-            return afterDescription.substring(categoryIndex + 2,
-                    dateIndex != -1 ? dateIndex : afterDescription.length()).trim();
-        }
-
-        return afterDescription.substring(categoryIndex + 2).trim();
+        return remainder.substring(categoryIndex + 2, endIndex).trim();
     }
     //@@author
 
     //@@author EdwinTun98
-    private String extractDate(String afterDescription) {
-        int dateIndex = afterDescription.indexOf("d/");
+    private String extractDate(String remainder) {
+        int dateIndex = remainder.indexOf("d/");
 
         if (dateIndex == -1) {
             return "no date";
         }
 
-        int categoryIndex = afterDescription.indexOf("c/");
+        int categoryIndex = remainder.indexOf("c/");
+        int endIndex = categoryIndex != -1 && categoryIndex >
+                dateIndex ? categoryIndex : remainder.length();
 
-        if (categoryIndex == -1 || dateIndex < categoryIndex) {
-            return afterDescription.substring(dateIndex + 2,
-                    categoryIndex != -1 ? categoryIndex : afterDescription.length()).trim();
-        }
-
-        return afterDescription.substring(dateIndex + 2).trim();
+        return remainder.substring(dateIndex + 2, endIndex).trim();
     }
     //@@author
 
     //@@author EdwinTun98
-    private void validateAmount(double amount) throws MTException {
-        if (amount <= 0) {
-            throw new MTException("Amount must be greater than zero.");
-        }
-    }
-    //@@author
-
-    //@@author EdwinTun98
-    private EditExpenseCommand parseEditExpenseCommand(String input) throws MTException {
+    private EditExpenseCommand createEditExpenseCommand(String input) throws MTException {
         try {
-            String afterEdit = input.substring("edit".length()).trim();
-            int firstSpaceIndex = afterEdit.indexOf(' ');
+            EditCommandData editData = parseEditCommand(input);
 
-            if (firstSpaceIndex == -1) {
-                throw new MTException("Invalid format. Use: edit <entry_number> [options]");
-            }
-
-            int index = Integer.parseInt(afterEdit.substring(0, firstSpaceIndex)) - 1;
-            String restOfString = afterEdit.substring(firstSpaceIndex + 1).trim();
-
-            String desc = null;
-            double amount = 0.00;
-            String cat = null;
-            String date = null;
-
-            int dollarSlash = restOfString.indexOf("$/");
-
-            String beforeDollar;
-            String afterDollar;
-
-            if (dollarSlash == -1) {
-                beforeDollar = restOfString;
-                afterDollar = "";
-            } else {
-                beforeDollar = restOfString.substring(0, dollarSlash).trim();
-                afterDollar = restOfString.substring(dollarSlash + 2).trim();
-            }
-
-            if (!beforeDollar.isEmpty()) {
-                desc = beforeDollar;
-            }
-
-            if (!afterDollar.isEmpty()) {
-                int cIndex = afterDollar.indexOf("c/");
-                int dIndex = afterDollar.indexOf("d/");
-
-                double parsedAmount;
-                if (cIndex != -1 && dIndex != -1) {
-                    if (cIndex < dIndex) {
-                        parsedAmount = Double.parseDouble(afterDollar.substring(0, cIndex).trim());
-                        cat = afterDollar.substring(cIndex + 2, dIndex).trim();
-                        date = afterDollar.substring(dIndex + 2).trim();
-                    } else {
-                        parsedAmount = Double.parseDouble(afterDollar.substring(0, dIndex).trim());
-                        date = afterDollar.substring(dIndex + 2, cIndex).trim();
-                        cat = afterDollar.substring(cIndex + 2).trim();
-                    }
-                    amount = parsedAmount;
-                } else if (cIndex != -1) {
-                    parsedAmount = Double.parseDouble(afterDollar.substring(0, cIndex).trim());
-                    cat = afterDollar.substring(cIndex + 2).trim();
-                    amount = parsedAmount;
-                } else if (dIndex != -1) {
-                    parsedAmount = Double.parseDouble(afterDollar.substring(0, dIndex).trim());
-                    date = afterDollar.substring(dIndex + 2).trim();
-                    amount = parsedAmount;
-                } else {
-                    parsedAmount = Double.parseDouble(afterDollar.trim());
-                    amount = parsedAmount;
-                }
-
-                if (cat != null && cat.isEmpty()) {
-                    cat = null;
-                }
-
-                if (date != null && date.isEmpty()) {
-                    date = null;
-                }
-            }
-
-            if (dollarSlash == -1) {
-                int cIndex = beforeDollar.indexOf("c/");
-                int dIndex = beforeDollar.indexOf("d/");
-
-                if (cIndex != -1 || dIndex != -1) {
-                    desc = null;
-
-                    if (cIndex != -1 && (dIndex == -1 || cIndex < dIndex)) {
-                        String possibleAmountPart = beforeDollar.substring(0, cIndex).trim();
-                        if (!possibleAmountPart.isEmpty()) {
-                            desc = possibleAmountPart;
-                        }
-
-                        int catEnd = (dIndex != -1) ? dIndex : beforeDollar.length();
-                        cat = beforeDollar.substring(cIndex + 2, catEnd).trim();
-
-                        if (dIndex != -1) {
-                            date = beforeDollar.substring(dIndex + 2).trim();
-                        }
-                    } else if (dIndex != -1 && (cIndex == -1 || dIndex < cIndex)) {
-                        String possibleAmountPart = beforeDollar.substring(0, dIndex).trim();
-                        if (!possibleAmountPart.isEmpty()) {
-                            desc = possibleAmountPart;
-                        }
-                        int dateEnd = (cIndex != -1) ? cIndex : beforeDollar.length();
-                        date = beforeDollar.substring(dIndex + 2, dateEnd).trim();
-                        if (cIndex != -1) {
-                            cat = beforeDollar.substring(cIndex + 2).trim();
-                        }
-                    }
-                }
-            }
-
-            return new EditExpenseCommand(index, desc, amount, cat, date);
-
+            return new EditExpenseCommand(
+                    editData.index,
+                    editData.description,
+                    editData.amount,
+                    editData.category,
+                    editData.date
+            );
         } catch (NumberFormatException error) {
-            throw new MTException("Invalid number format in edit command: "
-                    + error.getMessage());
+            throw new MTException("Invalid number format in edit command");
         } catch (MTException error) {
             throw error;
         } catch (Exception error) {
-            throw new MTException("Invalid edit format: "
-                    + error.getMessage());
+            throw new MTException("Invalid edit format");
         }
     }
     //@@author
+
+    //@@author EdwinTun98
+    private EditCommandData parseEditCommand(String input) throws MTException {
+        String afterEdit = input.substring("edit".length()).trim();
+        int firstSpace = afterEdit.indexOf(' ');
+
+        if (firstSpace == -1) {
+            throw new MTException("Invalid format. " +
+                    "Use: edit <entry_number> [options]");
+        }
+
+        int index = Integer.parseInt(afterEdit.substring(0, firstSpace)) - 1;
+        String rest = afterEdit.substring(firstSpace + 1).trim();
+
+        return new EditCommandData(
+                index,
+                parseEditDescription(rest),
+                parseEditAmount(rest),
+                parseEditCategory(rest),
+                parseEditDate(rest)
+        );
+    }
+    //@@author
+
+    //@@author EdwinTun98
+    private String parseEditDescription(String input) {
+        if (!input.contains("$/")) {
+            int cIndex = input.indexOf("c/");
+            int dIndex = input.indexOf("d/");
+
+            if (cIndex == -1 && dIndex == -1) {
+                return input.trim();
+            }
+
+            int end = Math.min(
+                    cIndex != -1 ? cIndex : input.length(),
+                    dIndex != -1 ? dIndex : input.length()
+            );
+
+            return input.substring(0, end).trim();
+        }
+
+        return null;
+    }
+    //@@author EdwinTun98
+
+    //@@author EdwinTun98
+    private double parseEditAmount(String input) {
+        if (!input.contains("$/")) {
+            return 0.00;
+        }
+
+        String afterDollar = input.substring(
+                input.indexOf("$/") + 2).trim();
+        int cIndex = afterDollar.indexOf("c/");
+        int dIndex = afterDollar.indexOf("d/");
+
+        String amountString = afterDollar.substring(
+                0,
+                Math.min(
+                        cIndex != -1 ? cIndex : afterDollar.length(),
+                        dIndex != -1 ? dIndex : afterDollar.length()
+                )
+        ).trim();
+
+        return amountString.isEmpty() ? 0.00 : Double.parseDouble(amountString);
+    }
+    //@@author
+
+    //@@author EdwinTun98
+    private String parseEditCategory(String input) {
+        if (!input.contains("c/")) {
+            return null;
+        }
+
+        int cIndex = input.indexOf("c/");
+        String afterCategory = input.substring(cIndex + 2).trim();
+
+        int dIndex = afterCategory.indexOf("d/");
+
+        return dIndex != -1 ? afterCategory.substring(0, dIndex)
+                .trim() : afterCategory.trim();
+    }
+    //@@author
+
+    //@@author EdwinTun98
+    private String parseEditDate(String input) {
+        if (!input.contains("d/")) {
+            return null;
+        }
+
+        int dIndex = input.indexOf("d/");
+        String afterDate = input.substring(dIndex + 2).trim();
+
+        int cIndex = afterDate.indexOf("c/");
+
+        return cIndex != -1 ? afterDate.substring(0, cIndex)
+                .trim() : afterDate.trim();
+    }
+    //@@author
+
+    //@@author limleyhooi
+    private AddIncomeCommand createAddIncomeCommand(String input) throws MTException {
+        try {
+            IncomeData incomeData = parseIncomeData(input);
+
+            return new AddIncomeCommand(
+                    incomeData.description,
+                    incomeData.amount,
+                    incomeData.date
+            );
+        } catch (NumberFormatException error) {
+            throw new MTException("Invalid amount format in " +
+                    "addIncome command");
+        }
+    }
+    //@@author
+
+    //@@author limleyhooi
+    private IncomeData parseIncomeData(String input) throws MTException {
+        String content = input.substring("addIncome".length()).trim();
+        String[] parts = content.split("\\$/", 2);
+
+        if (parts.length < 2) {
+            throw new MTException("Invalid format. " +
+                    "Use: addIncome <description> $/<amount> [d/<date>]");
+        }
+
+        String description = parts[0].trim();
+        String remainder = parts[1].trim();
+        String date = "no date";
+        double amount;
+
+        if (remainder.contains("d/")) {
+            String[] amountAndDate = remainder.split("d/", 2);
+            amount = Double.parseDouble(amountAndDate[0].trim());
+            date = amountAndDate[1].trim();
+        } else {
+            amount = Double.parseDouble(remainder.trim());
+        }
+
+        return new IncomeData(description, amount, date);
+    }
+    //@@author
+
+    //@@author EdwinTun98, limleyhooi
+    // Helper data classes for parsing results
+    private record ExpenseData(String description, double amount, String category, String date) {
+    }
+    //@@author
+
+    //@@author EdwinTun98
+    private record EditCommandData(int index, String description, double amount, String category, String date) {
+    }
+    //@@author
+
+    //@@author limleyhooi
+    private record IncomeData(String description, double amount, String date) {
+    }
+    //@@author limleyhooi
 }

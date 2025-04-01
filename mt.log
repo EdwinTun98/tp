@@ -8220,3 +8220,97 @@ java.lang.NumberFormatException: For input string: "abc"
 	at worker.org.gradle.process.internal.worker.GradleWorkerMain.run(GradleWorkerMain.java:69)
 	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
 
+Apr 01, 2025 6:48:31 PM seedu.duke.MTLogger logInfo
+INFO: Starting CLI program.
+Apr 01, 2025 6:48:31 PM seedu.duke.MTLogger logInfo
+INFO: Loaded 0 entries from file.
+Apr 01, 2025 6:48:47 PM seedu.duke.MTLogger logWarning
+WARNING: Expense list is empty.
+Apr 01, 2025 6:48:47 PM seedu.duke.MTLogger logWarning
+WARNING: Error processing command: No entries available to display.
+Apr 01, 2025 6:48:50 PM seedu.duke.MTLogger logWarning
+WARNING: Error processing command: Unknown command. Type 'help' for a list of available commands.
+Apr 01, 2025 6:49:02 PM seedu.duke.MTLogger logInfo
+INFO: Description: fuel
+Apr 01, 2025 6:49:02 PM seedu.duke.MTLogger logInfo
+INFO: Amount after formatting: 20.0
+Apr 01, 2025 6:49:02 PM seedu.duke.MTLogger logInfo
+INFO: Added expense: Expense: fuel $20.00 {Uncategorized} [no date]
+Apr 01, 2025 6:49:20 PM seedu.duke.MTLogger logInfo
+INFO: Description: lunch
+Apr 01, 2025 6:49:20 PM seedu.duke.MTLogger logInfo
+INFO: Amount after formatting: 10.0
+Apr 01, 2025 6:49:20 PM seedu.duke.MTLogger logInfo
+INFO: Added expense: Expense: lunch $10.00 {food expense} [no date]
+Apr 01, 2025 6:49:42 PM seedu.duke.MTLogger logInfo
+INFO: Description: repairs
+Apr 01, 2025 6:49:42 PM seedu.duke.MTLogger logInfo
+INFO: Amount after formatting: 30.0
+Apr 01, 2025 6:49:42 PM seedu.duke.MTLogger logInfo
+INFO: Added expense: Expense: repairs $30.00 {repairs} [2025-08-09]
+Apr 01, 2025 6:50:01 PM seedu.duke.MTLogger logInfo
+INFO: Expense amount: 20.0
+Apr 01, 2025 6:50:01 PM seedu.duke.MTLogger logInfo
+INFO: Expense amount: 10.0
+Apr 01, 2025 6:50:01 PM seedu.duke.MTLogger logInfo
+INFO: Expense amount: 30.0
+Apr 01, 2025 6:50:01 PM seedu.duke.MTLogger logInfo
+INFO: Total expense calculated: 60.00
+Apr 01, 2025 6:50:08 PM seedu.duke.MTLogger logWarning
+WARNING: Error processing command: Invalid format. Use: addExp <description> $/<amount> [c/<category>] [d/<date>]
+Apr 01, 2025 6:50:12 PM seedu.duke.MTLogger logInfo
+INFO: Expense amount: 20.0
+Apr 01, 2025 6:50:12 PM seedu.duke.MTLogger logInfo
+INFO: Expense amount: 10.0
+Apr 01, 2025 6:50:12 PM seedu.duke.MTLogger logInfo
+INFO: Expense amount: 30.0
+Apr 01, 2025 6:50:12 PM seedu.duke.MTLogger logInfo
+INFO: Total expense calculated: 60.00
+Apr 01, 2025 6:50:27 PM seedu.duke.MTLogger logInfo
+INFO: Total budget after df formatting: 100.0
+Apr 01, 2025 6:50:27 PM seedu.duke.MTLogger logInfo
+INFO: Total budget set to: $100.00
+Apr 01, 2025 6:51:03 PM seedu.duke.MTLogger logWarning
+WARNING: Error processing command: Invalid budget format. Please enter a valid number.
+Apr 01, 2025 6:51:14 PM seedu.duke.MTLogger logInfo
+INFO: Deleted entry at index: 0
+Apr 01, 2025 6:51:21 PM seedu.duke.MTLogger logWarning
+WARNING: Error processing command: Use: delete <ENTRY_NUMBER>
+Apr 01, 2025 6:51:49 PM seedu.duke.MTLogger logInfo
+INFO: Displayed 2 unique categories.
+Apr 01, 2025 6:51:55 PM seedu.duke.MTLogger logWarning
+WARNING: Error processing command: Unknown command. Type 'help' for a list of available commands.
+Apr 01, 2025 6:52:25 PM seedu.duke.MTLogger logWarning
+WARNING: Error processing command: Invalid format. Use: addIncome <description> $/<amount> [d/<date>]
+Apr 01, 2025 6:53:42 PM seedu.duke.MTLogger logInfo
+INFO: Added income: Income: salary bonus $3000.00 [2025-04-01]
+Apr 01, 2025 6:53:57 PM seedu.duke.MTLogger logInfo
+INFO: Displayed 3 unique categories.
+Apr 01, 2025 6:54:44 PM seedu.duke.MTLogger logInfo
+INFO: Expense amount: 10.0
+Apr 01, 2025 6:54:44 PM seedu.duke.MTLogger logInfo
+INFO: Expense amount: 30.0
+Apr 01, 2025 6:54:44 PM seedu.duke.MTLogger logInfo
+INFO: Total expense calculated: 40.00
+Apr 01, 2025 6:55:06 PM seedu.duke.MTLogger logInfo
+INFO: All entries have been cleared from the money list.
+Apr 01, 2025 6:55:08 PM seedu.duke.MTLogger logWarning
+WARNING: Expense list is empty.
+Apr 01, 2025 6:55:08 PM seedu.duke.MTLogger logWarning
+WARNING: Error processing command: No entries available to display.
+Apr 01, 2025 6:55:32 PM seedu.duke.MTLogger logInfo
+INFO: Added income: Income: wages $3000.00 [2025-04-01]
+Apr 01, 2025 6:55:36 PM seedu.duke.MTLogger logWarning
+WARNING: Error processing command: Invalid format. Use: edit <entry_number> [options]
+Apr 01, 2025 6:55:43 PM seedu.duke.MTLogger logWarning
+WARNING: Error processing command: Entry not in expected format!
+Apr 01, 2025 6:56:03 PM seedu.duke.MTLogger logWarning
+WARNING: Error processing command: Entry not in expected format!
+Apr 01, 2025 6:56:37 PM seedu.duke.MTLogger logInfo
+INFO: Description: rent
+Apr 01, 2025 6:56:37 PM seedu.duke.MTLogger logInfo
+INFO: Amount after formatting: 300.0
+Apr 01, 2025 6:56:37 PM seedu.duke.MTLogger logInfo
+INFO: Added expense: Expense: rent $300.00 {Uncategorized} [no date]
+Apr 01, 2025 6:56:58 PM seedu.duke.MTLogger logInfo
+INFO: Displayed 2 unique categories.
