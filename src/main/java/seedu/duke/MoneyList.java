@@ -114,6 +114,7 @@ public class MoneyList {
                 if (afterAmountPart.contains("c/")) {
                     // Split on "c/" to separate the amount from the category (and possibly date)
                     String[] parts2 = afterAmountPart.split("c/", 2);
+                    //@@author limleyhooi
                     String amountString = parts2[0].trim();
                     // Validate and parse the amount
                     if (amountString.matches("-?\\d+(\\.\\d+)?")) {
@@ -182,8 +183,125 @@ public class MoneyList {
             throw new MTException("Failed to add expense: " + error.getMessage());
         }
     }
+    //@@author
+    //@@author limleyhooi
+    public void addIncome(String input) throws MTException {
+        try {
+            if (input == null) {
+                throw new MTException("Input should not be null");
+            }
+            input = input.trim();
+
+            //  input format: addIncome <description> $/<amount> [d/<date>]
+            if (!input.startsWith("addIncome") || !input.contains("$/")) {
+                throw new MTException("Invalid format. Use: addIncome <description> $/<amount> [d/<date>]");
+            }
+
+
+            String content = input.substring("addIncome".length()).trim();
+
+
+            String[] parts = content.split("\\$/", 2);
+            String description = parts[0].trim();
+            String remainder = parts[1].trim();
+
+            double amount = 0.0;
+            String date = "no date";
+
+            // Check if there's a date marker "d/" in the remainder
+            if (remainder.contains("d/")) {
+                String[] parts2 = remainder.split("d/", 2);
+                String amountString = parts2[0].trim();
+                amount = Double.parseDouble(amountString);
+                date = parts2[1].trim();
+            } else {
+                amount = Double.parseDouble(remainder.trim());
+            }
+
+            if (amount <= 0) {
+                throw new MTException("Amount must be greater than zero.");
+            }
+
+
+            Income newIncome = new Income(description, amount,  date);
+            moneyList.add(newIncome.toString());
+            logger.logInfo("Added income: " + newIncome);
+            ui.print("Income added: " + newIncome);
+            storage.saveEntries(moneyList);
+        } catch (NumberFormatException error) {
+            logger.logSevere("Invalid amount format in addIncome: " + input, error);
+            throw new MTException("Invalid amount format. Please ensure it is a numeric value.");
+        } catch (Exception error) {
+            logger.logSevere("Error adding income: " + error.getMessage(), error);
+            throw new MTException("Failed to add income: " + error.getMessage());
+        }
+    }//@@author
 
     //@@author EdwinTun98
+    public void editExpense(int index, String newDesc, Double newAmount,
+                            String newCat, String newDate) throws MTException {
+        validateIndex(index);
+
+        String oldEntry = moneyList.get(index);
+
+        if (!oldEntry.startsWith("Expense: ")) {
+            throw new MTException("Entry not in expected format!");
+        }
+
+        String stripped = oldEntry.substring("Expense: ".length()).trim();
+        int dollarIndex = stripped.indexOf('$');
+
+        if (dollarIndex < 1) {
+            throw new MTException("Corrupted old entry: missing $ for amount.");
+        }
+
+        String oldDescription = stripped.substring(0, dollarIndex).trim();
+
+        int openBrace = stripped.indexOf('{', dollarIndex);
+        if (openBrace == -1) {
+            throw new MTException("Corrupted old entry: missing { for category.");
+        }
+
+        String amountPart = stripped.substring(dollarIndex + 1, openBrace).trim();
+        double oldAmount = Double.parseDouble(amountPart);
+
+        int closeBrace = stripped.indexOf('}', openBrace);
+        if (closeBrace == -1) {
+            throw new MTException("Corrupted old entry: missing } for category.");
+        }
+
+        String oldCategory = stripped.substring(openBrace + 1, closeBrace).trim();
+
+        int openBracket = stripped.indexOf('[', closeBrace);
+        int closeBracket = stripped.indexOf(']', openBracket);
+        if (openBracket == -1 || closeBracket == -1) {
+            throw new MTException("Corrupted old entry: missing [ or ] for date.");
+        }
+
+        String oldDate = stripped.substring(openBracket + 1, closeBracket).trim();
+
+        if (newDesc == null || newDesc.isEmpty()) {
+            newDesc = oldDescription;
+        }
+        if (newAmount <= 0.00) {
+            newAmount = oldAmount;
+        }
+        if (newCat == null || newCat.isEmpty()) {
+            newCat = oldCategory;
+        }
+        if (newDate == null || newDate.isEmpty()) {
+            newDate = oldDate;
+        }
+
+        String updatedStr = String.format("Expense: %s $%.2f {%s} [%s]",
+                newDesc, newAmount, newCat, newDate);
+
+        moneyList.set(index, updatedStr);
+        ui.print("Entry updated. " + updatedStr);
+        storage.saveEntries(moneyList);
+    }
+
+
     public void listSummary() throws MTException {
         if (moneyList.isEmpty()) {
             logger.logWarning("Expense list is empty.");
@@ -224,13 +342,13 @@ public class MoneyList {
             ui.print((i + INDEX_OFFSET) + ": " + results.get(i));
         }
     }
+    //@@author
 
     public void getTotalExpense() {
         double total = 0.0;
 
         for (String entry : moneyList) {
             try {
-
                 // Split entry data to get entry amount
                 String[] parts1 = entry.split("\\$");
                 String[] parts2 = parts1[1].split("\\{");
@@ -307,7 +425,7 @@ public class MoneyList {
                     String beforeCat = entry.substring(entry.indexOf("{") + 1).trim();
 
                     // Extract the string value before }
-                    String [] parts = beforeCat.split("}", 2);
+                    String[] parts = beforeCat.split("}", 2);
 
                     String category = parts[0];
 
@@ -337,9 +455,16 @@ public class MoneyList {
         }
     }
 
-    public void clearEntries() {
+    public void clearEntries() throws MTException {
+        if (moneyList.isEmpty()) {
+            ui.print("No entries to clear");
+            return;
+        }
+
         moneyList.clear();
+        storage.saveEntries(moneyList);
+        
         logger.logInfo("All entries have been cleared from the money list.");
-        ui.print("All entries have been cleared.");
+        ui.print("All entries cleared");
     }
 }

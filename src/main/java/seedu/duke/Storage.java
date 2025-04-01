@@ -15,13 +15,16 @@ public class Storage {
     private static final String FILE_PATH = "mt.txt";
     private final MTLogger logger;
 
+    //@@author rchlai
     /**
      * Initializes a new Storage instance with a logger.
      */
     public Storage() {
         this.logger = new MTLogger(Storage.class.getName());
     }
+    //@@author
 
+    //@@author rchlai
     /**
      * Saves all entries to the storage file.
      *
@@ -40,7 +43,9 @@ public class Storage {
             throw new MTException("Error saving entries: " + error.getMessage());
         }
     }
+    //@@author
 
+    //@@author rchlai
     /**
      * Loads all entries from the storage file.
      *
@@ -68,4 +73,5 @@ public class Storage {
 
         return entries;
     }
+    //@@author
 }
