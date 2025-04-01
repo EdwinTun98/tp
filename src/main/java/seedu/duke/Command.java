@@ -1,5 +1,6 @@
 package seedu.duke;
 
+//@@author limleyhooi
 /**
  * Represents a command to be executed by the MoneyTrail application.
  * Commands can perform actions and indicate if they should terminate
@@ -18,6 +19,7 @@ public interface Command {
      */
     boolean shouldExit();
 }
+//@@author
 
 //@@author EdwinTun98
 /**
@@ -34,7 +36,9 @@ class ListCommand implements Command {
         return false;
     }
 }
+//@@author
 
+//@@author limleyhooi
 /**
  * Finds entries containing the specified keyword.
  */
@@ -57,6 +61,7 @@ class FindCommand implements Command {
 }
 //@@author
 
+//@@author limleyhooi
 /**
  * Deletes an entry at the specified index.
  */
@@ -80,7 +85,9 @@ class DeleteCommand implements Command {
         return false;
     }
 }
+//@@author
 
+//@@author limleyhooi
 /**
  * Calculates and displays total expenses.
  */
@@ -95,7 +102,9 @@ class TotalExpenseCommand implements Command {
         return false;
     }
 }
+//@@author
 
+//@@author limleyhooi
 /**
  * Sets the total budget amount.
  */
@@ -117,7 +126,9 @@ class BudgetCommand implements Command {
         return false;
     }
 }
+//@@author
 
+//@@author limleyhooi
 /**
  * Adds a new expense entry.
  */
@@ -156,6 +167,7 @@ class AddExpenseCommand implements Command {
         return false;
     }
 }
+//@@author
 
 //@@author EdwinTun98
 /**
@@ -189,6 +201,7 @@ class EditExpenseCommand implements Command {
 }
 //@@author
 
+//@@author limleyhooi
 /**
  * Lists all available categories.
  */
@@ -203,7 +216,9 @@ class ListCatsCommand implements Command {
         return false;
     }
 }
+//@@author
 
+//@@author limleyhooi
 /**
  * Displays help information.
  */
@@ -218,7 +233,9 @@ class HelpCommand implements Command {
         return false;
     }
 }
+//@@author
 
+//@@author limleyhooi
 /**
  * Terminates the application.
  */
@@ -233,7 +250,9 @@ class ExitCommand implements Command {
         return true;
     }
 }
+//@@author
 
+//@@author rchlai
 /**
  * Clears the entry list.
  */
@@ -248,3 +267,4 @@ class ClearListCommand implements Command {
         return false;
     }
 }
+//@@author

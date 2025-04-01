@@ -6,9 +6,11 @@ package seedu.duke;
 public class Parser {
     private final MTLogger logger;
 
+    //@@author limleyhooi
     public Parser() {
         this.logger = new MTLogger(Parser.class.getName());
     }
+    //@@author
 
     public Command parseCommand(String input) throws MTException {
         logger.logInfo("Parsing input: " + input);
@@ -84,6 +86,7 @@ public class Parser {
     }
     //@@author
 
+    //@@author limleyhooi
     private DeleteCommand parseDeleteCommand(String input) throws MTException {
         try {
             int index = Integer.parseInt(input.replaceAll("[^0-9]", "")) - 1;
@@ -93,7 +96,9 @@ public class Parser {
             throw new MTException("Use: delete <ENTRY_NUMBER>");
         }
     }
+    //@@author
 
+    //@@author limleyhooi
     private BudgetCommand parseBudgetCommand(String input) throws MTException {
         try {
             String budgetString = input.substring("setTotBdt".length()).trim();
@@ -111,6 +116,7 @@ public class Parser {
                     "Please enter a valid number (e.g., setTotalBudget 500.00).");
         }
     }
+    //@@author
 
     //@@author EdwinTun98
     private AddExpenseCommand parseAddExpenseCommand(String input) throws MTException {
