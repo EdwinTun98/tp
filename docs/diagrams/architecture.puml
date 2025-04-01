@@ -1,0 +1,37 @@
+@startuml MoneyTrail_Component_Diagram
+
+skinparam monochrome true
+skinparam componentStyle uml2
+
+package "MoneyTrail App" {
+  [User Interface] as UI <<TextUI>>
+  [Command Processor] as Parser <<Parser>>
+  [Core Logic] as MoneyList <<MoneyList>>
+  [Data Storage] as Storage <<Storage>>
+}
+
+[User] as User
+
+database "File System" as FS
+
+' Connections
+User --> UI : Commands/Input
+UI --> Parser : Parses
+Parser --> MoneyList : Executes
+MoneyList --> Storage : Saves/Loads
+Storage --> FS : Reads/Writes\n(mt.txt)
+MoneyList --> UI : Displays
+
+' Component internals (simplified)
+component MoneyList {
+  [Expense Tracker]
+  [Budget Calculator]
+  [Category Manager]
+}
+
+component Parser {
+  [Command Factory]
+  [Input Validator]
+}
+
+@enduml

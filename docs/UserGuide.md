@@ -239,6 +239,21 @@ What do you want to do next?
 ```
 
 
+### Setting a Category Budget: `setCatBgt`
+
+{TO BE ADDED}
+
+Format: setCatBgt c/<CATEGORY> <AMOUNT>
+
+Outcome:
+```
+What do you want to do next?
+setCatBgt c/food 100
+Budget for category 'food' set to $100.00
+-------------------------------------------------------------------------------
+What do you want to do next?
+```
+
 ## FAQ
 
 **Q**: How do I transfer my data to another computer? 
