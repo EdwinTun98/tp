@@ -68,10 +68,49 @@ public class Parser {
             return new ClearListCommand();
         }
 
+        if (trimmedInput.startsWith("addIncome")) {
+            return parseAddIncomeCommand(trimmedInput);
+        }
+
         logger.logWarning("Unknown command: " + trimmedInput);
         throw new MTException("Unknown command. Type 'help' for a " +
                 "list of available commands.");
     }
+
+    //@@author limleyhooi
+    private AddIncomeCommand parseAddIncomeCommand(String input) throws MTException {
+        try {
+            // Remove the command prefix "addIncome" and trim the input.
+            String content = input.substring("addIncome".length()).trim();
+
+            // Split on "$/" to separate description from amount (and optional date)
+            String[] parts = content.split("\\$/", 2);
+            if (parts.length < 2) {
+                throw new MTException("Invalid format. Use: addIncome <description> $/<amount> [d/<date>]");
+            }
+
+            String description = parts[0].trim();
+            String remainder = parts[1].trim();
+
+            double amount = 0.0;
+            String date = "no date";
+
+            // Check if there's a date marker "d/" in the remainder.
+            if (remainder.contains("d/")) {
+                String[] parts2 = remainder.split("d/", 2);
+                String amountString = parts2[0].trim();
+                amount = Double.parseDouble(amountString);
+                date = parts2[1].trim();
+            } else {
+                amount = Double.parseDouble(remainder.trim());
+            }
+
+            return new AddIncomeCommand(description, amount, date);
+        } catch (NumberFormatException error) {
+            throw new MTException("Invalid amount format in addIncome command: " + error.getMessage());
+        }
+    }
+    //@@author
 
     //@@author EdwinTun98
     private FindCommand parseFindCommand(String input) throws MTException {
