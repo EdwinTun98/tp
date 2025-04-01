@@ -15,5 +15,5 @@ Categories (in order of appearance):
 List of available commands:
 1. help: Displays this list of available commands.
 2. list: Lists out all entries.
-[... other commands ...]s
+[... other commands ...]
 Exiting program... Thank you for using MoneyTrail! :)

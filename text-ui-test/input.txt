@@ -1,10 +1,10 @@
-addExpense Lunch $/12.50 c/Food
-addExpense Textbook $/59.99 c/Education
+addExp Lunch $/12.50 c/Food
+addExp Textbook $/59.99 c/Education
 list
-delete 1
+del 1
 find book
-totalExpense
-setTotalBudget 500.00
-listCats
+totalExp
+setTotBgt 500.00
+listCat
 help
 exit
