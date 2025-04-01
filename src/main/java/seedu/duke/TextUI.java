@@ -108,5 +108,6 @@ public class TextUI {
         print("11. edit <index> <description> $/<value> " +
                 "c/<category> d/<date>: Edits an entry." + "\n" +
                 "You can select a metric to edit.");
+        print("12. addIncome <description> $/<amount> [d/<date>] ");
     }
 }

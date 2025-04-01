@@ -20,6 +20,9 @@ The application is divided into several classes, each with a specific responsibi
 - `MTLogger`: Logs application events and errors for debugging and monitoring.
 - `MTException`: A custom exception class for handling application-specific errors.
 - `Expense`: Represents an expense entry with a description and amount.
+- `Income`: Represents an income entry with a description, amount, date, and provides a formatted string for display.
+- `Parser`: Processes user input and converts it into the corresponding Command object.
+- `Command`: Defines a common interface for all operations that can be executed in the application.
 
 NOTE: Additional classes may be required in the future.
 
