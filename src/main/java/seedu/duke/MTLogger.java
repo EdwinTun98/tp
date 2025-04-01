@@ -15,6 +15,7 @@ public class MTLogger {
 
     private final Logger logger;
 
+    //@@author rchlai
     /**
      * Creates a logger instance for the specified class.
      * @param className The name of the class that will use this logger
@@ -23,6 +24,7 @@ public class MTLogger {
         this.logger = Logger.getLogger(className);
         configureLogger();
     }
+    //@@author
 
     /**
      * Configures the logger to write to a file with basic formatting.
@@ -47,6 +49,7 @@ public class MTLogger {
         }
     }
 
+    //@@author rchlai
     /**
      * Logs an informational message.
      * @param message The message to log
@@ -54,7 +57,9 @@ public class MTLogger {
     public void logInfo(String message) {
         logger.info(message);
     }
+    //@@author
 
+    //@@author rchlai
     /**
      * Logs a warning message.
      * @param message The warning message to log
@@ -62,7 +67,9 @@ public class MTLogger {
     public void logWarning(String message) {
         logger.warning(message);
     }
+    //@@author
 
+    //@@author rchlai
     /**
      * Logs a severe error message with associated exception.
      * @param message The error message
@@ -71,4 +78,5 @@ public class MTLogger {
     public void logSevere(String message, Throwable error) {
         logger.log(Level.SEVERE, message, error);
     }
+    //@@author
 }

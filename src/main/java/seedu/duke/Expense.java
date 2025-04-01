@@ -9,6 +9,7 @@ public class Expense {
     protected String date;
     protected String category;
 
+    //@@author Hansel-K
     /**
      * Creates an Expense with mandatory description and amount.
      * Uses "Uncategorized" if category is empty/null, and "no date"
@@ -25,6 +26,7 @@ public class Expense {
         this.category = (category == null || category.isEmpty()) ? "Uncategorized" : category;
         this.date = (date == null || date.isEmpty()) ? "no date" : date;
     }
+    //@@author
 
     /**
      * @return Expense description
@@ -54,6 +56,7 @@ public class Expense {
         return this.category;
     }
 
+    //@@author Hansel-K
     /**
      * @return Formatted string representation of the expense
      */
@@ -62,4 +65,5 @@ public class Expense {
         return String.format("Expense: %s $%.2f {%s} [%s]",
                 this.getDescription(), this.getAmount(), this.getCategory(), this.getDate());
     }
+    //@@author
 }

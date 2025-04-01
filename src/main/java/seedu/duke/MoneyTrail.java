@@ -13,6 +13,7 @@ public class MoneyTrail {
     private final TextUI ui;
     private final Parser parser;
 
+    //@@author rchlai
     /**
      * Initializes the core program components.
      */
@@ -24,6 +25,7 @@ public class MoneyTrail {
         this.moneyList = new MoneyList(logger, storage, ui);
         this.parser = new Parser();
     }
+    //@@author
 
     /**
      * Runs the main program loop.
@@ -72,6 +74,7 @@ public class MoneyTrail {
         ui.printExitMsg();
     }
 
+    //@@author rchlai
     /**
      * Application entry point.
      * @param args Command-line arguments (unused)
@@ -79,4 +82,5 @@ public class MoneyTrail {
     public static void main(String[] args) {
         new MoneyTrail().run();
     }
+    //@@author
 }
