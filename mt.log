@@ -8314,3 +8314,11 @@ Apr 01, 2025 6:56:37 PM seedu.duke.MTLogger logInfo
 INFO: Added expense: Expense: rent $300.00 {Uncategorized} [no date]
 Apr 01, 2025 6:56:58 PM seedu.duke.MTLogger logInfo
 INFO: Displayed 2 unique categories.
+Apr 01, 2025 7:51:56 PM seedu.duke.MTLogger logInfo
+INFO: Starting CLI program.
+Apr 01, 2025 7:51:57 PM seedu.duke.MTLogger logInfo
+INFO: Loaded 2 entries from file.
+Apr 01, 2025 7:52:05 PM seedu.duke.MTLogger logInfo
+INFO: Total budget after df formatting: 1000.0
+Apr 01, 2025 7:52:05 PM seedu.duke.MTLogger logInfo
+INFO: Total budget set to: $1000.00
