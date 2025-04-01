@@ -3670,3 +3670,55 @@ Apr 01, 2025 9:09:10 AM seedu.duke.MTLogger logInfo
 INFO: Starting CLI program.
 Apr 01, 2025 9:09:10 AM seedu.duke.MTLogger logInfo
 INFO: Loaded 4 entries from file.
+Apr 01, 2025 10:19:59 AM seedu.duke.MTLogger logInfo
+INFO: Starting CLI program.
+Apr 01, 2025 10:19:59 AM seedu.duke.MTLogger logInfo
+INFO: Loaded 4 entries from file.
+Apr 01, 2025 10:21:39 AM seedu.duke.MTLogger logInfo
+INFO: Description: car repairs
+Apr 01, 2025 10:21:39 AM seedu.duke.MTLogger logInfo
+INFO: Amount after formatting: 300.0
+Apr 01, 2025 10:21:39 AM seedu.duke.MTLogger logInfo
+INFO: Added expense: Expense: car repairs $300.00 {repairs} [no date]
+Apr 01, 2025 10:21:54 AM seedu.duke.MTLogger logInfo
+INFO: Displayed 4 unique categories.
+Apr 01, 2025 10:22:12 AM seedu.duke.MTLogger logInfo
+INFO: Expense amount: 10.0
+Apr 01, 2025 10:22:12 AM seedu.duke.MTLogger logInfo
+INFO: Expense amount: 30.0
+Apr 01, 2025 10:22:12 AM seedu.duke.MTLogger logInfo
+INFO: Expense amount: 400.0
+Apr 01, 2025 10:22:12 AM seedu.duke.MTLogger logInfo
+INFO: Expense amount: 600.0
+Apr 01, 2025 10:22:12 AM seedu.duke.MTLogger logInfo
+INFO: Expense amount: 300.0
+Apr 01, 2025 10:22:12 AM seedu.duke.MTLogger logInfo
+INFO: Total expense calculated: 1340.00
+Apr 01, 2025 10:27:33 AM seedu.duke.MTLogger logInfo
+INFO: Starting CLI program.
+Apr 01, 2025 10:27:33 AM seedu.duke.MTLogger logInfo
+INFO: Loaded 5 entries from file.
+Apr 01, 2025 10:27:50 AM seedu.duke.MTLogger logInfo
+INFO: Description: dinner
+Apr 01, 2025 10:27:50 AM seedu.duke.MTLogger logInfo
+INFO: Amount after formatting: 20.0
+Apr 01, 2025 10:27:50 AM seedu.duke.MTLogger logInfo
+INFO: Added expense: Expense: dinner $20.00 {food} [no date]
+Apr 01, 2025 10:28:00 AM seedu.duke.MTLogger logInfo
+INFO: Expense amount: 10.0
+Apr 01, 2025 10:28:00 AM seedu.duke.MTLogger logInfo
+INFO: Expense amount: 30.0
+Apr 01, 2025 10:28:00 AM seedu.duke.MTLogger logInfo
+INFO: Expense amount: 400.0
+Apr 01, 2025 10:28:00 AM seedu.duke.MTLogger logInfo
+INFO: Expense amount: 600.0
+Apr 01, 2025 10:28:00 AM seedu.duke.MTLogger logInfo
+INFO: Expense amount: 300.0
+Apr 01, 2025 10:28:00 AM seedu.duke.MTLogger logInfo
+INFO: Expense amount: 20.0
+Apr 01, 2025 10:28:00 AM seedu.duke.MTLogger logInfo
+INFO: Total expense calculated: 1360.00
+Apr 01, 2025 10:36:11 AM seedu.duke.MTLogger logInfo
+INFO: Starting CLI program.
+Apr 01, 2025 10:36:11 AM seedu.duke.MTLogger logInfo
+INFO: Loaded 6 entries from file.

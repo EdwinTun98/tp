@@ -18,6 +18,7 @@ public interface Command {
      */
     boolean shouldExit();
 }
+
 //@@author EdwinTun98
 /**
  * Lists all entries in the MoneyList.
@@ -79,7 +80,6 @@ class DeleteCommand implements Command {
         return false;
     }
 }
-
 
 /**
  * Calculates and displays total expenses.

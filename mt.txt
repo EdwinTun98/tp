@@ -1,4 +1,6 @@
-Expense: c/food $10.00 {food expense} [2025-09-04]
+Expense: food $10.00 {food expense} [2025-09-04]
 Expense: fuel $30.00 {Uncategorized} [no date]
 Expense: rent $400.00 {rent} [2020-09-08]
 Expense: mortage $600.00 {rent} [2024-06-04]
+Expense: car repairs $300.00 {repairs} [no date]
+Expense: dinner at home $20.00 {food} [2025-06-07]
