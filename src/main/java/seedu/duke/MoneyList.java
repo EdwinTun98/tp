@@ -296,7 +296,6 @@ public class MoneyList {
 
         for (String entry : moneyList) {
             try {
-
                 // Split entry data to get entry amount
                 String[] parts1 = entry.split("\\$");
                 String[] parts2 = parts1[1].split("\\{");
@@ -403,9 +402,16 @@ public class MoneyList {
         }
     }
 
-    public void clearEntries() {
+    public void clearEntries() throws MTException {
+        if (moneyList.isEmpty()) {
+            ui.print("No entries to clear");
+            return;
+        }
+
         moneyList.clear();
+        storage.saveEntries(moneyList);
+        
         logger.logInfo("All entries have been cleared from the money list.");
-        ui.print("All entries have been cleared.");
+        ui.print("All entries cleared");
     }
 }

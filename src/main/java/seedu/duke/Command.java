@@ -136,9 +136,9 @@ class AddExpenseCommand implements Command {
 
     @Override
     public void execute(MoneyList moneyList) throws MTException {
-        // Reconstruct the command string expected by MoneyList.addExpense.
-
+        // Reconstruct the command string expected by MoneyList.addExpense
         String expenseCommand = "addExp " + description + " $/" + amount;
+
         if (!category.equals("Uncategorized")) {
             expenseCommand += " c/" + category;
         }
@@ -156,7 +156,11 @@ class AddExpenseCommand implements Command {
         return false;
     }
 }
+
 //@@author EdwinTun98
+/**
+ * Edits an existing entry in the list.
+ */
 class EditExpenseCommand implements Command {
     private final int index;
     private final String newDescription;
@@ -206,7 +210,7 @@ class ListCatsCommand implements Command {
 class HelpCommand implements Command {
     @Override
     public void execute(MoneyList moneyList) {
-        //  handled in the MoneyTrail class
+        // handled in the MoneyTrail class
     }
 
     @Override
@@ -227,5 +231,20 @@ class ExitCommand implements Command {
     @Override
     public boolean shouldExit() {
         return true;
+    }
+}
+
+/**
+ * Clears the entry list.
+ */
+class ClearListCommand implements Command {
+    @Override
+    public void execute(MoneyList moneyList) throws MTException {
+        moneyList.clearEntries();
+    }
+
+    @Override
+    public boolean shouldExit() {
+        return false;
     }
 }
