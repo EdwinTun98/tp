@@ -28,8 +28,17 @@ NOTE: Additional classes may be required in the future.
 
 ## Product scope
 ### Target user profile
+- Tertiary students
 
-{Describe the target user profile}
+- Who are budget-conscious and want to track their spending
+
+- Want a lightweight, fast, and offline personal finance tracker
+
+- Appreciate having flexibility to edit, categorize, and budget their expenses and income
+
+#### These users are likely
+- Looking for an alternative to spreadsheets or complex finance apps
+- Wanting a simple, local solution with minimal setup
 
 ### Value proposition
 
