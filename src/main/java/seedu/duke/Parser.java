@@ -82,8 +82,8 @@ public class Parser {
 
         return new FindCommand(keyword);
     }
-
     //@@author
+
     private DeleteCommand parseDeleteCommand(String input) throws MTException {
         try {
             int index = Integer.parseInt(input.replaceAll("[^0-9]", "")) - 1;
@@ -112,78 +112,152 @@ public class Parser {
         }
     }
 
+    //@@author EdwinTun98
     private AddExpenseCommand parseAddExpenseCommand(String input) throws MTException {
         try {
-            if (input == null) {
-                throw new MTException("Input should not be null");
-            }
-
+            validateInput(input);
             String processedInput = input.trim();
-            String description = "No description";  // Default description
-            double amount = 0.00;
-            String category = "Uncategorized";
-            String date = "no date";
 
-            if (!processedInput.startsWith("addExp") || !processedInput.contains("$/")) {
-                throw new MTException("Invalid format. Use: addExp <description> " +
-                        "$/<amount> [c/<category>] [d/<date>]");
-            }
+            validateCommandFormat(processedInput);
 
-            String contentAfterCommand = processedInput.substring("addExp".length()).trim();
+            String contentAfterCommand = getContentAfterCommand(processedInput);
+            String description = extractDescription(contentAfterCommand);
 
-            // Modified parsing to handle missing description
-            int dollarSlashIndex = contentAfterCommand.indexOf("$/");
-            if (dollarSlashIndex == 0) {
-                // Case where description is missing (immediately after addExpense comes $/)
-                description = "No description";
-            } else if (dollarSlashIndex > 0) {
-                // Case where description exists
-                description = contentAfterCommand.substring(0, dollarSlashIndex).trim();
-            }
+            String afterDescription = getAfterDescription(contentAfterCommand);
+            double amount = extractAmount(afterDescription);
+            String category = extractCategory(afterDescription);
+            String date = extractDate(afterDescription);
 
-            String afterDescription = contentAfterCommand.substring(dollarSlashIndex + 2).trim();
-
-            // Rest of the parsing logic remains the same
-            int categoryIndex = afterDescription.indexOf("c/");
-            int dateIndex = afterDescription.indexOf("d/");
-
-            String amountString = "";
-            if (categoryIndex != -1 && dateIndex != -1) {
-                if (categoryIndex < dateIndex) {
-                    amountString = afterDescription.substring(0, categoryIndex).trim();
-                    category = afterDescription.substring(categoryIndex + 2, dateIndex).trim();
-                    date = afterDescription.substring(dateIndex + 2).trim();
-                } else {
-                    amountString = afterDescription.substring(0, dateIndex).trim();
-                    date = afterDescription.substring(dateIndex + 2, categoryIndex).trim();
-                    category = afterDescription.substring(categoryIndex + 2).trim();
-                }
-            } else if (categoryIndex != -1) {
-                amountString = afterDescription.substring(0, categoryIndex).trim();
-                category = afterDescription.substring(categoryIndex + 2).trim();
-            } else if (dateIndex != -1) {
-                amountString = afterDescription.substring(0, dateIndex).trim();
-                date = afterDescription.substring(dateIndex + 2).trim();
-            } else {
-                amountString = afterDescription.trim();
-            }
-
-            amount = Double.parseDouble(amountString);
-            if (amount <= 0) {
-                throw new MTException("Amount must be greater than zero.");
-            }
+            validateAmount(amount);
 
             return new AddExpenseCommand(description, amount, category, date);
-
         } catch (NumberFormatException e) {
             logger.logWarning("Invalid amount format: " + input);
-            throw new MTException("Invalid amount format. Please ensure it is a numeric value.");
+            throw new MTException("Invalid amount format. " +
+                    "Please ensure it is a numeric value.");
         } catch (IndexOutOfBoundsException e) {
             logger.logWarning("Invalid command format: " + input);
             throw new MTException("Invalid format. Use: addExpense <description> " +
                     "$/<amount> [c/<category>] [d/<date>]");
         }
     }
+    //@@author
+
+    //@@author EdwinTun98
+    private void validateInput(String input) throws MTException {
+        if (input == null) {
+            throw new MTException("Input should not be null");
+        }
+    }
+    //@@author
+
+    //@@author EdwinTun98
+    private void validateCommandFormat(String input) throws MTException {
+        if (!input.startsWith("addExp") || !input.contains("$/")) {
+            throw new MTException("Invalid format. Use: addExp <description> " +
+                    "$/<amount> [c/<category>] [d/<date>]");
+        }
+    }
+    //@@author
+
+    //@@author EdwinTun98
+    private String getContentAfterCommand(String input) {
+        return input.substring("addExp".length()).trim();
+    }
+    //@@author
+
+    //@@author EdwinTun98
+    private String extractDescription(String contentAfterCommand) {
+        int dollarSlashIndex = contentAfterCommand.indexOf("$/");
+
+        if (dollarSlashIndex == 0) {
+            return "No description";
+        } else if (dollarSlashIndex > 0) {
+            return contentAfterCommand.substring(0, dollarSlashIndex).trim();
+        }
+
+        return "No description";
+    }
+    //@@author
+
+    //@@author EdwinTun98
+    private String getAfterDescription(String contentAfterCommand) {
+        int dollarSlashIndex = contentAfterCommand.indexOf("$/");
+
+        return contentAfterCommand.substring(dollarSlashIndex + 2).trim();
+    }
+    //@@author
+
+    //@@author EdwinTun98
+    private double extractAmount(String afterDescription) throws NumberFormatException {
+        int categoryIndex = afterDescription.indexOf("c/");
+        int dateIndex = afterDescription.indexOf("d/");
+
+        String amountString = determineAmountString(afterDescription, categoryIndex, dateIndex);
+
+        return Double.parseDouble(amountString);
+    }
+    //@@author
+
+    //@@author EdwinTun98
+    private String determineAmountString(String input, int categoryIndex, int dateIndex) {
+        if (categoryIndex != -1 && dateIndex != -1) {
+            return input.substring(0, Math.min(categoryIndex, dateIndex)).trim();
+        } else if (categoryIndex != -1) {
+            return input.substring(0, categoryIndex).trim();
+        } else if (dateIndex != -1) {
+            return input.substring(0, dateIndex).trim();
+        }
+
+        return input.trim();
+    }
+    //@@author
+
+    //@@author EdwinTun98
+    private String extractCategory(String afterDescription) {
+        int categoryIndex = afterDescription.indexOf("c/");
+
+        if (categoryIndex == -1) {
+            return "Uncategorized";
+        }
+
+        int dateIndex = afterDescription.indexOf("d/");
+
+        if (dateIndex == -1 || categoryIndex < dateIndex) {
+            return afterDescription.substring(categoryIndex + 2,
+                    dateIndex != -1 ? dateIndex : afterDescription.length()).trim();
+        }
+
+        return afterDescription.substring(categoryIndex + 2).trim();
+    }
+    //@@author
+
+    //@@author EdwinTun98
+    private String extractDate(String afterDescription) {
+        int dateIndex = afterDescription.indexOf("d/");
+
+        if (dateIndex == -1) {
+            return "no date";
+        }
+
+        int categoryIndex = afterDescription.indexOf("c/");
+
+        if (categoryIndex == -1 || dateIndex < categoryIndex) {
+            return afterDescription.substring(dateIndex + 2,
+                    categoryIndex != -1 ? categoryIndex : afterDescription.length()).trim();
+        }
+
+        return afterDescription.substring(dateIndex + 2).trim();
+    }
+    //@@author
+
+    //@@author EdwinTun98
+    private void validateAmount(double amount) throws MTException {
+        if (amount <= 0) {
+            throw new MTException("Amount must be greater than zero.");
+        }
+    }
+    //@@author
 
     //@@author EdwinTun98
     private EditExpenseCommand parseEditExpenseCommand(String input) throws MTException {
@@ -305,4 +379,3 @@ public class Parser {
     }
     //@@author
 }
-
