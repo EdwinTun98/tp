@@ -2,12 +2,15 @@ package seedu.duke;
 
 import java.util.ArrayList;
 import java.text.DecimalFormat;
+import java.util.HashMap;
 import java.util.LinkedHashSet;
+import java.util.Map;
 
 public class MoneyList {
     private static final int INDEX_OFFSET = 1;
 
     private final ArrayList<String> moneyList;
+    private final HashMap<String, Double> categoryBudget = new HashMap<>();
     private final MTLogger logger;
     private final Storage storage;
     private final TextUI ui;
@@ -57,7 +60,7 @@ public class MoneyList {
             logger.logInfo("Deleted entry at index: " + deleteIndex);
 
             // save updated list
-            storage.saveEntries(moneyList);
+            storage.saveExpenses(moneyList);
             // print out number of items left in moneyList
             ui.printNumItems(moneyList.size());
         } catch (NumberFormatException error) {
@@ -70,6 +73,11 @@ public class MoneyList {
         ArrayList<String> loadedEntries = storage.loadEntries();
         if (loadedEntries != null) {
             moneyList.addAll(loadedEntries);
+        }
+
+        HashMap<String, Double> loadedBudgets = storage.loadBudgets();
+        if (loadedBudgets != null) {
+            categoryBudget.putAll(loadedBudgets);
         }
 
         // Assert that moneyList is not null
@@ -173,7 +181,7 @@ public class MoneyList {
             moneyList.add(newExpense.toString());
             logger.logInfo("Added expense: " + newExpense);
             ui.print("Expense added: " + newExpense);
-            storage.saveEntries(moneyList);
+            storage.saveExpenses(moneyList);
 
         } catch (NumberFormatException error) {
             logger.logSevere("Invalid amount format: " + input, error);
@@ -245,9 +253,8 @@ public class MoneyList {
 
         moneyList.set(index, updatedStr);
         ui.print("Entry updated. " + updatedStr);
-        storage.saveEntries(moneyList);
+        storage.saveExpenses(moneyList);
     }
-
 
     public void listSummary() throws MTException {
         if (moneyList.isEmpty()) {
@@ -260,6 +267,26 @@ public class MoneyList {
             ui.print((i + INDEX_OFFSET) + ": " + moneyList.get(i));
         }
     }
+
+    public void listBudgets() throws MTException {
+        try {
+            if (categoryBudget.isEmpty()) {
+                logger.logWarning("No budgets to list.");
+                throw new MTException("No category budgets have been set.");
+            }
+
+            ui.print("Category Budgets:");
+            for (Map.Entry<String, Double> entry : categoryBudget.entrySet()) {
+                ui.print("- " + entry.getKey() + ": $" + String.format("%.2f", entry.getValue()));
+            }
+
+            logger.logInfo("Listed " + categoryBudget.size() + " category budgets.");
+        } catch (Exception e) {
+            logger.logSevere("Failed to list budgets: " + e.getMessage(), e);
+            throw new MTException("Something went wrong while listing budgets.");
+        }
+    }
+
 
     public void findEntry(String input) throws MTException {
         // Validate the input for null, empty, or whitespace-only
@@ -289,6 +316,17 @@ public class MoneyList {
             ui.print((i + INDEX_OFFSET) + ": " + results.get(i));
         }
     }
+
+    public void setCategoryLimit(String category, double amount) throws MTException {
+        if (amount < 0) {
+            throw new MTException("Category budget cannot be negative.");
+        }
+
+        categoryBudget.put(category, amount);
+        ui.print("Budget for category '" + category + "' set to $" + String.format("%.2f", amount));
+        logger.logInfo("Set budget: " + category + " = " + amount);
+        storage.saveBudgets(categoryBudget);
+    }
     //@@author
 
     public void getTotalExpense() {
@@ -316,6 +354,7 @@ public class MoneyList {
         logger.logInfo("Total expense calculated: " + String.format("%.2f", total));
     }
 
+    //@@author Hansel-K
     public void setTotalBudget(String input) throws MTException {
         try {
             assert input != null : "Input should not be null";
@@ -355,6 +394,7 @@ public class MoneyList {
     public double getTotalBudget() {
         return this.totalBudget;
     }
+    //@@author
 
     public void listCats() {
         try {

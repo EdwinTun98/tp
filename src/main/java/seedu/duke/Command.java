@@ -18,6 +18,7 @@ public interface Command {
      */
     boolean shouldExit();
 }
+
 //@@author EdwinTun98
 /**
  * Lists all entries in the MoneyList.
@@ -26,6 +27,18 @@ class ListCommand implements Command {
     @Override
     public void execute(MoneyList moneyList) throws MTException {
         moneyList.listSummary();
+    }
+
+    @Override
+    public boolean shouldExit() {
+        return false;
+    }
+}
+
+class ListBudgetCommand implements Command {
+    @Override
+    public void execute(MoneyList moneyList) throws MTException {
+        moneyList.listBudgets();
     }
 
     @Override
@@ -183,6 +196,27 @@ class EditExpenseCommand implements Command {
         return false;
     }
 }
+
+class SetCategoryBudgetCommand implements Command {
+    private final String category;
+    private final double amount;
+
+    public SetCategoryBudgetCommand(String category, double amount) {
+        this.category = category;
+        this.amount = amount;
+    }
+
+    @Override
+    public void execute(MoneyList moneyList) throws MTException {
+        moneyList.setCategoryLimit(category, amount);
+    }
+
+    @Override
+    public boolean shouldExit() {
+        return false;
+    }
+}
+
 //@@author
 
 /**

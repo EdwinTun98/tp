@@ -102,6 +102,9 @@ public class TextUI {
         print("6. del <entry_number>: Deletes an entry.");
         print("7. find <keyword>: Finds an entry based on the given keyword.");
         print("8. listCats: Lists out all entry categories in order of appearance.");
-        print("9. exit: Exits the program.");
+        print("9. catBtg: Lists out categories Budget.");
+        print("10. edit <description> or $/<value> or c/<cat> or d/<date: Edit entries.");
+        print("11. check <keyword>: check total expense for keyword 'total' or 'category' and show spending left.");
+        print("12. exit: Exits the program.");
     }
 }

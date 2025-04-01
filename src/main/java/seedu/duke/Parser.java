@@ -42,8 +42,16 @@ public class Parser {
             return new TotalExpenseCommand();
         }
 
+        if (trimmedInput.equalsIgnoreCase("listBgt")) {
+            return new ListBudgetCommand();
+        }
+
         if (trimmedInput.startsWith("setTotBgt")) {
             return parseBudgetCommand(trimmedInput);
+        }
+
+        if (trimmedInput.startsWith("setCatBgt")) {
+            return parseSetCategoryBudgetCommand(trimmedInput);
         }
 
         if (trimmedInput.startsWith("addExp")) {
@@ -295,6 +303,42 @@ public class Parser {
         } catch (Exception e) {
             throw new MTException("Invalid edit format: " + e.getMessage());
         }
+    }
+
+
+
+    private SetCategoryBudgetCommand parseSetCategoryBudgetCommand(String input) throws MTException {
+        // Validate format (e.g. setCatBgt c/food 100)
+        String trimmed = input.substring("setCatBgt".length()).trim();
+
+        if (!trimmed.startsWith("c/")) {
+            throw new MTException("Invalid format. Use: setCatBgt c/<category> <amount>");
+        }
+
+        String[] parts = trimmed.split("\\s+", 2); // [ "c/food", "100" ]
+        if (parts.length < 2) {
+            throw new MTException("Missing budget value. Format: setCatBgt c/<category> <amount>");
+        }
+
+        String category = parts[0].substring(2).trim(); // strip off "c/"
+        String amountStr = parts[1].trim();
+
+        if (category.isEmpty()) {
+            throw new MTException("Category name cannot be empty.");
+        }
+
+        double amount;
+        try {
+            amount = Double.parseDouble(amountStr);
+        } catch (NumberFormatException e) {
+            throw new MTException("Invalid amount. Please enter a valid number.");
+        }
+
+        if (amount < 0) {
+            throw new MTException("Budget cannot be negative.");
+        }
+
+        return new SetCategoryBudgetCommand(category, amount);
     }
     //@@author
 }
