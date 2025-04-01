@@ -60,6 +60,7 @@ class FindCommand implements Command {
 /**
  * Deletes an entry at the specified index.
  */
+//@@author limleyhooi
 class DeleteCommand implements Command {
     private final int index;
 
@@ -156,6 +157,37 @@ class AddExpenseCommand implements Command {
         return false;
     }
 }
+//@@author
+//@@author limleyhooi
+
+
+class AddIncomeCommand implements Command {
+    private final String description;
+    private final double amount;
+    private final String date;
+
+    public AddIncomeCommand(String description, double amount, String date) {
+        this.description = description;
+        this.amount = amount;
+        this.date = date;
+    }
+
+    @Override
+    public void execute(MoneyList moneyList) throws MTException {
+        // Construct the command string as expected by MoneyList.addIncome
+        String incomeCommand = "addIncome " + description + " $/" + amount;
+        if (!date.equals("no date")) {
+            incomeCommand += " d/" + date;
+        }
+        moneyList.addIncome(incomeCommand);
+    }
+
+    @Override
+    public boolean shouldExit() {
+        return false;
+    }
+}
+//@@author
 
 //@@author EdwinTun98
 /**
@@ -192,6 +224,7 @@ class EditExpenseCommand implements Command {
 /**
  * Lists all available categories.
  */
+//@@author limleyhooi
 class ListCatsCommand implements Command {
     @Override
     public void execute(MoneyList moneyList) {
@@ -233,7 +266,7 @@ class ExitCommand implements Command {
         return true;
     }
 }
-
+//@@author
 /**
  * Clears the entry list.
  */
