@@ -54,7 +54,7 @@ public class Parser {
             return parseEditExpenseCommand(trimmedInput);
         }
 
-        if (trimmedInput.equalsIgnoreCase("listCats")) {
+        if (trimmedInput.equalsIgnoreCase("listCat")) {
             return new ListCatsCommand();
         }
 
@@ -293,12 +293,14 @@ public class Parser {
 
             return new EditExpenseCommand(index, desc, amount, cat, date);
 
-        } catch (NumberFormatException e) {
-            throw new MTException("Invalid number format in edit command: " + e.getMessage());
-        } catch (MTException e) {
-            throw e;
-        } catch (Exception e) {
-            throw new MTException("Invalid edit format: " + e.getMessage());
+        } catch (NumberFormatException error) {
+            throw new MTException("Invalid number format in edit command: "
+                    + error.getMessage());
+        } catch (MTException error) {
+            throw error;
+        } catch (Exception error) {
+            throw new MTException("Invalid edit format: "
+                    + error.getMessage());
         }
     }
     //@@author

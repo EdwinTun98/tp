@@ -99,11 +99,14 @@ public class TextUI {
         print("3. addExp <description> $/<value> c/<category> d/<date>: "
                 + "\n" + "Adds a new expense entry. Category and date are optional.");
         print("4. totalExp: Displays the total expense accumulated from all entries.");
-        print("5. setTotBgt <amount>: Sets a total spending budget to adhere to.");
-        print("6. del <entry_number>: Deletes an entry.");
+        print("5. setTotBgt <value>: Sets a total spending budget to adhere to.");
+        print("6. del <index>: Deletes an entry.");
         print("7. find <keyword>: Finds an entry based on the given keyword.");
         print("8. listCat: Lists out all entry categories in order of appearance.");
         print("9. clear: Clear all existing entries.");
         print("10. exit: Exits the program.");
+        print("11. edit <index> <description> $/<value> " +
+                "c/<category> d/<date>: Edits an entry." + "\n" +
+                "You can select a metric to edit.");
     }
 }

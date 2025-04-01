@@ -1,7 +1,4 @@
-<<<<<<< HEAD
-Expense: ense fuel $20.00 {Uncategorized} [no date]
-Expense: food $30.00 {Food} [no date]
-=======
-Expense: dinner $10.00 {food} [2025-05-15]
-Expense: ball $6.00 {} [no date]
->>>>>>> master
+Expense: c/food $10.00 {food expense} [2025-09-04]
+Expense: fuel $30.00 {Uncategorized} [no date]
+Expense: rent $400.00 {rent} [2020-09-08]
+Expense: mortage $600.00 {rent} [2024-06-04]

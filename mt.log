@@ -3550,3 +3550,123 @@ INFO: Starting CLI program.
 Apr 01, 2025 1:12:35 AM seedu.duke.MTLogger logInfo
 INFO: Loaded 2 entries from file.
 >>>>>>> master
+Apr 01, 2025 8:18:58 AM seedu.duke.MTLogger logInfo
+INFO: Starting CLI program.
+Apr 01, 2025 8:18:58 AM seedu.duke.MTLogger logInfo
+INFO: Loaded 7 entries from file.
+Apr 01, 2025 8:19:05 AM seedu.duke.MTLogger logWarning
+WARNING: Error processing command: Unknown command. Type 'help' for a list of available commands.
+Apr 01, 2025 8:19:09 AM seedu.duke.MTLogger logInfo
+INFO: Displayed 7 unique categories.
+Apr 01, 2025 8:19:20 AM seedu.duke.MTLogger logInfo
+INFO: All entries have been cleared from the money list.
+Apr 01, 2025 8:19:23 AM seedu.duke.MTLogger logWarning
+WARNING: Expense list is empty.
+Apr 01, 2025 8:19:23 AM seedu.duke.MTLogger logWarning
+WARNING: Error processing command: No entries available to display.
+Apr 01, 2025 8:19:38 AM seedu.duke.MTLogger logInfo
+INFO: Description: food
+Apr 01, 2025 8:19:38 AM seedu.duke.MTLogger logInfo
+INFO: Amount after formatting: 20.0
+Apr 01, 2025 8:19:38 AM seedu.duke.MTLogger logInfo
+INFO: Added expense: Expense: food $20.00 {food} [no date]
+Apr 01, 2025 8:19:42 AM seedu.duke.MTLogger logInfo
+INFO: Displayed 1 unique categories.
+Apr 01, 2025 8:19:52 AM seedu.duke.MTLogger logInfo
+INFO: Description: fuel
+Apr 01, 2025 8:19:52 AM seedu.duke.MTLogger logInfo
+INFO: Amount after formatting: 30.0
+Apr 01, 2025 8:19:52 AM seedu.duke.MTLogger logInfo
+INFO: Added expense: Expense: fuel $30.00 {Uncategorized} [no date]
+Apr 01, 2025 8:19:57 AM seedu.duke.MTLogger logInfo
+INFO: Displayed 2 unique categories.
+Apr 01, 2025 8:20:02 AM seedu.duke.MTLogger logInfo
+INFO: Expense amount: 20.0
+Apr 01, 2025 8:20:02 AM seedu.duke.MTLogger logInfo
+INFO: Expense amount: 30.0
+Apr 01, 2025 8:20:02 AM seedu.duke.MTLogger logInfo
+INFO: Total expense calculated: 50.00
+Apr 01, 2025 8:20:31 AM seedu.duke.MTLogger logInfo
+INFO: Description: rent
+Apr 01, 2025 8:20:31 AM seedu.duke.MTLogger logInfo
+INFO: Amount after formatting: 400.0
+Apr 01, 2025 8:20:31 AM seedu.duke.MTLogger logInfo
+INFO: Added expense: Expense: rent $400.00 {rent} [2020-09-08]
+Apr 01, 2025 8:20:38 AM seedu.duke.MTLogger logInfo
+INFO: Displayed 3 unique categories.
+Apr 01, 2025 8:20:44 AM seedu.duke.MTLogger logInfo
+INFO: Expense amount: 20.0
+Apr 01, 2025 8:20:44 AM seedu.duke.MTLogger logInfo
+INFO: Expense amount: 30.0
+Apr 01, 2025 8:20:44 AM seedu.duke.MTLogger logInfo
+INFO: Expense amount: 400.0
+Apr 01, 2025 8:20:44 AM seedu.duke.MTLogger logInfo
+INFO: Total expense calculated: 450.00
+Apr 01, 2025 8:26:05 AM seedu.duke.MTLogger logInfo
+INFO: Starting CLI program.
+Apr 01, 2025 8:26:05 AM seedu.duke.MTLogger logInfo
+INFO: Loaded 3 entries from file.
+Apr 01, 2025 8:26:26 AM seedu.duke.MTLogger logWarning
+WARNING: Error processing command: Invalid format. Use: edit <entry_number> [options]
+Apr 01, 2025 8:27:37 AM seedu.duke.MTLogger logInfo
+INFO: Displayed 3 unique categories.
+Apr 01, 2025 8:29:21 AM seedu.duke.MTLogger logInfo
+INFO: Displayed 3 unique categories.
+Apr 01, 2025 8:29:49 AM seedu.duke.MTLogger logInfo
+INFO: Description: mortage
+Apr 01, 2025 8:29:49 AM seedu.duke.MTLogger logInfo
+INFO: Amount after formatting: 600.0
+Apr 01, 2025 8:29:49 AM seedu.duke.MTLogger logInfo
+INFO: Added expense: Expense: mortage $600.00 {rent} [2024-06-04]
+Apr 01, 2025 8:30:01 AM seedu.duke.MTLogger logInfo
+INFO: Expense amount: 10.0
+Apr 01, 2025 8:30:01 AM seedu.duke.MTLogger logInfo
+INFO: Expense amount: 30.0
+Apr 01, 2025 8:30:01 AM seedu.duke.MTLogger logInfo
+INFO: Expense amount: 400.0
+Apr 01, 2025 8:30:01 AM seedu.duke.MTLogger logInfo
+INFO: Expense amount: 600.0
+Apr 01, 2025 8:30:01 AM seedu.duke.MTLogger logInfo
+INFO: Total expense calculated: 1040.00
+Apr 01, 2025 8:30:38 AM seedu.duke.MTLogger logInfo
+INFO: Displayed 3 unique categories.
+Apr 01, 2025 8:31:03 AM seedu.duke.MTLogger logInfo
+INFO: Total budget after df formatting: 100.0
+Apr 01, 2025 8:31:03 AM seedu.duke.MTLogger logInfo
+INFO: Total budget set to: $100.00
+Apr 01, 2025 8:31:40 AM seedu.duke.MTLogger logInfo
+INFO: Starting CLI program.
+Apr 01, 2025 8:31:40 AM seedu.duke.MTLogger logInfo
+INFO: Loaded 4 entries from file.
+Apr 01, 2025 8:32:23 AM seedu.duke.MTLogger logWarning
+WARNING: Error processing command: Invalid format. Use: edit <entry_number> [options]
+Apr 01, 2025 8:36:55 AM seedu.duke.MTLogger logInfo
+INFO: Starting CLI program.
+Apr 01, 2025 8:36:55 AM seedu.duke.MTLogger logInfo
+INFO: Loaded 4 entries from file.
+Apr 01, 2025 8:37:44 AM seedu.duke.MTLogger logInfo
+INFO: Starting CLI program.
+Apr 01, 2025 8:37:44 AM seedu.duke.MTLogger logInfo
+INFO: Loaded 4 entries from file.
+Apr 01, 2025 8:41:04 AM seedu.duke.MTLogger logInfo
+INFO: Starting CLI program.
+Apr 01, 2025 8:41:04 AM seedu.duke.MTLogger logInfo
+INFO: Loaded 4 entries from file.
+Apr 01, 2025 8:43:07 AM seedu.duke.MTLogger logInfo
+INFO: Starting CLI program.
+Apr 01, 2025 8:43:07 AM seedu.duke.MTLogger logInfo
+INFO: Loaded 4 entries from file.
+Apr 01, 2025 8:51:25 AM seedu.duke.MTLogger logInfo
+INFO: Starting CLI program.
+Apr 01, 2025 8:51:26 AM seedu.duke.MTLogger logInfo
+INFO: Loaded 4 entries from file.
+Apr 01, 2025 8:51:40 AM seedu.duke.MTLogger logWarning
+WARNING: Error processing command: Invalid format. Use: edit <entry_number> [options]
+Apr 01, 2025 8:53:31 AM seedu.duke.MTLogger logWarning
+WARNING: Error processing command: Invalid format. Use: edit <entry_number> [options]
+Apr 01, 2025 8:54:25 AM seedu.duke.MTLogger logWarning
+WARNING: Error processing command: Invalid amount format. Please ensure it is a numeric value.
+Apr 01, 2025 9:09:10 AM seedu.duke.MTLogger logInfo
+INFO: Starting CLI program.
+Apr 01, 2025 9:09:10 AM seedu.duke.MTLogger logInfo
+INFO: Loaded 4 entries from file.
