@@ -1,0 +1,11 @@
+@startuml DeleteCommand_Class
+hide circle
+skinparam classAttributeIconSize 0
+
+class DeleteCommand {
+  - index: int
+  + execute(MoneyList)
+  + shouldExit(): boolean
+}
+DeleteCommand --> MoneyList : "deleteEntry()"
+@enduml
