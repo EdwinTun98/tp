@@ -486,7 +486,8 @@ public class MoneyList {
     }
 
     //@@author Hansel-K
-/*    public void setTotalBudget(String input) throws MTException {
+    /*
+    public void setTotalBudget(String input) throws MTException {
         try {
             assert input != null : "Input should not be null";
             assert input.startsWith("setTotBgt") : "Input should start with 'setBgt'";
