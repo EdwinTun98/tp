@@ -1,9 +1,24 @@
 @startuml
 actor User
 User -> Parser : Input "exit"
+activate Parser
+
 Parser -> CommandExecutor : Parse "exit"
+activate CommandExecutor
+
 CommandExecutor -> MoneyTrail : Terminate Loop
+activate MoneyTrail
+deactivate MoneyTrail
+
 CommandExecutor -> Storage : Save Data
+activate Storage
+deactivate Storage
+
 CommandExecutor -> TextUI : Display Exit Message
-User <-- TextUI : "Thank you for using MoneyTrail!"
+activate TextUI
+TextUI -> User : "Thank you for using MoneyTrail!"
+deactivate TextUI
+
+deactivate CommandExecutor
+deactivate Parser
 @enduml
