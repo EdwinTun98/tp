@@ -93,8 +93,6 @@ class DeleteCommand implements Command {
     }
 }
 
-
-
 /**
  * Calculates and displays total expenses.
  */
