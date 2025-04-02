@@ -1,0 +1,15 @@
+@startuml Command_Execution
+participant MoneyTrail
+participant Parser
+participant "AddExpenseCommand" as AEC
+participant MoneyList
+
+MoneyTrail -> Parser : "parseCommand(input)"
+Parser -> AEC : new()
+MoneyTrail -> AEC : execute()
+activate AEC
+AEC -> MoneyList : "addExpense()"
+MoneyList --> AEC
+AEC --> MoneyTrail
+deactivate AEC
+@enduml
