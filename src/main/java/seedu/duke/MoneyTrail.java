@@ -14,6 +14,7 @@ public class MoneyTrail {
     private final Parser parser;
 
     //@@author rchlai
+
     /**
      * Initializes the core program components.
      */
@@ -77,6 +78,7 @@ public class MoneyTrail {
     //@@author rchlai
     /**
      * Application entry point.
+     *
      * @param args Command-line arguments (unused)
      */
     public static void main(String[] args) {

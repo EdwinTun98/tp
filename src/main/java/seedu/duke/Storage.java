@@ -51,10 +51,16 @@ public class Storage {
 
     //@@author EdwinTun98
     public void saveBudgets(HashMap<String, Budget> budgetList) throws MTException {
+        if (budgetList == null || budgetList.isEmpty()) {
+            logger.logWarning("No budgets to save.");
+            return;
+        }
+
         try (FileWriter writer = new FileWriter(BUDGET_FILE_PATH)) {
             for (Budget budget : budgetList.values()) {
                 writer.write(budget.getCategory() + " " + budget.getAmount() + "\n");
             }
+            logger.logInfo("Budgets successfully saved to " + BUDGET_FILE_PATH);
         } catch (IOException e) {
             logger.logSevere("Failed to save budgets", e);
             throw new MTException("Error saving budgets: " + e.getMessage());
