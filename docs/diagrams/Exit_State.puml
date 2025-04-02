@@ -1,0 +1,19 @@
+@startuml
+[*] --> Initialized : Start Application
+
+state Initialized {
+    Initialized --> Running : Load Entries
+    Running : Process User Commands
+
+    Running --> HelpCommandExecuted : User Input "help"
+    Running --> ExitRequested : User Input "exit"
+    Running --> InvalidCommand : Invalid User Input
+
+    HelpCommandExecuted --> Running : Show All Commands
+    InvalidCommand --> Running : Display Error
+}
+
+ExitRequested : Execute Exit Command
+ExitRequested --> Exiting : Stop Processing Loop
+Exiting --> [*] : Display Exit Message
+@enduml
