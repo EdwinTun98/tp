@@ -1,0 +1,24 @@
+@startuml MoneyTrail_Sequence_Activation
+scale 1.3
+actor User
+participant TextUI
+participant MoneyTrail
+participant Parser
+participant MoneyList
+
+User -> TextUI : "addExp Lunch $/10"
+activate TextUI
+TextUI -> MoneyTrail : "processInput()"
+activate MoneyTrail
+MoneyTrail -> Parser : "parseCommand(input)"
+activate Parser
+Parser --> MoneyTrail : "AddExpenseCommand"
+deactivate Parser
+MoneyTrail -> MoneyList : "execute(command)"
+activate MoneyList
+MoneyList --> MoneyTrail : "Expense added"
+MoneyTrail --> TextUI
+deactivate MoneyList
+deactivate MoneyTrail
+deactivate TextUI
+@enduml

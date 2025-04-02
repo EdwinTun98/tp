@@ -1,19 +1,45 @@
 # Developer Guide
 
-## Acknowledgements
+[1. Acknowledgements](#-acknowledgements) <br>
+[2. Design](#-design) <br>
+&nbsp;&nbsp;[3.1.0 UI Class](#310-ui-class) <br>
+&nbsp;&nbsp;[3.1.1 DataStorage Class](#311-datastorage-class) <br>
+&nbsp;&nbsp;[3.1.2 GroupStorage Class](#312-groupstorage-class) <br>
+&nbsp;&nbsp;[3.1.3 Commands Class](#313-commands-class) <br>
+&nbsp;&nbsp;[3.1.4 ExpenseCommands Classes](#314-expensecommands-classes) <br>
+&nbsp;&nbsp;[3.1.5 FriendsCommands Class](#315-friendscommands-class) <br>
+&nbsp;&nbsp;[3.1.6 SplitCommand Class](#316-splitcommand-class) <br>
+&nbsp;&nbsp;[3.1.7 BudgetManager Class](#317-budgetmanager-class) <br>
+&nbsp;&nbsp;[3.1.8 Expense Class](#318-expense-class) <br>
+&nbsp;&nbsp;[3.1.9 Friend Class](#319-friend-class) <br>
+&nbsp;&nbsp;[3.2.0 Group Class](#320-group-class) <br>
+&nbsp;&nbsp;[3.2.1 GroupManager Class](#321-groupmanager-class) <br>
+&nbsp;&nbsp;[3.2.2 Messages Class](#322-messages-class) <br>
+&nbsp;&nbsp;[3.2.3 Summary Class](#323-summary-class) <br>
+&nbsp;&nbsp;[3.2.4 ExpenseClassifier Class](#324-expenseclassifier-class) <br>
+&nbsp;&nbsp;[3.2.5 Currency Class](#325-currency-class) <br>
+[4. Overall Application Architecture](#4-overall-application-architecture) <br>
+&nbsp;&nbsp;[4.1 Application Class Diagram](#41-application-class-diagram) <br>
+&nbsp;&nbsp;[4.2 Expense CRUD Feature](#42-expense-crud-feature) <br>
+&nbsp;&nbsp;[4.3 Create Group Feature](#43-create-group-feature) <br>
+&nbsp;&nbsp;[4.4 Split Expense Feature](#44-split-expense-feature) <br>
+&nbsp;&nbsp;[4.5 Change Currency Feature](#45-change-currency-feature) <br>
+&nbsp;&nbsp;[4.6 Data Visualization Feature](#46-data-visualization-feature) <br>
 
+## Acknowledgements
+<a name="ack"></a>
 {list here sources of all reused/adapted ideas, code, documentation, and third-party libraries -- include links to the original source as well}
 
-## Design & implementation
+## Design
 
-{Describe the design and implementation of the product. Use UML diagrams and short code snippets where applicable.}
+{Use UML diagrams and short code snippets where applicable.}
 
 > [!TIP]
 > Tip: The `.puml` files used to create diagrams in this document `docs/diagrams` folder.
 
 ### Architecture Overview
 
-![Image](https://github.com/user-attachments/assets/efac5d7d-2c44-44e3-8b19-acf6f26b73b1)
+![Image](diagrams/architecture.png)
 
 The **Architecture Diagram** given above explains the high-level design of the App.
 
@@ -24,14 +50,361 @@ The application is divided into several classes, each with a specific responsibi
 - `MoneyList`: Manages the list of expenses and provides methods for adding, deleting, listing, and finding expenses.
 - `Storage`: Handles loading and saving data to a file.
 - `TextUI`: Manages user interface interactions, such as displaying messages and errors.
-- `MTLogger`: Logs application events and errors for debugging and monitoring.
+- `MTLogger`: Logs application events and errors for debugging and monitoring (Will not be discussed).
 - `MTException`: A custom exception class for handling application-specific errors.
 - `Expense`: Represents an expense entry with a description and amount.
 - `Income`: Represents an income entry with a description, amount, date, and provides a formatted string for display.
 - `Parser`: Processes user input and converts it into the corresponding Command object.
 - `Command`: Defines a common interface for all operations that can be executed in the application.
 
-NOTE: Additional classes may be required in the future.
+### MoneyTrail Component: `MoneyTrail.java`
+
+**Role**: Entry point and main controller of the application.
+
+Here is the UML component diagram of `MoneyTrail.java`:
+
+![Image](diagrams/MT_Component.png)
+
+This UML component diagram illustrates `MoneyTrail.java`’s role 
+as the central coordinator in the architecture:
+
+- MoneyTrail (shown as a composite component) receives user input via TextUI and delegates parsing to the Parser.
+
+
+- It forwards parsed commands to MoneyList for execution, which interacts with Storage to persist data.
+
+
+- Simplifications: Logging and error-handling components are omitted to focus on core data flow.
+
+Here is the UML sequence diagram of `MoneyTrail.java` touching only its main loop:
+
+![Image](diagrams/MoneyTrail_Sequence.png)
+
+This UML sequence diagram captures the simplified command execution flow:
+
+- The User submits an expense command (e.g., addExp Lunch $/10) through TextUI.
+
+
+- MoneyTrail triggers parsing via Parser, which returns a concrete AddExpenseCommand.
+
+
+- The command is executed by MoneyList, with results relayed back to TextUI.
+
+
+- Simplifications: Uses pseudocode (processInput()) instead of exact method names.
+
+
+- Key omission: Loop logic and error handling are excluded to highlight the happy path.
+
+Here is the Java Code snippet showing the core loop:
+
+```
+public void run() {
+  // ...
+  while (!shouldExit) {
+    String input = in.nextLine().trim();          // User input
+    Command command = parser.parseCommand(input); // Delegates parsing
+    command.execute(moneyList);                  // Delegates execution
+  }
+}
+```
+
+The provided Java snippet:
+
+- Continuously reads user input (in.nextLine()).
+
+
+- Delegates parsing to Parser and execution to MoneyList via the Command pattern.
+
+
+- Focus: Demonstrates the class’s role as a facade without exposing internal details like logging.
+
+### Text UI Component: `TextUI.java`
+
+**Role**: Handles all user interactions and visual output for the MoneyTrail application.
+
+Here is the UML class diagram of `TextUI.java`:
+
+![Image](diagrams/TextUI_ClassDiagram.png)
+
+The simplified UML class diagram shows TextUI's core structure:
+
+- Focuses on key public methods like print() and showAllAvailableCommands()
+
+
+- Explicitly omits internal helpers (noted in comment)
+
+Here is the UML sequence diagram of `TextUI.java`:
+
+![Image](diagrams/TextUI_Sequence.png)
+
+This UML sequence diagram demonstrates a typical command flow:
+
+- User requests "help" via MoneyTrail
+
+
+- TextUI activates to display command list
+
+
+- Shows clean activation/deactivation lifecycle
+
+
+- Simplified to one representative interaction and omits lower-level print operations
+
+### Parser Component: `Parser.java`
+
+**Role**:
+
+- Translates raw user input into executable Command objects
+
+- Validates input syntax
+
+- Handles parsing errors with meaningful feedback
+
+Here is the UML class diagram of `Parser.java`:
+
+> [!NOTE]
+> This class diagram only concerns parsing the command that adds expense entries.
+
+![Image](diagrams/Parser_ClassDiagram.png)
+
+This simplified UML class diagram shows the Parser's core structure:
+
+- The Parser class depends on the Command interface to produce concrete command objects like AddExpenseCommand.
+
+
+- Key methods like parseCommand() and factory methods (e.g., createAddExpenseCommand()) are highlighted, while internal helpers are omitted for clarity.
+
+Here is the UML sequence diagram of `Parser.java`:
+
+![Image](diagrams/Parser_Sequence.png)
+
+This UML sequence diagram illustrates the parsing workflow for an "add expense" command:
+
+- User input flows from MoneyTrail to the Parser, which activates to process the request.
+
+
+- The Parser delegates to specialized factory methods to instantiate a concrete AddExpenseCommand.
+
+Here are the core Java Code snippets:
+
+```
+public Command parseCommand(String input) throws MTException {
+  if (input.trim().isEmpty()) {
+    throw new MTException("Empty command");  // Input validation
+  }
+  return createCommandFromInput(input);      // Delegation
+}
+```
+
+This method demonstrates the Parser's two key responsibilities:
+
+- Input validation (rejecting empty strings).
+
+
+- Delegation to command-specific factory methods.
+
+```
+private Command createAddExpenseCommand(String input) throws MTException {
+  // Simplified extraction:
+  String[] parts = input.split("\\$/"); 
+  double amount = Double.parseDouble(parts[1].split(" ")[0]);
+  return new AddExpenseCommand(...);
+}
+```
+
+This method shows simplified parsing logic for expense commands:
+
+- Splits input to extract amount and description.
+
+
+- Constructs a ready-to-execute AddExpenseCommand object.
+
+### Money List Component: `MoneyList.java`
+
+**Role**:
+
+- Core data manager for all financial entries (expenses/incomes)
+
+- Central hub for business logic operations
+
+- Bridge between commands and storage
+
+Here is the simplified UML class diagram of `MoneyList.java`:
+
+![Image](diagrams/MoneyList_ClassDiagram.png)
+
+This simplified UML diagram shows MoneyList's core structure:
+
+- Manages an ArrayList of financial entries
+
+
+- Collaborates with Storage (persistence) and TextUI (display)
+
+Here is the UML sequence diagram of `MoneyList.java`:
+
+![Image](diagrams/MoneyList_Seq.png)
+
+This UML sequence diagram:
+
+- Illustrates the addExpense workflow with activation bars:
+
+
+- User command flows through Parser to MoneyList
+
+
+- MoneyList validates input (nested activation)
+
+
+- Saves via Storage and confirms via TextUI
+
+Here are the Java Code snippets:
+
+```
+public void addExpense(String input) throws MTException {
+  // Input parsing omitted
+  Expense newExp = new Expense(desc, amount, cat, date);
+  moneyList.add(newExp.toString());  // Store formatted string
+  storage.saveEntries(moneyList);    // Persist
+  ui.print("Added: " + newExp);     // Confirm
+}
+```
+
+This snippet demonstrates three key responsibilities:
+
+- Creates Expense object from parsed data
+
+
+- Updates in-memory list
+
+
+- Coordinates persistence and user feedback
+
+
+- Shows clean separation of concerns
+
+```
+public void loadEntriesFromFile() throws MTException {
+  moneyList.clear();
+  moneyList.addAll(storage.loadEntries());  // Delegates IO
+  logger.logInfo("Loaded " + moneyList.size() + " entries"); 
+}
+```
+
+This snippet highlights storage integration:
+
+- Clears current state
+
+
+- Delegates file operations to Storage
+
+
+- Logs results
+
+
+- Emphasizes single responsibility principle
+
+### Storage Component: `Storage.java`
+
+**Role**: Handles all file I/O operations for persistent data storage, including:
+
+- Saving entries to mt.txt
+
+- Loading entries on startup
+
+- Encapsulating filesystem interactions
+
+Here is the UML class diagram of `Storage.java`:
+
+![Image](diagrams/Storage_Class.png)
+
+This UML class diagram shows the Storage component's structure and its relationship with MoneyList:
+
+- saveEntries() and loadEntries() define the file I/O interface.
+
+
+- MoneyList depends on Storage for persistence but remains decoupled from file operations.
+
+
+- Key Omissions: Internal helper methods and low-level file handling details are excluded for clarity.
+
+Here is the UML sequence diagram of `Storage.java`:
+
+![Image](diagrams/Storage_Seq.png)
+
+This UML sequence diagram illustrates the file read/write workflow:
+
+1. Loading Data:
+
+- MoneyList activates Storage to load entries, which reads mt.txt before returning parsed data.
+
+2. Saving Data:
+
+- MoneyList triggers a save, with Storage writing all entries atomically.
+
+### Command Component: `Command.java`
+
+**Role**:
+
+The Command interface defines the execution contract for all user actions in MoneyTrail, enabling:
+
+- Uniform execution of diverse operations (add, delete, search)
+
+- Decoupled control flow between parsing and execution
+
+- Termination control for session management
+
+Here is a simplified UML class diagram:
+
+![Image](diagrams/Command_Class.png)
+
+This class diagram:
+
+- shows that all concrete commands implement the Command interface.
+
+
+- simplifications: Only 4 representative commands shown (others follow same pattern) and method details omitted except interface signature.
+
+Here is the UML sequence diagram that outlines the functionality of adding an expense entry:
+
+![Image](diagrams/Command_Seq.png)
+
+This sequence diagram illustrates:
+
+- The MoneyTrail component receives parsed AddExpenseCommand from the Parser.
+
+- The command's execute() method activates to modify the MoneyList.
+
+Here are the self-explanatory Java code snippets:
+
+```
+public interface Command {
+    /**
+     * @param moneyList Target list for modifications
+     * @throws MTException On execution failures
+     */
+    void execute(MoneyList moneyList) throws MTException;
+
+    /** @return true triggers application exit */
+    boolean shouldExit();
+}
+```
+
+```
+class ExitCommand implements Command {
+    @Override
+    public void execute(MoneyList moneyList) {
+        // No operation required
+    }
+
+    @Override
+    public boolean shouldExit() {
+        return true; // Signals termination
+    }
+}
+```
+
+## Implementations
 
 ## Product scope
 ### Target user profile

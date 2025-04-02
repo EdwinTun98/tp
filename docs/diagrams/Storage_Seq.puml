@@ -1,0 +1,16 @@
+@startuml Storage_Sequence_Simplified
+participant MoneyList
+participant Storage
+
+activate MoneyList
+MoneyList -> Storage : "loadEntries()"
+activate Storage
+Storage --> MoneyList : ArrayList<String>
+deactivate Storage
+
+MoneyList -> Storage : "saveEntries(list)"
+activate Storage
+Storage --> MoneyList : void
+deactivate Storage
+deactivate MoneyList
+@enduml

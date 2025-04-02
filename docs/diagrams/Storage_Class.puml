@@ -1,0 +1,15 @@
+@startuml Storage_ClassDiagram
+class Storage {
+  - FILE_PATH: String
+  - logger: MTLogger
+  + saveEntries(ArrayList<String>)
+  + loadEntries(): ArrayList<String>
+}
+
+class MoneyList {
+  + addExpense()
+  + loadEntriesFromFile()
+}
+
+Storage <- MoneyList : "uses"
+@enduml
