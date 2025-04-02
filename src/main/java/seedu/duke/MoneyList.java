@@ -86,6 +86,7 @@ public class MoneyList {
         ui.print("Loaded " + moneyList.size() + " entries from file.");
     }
 
+    //@@author Hansel-K
     public void addExpense(String input) throws MTException {
         try {
             // Check that the input is not null and trim it.
@@ -191,6 +192,7 @@ public class MoneyList {
             throw new MTException("Failed to add expense: " + error.getMessage());
         }
     }
+    //@@author
 
     //@@author limleyhooi
     public void addIncome(String input) throws MTException {
@@ -344,7 +346,6 @@ public class MoneyList {
         }
     }
 
-
     public void findEntry(String input) throws MTException {
         // Validate the input for null, empty, or whitespace-only
         if (input == null || input.trim().isEmpty()) {
@@ -417,7 +418,6 @@ public class MoneyList {
         }
     }
 
-
     public double getTotalExpenseValue(String category) throws MTException {
         double totalExpenses = 0.0;
         for (String entry : moneyList) {
@@ -461,6 +461,7 @@ public class MoneyList {
     }
     //@@author
 
+    //@@author Hansel-K
     public void getTotalExpense() {
         double total = 0.0;
 
@@ -485,7 +486,7 @@ public class MoneyList {
         logger.logInfo("Total expense calculated: " + String.format("%.2f", total));
     }
 
-    //@@author Hansel-K
+
     /*
     public void setTotalBudget(String input) throws MTException {
         try {
@@ -568,6 +569,7 @@ public class MoneyList {
     }
     //@@author
 
+    //@@author Hansel-K
     public void listCats() {
         try {
             if (moneyList.isEmpty()) {
@@ -627,4 +629,5 @@ public class MoneyList {
         logger.logInfo("All entries have been cleared from the money list.");
         ui.print("All entries cleared");
     }
+    //@@author
 }
