@@ -1,29 +1,13 @@
 # Developer Guide
 
-[1. Acknowledgements](#-acknowledgements) <br>
+[1. Acknowledgements](##-acknowledgements) <br>
 [2. Design](#-design) <br>
-&nbsp;[3.1.0 UI Class](#310-ui-class) <br>
-&nbsp;[3.1.1 DataStorage Class](#311-datastorage-class) <br>
-&nbsp;[3.1.2 GroupStorage Class](#312-groupstorage-class) <br>
-&nbsp;[3.1.3 Commands Class](#313-commands-class) <br>
-&nbsp;[3.1.4 ExpenseCommands Classes](#314-expensecommands-classes) <br>
-&nbsp;[3.1.5 FriendsCommands Class](#315-friendscommands-class) <br>
-&nbsp;[3.1.6 SplitCommand Class](#316-splitcommand-class) <br>
-&nbsp;[3.1.7 BudgetManager Class](#317-budgetmanager-class) <br>
-&nbsp;[3.1.8 Expense Class](#318-expense-class) <br>
-&nbsp;[3.1.9 Friend Class](#319-friend-class) <br>
-&nbsp;[3.2.0 Group Class](#320-group-class) <br>
-&nbsp;[3.2.1 GroupManager Class](#321-groupmanager-class) <br>
-&nbsp;[3.2.2 Messages Class](#322-messages-class) <br>
-&nbsp;[3.2.3 Summary Class](#323-summary-class) <br>
-&nbsp;[3.2.4 ExpenseClassifier Class](#324-expenseclassifier-class) <br>
-&nbsp;[3.2.5 Currency Class](#325-currency-class) <br>
-[3. Implementations](#4-overall-application-architecture) <br>
-[4. Product Scope](#41-application-class-diagram) <br>
-[5. User Stories](#42-expense-crud-feature) <br>
-[6. Non-Functional Requirements](#43-create-group-feature) <br>
-[7. Glossary](#44-split-expense-feature) <br>
-[8. Instructions for Manual Testing](#45-change-currency-feature) <br>
+[3. Implementations](#-implementations) <br>
+[4. Product Scope](#-product-scope) <br>
+[5. User Stories](#-user-stories) <br>
+[6. Non-Functional Requirements](##-non-functional-requirements) <br>
+[7. Glossary](##-glossary) <br>
+[8. Instructions for Manual Testing](##-instructions-for-manual-testing) <br>
 
 ## Acknowledgements
 {list here sources of all reused/adapted ideas, code, documentation, and third-party libraries -- include links to the original source as well}
@@ -537,9 +521,96 @@ public void execute(MoneyList moneyList) throws MTException {
 
 Why: Reuses existing MoneyList logic while maintaining consistent command formatting.
 
+## Exit Feature
+
+**Overview**:
+
+The ExitCommand provides a controlled shutdown of MoneyTrail by:
+
+- Terminating the main processing loop
+
+- Triggering a final data save
+
+- Displaying a farewell message
+
+**Key Characteristics**:
+
+- Immediate persistence before exit
+
+- No return to command loop
+
+- Minimal dependencies
+
+**Workflow**:
+
+![Image](diagrams/Exit_Activity.png)
+
+Why: Clearly separates success/failure paths while showing system state changes.
+
+![Image](diagrams/Exit_Sequence.png)
+
+Key Interactions:
+
+- Parser active only during initial parsing
+
+- ExitCommand handles shutdown sequence
+
+- Storage activates briefly for final save
+
+**Key Code Snippets**:
+
+`ExitCommand.java`:
+
+```
+public class ExitCommand implements Command {
+    @Override
+    public void execute(MoneyList moneyList) {
+        // No operations needed beyond flagging exit
+    }
+
+    @Override
+    public boolean shouldExit() {
+        return true; // Critical termination flag
+    }
+}
+```
+
+Design Choice: Minimalist implementation since persistence is handled by MoneyTrail's main loop cleanup.
+
+`MoneyTrail.java` (snippet):
+
+```
+while (!shouldExit) {
+    Command cmd = parser.parseCommand(input);
+    cmd.execute(moneyList); // Triggers save if ExitCommand
+    shouldExit = cmd.shouldExit(); // Loop control
+}
+```
+
+Why: Centralizes shutdown logic in the main loop for consistency.
+
+**Design Rationale**:
+
+1. Safety:
+
+- Final save occurs even if user force-quits
+
+- Atomic shouldExit flag prevents partial shutdown
+
+2. User Experience:
+
+- Clear exit confirmation message
+
+- No hidden background processes
+
+3. Extensibility:
+
+- Easy to add pre-exit hooks (e.g., analytics logging)
+
 ## Product scope
 
 ### Target user profile
+
 Tertiary students who:
 - Are budget-conscious and want to track their spending
 - Find it troublesome to log their expenses and income on pen and paper.
@@ -569,6 +640,7 @@ and stay within budget — digitally and all in one place. Our tool transforms f
 ## Non-Functional Requirements
 
 #### Usability
+
 #### User-friendly Interface:
 The application should have an intuitive design, making it easy for users to navigate and input data.
 
@@ -576,11 +648,13 @@ The application should have an intuitive design, making it easy for users to nav
 Provide clear and actionable feedback when a user makes a mistake (e.g., invalid input format).
 
 ### Performance
+
 #### Fast Response Time:
 The application should process commands and display results within a fraction of a second
 to ensure a smooth user experience
 
 ### Reliability
+
 #### Error Recovery
 The application should gracefully handle unexpected crashes or errors, saving user data wherever possible.
 
@@ -609,6 +683,7 @@ Calculations (e.g., total expenses, budget limits) must be precise and error-fre
 {Give instructions on how to do a manual product testing e.g., how to load sample data to be used for testing}
 
 ### Testing Basic Commands
+
 #### help Command:
 1. Input the help command.
 2. Verify that a complete list of all available commands is displayed.
@@ -634,6 +709,7 @@ Calculations (e.g., total expenses, budget limits) must be precise and error-fre
 3. Check for case sensitivity and partial matches (e.g., searching "lunch" vs "Lunch").
 
 ### Testing Budget Features
+
 #### totalExp Command:
 1. Add multiple expenses and run totalExp.
 2. Verify the total sum of all expenses is calculated accurately.
@@ -648,6 +724,7 @@ Calculations (e.g., total expenses, budget limits) must be precise and error-fre
 2. Run listCat and verify that all used categories are listed without duplicates.
 
 ### Testing Data Management
+
 #### Loading Sample Data:
 1. Locate the mt.txt file in the application's home folder
 2. Edit the file to include the sample entries in the required format (e.g., `Expense: fuel $10.00 {transportation} [no date]` ).
@@ -659,6 +736,7 @@ Calculations (e.g., total expenses, budget limits) must be precise and error-fre
 3. Exit and restart the application, then confirm the changes persist
 
 ### Testing Application Behavior
+
 #### Error Messages and Validation:
 1. Provide invalid inputs for commands (e.g., non-numeric values for amounts, invalid date formats).
 2. Ensure that the application displays clear and descriptive error messages.

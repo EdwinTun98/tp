@@ -1,9 +1,37 @@
-@startuml
+@startuml Exit_Sequence
 actor User
-User -> Parser : Input "exit"
-Parser -> CommandExecutor : Parse "exit"
-CommandExecutor -> MoneyTrail : Terminate Loop
-CommandExecutor -> Storage : Save Data
-CommandExecutor -> TextUI : Display Exit Message
-User <-- TextUI : "Thank you for using MoneyTrail!"
+participant Parser
+participant ExitCommand
+participant MoneyTrail
+participant Storage
+participant TextUI
+
+User -> Parser : "exit"
+activate Parser
+Parser -> ExitCommand : parseCommand()
+activate ExitCommand
+ExitCommand --> Parser
+deactivate ExitCommand
+Parser --> MoneyTrail : ExitCommand
+deactivate Parser
+
+MoneyTrail -> ExitCommand : execute()
+activate ExitCommand
+ExitCommand -> MoneyTrail : setShouldExit(true)
+activate MoneyTrail
+MoneyTrail --> ExitCommand
+deactivate MoneyTrail
+
+ExitCommand -> Storage : saveEntries()
+activate Storage
+Storage --> ExitCommand
+deactivate Storage
+
+ExitCommand -> TextUI : printExitMsg()
+activate TextUI
+TextUI --> User : "Thank you..."
+TextUI --> ExitCommand
+deactivate TextUI
+ExitCommand --> MoneyTrail
+deactivate ExitCommand
 @enduml
