@@ -618,9 +618,10 @@ Tertiary students who:
 - Appreciate having flexibility to edit, categorize, and budget their expenses and income
 
 ### Value proposition
-MoneyTrail is a lightweight, user-friendly budget tracking application to help you achieve financial clarity
-and peace of mind. Say goodbye to the hassle of pen and paper logging. MoneyTrail is designed for simplicity and efficiency, it empowers users to manage expenses, track spending,
-and stay within budget — digitally and all in one place. Our tool transforms financial management into a stress-free experience.
+
+"Track expenses, manage budgets, and control 
+spending—all in one simple CLI app for personal 
+finance mastery."
 
 ## User Stories
 
