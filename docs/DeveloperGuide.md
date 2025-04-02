@@ -1,19 +1,45 @@
 # Developer Guide
 
-## Acknowledgements
+[1. Acknowledgements](#-acknowledgements) <br>
+[2. Design](#-design) <br>
+&nbsp;&nbsp;[3.1.0 UI Class](#310-ui-class) <br>
+&nbsp;&nbsp;[3.1.1 DataStorage Class](#311-datastorage-class) <br>
+&nbsp;&nbsp;[3.1.2 GroupStorage Class](#312-groupstorage-class) <br>
+&nbsp;&nbsp;[3.1.3 Commands Class](#313-commands-class) <br>
+&nbsp;&nbsp;[3.1.4 ExpenseCommands Classes](#314-expensecommands-classes) <br>
+&nbsp;&nbsp;[3.1.5 FriendsCommands Class](#315-friendscommands-class) <br>
+&nbsp;&nbsp;[3.1.6 SplitCommand Class](#316-splitcommand-class) <br>
+&nbsp;&nbsp;[3.1.7 BudgetManager Class](#317-budgetmanager-class) <br>
+&nbsp;&nbsp;[3.1.8 Expense Class](#318-expense-class) <br>
+&nbsp;&nbsp;[3.1.9 Friend Class](#319-friend-class) <br>
+&nbsp;&nbsp;[3.2.0 Group Class](#320-group-class) <br>
+&nbsp;&nbsp;[3.2.1 GroupManager Class](#321-groupmanager-class) <br>
+&nbsp;&nbsp;[3.2.2 Messages Class](#322-messages-class) <br>
+&nbsp;&nbsp;[3.2.3 Summary Class](#323-summary-class) <br>
+&nbsp;&nbsp;[3.2.4 ExpenseClassifier Class](#324-expenseclassifier-class) <br>
+&nbsp;&nbsp;[3.2.5 Currency Class](#325-currency-class) <br>
+[4. Overall Application Architecture](#4-overall-application-architecture) <br>
+&nbsp;&nbsp;[4.1 Application Class Diagram](#41-application-class-diagram) <br>
+&nbsp;&nbsp;[4.2 Expense CRUD Feature](#42-expense-crud-feature) <br>
+&nbsp;&nbsp;[4.3 Create Group Feature](#43-create-group-feature) <br>
+&nbsp;&nbsp;[4.4 Split Expense Feature](#44-split-expense-feature) <br>
+&nbsp;&nbsp;[4.5 Change Currency Feature](#45-change-currency-feature) <br>
+&nbsp;&nbsp;[4.6 Data Visualization Feature](#46-data-visualization-feature) <br>
 
+## Acknowledgements
+<a name="ack"></a>
 {list here sources of all reused/adapted ideas, code, documentation, and third-party libraries -- include links to the original source as well}
 
-## Design & implementation
+## Design
 
-{Describe the design and implementation of the product. Use UML diagrams and short code snippets where applicable.}
+{Use UML diagrams and short code snippets where applicable.}
 
 > [!TIP]
 > Tip: The `.puml` files used to create diagrams in this document `docs/diagrams` folder.
 
 ### Architecture Overview
 
-![Image](https://github.com/user-attachments/assets/efac5d7d-2c44-44e3-8b19-acf6f26b73b1)
+![Image](diagrams/architecture.png)
 
 The **Architecture Diagram** given above explains the high-level design of the App.
 
@@ -31,7 +57,125 @@ The application is divided into several classes, each with a specific responsibi
 - `Parser`: Processes user input and converts it into the corresponding Command object.
 - `Command`: Defines a common interface for all operations that can be executed in the application.
 
-NOTE: Additional classes may be required in the future.
+### MoneyTrail Component: `MoneyTrail.java`
+
+**Role**: Entry point and main controller of the application.
+
+Here is the UML component diagram of `MoneyTrail.java`:
+
+![Image](diagrams/MT_Component.png)
+
+This UML component diagram illustrates `MoneyTrail.java`’s role 
+as the central coordinator in the architecture:
+
+- MoneyTrail (shown as a composite component) receives user input via TextUI and delegates parsing to the Parser.
+
+
+- It forwards parsed commands to MoneyList for execution, which interacts with Storage to persist data.
+
+
+- Simplifications: Logging and error-handling components are omitted to focus on core data flow.
+
+Here is the UML sequence diagram of `MoneyTrail.java` touching only its main loop:
+
+![Image](diagrams/MoneyTrail_Sequence.png)
+
+This UML sequence diagram captures the simplified command execution flow:
+
+- The User submits an expense command (e.g., addExp Lunch $/10) through TextUI.
+
+
+- MoneyTrail triggers parsing via Parser, which returns a concrete AddExpenseCommand.
+
+
+- The command is executed by MoneyList, with results relayed back to TextUI.
+
+
+- Simplifications: Uses pseudocode (processInput()) instead of exact method names.
+
+
+- Key omission: Loop logic and error handling are excluded to highlight the happy path.
+
+Here is the Java Code snippet showing the core loop:
+
+```
+public void run() {
+  // ...
+  while (!shouldExit) {
+    String input = in.nextLine().trim();          // User input
+    Command command = parser.parseCommand(input); // Delegates parsing
+    command.execute(moneyList);                  // Delegates execution
+  }
+}
+```
+
+The provided Java snippet:
+
+- Continuously reads user input (in.nextLine()).
+
+
+- Delegates parsing to Parser and execution to MoneyList via the Command pattern.
+
+
+- Focus: Demonstrates the class’s role as a facade without exposing internal details like logging.
+
+### Text UI Component: `TextUI.java`
+
+**Role**: Handles all user interactions and visual output for the MoneyTrail application.
+
+Here is the UML class diagram of `TextUI.java`:
+
+![Image](diagrams/TextUI_ClassDiagram.png)
+
+The simplified UML class diagram shows TextUI's core structure:
+
+- Focuses on key public methods like print() and showAllAvailableCommands()
+
+
+- Explicitly omits internal helpers (noted in comment)
+
+Here is the UML sequence diagram of `TextUI.java`
+
+![Image](diagrams/TextUI_Sequence.png)
+
+This UML sequence diagram demonstrates a typical command flow:
+
+- User requests "help" via MoneyTrail
+
+
+- TextUI activates to display command list
+
+
+- Shows clean activation/deactivation lifecycle
+
+
+- Simplified to one representative interaction and omits lower-level print operations
+
+### Parser Component: `Parser.java`
+
+Here is the UML component diagram of `Parser.java`:
+
+Here is the UML sequence diagram of `Parser.java`
+
+Here is the Java Code snippet:
+
+### Money List Component: `MoneyList.java`
+
+Here is the UML component diagram of `MoneyList.java`:
+
+Here is the UML sequence diagram of `MoneyList.java`
+
+Here is the Java Code snippet:
+
+### Storage Component: `Storage.java`
+
+Here is the UML component diagram of `Storage.java`:
+
+Here is the UML sequence diagram of `Storage.java`
+
+Here is the Java Code snippet:
+
+## Implementations
 
 ## Product scope
 ### Target user profile

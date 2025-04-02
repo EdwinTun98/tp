@@ -1,0 +1,10 @@
+@startuml TextUI_ClassDiagram
+class TextUI {
+  - printedMessages: List<String>
+  + print(String)
+  + printWelcomeMsg()
+  + printErrorMsg(MTException)
+  + showAllAvailableCommands()
+}
+note right: "Omitted: Helper methods like addLineDivider()"
+@enduml

@@ -1,0 +1,15 @@
+@startuml TextUI_Sequence
+actor User
+participant MoneyTrail
+participant TextUI
+
+User -> MoneyTrail : "help"
+activate MoneyTrail
+MoneyTrail -> TextUI : "showAllAvailableCommands()"
+activate TextUI
+TextUI -> TextUI : "print(commands...)"
+TextUI --> MoneyTrail : "Command list"
+deactivate TextUI
+MoneyTrail --> User : "Displays help"
+deactivate MoneyTrail
+@enduml

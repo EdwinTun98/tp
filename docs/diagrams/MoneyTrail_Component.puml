@@ -1,0 +1,19 @@
+@startuml MoneyTrail_Component
+scale 1.5
+skinparam monochrome true
+skinparam linetype ortho
+
+actor User
+component "MoneyTrail" {
+  component Parser
+  component MoneyList
+}
+component TextUI
+component Storage
+
+User -right-> TextUI : "Commands"
+TextUI -right-> "MoneyTrail" : "Input"
+"MoneyTrail" -down-> Parser : "parseCommand()"
+"MoneyTrail" -down-> MoneyList : "execute()"
+MoneyList -left-> Storage : "save/load"
+@enduml
