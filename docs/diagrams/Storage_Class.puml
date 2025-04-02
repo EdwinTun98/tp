@@ -1,4 +1,7 @@
 @startuml Storage_ClassDiagram
+hide circle
+skinparam classAttributeIconSize 0
+
 class Storage {
   - FILE_PATH: String
   - logger: MTLogger

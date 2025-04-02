@@ -1,0 +1,9 @@
+@startuml Income_Creation
+activate MoneyList
+MoneyList -> Income : **new**("Salary", 3000.00, "2023-10-01")
+activate Income
+Income --> Income : Set default date if null
+Income --> MoneyList : Income instance
+deactivate Income
+deactivate MoneyList
+@enduml

@@ -1,4 +1,7 @@
 @startuml TextUI_ClassDiagram
+hide circle
+skinparam classAttributeIconSize 0
+
 class TextUI {
   - printedMessages: List<String>
   + print(String)

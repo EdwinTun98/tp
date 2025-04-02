@@ -27,19 +27,16 @@
 &nbsp;&nbsp;[4.6 Data Visualization Feature](#46-data-visualization-feature) <br>
 
 ## Acknowledgements
-<a name="ack"></a>
 {list here sources of all reused/adapted ideas, code, documentation, and third-party libraries -- include links to the original source as well}
 
 ## Design
-
-{Use UML diagrams and short code snippets where applicable.}
 
 > [!TIP]
 > Tip: The `.puml` files used to create diagrams in this document `docs/diagrams` folder.
 
 ### Architecture Overview
 
-![Image](diagrams/architecture.png)
+![Image](diagrams/Architecture.png)
 
 The **Architecture Diagram** given above explains the high-level design of the App.
 
@@ -316,7 +313,7 @@ This snippet highlights storage integration:
 
 Here is the UML class diagram of `Storage.java`:
 
-![Image](diagrams/Storage_Class.png)
+![Image](diagrams/Storage_ClassDiagram.png)
 
 This UML class diagram shows the Storage component's structure and its relationship with MoneyList:
 
@@ -331,6 +328,9 @@ This UML class diagram shows the Storage component's structure and its relations
 Here is the UML sequence diagram of `Storage.java`:
 
 ![Image](diagrams/Storage_Seq.png)
+
+**Warning**: Due to unexplained image exportation issues, some activation bars will have missing lines.
+The original `.puml` files have complete activation bars.
 
 This UML sequence diagram illustrates the file read/write workflow:
 
@@ -402,6 +402,89 @@ class ExitCommand implements Command {
         return true; // Signals termination
     }
 }
+```
+
+### Expense Component: `Expense.java`
+
+**Role**:
+
+Models financial expenditure entries with:
+
+- Description
+
+- Amount
+
+- Category (default: "Uncategorized")
+
+- Date (default: "no date")
+
+Here is a self-explanatory UML class diagram:
+
+![Image](diagrams/Expense_Class.png)
+
+`Expense.java`'s toString() method prints out the string representation of an expense entry.
+Stored expense entries also used this string format.
+
+Here is a simplified UML sequence diagram:
+
+![Image](diagrams/Expense_Seq.png)
+
+This sequence diagram shows the end-to-end process of instantiating an Expense object:
+
+- MoneyList initiates the creation by calling Expense's constructor with parameters ("Lunch", 10.50, etc.), shown by its activation bar spanning the entire operation.
+
+
+- The Expense object activates during its initialization phase to handle default value assignment (like auto-setting "Uncategorized" for null categories).
+
+
+- Control returns to MoneyList with the fully constructed Expense instance.
+
+Here is a Java code snippet and its sample output:
+
+```
+// Creating and storing an expense
+Expense lunch = new Expense("Lunch", 12.50, "Food", null);
+moneyList.add(lunch.toString());  // Stores formatted string
+```
+
+Outcome:
+```
+"Expense: Lunch $12.50 {Food} [no date]"
+```
+
+### Income Component: `Income.java`
+
+**Role**:
+
+Models financial income entries with::
+
+- Description (required)
+
+- Amount (positive value)
+
+- Date (default: "no date")
+
+Here is a self-explanatory UML class diagram:
+
+![Image](diagrams/Income_Class.png)
+
+Here is a simplified UML sequence diagram:
+
+![Image](diagrams/Income_Seq.png)
+
+The sequence diagram of `Income.java` shares the same underlying 
+explanations as the sequence diagram of `Expense.java`.
+
+Here is a self-explanatory Java code snippet and its sample output:
+
+```
+Income salary = new Income("Salary", 3000.00, null);
+moneyList.add(salary.toString()); 
+```
+
+Outcome:
+```
+"Income: Salary $3000.00 [no date]"
 ```
 
 ## Implementations

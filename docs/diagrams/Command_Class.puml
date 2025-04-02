@@ -1,5 +1,7 @@
 @startuml Command_Relationships
 skinparam monochrome true
+hide circle
+skinparam classAttributeIconSize 0
 
 interface Command {
   + execute(MoneyList): void

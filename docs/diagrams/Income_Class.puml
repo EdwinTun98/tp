@@ -1,0 +1,16 @@
+@startuml Income_ClassDiagram
+hide circle
+skinparam classAttributeIconSize 0
+
+class Income {
+  - description: String
+  - amount: double
+  - date: String
+  + Income(desc, amount, date)
+  + getDescription(): String
+  + getAmount(): double
+  + getDate(): String
+  + toString(): String
+}
+
+@enduml
