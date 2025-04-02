@@ -85,7 +85,6 @@ public class Storage {
             logger.logSevere("Failed to find file at " + FILE_PATH, error);
             throw new MTException("File not found. Starting with an empty list.");
         }
-
         return entries;
     }
 
