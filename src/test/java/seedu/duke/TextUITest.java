@@ -180,7 +180,7 @@ public class TextUITest {
 
         System.setOut(System.out);
     }
-    
+
     /**
      * Tests that {@link TextUI#printNumItems} handles pluralization
      * correctly for single entry.

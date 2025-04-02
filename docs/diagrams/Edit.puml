@@ -1,0 +1,24 @@
+@startuml
+actor User
+participant MoneyTrail
+participant Parser
+participant EditExpenseCommand
+participant MoneyList
+participant Storage
+participant TextUI
+
+== User Input ==
+User -> MoneyTrail : "edit 2 newdesc $/50 c/food d/2024-04-01"
+MoneyTrail -> Parser : parseCommand("edit 2 newdesc $/50 c/food d/2024-04-01")
+Parser -> Parser : parseEditCommand()
+Parser --> MoneyTrail : EditExpenseCommand
+
+== Execute Command ==
+MoneyTrail -> EditExpenseCommand : execute(moneyList)
+EditExpenseCommand -> MoneyList : editExpense(index=1, newDesc, newAmount, newCat, newDate)
+
+== Expense Update ==
+MoneyList -> Storage : saveExpenses(moneyList)
+MoneyList -> TextUI : print("Entry updated. Expense: newdesc $50.00 {food} [2024-04-01]")
+
+@enduml

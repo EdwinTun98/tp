@@ -474,8 +474,202 @@ Outcome:
 
 This section describes some details on how certain features are implemented.
 
-### Delete Feature
+## SetCategoryBudgetCommand & BudgetCommand
 
+**Overview**:
+
+The `SetCategoryBudgetCommand` sets a budget limit for a specific expense category.
+
+- Parameter Parsing: Extracts category and amount from command input.
+
+- Validation: Ensures amount is numeric and non-negative; category is not empty. 
+
+- Persistence: Updates the stored category budgets via Storage.
+
+**Implementation**: Encapsulates logic to update category-level budgets while complying with the Command interface.
+
+**Workflow**:
+
+![Image](diagrams/Set_Category_Budget.png)
+
+**Why this design**:
+
+- Modular Parsing: Parser delegates creation of the command, isolating input handling.
+
+- Encapsulation: Category logic lives in MoneyList, not the command class.
+
+- Separation of Concerns: Each class (Parser, Command, MoneyList) handles its own role clearly.
+
+- Persistence: Ensures budget updates are immediately saved to file.
+
+**Key Code Snippets**:
+
+```
+// In Parser.java
+String[] parts = trimmed.split("\\s+", 2);
+String category = parts[0].substring(2).trim(); // removes "c/"
+double amount = Double.parseDouble(parts[1].trim());
+return new SetCategoryBudgetCommand(category, amount);
+```
+
+Rationale: Efficiently splits user input, ensures valid category and parses numeric budget.
+
+```
+// In SetCategoryBudgetCommand.java
+public void execute(MoneyList moneyList) throws MTException {
+    moneyList.setCategoryLimit(category, amount);
+}
+```
+Rationale: Clean delegation to MoneyList, which handles validation, storage, and UI feedback.
+
+## ListCatsCommand & ListCommand
+
+**Overview**:
+
+The `ListCatsCommand` displays all unique categories used in existing expense entries.
+
+**Key Characteristics**:
+
+- Extraction Logic: Parses categories from string-formatted expense entries.
+
+- User Feedback: Provides friendly output listing categories in order of appearance.
+
+- Robustness: Handles empty lists and malformed entries gracefully.
+
+**Implementation**: Implements the Command interface and delegates logic to MoneyList.listCats().
+
+![Image](diagrams/List.png)
+
+**Why this design**:
+- Separation of Concerns: Parsing stays in Parser, business logic in MoneyList, and output in TextUI.
+
+- User Experience: Avoids duplicate category names and maintains intuitive display order.
+
+- Defensive Programming: Safeguards against null entries or missing {} in expense strings.
+
+**Key Code Snippets**:
+
+```
+@Override
+public void execute(MoneyList moneyList) {
+    moneyList.listCats();
+}
+```
+
+Rationale: Simple delegation to the domain class, keeps command class clean and focused.
+
+```
+// In MoneyList.listCats()
+for (String entry : moneyList) {
+    String beforeCat = entry.substring(entry.indexOf("{") + 1).trim();
+    String category = beforeCat.split("}", 2)[0];
+    categories.add(category);
+}
+```
+Rationale: Extracts category from each entry while preserving insertion order using a LinkedHashSet.
+
+## EditExpenseCommand
+**Overview**:
+
+The `EditExpenseCommand` updates the details of an existing expense entry, such as description, amount, category, or date.
+
+**Key characteristics**:
+- 1-based index: User input is converted to 0-based internally.
+
+- Partial Updates: Supports optional editing — any missing field retains its old value.
+
+- Validation: Checks for proper format, entry type, and valid index.
+
+- Persistence: Saves changes immediately to storage.
+
+**Implementation**: Implements the Command interface and delegates modification logic to MoneyList.editExpense(...).
+
+**Workflow**:
+
+![Image](diagrams/EditExpenses.png)
+
+**Why this design**:
+
+- Flexible Parsing: Parser extracts only the fields that were included by the user.
+
+- Robust Update Logic: MoneyList handles the safe merging of old and new fields.
+
+- Defensive Programming: Prevents editing non-expense entries or malformed lines.
+
+- Persistence Guarantee: Changes are saved immediately to prevent data loss.
+
+**Key Code Snippets**:
+
+```
+// In EditExpenseCommand
+public void execute(MoneyList moneyList) throws MTException {
+    moneyList.editExpense(index, newDescription, newAmount, newCategory, newDate);
+}
+```
+
+Rationale: Simple execution method defers logic to the MoneyList class for clarity and separation of concerns.
+
+```
+// In MoneyList.editExpense()
+if (newDesc == null || newDesc.isEmpty()) {
+    newDesc = oldDescription;
+}
+if (newAmount <= 0.00) {
+    newAmount = oldAmount;
+}
+```
+
+Rationale: Ensures that missing fields are safely defaulted to their existing values, enabling partial updates.
+
+## FindCommand
+**Overview**:
+
+The `FindCommand` searches for entries in the MoneyList that contain a specific keyword, case-insensitively.
+
+- Search Scope: Scans all entries (expenses and incomes) as raw strings.
+
+- Case-Insensitive: Matches regardless of capitalization.
+
+- Feedback: Notifies user of matched results or when none are found.
+
+**Implementation**: Implements the Command interface and delegates search logic to MoneyList.findEntry(keyword).
+
+**Workflow**:
+
+![Image](diagrams/FindCommand.png)
+
+**Why this design**:
+
+- Simple Matching: Leverages String.contains() and lowercasing for intuitive matching.
+
+- Feedback-Oriented: Tells user what was found or if no match exists.
+
+- Robust Edge Handling: Gracefully handles null/empty inputs and missing matches.
+
+
+
+**Key Code Snippets**:
+
+```
+// In Parser.java
+String keyword = input.substring(5).trim();
+return new FindCommand(keyword);
+```
+
+Rationale: Efficiently strips the find prefix and trims whitespace, ensuring the keyword is clean and valid.
+
+```
+// In MoneyList.findEntry()
+for (String entry : moneyList) {
+    if (entry.toLowerCase().contains(input.toLowerCase())) {
+        results.add(entry);
+    }
+}
+```
+
+Rationale: Performs a basic case-insensitive search over all stored entries and collects results.
+
+## DeleteCommand
 **Overview**:
 
 The `DeleteCommand` permanently removes an entry from MoneyList based on user-specified index. 
