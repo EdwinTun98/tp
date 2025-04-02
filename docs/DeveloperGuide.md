@@ -1,18 +1,18 @@
 # Developer Guide
 
-[1. Acknowledgements](##-acknowledgements) <br>
-[2. Design](#-design) <br>
-[3. Implementations](#-implementations) <br>
-[4. Product Scope](#-product-scope) <br>
-[5. User Stories](#-user-stories) <br>
-[6. Non-Functional Requirements](##-non-functional-requirements) <br>
-[7. Glossary](##-glossary) <br>
-[8. Instructions for Manual Testing](##-instructions-for-manual-testing) <br>
+[1. Acknowledgements](#1-acknowledgements) <br>
+[2. Design](#2-design) <br>
+[3. Implementations](#3-implementations) <br>
+[4. Product Scope](#4-product-scope) <br>
+[5. User Stories](#5-user-stories) <br>
+[6. Non-Functional Requirements](#6-non-functional-req) <br>
+[7. Glossary](#7-glossary) <br>
+[8. Instructions for Manual Testing](#8-testing) <br>
 
-## Acknowledgements
+## Acknowledgements <a name="1-acknowledgements"></a>
 {list here sources of all reused/adapted ideas, code, documentation, and third-party libraries -- include links to the original source as well}
 
-## Design
+## Design <a name="2-design"></a>
 
 > [!TIP]
 > Tip: The `.puml` files used to create diagrams in this document `docs/diagrams` folder.
@@ -470,7 +470,7 @@ Outcome:
 "Income: Salary $3000.00 [no date]"
 ```
 
-## Implementations
+## Implementations <a name="3-implementations"></a>
 
 This section describes some details on how certain features are implemented.
 
@@ -607,7 +607,7 @@ Why: Centralizes shutdown logic in the main loop for consistency.
 
 - Easy to add pre-exit hooks (e.g., analytics logging)
 
-## Product scope
+## Product scope <a name="4-product-scope"></a>
 
 ### Target user profile
 
@@ -623,7 +623,7 @@ Tertiary students who:
 spending—all in one simple CLI app for personal 
 finance mastery."
 
-## User Stories
+## User Stories <a name="5-user-stories"></a>
 
 | Version | As a ... | I want to ...                                                  | So that I can ...                                            |
 |---------|----------|----------------------------------------------------------------|--------------------------------------------------------------|
@@ -638,7 +638,7 @@ finance mastery."
 | v2.0    | user     | list all used categories                                       | analyze spending patterns across different categories        |
 | v2.0    | user     | clear all entries                                              | reset the application entirely                               |
 
-## Non-Functional Requirements
+## Non-Functional Requirements <a name="6-non-functional-req"></a>
 
 #### Usability
 
@@ -662,7 +662,7 @@ The application should gracefully handle unexpected crashes or errors, saving us
 #### Accuracy
 Calculations (e.g., total expenses, budget limits) must be precise and error-free.
 
-## Glossary
+## Glossary <a name="7-glossary"></a>
 
 | Term           | Definition                                                                                         | 
 |----------------|----------------------------------------------------------------------------------------------------|
@@ -679,7 +679,7 @@ Calculations (e.g., total expenses, budget limits) must be precise and error-fre
 | Help Command   | A command help that provides a summary of all available commands and their formats.                |
 | Usability      | The ease with which users can navigate and use the application’s features effectively.             |
 
-## Instructions for Manual Testing
+## Instructions for Manual Testing <a name="8-testing"></a>
 
 {Give instructions on how to do a manual product testing e.g., how to load sample data to be used for testing}
 
