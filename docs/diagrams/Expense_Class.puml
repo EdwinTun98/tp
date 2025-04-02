@@ -1,0 +1,18 @@
+@startuml Expense_ClassDiagram
+hide circle
+skinparam classAttributeIconSize 0
+
+class Expense {
+  - description: String
+  - amount: double
+  - category: String
+  - date: String
+  + Expense(desc, amount, cat, date)
+  + getDescription(): String
+  + getAmount(): double
+  + getCategory(): String
+  + getDate(): String
+  + toString(): String
+}
+
+@enduml
