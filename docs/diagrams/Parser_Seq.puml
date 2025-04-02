@@ -1,0 +1,27 @@
+@startuml Parser_Sequence_Activation
+actor User
+participant MoneyTrail
+participant Parser
+participant AddExpenseCommand
+
+User -> MoneyTrail : "addExp Lunch $/10 c/Food"
+activate MoneyTrail
+MoneyTrail -> Parser : "parseCommand(input)"
+activate Parser
+
+Parser -> Parser : "createCommandFromInput()"
+activate Parser
+Parser -> Parser : "createAddExpenseCommand()"
+activate Parser
+
+Parser -> AddExpenseCommand : **new**(desc, amount, cat)
+activate AddExpenseCommand
+AddExpenseCommand --> Parser
+deactivate AddExpenseCommand
+
+deactivate Parser
+deactivate Parser #FFAAAA
+Parser --> MoneyTrail : AddExpenseCommand
+deactivate Parser
+deactivate MoneyTrail
+@enduml

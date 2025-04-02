@@ -1,0 +1,18 @@
+@startuml Storage_ClassDiagram
+hide circle
+skinparam classAttributeIconSize 0
+
+class Storage {
+  - FILE_PATH: String
+  - logger: MTLogger
+  + saveEntries(ArrayList<String>)
+  + loadEntries(): ArrayList<String>
+}
+
+class MoneyList {
+  + addExpense()
+  + loadEntriesFromFile()
+}
+
+Storage <- MoneyList : "uses"
+@enduml

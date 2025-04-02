@@ -1,0 +1,13 @@
+@startuml TextUI_ClassDiagram
+hide circle
+skinparam classAttributeIconSize 0
+
+class TextUI {
+  - printedMessages: List<String>
+  + print(String)
+  + printWelcomeMsg()
+  + printErrorMsg(MTException)
+  + showAllAvailableCommands()
+}
+note right: "Omitted: Helper methods like addLineDivider()"
+@enduml

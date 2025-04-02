@@ -1,0 +1,18 @@
+@startuml Parser_ClassDiagram
+hide circle
+skinparam classAttributeIconSize 0
+
+class Parser {
+  + parseCommand(String): Command
+  - createCommandFromInput(String): Command
+  - createAddExpenseCommand(String): AddExpenseCommand
+}
+
+interface Command {
+  <<interface>>
+  + execute()
+  + shouldExit()
+}
+
+Parser ..> Command : creates
+@enduml

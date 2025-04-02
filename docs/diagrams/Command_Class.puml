@@ -1,0 +1,44 @@
+@startuml Command_Relationships
+skinparam monochrome true
+hide circle
+skinparam classAttributeIconSize 0
+
+interface Command {
+  + execute(MoneyList): void
+  + shouldExit(): boolean
+}
+
+' Core Relationships
+Command <|.. AddExpenseCommand
+Command <|.. DeleteCommand
+Command <|.. ExitCommand
+Command <|.. HelpCommand
+' ... (other commands omitted for brevity)
+
+class Parser {
+  + parseCommand(): Command
+}
+
+class MoneyTrail {
+  - parser: Parser
+}
+
+class MoneyList {
+  + addExpense()
+  + deleteEntry()
+  ' ... (other operations)
+}
+
+' Key Connections
+MoneyTrail --> Parser : Creates
+Parser ..> Command : Instantiates
+Command --> MoneyList : Executes on
+
+note top of Command
+  **Design Notes**:
+  1. All commands implement the same interface
+  2. Parser acts as Command factory
+  3. MoneyList is the execution target
+  4. Other commands omitted for brevity
+end note
+@enduml
