@@ -50,7 +50,7 @@ The application is divided into several classes, each with a specific responsibi
 - `MoneyList`: Manages the list of expenses and provides methods for adding, deleting, listing, and finding expenses.
 - `Storage`: Handles loading and saving data to a file.
 - `TextUI`: Manages user interface interactions, such as displaying messages and errors.
-- `MTLogger`: Logs application events and errors for debugging and monitoring.
+- `MTLogger`: Logs application events and errors for debugging and monitoring (Will not be discussed).
 - `MTException`: A custom exception class for handling application-specific errors.
 - `Expense`: Represents an expense entry with a description and amount.
 - `Income`: Represents an income entry with a description, amount, date, and provides a formatted string for display.
@@ -134,7 +134,7 @@ The simplified UML class diagram shows TextUI's core structure:
 
 - Explicitly omits internal helpers (noted in comment)
 
-Here is the UML sequence diagram of `TextUI.java`
+Here is the UML sequence diagram of `TextUI.java`:
 
 ![Image](diagrams/TextUI_Sequence.png)
 
@@ -153,17 +153,78 @@ This UML sequence diagram demonstrates a typical command flow:
 
 ### Parser Component: `Parser.java`
 
-Here is the UML component diagram of `Parser.java`:
+**Role**:
 
-Here is the UML sequence diagram of `Parser.java`
+- Translates raw user input into executable Command objects
 
-Here is the Java Code snippet:
+- Validates input syntax
+
+- Handles parsing errors with meaningful feedback
+
+Here is the UML class diagram of `Parser.java`:
+
+> [!NOTE]
+> This class diagram only concerns parsing the command that adds expense entries.
+
+![Image](diagrams/Parser_ClassDiagram.png)
+
+This simplified UML class diagram shows the Parser's core structure:
+
+- The Parser class depends on the Command interface to produce concrete command objects like AddExpenseCommand.
+
+
+- Key methods like parseCommand() and factory methods (e.g., createAddExpenseCommand()) are highlighted, while internal helpers are omitted for clarity.
+
+Here is the UML sequence diagram of `Parser.java`:
+
+![Image](diagrams/Parser_Sequence.png)
+
+This UML sequence diagram illustrates the parsing workflow for an "add expense" command:
+
+- User input flows from MoneyTrail to the Parser, which activates to process the request.
+
+
+- The Parser delegates to specialized factory methods to instantiate a concrete AddExpenseCommand.
+
+Here are the core Java Code snippets:
+
+```
+public Command parseCommand(String input) throws MTException {
+  if (input.trim().isEmpty()) {
+    throw new MTException("Empty command");  // Input validation
+  }
+  return createCommandFromInput(input);      // Delegation
+}
+```
+
+This method demonstrates the Parser's two key responsibilities:
+
+- Input validation (rejecting empty strings).
+
+
+- Delegation to command-specific factory methods.
+
+```
+private Command createAddExpenseCommand(String input) throws MTException {
+  // Simplified extraction:
+  String[] parts = input.split("\\$/"); 
+  double amount = Double.parseDouble(parts[1].split(" ")[0]);
+  return new AddExpenseCommand(...);
+}
+```
+
+This method shows simplified parsing logic for expense commands:
+
+- Splits input to extract amount and description.
+
+
+- Constructs a ready-to-execute AddExpenseCommand object.
 
 ### Money List Component: `MoneyList.java`
 
 Here is the UML component diagram of `MoneyList.java`:
 
-Here is the UML sequence diagram of `MoneyList.java`
+Here is the UML sequence diagram of `MoneyList.java`:
 
 Here is the Java Code snippet:
 
@@ -171,7 +232,7 @@ Here is the Java Code snippet:
 
 Here is the UML component diagram of `Storage.java`:
 
-Here is the UML sequence diagram of `Storage.java`
+Here is the UML sequence diagram of `Storage.java`:
 
 Here is the Java Code snippet:
 
