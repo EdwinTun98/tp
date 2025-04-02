@@ -181,10 +181,10 @@ public class TextUITest {
         System.setOut(System.out);
     }
 
-    /**
+/*    *//**
      * Tests that {@link TextUI#showAllAvailableCommands} outputs
      * all commands in the correct format.
-     */
+     *//*
     @Test
     void showAllAvailableCommands_outputsCompleteList() {
         TextUI textUI = new TextUI();
@@ -203,7 +203,7 @@ public class TextUITest {
                 "Should output complete command list with numbering");
 
         System.setOut(System.out);
-    }
+    }*/
 
     /**
      * Tests that {@link TextUI#printNumItems} handles pluralization

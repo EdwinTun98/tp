@@ -18,6 +18,7 @@ public class Storage {
     private final MTLogger logger;
 
     //@@author rchlai
+
     /**
      * Initializes a new Storage instance with a logger.
      */
@@ -27,6 +28,7 @@ public class Storage {
     //@@author
 
     //@@author rchlai
+
     /**
      * Saves all entries to the storage file.
      *
@@ -37,7 +39,7 @@ public class Storage {
         logger.logInfo("Saving entries into " + FILE_PATH);
 
         try (FileWriter writer = new FileWriter(FILE_PATH)) {
-            for (String entry: moneyList) {
+            for (String entry : moneyList) {
                 writer.write(entry + "\n");
             }
         } catch (IOException error) {
@@ -61,6 +63,7 @@ public class Storage {
     //@@author
 
     //@@author rchlai
+
     /**
      * Loads all entries from the storage file.
      *
@@ -93,7 +96,9 @@ public class Storage {
         HashMap<String, Budget> budgets = new HashMap<>();
         File file = new File(BUDGET_FILE_PATH);
 
-        if (!file.exists()) {return budgets;}
+        if (!file.exists()) {
+            return budgets;
+        }
 
         try (Scanner scanner = new Scanner(file)) {
             while (scanner.hasNextLine()) {
