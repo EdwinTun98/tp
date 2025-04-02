@@ -1,0 +1,13 @@
+@startuml
+start
+:User Inputs "exit";
+:Parser Interprets Command;
+if (Command is valid?) then (Yes)
+    :Terminate Processing Loop;
+    :Save Data to File;
+    :Display Exit Message to User;
+else (No)
+    :Display Error Message;
+endif
+stop
+@enduml

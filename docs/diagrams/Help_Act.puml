@@ -1,0 +1,12 @@
+@startuml
+start
+:User Inputs "help";
+:Parser Interprets Command;
+if (Command is valid?) then (Yes)
+    :Retrieve List of Commands;
+    :Display Commands to User;
+else (No)
+    :Display Error Message;
+endif
+stop
+@enduml

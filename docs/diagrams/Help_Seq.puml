@@ -1,0 +1,7 @@
+@startuml
+actor User
+User -> Parser : Input "help"
+Parser -> CommandExecutor : Parse "help"
+CommandExecutor -> TextUI : Retrieve List of Commands
+TextUI -> User : Display List of Commands
+@enduml
