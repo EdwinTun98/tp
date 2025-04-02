@@ -2,29 +2,28 @@
 
 [1. Acknowledgements](#-acknowledgements) <br>
 [2. Design](#-design) <br>
-&nbsp;&nbsp;[3.1.0 UI Class](#310-ui-class) <br>
-&nbsp;&nbsp;[3.1.1 DataStorage Class](#311-datastorage-class) <br>
-&nbsp;&nbsp;[3.1.2 GroupStorage Class](#312-groupstorage-class) <br>
-&nbsp;&nbsp;[3.1.3 Commands Class](#313-commands-class) <br>
-&nbsp;&nbsp;[3.1.4 ExpenseCommands Classes](#314-expensecommands-classes) <br>
-&nbsp;&nbsp;[3.1.5 FriendsCommands Class](#315-friendscommands-class) <br>
-&nbsp;&nbsp;[3.1.6 SplitCommand Class](#316-splitcommand-class) <br>
-&nbsp;&nbsp;[3.1.7 BudgetManager Class](#317-budgetmanager-class) <br>
-&nbsp;&nbsp;[3.1.8 Expense Class](#318-expense-class) <br>
-&nbsp;&nbsp;[3.1.9 Friend Class](#319-friend-class) <br>
-&nbsp;&nbsp;[3.2.0 Group Class](#320-group-class) <br>
-&nbsp;&nbsp;[3.2.1 GroupManager Class](#321-groupmanager-class) <br>
-&nbsp;&nbsp;[3.2.2 Messages Class](#322-messages-class) <br>
-&nbsp;&nbsp;[3.2.3 Summary Class](#323-summary-class) <br>
-&nbsp;&nbsp;[3.2.4 ExpenseClassifier Class](#324-expenseclassifier-class) <br>
-&nbsp;&nbsp;[3.2.5 Currency Class](#325-currency-class) <br>
-[4. Overall Application Architecture](#4-overall-application-architecture) <br>
-&nbsp;&nbsp;[4.1 Application Class Diagram](#41-application-class-diagram) <br>
-&nbsp;&nbsp;[4.2 Expense CRUD Feature](#42-expense-crud-feature) <br>
-&nbsp;&nbsp;[4.3 Create Group Feature](#43-create-group-feature) <br>
-&nbsp;&nbsp;[4.4 Split Expense Feature](#44-split-expense-feature) <br>
-&nbsp;&nbsp;[4.5 Change Currency Feature](#45-change-currency-feature) <br>
-&nbsp;&nbsp;[4.6 Data Visualization Feature](#46-data-visualization-feature) <br>
+&nbsp;[3.1.0 UI Class](#310-ui-class) <br>
+&nbsp;[3.1.1 DataStorage Class](#311-datastorage-class) <br>
+&nbsp;[3.1.2 GroupStorage Class](#312-groupstorage-class) <br>
+&nbsp;[3.1.3 Commands Class](#313-commands-class) <br>
+&nbsp;[3.1.4 ExpenseCommands Classes](#314-expensecommands-classes) <br>
+&nbsp;[3.1.5 FriendsCommands Class](#315-friendscommands-class) <br>
+&nbsp;[3.1.6 SplitCommand Class](#316-splitcommand-class) <br>
+&nbsp;[3.1.7 BudgetManager Class](#317-budgetmanager-class) <br>
+&nbsp;[3.1.8 Expense Class](#318-expense-class) <br>
+&nbsp;[3.1.9 Friend Class](#319-friend-class) <br>
+&nbsp;[3.2.0 Group Class](#320-group-class) <br>
+&nbsp;[3.2.1 GroupManager Class](#321-groupmanager-class) <br>
+&nbsp;[3.2.2 Messages Class](#322-messages-class) <br>
+&nbsp;[3.2.3 Summary Class](#323-summary-class) <br>
+&nbsp;[3.2.4 ExpenseClassifier Class](#324-expenseclassifier-class) <br>
+&nbsp;[3.2.5 Currency Class](#325-currency-class) <br>
+[3. Implementations](#4-overall-application-architecture) <br>
+[4. Product Scope](#41-application-class-diagram) <br>
+[5. User Stories](#42-expense-crud-feature) <br>
+[6. Non-Functional Requirements](#43-create-group-feature) <br>
+[7. Glossary](#44-split-expense-feature) <br>
+[8. Instructions for Manual Testing](#45-change-currency-feature) <br>
 
 ## Acknowledgements
 {list here sources of all reused/adapted ideas, code, documentation, and third-party libraries -- include links to the original source as well}
@@ -489,6 +488,55 @@ Outcome:
 
 ## Implementations
 
+This section describes some details on how certain features are implemented.
+
+### Delete Feature
+
+**Overview**:
+
+The `DeleteCommand` permanently removes an entry from MoneyList based on user-specified index. 
+Key characteristics:
+
+- 1-based indexing (user-facing) converted to 0-based (internal)
+
+- Validation: Checks for invalid indices before deletion
+
+- Data Persistence: Automatically saves changes to storage
+
+![Image](diagrams/DeleteCommand_Class.png)
+
+**Implementation**: Encapsulates deletion logic while adhering to the Command interface.
+
+**Workflow**:
+
+![Image](diagrams/Delete_Seq.png)
+
+**Why this design**:
+
+- Separation of Concerns: Parsing vs execution
+
+- Validation: MoneyList handles index bounds checking
+
+- Persistence: Storage updated immediately after deletion
+
+**Key Code Snippets**:
+
+```
+// In DeleteCommand constructor
+this.index = Integer.parseInt(input.replaceAll("[^0-9]", "")) - 1;
+```
+
+Rationale: Translates user's 1-based input to 0-based list indexing while sanitizing non-numeric characters.
+
+```
+public void execute(MoneyList moneyList) throws MTException {
+    String deleteCommand = "delete " + (index + 1); // Reconstruct user command
+    moneyList.deleteEntry(deleteCommand); // Delegates to MoneyList
+}
+```
+
+Why: Reuses existing MoneyList logic while maintaining consistent command formatting.
+
 ## Product scope
 ### Target user profile
 
@@ -565,7 +613,7 @@ Calculations (e.g., total expenses, budget limits) must be precise and error-fre
 | Help Command   | A command help that provides a summary of all available commands and their formats.                |
 | Usability      | The ease with which users can navigate and use the application’s features effectively.             |
 
-## Instructions for manual testing
+## Instructions for Manual Testing
 
 {Give instructions on how to do a manual product testing e.g., how to load sample data to be used for testing}
 
