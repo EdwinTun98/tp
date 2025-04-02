@@ -163,6 +163,7 @@ public class MoneyList {
                     }
                 }
 
+                
                 DecimalFormat df = new DecimalFormat("#.00");
                 amount = Double.valueOf(df.format(amount));
 
