@@ -180,31 +180,7 @@ public class TextUITest {
 
         System.setOut(System.out);
     }
-
-  //  /**
-   //  * Tests that {@link TextUI#showAllAvailableCommands} outputs
-    //  * all commands in the correct format.
-    // */
-/*    @Test
-    void showAllAvailableCommands_outputsCompleteList() {
-        TextUI textUI = new TextUI();
-
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(outputStream));
-
-        textUI.showAllAvailableCommands();
-
-        String output = outputStream.toString();
-        assertTrue(output.contains("List of available commands:") &&
-                        output.contains("1. help") &&
-                        output.contains("2. list") &&
-                        output.contains("3. addExp") &&
-                        output.contains("10. exit"),
-                "Should output complete command list with numbering");
-
-        System.setOut(System.out);
-    }*/
-
+    
     /**
      * Tests that {@link TextUI#printNumItems} handles pluralization
      * correctly for single entry.
