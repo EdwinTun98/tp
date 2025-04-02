@@ -28,7 +28,7 @@ public class SetTotalBudgetTest {
         moneyList.getMoneyList().add("Entry 2: $50");
         moneyList.getMoneyList().add("Entry 3: $75");
     }
-    
+
     /*
     @Test
     public void testSetTotalBudget_valid() throws MTException {

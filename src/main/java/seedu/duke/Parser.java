@@ -141,7 +141,7 @@ public class Parser {
     }
     //@@author
 
-    //@@author EdwinTun98
+    //@@author Hansel-K
     private AddExpenseCommand createAddExpenseCommand(String input) throws MTException {
         try {
             validateAddExpenseFormat(input);
