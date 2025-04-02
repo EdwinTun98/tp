@@ -1,6 +1,5 @@
 package seedu.duke;
 
-//@@author limleyhooi
 /**
  * Represents a command to be executed by the MoneyTrail application.
  * Commands can perform actions and indicate if they should terminate
@@ -19,7 +18,6 @@ public interface Command {
      */
     boolean shouldExit();
 }
-//@@author
 
 //@@author EdwinTun98
 /**
@@ -36,9 +34,19 @@ class ListCommand implements Command {
         return false;
     }
 }
-//@@author
 
-//@@author limleyhooi
+class ListBudgetCommand implements Command {
+    @Override
+    public void execute(MoneyList moneyList) throws MTException {
+        moneyList.listBudgets();
+    }
+
+    @Override
+    public boolean shouldExit() {
+        return false;
+    }
+}
+
 /**
  * Finds entries containing the specified keyword.
  */
@@ -61,11 +69,9 @@ class FindCommand implements Command {
 }
 //@@author
 
-//@@author limleyhooi
 /**
  * Deletes an entry at the specified index.
  */
-//@@author limleyhooi
 class DeleteCommand implements Command {
     private final int index;
 
@@ -86,9 +92,7 @@ class DeleteCommand implements Command {
         return false;
     }
 }
-//@@author
 
-//@@author limleyhooi
 /**
  * Calculates and displays total expenses.
  */
@@ -103,9 +107,7 @@ class TotalExpenseCommand implements Command {
         return false;
     }
 }
-//@@author
 
-//@@author limleyhooi
 /**
  * Sets the total budget amount.
  */
@@ -127,9 +129,7 @@ class BudgetCommand implements Command {
         return false;
     }
 }
-//@@author
 
-//@@author limleyhooi
 /**
  * Adds a new expense entry.
  */
@@ -148,9 +148,9 @@ class AddExpenseCommand implements Command {
 
     @Override
     public void execute(MoneyList moneyList) throws MTException {
-        // Reconstruct the command string expected by MoneyList.addExpense
-        String expenseCommand = "addExp " + description + " $/" + amount;
+        // Reconstruct the command string expected by MoneyList.addExpense.
 
+        String expenseCommand = "addExp " + description + " $/" + amount;
         if (!category.equals("Uncategorized")) {
             expenseCommand += " c/" + category;
         }
@@ -168,7 +168,6 @@ class AddExpenseCommand implements Command {
         return false;
     }
 }
-//@@author
 
 //@@author limleyhooi
 class AddIncomeCommand implements Command {
@@ -202,9 +201,6 @@ class AddIncomeCommand implements Command {
 //@@author
 
 //@@author EdwinTun98
-/**
- * Edits an existing entry in the list.
- */
 class EditExpenseCommand implements Command {
     private final int index;
     private final String newDescription;
@@ -231,13 +227,52 @@ class EditExpenseCommand implements Command {
         return false;
     }
 }
+
+class SetCategoryBudgetCommand implements Command {
+    private final String category;
+    private final double amount;
+
+    public SetCategoryBudgetCommand(String category, double amount) {
+        this.category = category;
+        this.amount = amount;
+    }
+
+    @Override
+    public void execute(MoneyList moneyList) throws MTException {
+        moneyList.setCategoryLimit(category, amount);
+    }
+
+    @Override
+    public boolean shouldExit() {
+        return false;
+    }
+}
+
+// CheckBudgetCommand.java
+class CheckExpensesCommand implements Command {
+    private final String category;
+
+    public CheckExpensesCommand(String category) {
+        this.category = category;
+    }
+
+    @Override
+    public void execute(MoneyList moneyList) throws MTException {
+        moneyList.checkExpenses(category);
+    }
+
+    @Override
+    public boolean shouldExit() {
+        return false;
+    }
+}
+
+
 //@@author
 
-//@@author limleyhooi
 /**
  * Lists all available categories.
  */
-//@@author limleyhooi
 class ListCatsCommand implements Command {
     @Override
     public void execute(MoneyList moneyList) {
@@ -249,16 +284,14 @@ class ListCatsCommand implements Command {
         return false;
     }
 }
-//@@author
 
-//@@author limleyhooi
 /**
  * Displays help information.
  */
 class HelpCommand implements Command {
     @Override
     public void execute(MoneyList moneyList) {
-        // handled in the MoneyTrail class
+        //  handled in the MoneyTrail class
     }
 
     @Override
@@ -266,9 +299,7 @@ class HelpCommand implements Command {
         return false;
     }
 }
-//@@author
 
-//@@author limleyhooi
 /**
  * Terminates the application.
  */
@@ -283,8 +314,6 @@ class ExitCommand implements Command {
         return true;
     }
 }
-//@@author
-
 //@@author rchlai
 /**
  * Clears the entry list.

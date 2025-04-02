@@ -45,7 +45,9 @@ public class Parser {
         if (input.equalsIgnoreCase("listCat")) {
             return new ListCatsCommand();
         }
-
+        if (input.equalsIgnoreCase("listBgt")) {
+            return new ListBudgetCommand();
+        }
         if (input.equalsIgnoreCase("help")) {
             return new HelpCommand();
         }
@@ -62,12 +64,20 @@ public class Parser {
             return createFindCommand(input);
         }
 
+        if (input.startsWith("check")) {
+            return parserCheckExpenses(input);
+        }
+
         if (input.startsWith("del")) {
             return createDeleteCommand(input);
         }
 
         if (input.startsWith("setTotBgt")) {
             return createBudgetCommand(input);
+        }
+
+        if (input.startsWith("setCatBgt")) {
+            return parseSetCategoryBudgetCommand(input);
         }
 
         if (input.startsWith("addExp")) {
@@ -175,6 +185,15 @@ public class Parser {
                 extractCategory(remainder),
                 extractDate(remainder)
         );
+    }
+
+    private CheckExpensesCommand parserCheckExpenses(String input) throws MTException {
+        String trimmed = input.substring("check".length()).trim();
+        if (trimmed.isEmpty()) {
+            throw new MTException("Missing category name. Usage: check c/<category or Total>");
+        }
+
+        return new CheckExpensesCommand(trimmed);
     }
     //@@author
 
@@ -355,6 +374,41 @@ public class Parser {
 
         return cIndex != -1 ? afterDate.substring(0, cIndex)
                 .trim() : afterDate.trim();
+    }
+    //@@author
+
+    //@@author EdwinTun98
+    private SetCategoryBudgetCommand parseSetCategoryBudgetCommand(String input) throws MTException {
+        String trimmed = input.substring("setCatBgt".length()).trim();
+
+        if (!trimmed.startsWith("c/")) {
+            throw new MTException("Invalid format. Use: setCatBgt c/<category> <amount>");
+        }
+
+        String[] parts = trimmed.split("\\s+", 2); // Expected: [ "c/food", "100" ]
+        if (parts.length < 2) {
+            throw new MTException("Missing budget value. Format: setCatBgt c/<category> <amount>");
+        }
+
+        String category = parts[0].substring(2).trim(); // removes "c/"
+        String amountStr = parts[1].trim();
+
+        if (category.isEmpty()) {
+            throw new MTException("Category name cannot be empty.");
+        }
+
+        double amount;
+        try {
+            amount = Double.parseDouble(amountStr);
+        } catch (NumberFormatException e) {
+            throw new MTException("Invalid amount. Please enter a valid number.");
+        }
+
+        if (amount < 0) {
+            throw new MTException("Budget cannot be negative.");
+        }
+
+        return new SetCategoryBudgetCommand(category, amount);
     }
     //@@author
 

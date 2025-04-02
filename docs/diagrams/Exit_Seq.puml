@@ -1,0 +1,9 @@
+@startuml
+actor User
+User -> Parser : Input "exit"
+Parser -> CommandExecutor : Parse "exit"
+CommandExecutor -> MoneyTrail : Terminate Loop
+CommandExecutor -> Storage : Save Data
+CommandExecutor -> TextUI : Display Exit Message
+User <-- TextUI : "Thank you for using MoneyTrail!"
+@enduml

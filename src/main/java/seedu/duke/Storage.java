@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 
 /**
@@ -13,9 +14,11 @@ import java.util.Scanner;
 public class Storage {
     // relative path of 'F:\repos\tp\mt.txt' directory
     private static final String FILE_PATH = "mt.txt";
+    private static final String BUDGET_FILE_PATH = "budgets.txt";
     private final MTLogger logger;
 
     //@@author rchlai
+
     /**
      * Initializes a new Storage instance with a logger.
      */
@@ -25,17 +28,18 @@ public class Storage {
     //@@author
 
     //@@author rchlai
+
     /**
      * Saves all entries to the storage file.
      *
      * @param moneyList List of entries to save
      * @throws MTException If there's an error writing to file
      */
-    public void saveEntries(ArrayList<String> moneyList) throws MTException {
+    public void saveExpenses(ArrayList<String> moneyList) throws MTException {
         logger.logInfo("Saving entries into " + FILE_PATH);
 
         try (FileWriter writer = new FileWriter(FILE_PATH)) {
-            for (String entry: moneyList) {
+            for (String entry : moneyList) {
                 writer.write(entry + "\n");
             }
         } catch (IOException error) {
@@ -45,7 +49,21 @@ public class Storage {
     }
     //@@author
 
+    //@@author EdwinTun98
+    public void saveBudgets(HashMap<String, Budget> budgetList) throws MTException {
+        try (FileWriter writer = new FileWriter(BUDGET_FILE_PATH)) {
+            for (Budget budget : budgetList.values()) {
+                writer.write(budget.getCategory() + " " + budget.getAmount() + "\n");
+            }
+        } catch (IOException e) {
+            logger.logSevere("Failed to save budgets", e);
+            throw new MTException("Error saving budgets: " + e.getMessage());
+        }
+    }
+    //@@author
+
     //@@author rchlai
+
     /**
      * Loads all entries from the storage file.
      *
@@ -70,8 +88,36 @@ public class Storage {
             logger.logSevere("Failed to find file at " + FILE_PATH, error);
             throw new MTException("File not found. Starting with an empty list.");
         }
-
         return entries;
+    }
+
+    //@@author EdwinTun98
+    public HashMap<String, Budget> loadBudgets() throws MTException {
+        HashMap<String, Budget> budgets = new HashMap<>();
+        File file = new File(BUDGET_FILE_PATH);
+
+        if (!file.exists()) {
+            return budgets;
+        }
+
+        try (Scanner scanner = new Scanner(file)) {
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine().trim();
+                String[] parts = line.split("\\s+", 2);
+                if (parts.length == 2) {
+                    String category = parts[0];
+                    double amount = Double.parseDouble(parts[1]);
+                    budgets.put(category, new Budget(category, amount));
+                }
+            }
+        } catch (FileNotFoundException e) {
+            logger.logSevere("Budget file not found", e);
+            throw new MTException("Budgets file not found.");
+        } catch (NumberFormatException e) {
+            throw new MTException("Corrupted budget entry: " + e.getMessage());
+        }
+
+        return budgets;
     }
     //@@author
 }
