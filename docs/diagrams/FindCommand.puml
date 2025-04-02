@@ -1,0 +1,29 @@
+@startuml
+actor User
+participant MoneyTrail
+participant Parser
+participant FindCommand
+participant MoneyList
+participant TextUI
+
+== User Input ==
+User -> MoneyTrail : "find lunch"
+MoneyTrail -> Parser : parseCommand("find lunch")
+Parser -> Parser : createFindCommand("find lunch")
+Parser --> MoneyTrail : FindCommand("lunch")
+
+== Execute Command ==
+MoneyTrail -> FindCommand : execute(moneyList)
+FindCommand -> MoneyList : findEntry("lunch")
+
+== Print Matches ==
+alt if entries matched
+    MoneyList -> TextUI : print("Found Matching entries for: lunch")
+    loop for each match
+        MoneyList -> TextUI : print("X: <entry>")
+    end
+else no match
+    MoneyList -> TextUI : print("Please enter a valid keyword to search.")
+end
+
+@enduml
