@@ -1,0 +1,24 @@
+@startuml
+actor User
+participant MoneyTrail
+participant Parser
+participant ListCatsCommand
+participant MoneyList
+participant TextUI
+
+== User Input ==
+User -> MoneyTrail : "listCat"
+MoneyTrail -> Parser : parseCommand("listCat")
+Parser --> MoneyTrail : ListCatsCommand
+
+== Execute Command ==
+MoneyTrail -> ListCatsCommand : execute(moneyList)
+ListCatsCommand -> MoneyList : listCats()
+
+== Print Categories ==
+MoneyList -> TextUI : print("Categories (in order of appearance):")
+loop for each unique category
+    MoneyList -> TextUI : print("- <category>")
+end
+
+@enduml

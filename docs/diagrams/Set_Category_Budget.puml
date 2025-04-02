@@ -1,0 +1,24 @@
+@startuml
+actor User
+participant MoneyTrail
+participant Parser
+participant SetCategoryBudgetCommand
+participant MoneyList
+participant Storage
+participant TextUI
+
+== User Enters Command ==
+User -> MoneyTrail : "setCatBgt c/food 100"
+MoneyTrail -> Parser : parseCommand("setCatBgt c/food 100")
+Parser -> Parser : parseSetCategoryBudgetCommand()
+Parser --> MoneyTrail : SetCategoryBudgetCommand
+
+== Execute Command ==
+MoneyTrail -> SetCategoryBudgetCommand : execute(moneyList)
+SetCategoryBudgetCommand -> MoneyList : setCategoryLimit("food", 100)
+
+== Budget Setting ==
+MoneyList -> Storage : saveBudgets(categoryBudget)
+MoneyList -> TextUI : print("Budget for category 'food' set to $100.00")
+
+@enduml
