@@ -14,14 +14,14 @@ public class MoneyList {
     private final MTLogger logger;
     private final Storage storage;
     private final TextUI ui;
-    private double totalBudget;
+    //private double totalBudget;
 
     public MoneyList(MTLogger logger, Storage storage, TextUI ui) {
         this.moneyList = new ArrayList<>();
         this.logger = logger;
         this.storage = storage;
         this.ui = ui;
-        this.totalBudget = 0.0;
+        //this.totalBudget = 0.0;
     }
 
     public ArrayList<String> getMoneyList() {
@@ -545,7 +545,7 @@ public class MoneyList {
 
             // Store as "TOTAL" category
             Budget OverallBudgetSet = new Budget("Overall", budget);
-            budgetList.put("Overall", OverallBudgetSet); // updates internal budget map
+            budgetList.put("Overall", OverallBudgetSet);
 
             // Save budgets to file
             storage.saveBudgets(budgetList);
@@ -562,7 +562,8 @@ public class MoneyList {
     }
 
     public double getTotalBudget() {
-        return this.totalBudget;
+        Budget total = budgetList.get("Overall");
+        return (total == null) ? 0.0 : total.getAmount();
     }
     //@@author
 
