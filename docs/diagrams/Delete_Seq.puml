@@ -1,0 +1,34 @@
+@startuml Delete_Sequence_Activation
+actor User
+participant MoneyTrail
+participant Parser
+participant DeleteCommand
+participant MoneyList
+participant Storage
+
+User -> MoneyTrail : "delete 2"
+activate MoneyTrail
+MoneyTrail -> Parser : "parseCommand()"
+activate Parser
+Parser -> DeleteCommand : "new(index=1)"
+activate DeleteCommand
+DeleteCommand --> Parser
+deactivate DeleteCommand
+Parser --> MoneyTrail : DeleteCommand
+deactivate Parser
+
+MoneyTrail -> DeleteCommand : "execute()"
+activate DeleteCommand
+DeleteCommand -> MoneyList : "deleteEntry()"
+activate MoneyList
+MoneyList -> Storage : "saveEntries()"
+activate Storage
+Storage --> MoneyList
+deactivate Storage
+MoneyList --> DeleteCommand : "Success"
+deactivate MoneyList
+DeleteCommand --> MoneyTrail : "Result"
+deactivate DeleteCommand
+MoneyTrail --> User : "Entry deleted"
+deactivate MoneyTrail
+@enduml
