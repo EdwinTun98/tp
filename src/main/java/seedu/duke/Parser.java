@@ -195,7 +195,6 @@ public class Parser {
 
         return new CheckExpensesCommand(trimmed);
     }
-
     //@@author
 
     //@@author limleyhooi, EdwinTun98
@@ -411,9 +410,6 @@ public class Parser {
 
         return new SetCategoryBudgetCommand(category, amount);
     }
-
-    //add parserCheckExpense()
-
     //@@author
 
     //@@author limleyhooi

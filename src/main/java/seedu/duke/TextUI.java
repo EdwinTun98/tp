@@ -11,6 +11,7 @@ public class TextUI {
 
     /**
      * Prints a string input.
+     *
      * @param str The input to be printed out
      */
     public void print(String str) {
@@ -74,6 +75,7 @@ public class TextUI {
 
     /**
      * Prints out the error message from MTException.
+     *
      * @param error From MTException
      */
     public void printErrorMsg(MTException error) {
@@ -82,6 +84,7 @@ public class TextUI {
 
     /**
      * Prints the number of items with correct singular/plural form.
+     *
      * @param numItems The number of items/entries
      */
     public void printNumItems(int numItems) {
@@ -106,7 +109,8 @@ public class TextUI {
         print("10. del <index>: Deletes an entry.");
         print("11. find <keyword>: Finds an entry based on the keyword.");
         print("12. edit <index> [<description>] [$/<amount>] [c/<category>] [d/<date>]: Edits an entry.");
-        print("13. check c/<Total or category>: Shows total expense or total expense for searched category and show set budget and total expenditure of respective category.");
+        print("13. check c/<Total or category>: Shows total expense or total expense for searched category and " +
+                "show set budget and total expenditure of respective category.");
         print("14. clear: Clears all entries.");
         print("15. exit: Exits the program.");
     }

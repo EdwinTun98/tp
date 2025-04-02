@@ -94,7 +94,7 @@ public class Storage {
         HashMap<String, Budget> budgets = new HashMap<>();
         File file = new File(BUDGET_FILE_PATH);
 
-        if (!file.exists()) return budgets;
+        if (!file.exists()) {return budgets;}
 
         try (Scanner scanner = new Scanner(file)) {
             while (scanner.hasNextLine()) {

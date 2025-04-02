@@ -191,6 +191,7 @@ public class MoneyList {
             throw new MTException("Failed to add expense: " + error.getMessage());
         }
     }
+
     //@@author
     //@@author limleyhooi
     public void addIncome(String input) throws MTException {
@@ -230,8 +231,7 @@ public class MoneyList {
                 throw new MTException("Amount must be greater than zero.");
             }
 
-
-            Income newIncome = new Income(description, amount,  date);
+            Income newIncome = new Income(description, amount, date);
             moneyList.add(newIncome.toString());
             logger.logInfo("Added income: " + newIncome);
             ui.print("Income added: " + newIncome);
@@ -399,8 +399,8 @@ public class MoneyList {
 
     public double getTotalExpenseValue(String category) throws MTException {
         double totalExpenses = 0.0;
-        for (String entry : moneyList){
-            if(entry.startsWith("Expense: ")){
+        for (String entry : moneyList) {
+            if (entry.startsWith("Expense: ")) {
                 try {
                     String[] entryPart1 = entry.split("\\$");
                     String[] entryPart2 = entryPart1[1].split("\\{");
@@ -408,8 +408,7 @@ public class MoneyList {
 
                     if (category == null) {
                         totalExpenses += expensesAmount;
-                    }
-                    else {
+                    } else {
                         String[] categorySplit = entryPart2[1].split("}", 2);
                         String categoryName = categorySplit[0].trim().toLowerCase();
 
@@ -562,7 +561,7 @@ public class MoneyList {
 
         moneyList.clear();
         storage.saveExpenses(moneyList);
-        
+
         logger.logInfo("All entries have been cleared from the money list.");
         ui.print("All entries cleared");
     }
