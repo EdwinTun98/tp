@@ -10,16 +10,16 @@ MoneyTrail -> Parser : "parseCommand(input)"
 activate Parser
 
 Parser -> Parser : "createCommandFromInput()"
-activate Parser #FFAAAA
+activate Parser
 Parser -> Parser : "createAddExpenseCommand()"
-activate Parser #FFBBBB
+activate Parser
 
 Parser -> AddExpenseCommand : **new**(desc, amount, cat)
 activate AddExpenseCommand
 AddExpenseCommand --> Parser
 deactivate AddExpenseCommand
 
-deactivate Parser #FFBBBB
+deactivate Parser
 deactivate Parser #FFAAAA
 Parser --> MoneyTrail : AddExpenseCommand
 deactivate Parser

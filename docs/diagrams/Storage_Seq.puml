@@ -1,4 +1,4 @@
-@startuml Storage_Sequence_Simplified
+@startuml Storage_Sequence_Corrected
 participant MoneyList
 participant Storage
 
