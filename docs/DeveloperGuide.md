@@ -407,24 +407,18 @@ class ExitCommand implements Command {
 ## Implementations
 
 ## Product scope
+
 ### Target user profile
-
-- Tertiary students
-
-- Who are budget-conscious and want to track their spending
-
+Tertiary students who:
+- Are budget-conscious and want to track their spending
+- Find it troublesome to log their expenses and income on pen and paper.
 - Want a lightweight, fast, and offline personal finance tracker
-
 - Appreciate having flexibility to edit, categorize, and budget their expenses and income
 
 ### Value proposition
-
-{Describe the value proposition: what problem does it solve?}
-
 MoneyTrail is a lightweight, user-friendly budget tracking application to help you achieve financial clarity
-and peace of mind.
-Designed for simplicity and efficiency, it empowers users to manage expenses, track spending,
-and stay within budget — all in one place. Our tool transforms financial management into a stress-free experience.
+and peace of mind. Say goodbye to the hassle of pen and paper logging. MoneyTrail is designed for simplicity and efficiency, it empowers users to manage expenses, track spending,
+and stay within budget — digitally and all in one place. Our tool transforms financial management into a stress-free experience.
 
 ## User Stories
 
@@ -444,7 +438,6 @@ and stay within budget — all in one place. Our tool transforms financial manag
 ## Non-Functional Requirements
 
 #### Usability
-
 #### User-friendly Interface:
 The application should have an intuitive design, making it easy for users to navigate and input data.
 
@@ -452,13 +445,11 @@ The application should have an intuitive design, making it easy for users to nav
 Provide clear and actionable feedback when a user makes a mistake (e.g., invalid input format).
 
 ### Performance
-
 #### Fast Response Time:
 The application should process commands and display results within a fraction of a second
 to ensure a smooth user experience
 
 ### Reliability
-
 #### Error Recovery
 The application should gracefully handle unexpected crashes or errors, saving user data wherever possible.
 
@@ -487,7 +478,6 @@ Calculations (e.g., total expenses, budget limits) must be precise and error-fre
 {Give instructions on how to do a manual product testing e.g., how to load sample data to be used for testing}
 
 ### Testing Basic Commands
-
 #### help Command:
 1. Input the help command.
 2. Verify that a complete list of all available commands is displayed.
@@ -513,7 +503,6 @@ Calculations (e.g., total expenses, budget limits) must be precise and error-fre
 3. Check for case sensitivity and partial matches (e.g., searching "lunch" vs "Lunch").
 
 ### Testing Budget Features
-
 #### totalExp Command:
 1. Add multiple expenses and run totalExp.
 2. Verify the total sum of all expenses is calculated accurately.
@@ -527,9 +516,22 @@ Calculations (e.g., total expenses, budget limits) must be precise and error-fre
 1. Add expenses with various categories (e.g., Food, Transportation).
 2. Run listCat and verify that all used categories are listed without duplicates.
 
-
 ### Testing Data Management
-(TO BE ADDED)
+#### Loading Sample Data:
+1. Locate the mt.txt file in the application's home folder
+2. Edit the file to include the sample entries in the required format (e.g., `Expense: fuel $10.00 {transportation} [no date]` ).
+3. Restart the application and run the `list` command to ensure that the sample data loads correctly.
+
+#### Saving Data:
+1. Add mew expenses using the `addExp` command.
+2. Check if the mt.txt file reflects the changes immediately after the application modifies data.
+3. Exit and restart the application, then confirm the changes persist
 
 ### Testing Application Behavior
-(TO BE ADDED)
+#### Error Messages and Validation:
+1. Provide invalid inputs for commands (e.g., non-numeric values for amounts, invalid date formats).
+2. Ensure that the application displays clear and descriptive error messages.
+
+#### Exiting Application:
+1. Run the `exit` command.
+2. Confirm that the application shuts down without errors and does not leave any processes running.
