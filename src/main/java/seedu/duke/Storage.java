@@ -6,7 +6,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Scanner;
 
 /**
@@ -49,10 +48,10 @@ public class Storage {
     //@@author
 
     //@@author EdwinTun98
-    public void saveBudgets(HashMap<String, Double> budgetList) throws MTException {
+    public void saveBudgets(HashMap<String, Budget> budgetList) throws MTException {
         try (FileWriter writer = new FileWriter(BUDGET_FILE_PATH)) {
-            for (Map.Entry<String, Double> entry : budgetList.entrySet()) {
-                writer.write(String.format("%s %.2f\n", entry.getKey(), entry.getValue()));
+            for (Budget budget : budgetList.values()) {
+                writer.write(budget.getCategory() + " " + budget.getAmount() + "\n");
             }
         } catch (IOException e) {
             logger.logSevere("Failed to save budgets", e);
@@ -91,8 +90,8 @@ public class Storage {
     }
 
     //@@author EdwinTun98
-    public HashMap<String, Double> loadBudgets() throws MTException {
-        HashMap<String, Double> budgets = new HashMap<>();
+    public HashMap<String, Budget> loadBudgets() throws MTException {
+        HashMap<String, Budget> budgets = new HashMap<>();
         File file = new File(BUDGET_FILE_PATH);
 
         if (!file.exists()) return budgets;
@@ -104,7 +103,7 @@ public class Storage {
                 if (parts.length == 2) {
                     String category = parts[0];
                     double amount = Double.parseDouble(parts[1]);
-                    budgets.put(category, amount);
+                    budgets.put(category, new Budget(category, amount));
                 }
             }
         } catch (FileNotFoundException e) {
@@ -116,6 +115,5 @@ public class Storage {
 
         return budgets;
     }
-    //@@author
     //@@author
 }

@@ -94,6 +94,7 @@ class DeleteCommand implements Command {
 }
 
 
+
 /**
  * Calculates and displays total expenses.
  */
@@ -169,6 +170,38 @@ class AddExpenseCommand implements Command {
         return false;
     }
 }
+
+//@@author limleyhooi
+class AddIncomeCommand implements Command {
+    private final String description;
+    private final double amount;
+    private final String date;
+
+    public AddIncomeCommand(String description, double amount, String date) {
+        this.description = description;
+        this.amount = amount;
+        this.date = date;
+    }
+
+    @Override
+    public void execute(MoneyList moneyList) throws MTException {
+        // Construct the command string as expected by MoneyList.addIncome
+        String incomeCommand = "addIncome " + description + " $/" + amount;
+
+        if (!date.equals("no date")) {
+            incomeCommand += " d/" + date;
+        }
+
+        moneyList.addIncome(incomeCommand);
+    }
+
+    @Override
+    public boolean shouldExit() {
+        return false;
+    }
+}
+//@@author
+
 //@@author EdwinTun98
 class EditExpenseCommand implements Command {
     private final int index;
@@ -217,6 +250,26 @@ class SetCategoryBudgetCommand implements Command {
     }
 }
 
+// CheckBudgetCommand.java
+class CheckExpensesCommand implements Command {
+    private final String category;
+
+    public CheckExpensesCommand(String category) {
+        this.category = category;
+    }
+
+    @Override
+    public void execute(MoneyList moneyList) throws MTException {
+        moneyList.checkExpenses(category);
+    }
+
+    @Override
+    public boolean shouldExit() {
+        return false;
+    }
+}
+
+
 //@@author
 
 /**
@@ -263,3 +316,19 @@ class ExitCommand implements Command {
         return true;
     }
 }
+//@@author rchlai
+/**
+ * Clears the entry list.
+ */
+class ClearListCommand implements Command {
+    @Override
+    public void execute(MoneyList moneyList) throws MTException {
+        moneyList.clearEntries();
+    }
+
+    @Override
+    public boolean shouldExit() {
+        return false;
+    }
+}
+//@@author

@@ -96,23 +96,18 @@ public class TextUI {
         print("List of available commands:");
         print("1. help: Displays this list of available commands.");
         print("2. list: Lists out all entries.");
-        print("3. addExp <description> $/<value> c/<category> d/<date>: "
-                + "\n" + "Adds a new expense entry. Category and date are optional.");
-        print("4. totalExp: Displays the total expense accumulated from all entries.");
-        print("5. setTotBgt <value>: Sets a total spending budget to adhere to.");
-        print("6. del <index>: Deletes an entry.");
-        print("7. find <keyword>: Finds an entry based on the given keyword.");
-        print("8. listCat: Lists out all entry categories in order of appearance.");
-        print("9. clear: Clear all existing entries.");
-        print("10. exit: Exits the program.");
-        print("11. edit <index> <description> $/<value> " +
-                "c/<category> d/<date>: Edits an entry." + "\n" +
-                "You can select a metric to edit.");
-        print("12. addIncome <description> $/<amount> [d/<date>] ");
-        print("8. listCats: Lists out all entry categories in order of appearance.");
-        print("9. catBtg: Lists out categories Budget.");
-        print("10. edit <description> or $/<value> or c/<cat> or d/<date: Edit entries.");
-        print("11. check <keyword>: check total expense for keyword 'total' or 'category' and show spending left.");
-        print("12. exit: Exits the program.");
+        print("3. addExp <description> $/<value> [c/<category>] [d/<date>]: Adds a new expense entry.");
+        print("4. addIncome <description> $/<value> [d/<date>]: Adds a new income entry.");
+        print("5. totalExp: Displays the total expense accumulated.");
+        print("6. setTotBgt <value>: Sets a total spending budget.");
+        print("7. setCatBgt c/<category> <value>: Sets a budget for a specific category.");
+        print("8. listBgt: Lists out all category budgets.");
+        print("9. listCat: Lists out all entry categories in order of appearance.");
+        print("10. del <index>: Deletes an entry.");
+        print("11. find <keyword>: Finds an entry based on the keyword.");
+        print("12. edit <index> [<description>] [$/<amount>] [c/<category>] [d/<date>]: Edits an entry.");
+        print("13. check c/<Total or category>: Shows total expense or total expense for searched category and show set budget and total expenditure of respective category.");
+        print("14. clear: Clears all entries.");
+        print("15. exit: Exits the program.");
     }
 }

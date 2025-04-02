@@ -10,7 +10,7 @@ public class MoneyList {
     private static final int INDEX_OFFSET = 1;
 
     private final ArrayList<String> moneyList;
-    private final HashMap<String, Double> categoryBudget = new HashMap<>();
+    private final HashMap<String, Budget> categoryBudget = new HashMap<>();
     private final MTLogger logger;
     private final Storage storage;
     private final TextUI ui;
@@ -74,7 +74,7 @@ public class MoneyList {
             moneyList.addAll(loadedEntries);
         }
 
-        HashMap<String, Double> loadedBudgets = storage.loadBudgets();
+        HashMap<String, Budget> loadedBudgets = storage.loadBudgets();
         if (loadedBudgets != null) {
             categoryBudget.putAll(loadedBudgets);
         }
@@ -322,24 +322,15 @@ public class MoneyList {
     }
 
     public void listBudgets() throws MTException {
-        try {
-            if (categoryBudget.isEmpty()) {
-                logger.logWarning("No budgets to list.");
-                throw new MTException("No category budgets have been set.");
-            }
+        if (categoryBudget.isEmpty()) {
+            throw new MTException("No category budgets have been set.");
+        }
 
-            ui.print("Category Budgets:");
-            for (Map.Entry<String, Double> entry : categoryBudget.entrySet()) {
-                ui.print("- " + entry.getKey() + ": $" + String.format("%.2f", entry.getValue()));
-            }
-
-            logger.logInfo("Listed " + categoryBudget.size() + " category budgets.");
-        } catch (Exception e) {
-            logger.logSevere("Failed to list budgets: " + e.getMessage(), e);
-            throw new MTException("Something went wrong while listing budgets.");
+        ui.print("Category Budgets:");
+        for (Map.Entry<String, Budget> entry : categoryBudget.entrySet()) {
+            ui.print("- " + entry.getValue().toString());
         }
     }
-
 
     public void findEntry(String input) throws MTException {
         // Validate the input for null, empty, or whitespace-only
@@ -375,11 +366,79 @@ public class MoneyList {
             throw new MTException("Category budget cannot be negative.");
         }
 
-        categoryBudget.put(category, amount);
+        Budget budget = new Budget(category, amount);
+        categoryBudget.put(category, budget);
+
         ui.print("Budget for category '" + category + "' set to $" + String.format("%.2f", amount));
         logger.logInfo("Set budget: " + category + " = " + amount);
-        storage.saveBudgets(categoryBudget);
+        storage.saveBudgets(categoryBudget); // You’ll add this in Storage.java
     }
+
+    public void checkExpenses(String categoryInput) throws MTException {
+        if (categoryInput == null || categoryInput.trim().isEmpty()) {
+            throw new MTException("Please specify a category or use 'Total'.");
+        }
+
+        boolean isTotal = categoryInput.equalsIgnoreCase("Total");
+
+        if (isTotal) {
+            double totalExpense = getTotalExpenseValue(null); // All expenses
+            printTotalBudgetSummary(totalExpense);
+        } else {
+            String targetCategory = categoryInput.trim().toLowerCase();
+            Budget budget = categoryBudget.get(targetCategory);
+
+            if (budget == null) {
+                throw new MTException("No budget set for category: " + categoryInput);
+            }
+
+            double categoryExpense = getTotalExpenseValue(targetCategory);
+            printCategoryBudgetSummary(budget, categoryExpense);
+        }
+    }
+
+    public double getTotalExpenseValue(String category) throws MTException {
+        double totalExpenses = 0.0;
+        for (String entry : moneyList){
+            if(entry.startsWith("Expense: ")){
+                try {
+                    String[] entryPart1 = entry.split("\\$");
+                    String[] entryPart2 = entryPart1[1].split("\\{");
+                    double expensesAmount = Double.parseDouble(entryPart2[0].trim());
+
+                    if (category == null) {
+                        totalExpenses += expensesAmount;
+                    }
+                    else {
+                        String[] categorySplit = entryPart2[1].split("}", 2);
+                        String categoryName = categorySplit[0].trim().toLowerCase();
+
+                        if (categoryName.equals(category.toLowerCase())) {
+                            totalExpenses += expensesAmount;
+                        }
+                    }
+                } catch (Exception e) {
+                    logger.logWarning("Error parsing entry for expense: " + entry);
+                }
+            }
+        }
+        return totalExpenses;
+    }
+
+    private void printTotalBudgetSummary(double overallExpenses) {
+        ui.print("-------- TOTAL BUDGET EXPENSES SUMMARY --------");
+        //ui.print(String.format("Total Budget: %.2f", overallExpenses));
+        ui.print(String.format("Total Expenses: %.2f", overallExpenses));
+    }
+
+    private void printCategoryBudgetSummary(Budget budget, double spent) {
+        ui.print("-------- CATEGORY EXPENSES BUDGET CHECK --------");
+        ui.print("Category: " + budget.getCategory());
+        ui.print(String.format("Budget: $%.2f", budget.getAmount()));
+        ui.print(String.format("Total Spent: $%.2f", spent));
+        ui.print(String.format("Remaining: $%.2f", budget.getAmount() - spent));
+    }
+
     //@@author
 
     public void getTotalExpense() {
