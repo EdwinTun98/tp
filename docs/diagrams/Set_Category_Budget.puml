@@ -7,18 +7,30 @@ participant MoneyList
 participant Storage
 participant TextUI
 
-== User Enters Command ==
 User -> MoneyTrail : "setCatBgt c/food 100"
+activate MoneyTrail
+
 MoneyTrail -> Parser : parseCommand("setCatBgt c/food 100")
+activate Parser
 Parser -> Parser : parseSetCategoryBudgetCommand()
+deactivate Parser
 Parser --> MoneyTrail : SetCategoryBudgetCommand
 
-== Execute Command ==
 MoneyTrail -> SetCategoryBudgetCommand : execute(moneyList)
+activate SetCategoryBudgetCommand
 SetCategoryBudgetCommand -> MoneyList : setCategoryLimit("food", 100)
+activate MoneyList
 
-== Budget Setting ==
 MoneyList -> Storage : saveBudgets(categoryBudget)
-MoneyList -> TextUI : print("Budget for category 'food' set to $100.00")
+activate Storage
+deactivate Storage
 
+MoneyList -> TextUI : print("Budget for category 'food' set to $100.00")
+activate TextUI
+deactivate TextUI
+
+deactivate MoneyList
+deactivate SetCategoryBudgetCommand
+deactivate MoneyTrail
 @enduml
+
