@@ -85,7 +85,7 @@ class StorageTest {
         testData.add("[Expense] Bus Value = $1.50 |Transport| (2023-10-16)");
 
         // Test save
-        assertDoesNotThrow(() -> storage.saveEntries(testData));
+        assertDoesNotThrow(() -> storage.saveExpenses(testData));
         assertTrue(Files.exists(Path.of("mt.txt")),
                 "File should be created");
 
@@ -120,7 +120,7 @@ class StorageTest {
 
         // Verify exception
         MTException thrown = assertThrows(MTException.class,
-                () -> storage.saveEntries(testData));
+                () -> storage.saveExpenses(testData));
 
         assertTrue(thrown.getMessage().contains("Error saving entries"));
     }
