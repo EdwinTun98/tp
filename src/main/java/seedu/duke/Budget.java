@@ -39,8 +39,8 @@ public class Budget {
 
     @Override
     public String toString() {
-        if (category.equalsIgnoreCase("Total")) {
-            return String.format("Total Budget: $%.2f", amount);
+        if (category.equalsIgnoreCase("Overall")) {
+            return String.format("Overall Budget: $%.2f", amount);
         }
         return String.format("Budget for %s: $%.2f", category, amount);
     }

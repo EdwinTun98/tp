@@ -8464,3 +8464,155 @@ Apr 02, 2025 4:42:49 PM seedu.duke.MTLogger logInfo
 INFO: Starting CLI program.
 Apr 02, 2025 4:42:49 PM seedu.duke.MTLogger logInfo
 INFO: Loaded 3 entries from file.
+Apr 03, 2025 1:12:30 AM seedu.duke.MTLogger logInfo
+INFO: Starting CLI program.
+Apr 03, 2025 1:12:30 AM seedu.duke.MTLogger logInfo
+INFO: Loaded 3 entries from file.
+Apr 03, 2025 1:12:40 AM seedu.duke.MTLogger logInfo
+INFO: Displayed 3 unique categories.
+Apr 03, 2025 1:13:15 AM seedu.duke.MTLogger logInfo
+INFO: Set budget: drive = 200.0
+Apr 03, 2025 1:13:23 AM seedu.duke.MTLogger logInfo
+INFO: Starting CLI program.
+Apr 03, 2025 1:13:23 AM seedu.duke.MTLogger logInfo
+INFO: Loaded 3 entries from file.
+Apr 03, 2025 1:13:32 AM seedu.duke.MTLogger logInfo
+INFO: Displayed 3 unique categories.
+Apr 03, 2025 1:14:21 AM seedu.duke.MTLogger logInfo
+INFO: Starting CLI program.
+Apr 03, 2025 1:14:21 AM seedu.duke.MTLogger logInfo
+INFO: Loaded 3 entries from file.
+Apr 03, 2025 1:14:30 AM seedu.duke.MTLogger logInfo
+INFO: Displayed 3 unique categories.
+Apr 03, 2025 1:48:26 AM seedu.duke.MTLogger logInfo
+INFO: Starting CLI program.
+Apr 03, 2025 1:48:27 AM seedu.duke.MTLogger logInfo
+INFO: Loaded 3 entries from file.
+Apr 03, 2025 1:48:31 AM seedu.duke.MTLogger logWarning
+WARNING: Error processing command: Missing category name. Usage: check c/<category or Total>
+Apr 03, 2025 1:55:35 AM seedu.duke.MTLogger logInfo
+INFO: Starting CLI program.
+Apr 03, 2025 1:55:35 AM seedu.duke.MTLogger logInfo
+INFO: Loaded 3 entries from file.
+Apr 03, 2025 1:55:42 AM seedu.duke.MTLogger logInfo
+INFO: Displayed 3 unique categories.
+Apr 03, 2025 2:18:30 AM seedu.duke.MTLogger logInfo
+INFO: Starting CLI program.
+Apr 03, 2025 2:18:30 AM seedu.duke.MTLogger logInfo
+INFO: Loaded 3 entries from file.
+Apr 03, 2025 2:18:49 AM seedu.duke.MTLogger logInfo
+INFO: Set budget: food = 20.0
+Apr 03, 2025 2:19:02 AM seedu.duke.MTLogger logInfo
+INFO: Set budget: food = 40.0
+Apr 03, 2025 2:20:10 AM seedu.duke.MTLogger logWarning
+WARNING: Error processing command: Unknown command. Type 'help' for a list of available commands.
+Apr 03, 2025 2:20:41 AM seedu.duke.MTLogger logWarning
+WARNING: Error processing command: Unknown command. Type 'help' for a list of available commands.
+Apr 03, 2025 2:23:58 AM seedu.duke.MTLogger logInfo
+INFO: Total budget set to: $50.00
+Apr 03, 2025 2:24:47 AM seedu.duke.MTLogger logInfo
+INFO: Starting CLI program.
+Apr 03, 2025 2:24:47 AM seedu.duke.MTLogger logSevere
+SEVERE: Error loading entries from file: Corrupted budget entry: For input string: "Budget 50.0"
+seedu.duke.MTException: Corrupted budget entry: For input string: "Budget 50.0"
+	at seedu.duke.Storage.loadBudgets(Storage.java:122)
+	at seedu.duke.MoneyList.loadEntriesFromFile(MoneyList.java:77)
+	at seedu.duke.MoneyTrail.run(MoneyTrail.java:38)
+	at seedu.duke.MoneyTrail.main(MoneyTrail.java:83)
+
+Apr 03, 2025 2:24:53 AM seedu.duke.MTLogger logWarning
+WARNING: Error processing command: No total budget set.
+Apr 03, 2025 2:25:06 AM seedu.duke.MTLogger logWarning
+WARNING: Error processing command: No category budgets have been set.
+Apr 03, 2025 2:28:10 AM seedu.duke.MTLogger logInfo
+INFO: Starting CLI program.
+Apr 03, 2025 2:28:10 AM seedu.duke.MTLogger logInfo
+INFO: Loaded 3 entries from file.
+Apr 03, 2025 2:28:24 AM seedu.duke.MTLogger logWarning
+WARNING: Error processing command: No total budget set.
+Apr 03, 2025 2:30:20 AM seedu.duke.MTLogger logWarning
+WARNING: Error processing command: Please enter a valid command.
+Apr 03, 2025 2:30:24 AM seedu.duke.MTLogger logInfo
+INFO: Total budget set to: $100.00
+Apr 03, 2025 2:30:34 AM seedu.duke.MTLogger logWarning
+WARNING: Error processing command: No total budget set.
+Apr 03, 2025 2:31:06 AM seedu.duke.MTLogger logInfo
+INFO: Starting CLI program.
+Apr 03, 2025 2:31:06 AM seedu.duke.MTLogger logSevere
+SEVERE: Error loading entries from file: Corrupted budget entry: For input string: "Budget 100.0"
+seedu.duke.MTException: Corrupted budget entry: For input string: "Budget 100.0"
+	at seedu.duke.Storage.loadBudgets(Storage.java:122)
+	at seedu.duke.MoneyList.loadEntriesFromFile(MoneyList.java:77)
+	at seedu.duke.MoneyTrail.run(MoneyTrail.java:38)
+	at seedu.duke.MoneyTrail.main(MoneyTrail.java:83)
+
+Apr 03, 2025 2:31:13 AM seedu.duke.MTLogger logWarning
+WARNING: Error processing command: No total budget set.
+Apr 03, 2025 2:33:29 AM seedu.duke.MTLogger logInfo
+INFO: Starting CLI program.
+Apr 03, 2025 2:33:29 AM seedu.duke.MTLogger logSevere
+SEVERE: Error loading entries from file: Corrupted budget entry: For input string: "Budget 100.0"
+seedu.duke.MTException: Corrupted budget entry: For input string: "Budget 100.0"
+	at seedu.duke.Storage.loadBudgets(Storage.java:122)
+	at seedu.duke.MoneyList.loadEntriesFromFile(MoneyList.java:77)
+	at seedu.duke.MoneyTrail.run(MoneyTrail.java:38)
+	at seedu.duke.MoneyTrail.main(MoneyTrail.java:83)
+
+Apr 03, 2025 2:33:40 AM seedu.duke.MTLogger logWarning
+WARNING: Error processing command: No category budgets have been set.
+Apr 03, 2025 2:34:05 AM seedu.duke.MTLogger logInfo
+INFO: Starting CLI program.
+Apr 03, 2025 2:34:05 AM seedu.duke.MTLogger logInfo
+INFO: Loaded 3 entries from file.
+Apr 03, 2025 2:34:22 AM seedu.duke.MTLogger logInfo
+INFO: Displayed 3 unique categories.
+Apr 03, 2025 2:35:31 AM seedu.duke.MTLogger logInfo
+INFO: Starting CLI program.
+Apr 03, 2025 2:35:31 AM seedu.duke.MTLogger logInfo
+INFO: Loaded 3 entries from file.
+Apr 03, 2025 2:36:00 AM seedu.duke.MTLogger logInfo
+INFO: Total budget set to: $100.00
+Apr 03, 2025 2:38:17 AM seedu.duke.MTLogger logInfo
+INFO: Starting CLI program.
+Apr 03, 2025 2:38:17 AM seedu.duke.MTLogger logInfo
+INFO: Loaded 3 entries from file.
+Apr 03, 2025 2:38:26 AM seedu.duke.MTLogger logWarning
+WARNING: Error processing command: Unknown command. Type 'help' for a list of available commands.
+Apr 03, 2025 2:38:31 AM seedu.duke.MTLogger logInfo
+INFO: Displayed 3 unique categories.
+Apr 03, 2025 2:52:30 AM seedu.duke.MTLogger logInfo
+INFO: Starting CLI program.
+Apr 03, 2025 2:52:30 AM seedu.duke.MTLogger logInfo
+INFO: Loaded 3 entries from file.
+Apr 03, 2025 2:53:03 AM seedu.duke.MTLogger logInfo
+INFO: Starting CLI program.
+Apr 03, 2025 2:53:03 AM seedu.duke.MTLogger logInfo
+INFO: Loaded 3 entries from file.
+Apr 03, 2025 2:53:14 AM seedu.duke.MTLogger logInfo
+INFO: Total budget set to: $500.00
+Apr 03, 2025 2:54:50 AM seedu.duke.MTLogger logInfo
+INFO: Starting CLI program.
+Apr 03, 2025 2:54:50 AM seedu.duke.MTLogger logInfo
+INFO: Loaded 3 entries from file.
+Apr 03, 2025 2:55:03 AM seedu.duke.MTLogger logWarning
+WARNING: Error processing command: No budget set for category: total
+Apr 03, 2025 3:05:46 AM seedu.duke.MTLogger logInfo
+INFO: Starting CLI program.
+Apr 03, 2025 3:05:46 AM seedu.duke.MTLogger logInfo
+INFO: Loaded 3 entries from file.
+Apr 03, 2025 3:05:54 AM seedu.duke.MTLogger logWarning
+WARNING: Error processing command: No budget set for category: total
+Apr 03, 2025 3:06:06 AM seedu.duke.MTLogger logWarning
+WARNING: Error processing command: No budget set for category: food
+Apr 03, 2025 3:06:31 AM seedu.duke.MTLogger logWarning
+WARNING: Error processing command: Unknown command. Type 'help' for a list of available commands.
+Apr 03, 2025 3:06:31 AM seedu.duke.MTLogger logWarning
+WARNING: Error processing command: Please enter a valid command.
+Apr 03, 2025 3:06:47 AM seedu.duke.MTLogger logInfo
+INFO: Total budget set to: $1000.00
+Apr 03, 2025 3:07:20 AM seedu.duke.MTLogger logWarning
+WARNING: Error processing command: Unknown command. Type 'help' for a list of available commands.
+Apr 03, 2025 3:07:47 AM seedu.duke.MTLogger logInfo
+INFO: Set budget: drink = 5000.0
+Apr 03, 2025 3:07:54 AM seedu.duke.MTLogger logInfo
+INFO: Displayed 3 unique categories.

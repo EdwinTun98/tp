@@ -10,7 +10,7 @@ public class MoneyList {
     private static final int INDEX_OFFSET = 1;
 
     private final ArrayList<String> moneyList;
-    private final HashMap<String, Budget> categoryBudget = new HashMap<>();
+    private final HashMap<String, Budget> budgetList = new HashMap<>();
     private final MTLogger logger;
     private final Storage storage;
     private final TextUI ui;
@@ -76,7 +76,7 @@ public class MoneyList {
 
         HashMap<String, Budget> loadedBudgets = storage.loadBudgets();
         if (loadedBudgets != null) {
-            categoryBudget.putAll(loadedBudgets);
+            budgetList.putAll(loadedBudgets);
         }
 
         // Assert that moneyList is not null
@@ -192,7 +192,6 @@ public class MoneyList {
         }
     }
 
-    //@@author
     //@@author limleyhooi
     public void addIncome(String input) throws MTException {
         try {
@@ -322,15 +321,29 @@ public class MoneyList {
     }
 
     public void listBudgets() throws MTException {
-        if (categoryBudget.isEmpty()) {
+        if (budgetList.isEmpty()) {
             throw new MTException("No category budgets have been set.");
         }
 
-        ui.print("Category Budgets:");
-        for (Map.Entry<String, Budget> entry : categoryBudget.entrySet()) {
-            ui.print("- " + entry.getValue().toString());
+        ui.print("-------- Overall Budgets --------");
+
+        // 1. Print the total budget first if it exists
+        Budget total = budgetList.get("Overall");
+        if (total != null) {
+            ui.print("- " + total.toString());
+            ui.print(" ");
+        }
+
+        ui.print("-------- Category Budgets: --------");
+        // 2. Print the other budgets (skip "total")
+        for (Map.Entry<String, Budget> entry : budgetList.entrySet()) {
+            if (!entry.getKey().equalsIgnoreCase("Overall")) {
+                ui.print("- " + entry.getValue().toString());
+                ui.print(" ");
+            }
         }
     }
+
 
     public void findEntry(String input) throws MTException {
         // Validate the input for null, empty, or whitespace-only
@@ -367,11 +380,11 @@ public class MoneyList {
         }
 
         Budget budget = new Budget(category, amount);
-        categoryBudget.put(category, budget);
+        budgetList.put(category, budget);
 
         ui.print("Budget for category '" + category + "' set to $" + String.format("%.2f", amount));
         logger.logInfo("Set budget: " + category + " = " + amount);
-        storage.saveBudgets(categoryBudget); // You’ll add this in Storage.java
+        storage.saveBudgets(budgetList);
     }
 
     public void checkExpenses(String categoryInput) throws MTException {
@@ -379,23 +392,31 @@ public class MoneyList {
             throw new MTException("Please specify a category or use 'Total'.");
         }
 
-        boolean isTotal = categoryInput.equalsIgnoreCase("Total");
+        String input = categoryInput.trim();
+        boolean isCategoryCheck = !input.equalsIgnoreCase("Overall");
 
-        if (isTotal) {
-            double totalExpense = getTotalExpenseValue(null); // All expenses
-            printTotalBudgetSummary(totalExpense);
-        } else {
-            String targetCategory = categoryInput.trim().toLowerCase();
-            Budget budget = categoryBudget.get(targetCategory);
+        if (isCategoryCheck) {
+            String targetCategory = input.toLowerCase();
+            Budget budget = budgetList.get(targetCategory);
 
             if (budget == null) {
-                throw new MTException("No budget set for category: " + categoryInput);
+                throw new MTException("No budget set for category: " + targetCategory);
             }
 
             double categoryExpense = getTotalExpenseValue(targetCategory);
             printCategoryBudgetSummary(budget, categoryExpense);
+        } else {
+            Budget totalBudget = budgetList.get("Overall");
+
+            if (totalBudget == null) {
+                throw new MTException("No Overall budget set.");
+            }
+
+            double totalExpense = getTotalExpenseValue(null);
+            printTotalBudgetSummary(totalBudget, totalExpense);
         }
     }
+
 
     public double getTotalExpenseValue(String category) throws MTException {
         double totalExpenses = 0.0;
@@ -424,20 +445,20 @@ public class MoneyList {
         return totalExpenses;
     }
 
-    private void printTotalBudgetSummary(double overallExpenses) {
-        ui.print("-------- TOTAL BUDGET EXPENSES SUMMARY --------");
-        //ui.print(String.format("Total Budget: %.2f", overallExpenses));
-        ui.print(String.format("Total Expenses: %.2f", overallExpenses));
+    private void printTotalBudgetSummary(Budget totalBudget, double totalExpenses) {
+        ui.print("-------- OVERALL BUDGET EXPENSES SUMMARY --------");
+        ui.print(String.format(totalBudget.toString()));
+        ui.print(String.format("Overall Expenses: $%.2f", totalExpenses));
+        ui.print(String.format("Remaining: $%.2f", totalBudget.getAmount() - totalExpenses));
     }
 
     private void printCategoryBudgetSummary(Budget budget, double spent) {
         ui.print("-------- CATEGORY EXPENSES BUDGET CHECK --------");
-        ui.print("Category: " + budget.getCategory());
+        ui.print(budget.toString());
         ui.print(String.format("Budget: $%.2f", budget.getAmount()));
         ui.print(String.format("Total Spent: $%.2f", spent));
         ui.print(String.format("Remaining: $%.2f", budget.getAmount() - spent));
     }
-
     //@@author
 
     public void getTotalExpense() {
@@ -465,7 +486,7 @@ public class MoneyList {
     }
 
     //@@author Hansel-K
-    public void setTotalBudget(String input) throws MTException {
+/*    public void setTotalBudget(String input) throws MTException {
         try {
             assert input != null : "Input should not be null";
             assert input.startsWith("setTotBgt") : "Input should start with 'setBgt'";
@@ -490,8 +511,47 @@ public class MoneyList {
 
             // Set the total budget
             this.totalBudget = budget;
+
             logger.logInfo(String.format("Total budget set to: $%.2f", totalBudget));
             ui.print(String.format("Total budget set to: $%.2f", totalBudget));
+        } catch (NumberFormatException e) {
+            logger.logSevere("Invalid budget format: " + input, e);
+            throw new MTException("Invalid amount format. Please ensure it is a numeric value.");
+        } catch (Exception e) {
+            logger.logSevere("Error setting budget: " + e.getMessage(), e);
+            ui.print("An error occurred while setting the budget.");
+        }
+    }*/
+
+    public void setTotalBudget(String input) throws MTException {
+        try {
+            assert input != null : "Input should not be null";
+            assert input.startsWith("setTotBgt") : "Input should start with 'setTotBgt'";
+
+            // Extract the budget value after the command
+            String budgetString = input.substring("setTotBgt".length()).trim();
+            Double budget = Double.parseDouble(budgetString);
+
+            // Validate amount
+            if (budget < 0) {
+                logger.logWarning("Attempted to set a negative budget: " + budget);
+                ui.print("Budget cannot be negative.");
+                return;
+            }
+
+            // Format to 2 decimal places
+            DecimalFormat df = new DecimalFormat("#.00");
+            budget = Double.valueOf(df.format(budget));
+
+            // Store as "TOTAL" category
+            Budget OverallBudgetSet = new Budget("Overall", budget);
+            budgetList.put("Overall", OverallBudgetSet); // updates internal budget map
+
+            // Save budgets to file
+            storage.saveBudgets(budgetList);
+
+            logger.logInfo(String.format("Total budget set to: $%.2f", budget));
+            ui.print(String.format("Total budget set to: $%.2f", budget));
         } catch (NumberFormatException e) {
             logger.logSevere("Invalid budget format: " + input, e);
             throw new MTException("Invalid amount format. Please ensure it is a numeric value.");
