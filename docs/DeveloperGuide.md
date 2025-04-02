@@ -222,19 +222,187 @@ This method shows simplified parsing logic for expense commands:
 
 ### Money List Component: `MoneyList.java`
 
-Here is the UML component diagram of `MoneyList.java`:
+**Role**:
+
+- Core data manager for all financial entries (expenses/incomes)
+
+- Central hub for business logic operations
+
+- Bridge between commands and storage
+
+Here is the simplified UML class diagram of `MoneyList.java`:
+
+![Image](diagrams/MoneyList_ClassDiagram.png)
+
+This simplified UML diagram shows MoneyList's core structure:
+
+- Manages an ArrayList of financial entries
+
+
+- Collaborates with Storage (persistence) and TextUI (display)
 
 Here is the UML sequence diagram of `MoneyList.java`:
 
-Here is the Java Code snippet:
+![Image](diagrams/MoneyList_Seq.png)
+
+This UML sequence diagram:
+
+- Illustrates the addExpense workflow with activation bars:
+
+
+- User command flows through Parser to MoneyList
+
+
+- MoneyList validates input (nested activation)
+
+
+- Saves via Storage and confirms via TextUI
+
+Here are the Java Code snippets:
+
+```
+public void addExpense(String input) throws MTException {
+  // Input parsing omitted
+  Expense newExp = new Expense(desc, amount, cat, date);
+  moneyList.add(newExp.toString());  // Store formatted string
+  storage.saveEntries(moneyList);    // Persist
+  ui.print("Added: " + newExp);     // Confirm
+}
+```
+
+This snippet demonstrates three key responsibilities:
+
+- Creates Expense object from parsed data
+
+
+- Updates in-memory list
+
+
+- Coordinates persistence and user feedback
+
+
+- Shows clean separation of concerns
+
+```
+public void loadEntriesFromFile() throws MTException {
+  moneyList.clear();
+  moneyList.addAll(storage.loadEntries());  // Delegates IO
+  logger.logInfo("Loaded " + moneyList.size() + " entries"); 
+}
+```
+
+This snippet highlights storage integration:
+
+- Clears current state
+
+
+- Delegates file operations to Storage
+
+
+- Logs results
+
+
+- Emphasizes single responsibility principle
 
 ### Storage Component: `Storage.java`
 
-Here is the UML component diagram of `Storage.java`:
+**Role**: Handles all file I/O operations for persistent data storage, including:
+
+- Saving entries to mt.txt
+
+- Loading entries on startup
+
+- Encapsulating filesystem interactions
+
+Here is the UML class diagram of `Storage.java`:
+
+![Image](diagrams/Storage_Class.png)
+
+This UML class diagram shows the Storage component's structure and its relationship with MoneyList:
+
+- saveEntries() and loadEntries() define the file I/O interface.
+
+
+- MoneyList depends on Storage for persistence but remains decoupled from file operations.
+
+
+- Key Omissions: Internal helper methods and low-level file handling details are excluded for clarity.
 
 Here is the UML sequence diagram of `Storage.java`:
 
-Here is the Java Code snippet:
+![Image](diagrams/Storage_Seq.png)
+
+This UML sequence diagram illustrates the file read/write workflow:
+
+1. Loading Data:
+
+- MoneyList activates Storage to load entries, which reads mt.txt before returning parsed data.
+
+2. Saving Data:
+
+- MoneyList triggers a save, with Storage writing all entries atomically.
+
+### Command Component: `Command.java`
+
+**Role**:
+
+The Command interface defines the execution contract for all user actions in MoneyTrail, enabling:
+
+- Uniform execution of diverse operations (add, delete, search)
+
+- Decoupled control flow between parsing and execution
+
+- Termination control for session management
+
+Here is a simplified UML class diagram:
+
+![Image](diagrams/Command_Class.png)
+
+This class diagram:
+
+- shows that all concrete commands implement the Command interface.
+
+
+- simplifications: Only 4 representative commands shown (others follow same pattern) and method details omitted except interface signature.
+
+Here is the UML sequence diagram that outlines the functionality of adding an expense entry:
+
+![Image](diagrams/Command_Seq.png)
+
+This sequence diagram illustrates:
+
+- The MoneyTrail component receives parsed AddExpenseCommand from the Parser.
+
+- The command's execute() method activates to modify the MoneyList.
+
+Here are the self-explanatory Java code snippets:
+
+```
+public interface Command {
+    /**
+     * @param moneyList Target list for modifications
+     * @throws MTException On execution failures
+     */
+    void execute(MoneyList moneyList) throws MTException;
+
+    /** @return true triggers application exit */
+    boolean shouldExit();
+}
+```
+
+```
+class ExitCommand implements Command {
+    @Override
+    public void execute(MoneyList moneyList) {
+        // No operation required
+    }
+
+    @Override
+    public boolean shouldExit() {
+        return true; // Signals termination
+    }
+}
+```
 
 ## Implementations
 

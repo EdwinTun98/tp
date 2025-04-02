@@ -1,0 +1,32 @@
+@startuml MoneyList_Sequence_Fixed
+actor User
+participant Parser
+participant MoneyList
+participant Storage
+participant TextUI
+
+User -> Parser : "addExp Lunch $/10"
+activate Parser
+Parser -> MoneyList : "execute(command)"
+activate MoneyList
+
+MoneyList -> MoneyList : "validateInput()"
+activate MoneyList
+MoneyList --> MoneyList : "Valid"
+deactivate MoneyList
+
+MoneyList -> Storage : "saveEntries()"
+activate Storage
+Storage --> MoneyList : "Saved"
+deactivate Storage
+
+MoneyList -> TextUI : "printConfirmation()"
+activate TextUI
+TextUI --> MoneyList : "Done"
+deactivate TextUI
+
+MoneyList --> Parser : "Result"
+deactivate MoneyList
+Parser --> User : "Feedback"
+deactivate Parser
+@enduml
