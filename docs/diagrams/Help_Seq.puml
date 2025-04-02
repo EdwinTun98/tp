@@ -1,7 +1,17 @@
 @startuml
 actor User
 User -> Parser : Input "help"
+activate Parser
+
 Parser -> CommandExecutor : Parse "help"
+activate CommandExecutor
+
 CommandExecutor -> TextUI : Retrieve List of Commands
+activate TextUI
+
 TextUI -> User : Display List of Commands
+deactivate TextUI
+
+deactivate CommandExecutor
+deactivate Parser
 @enduml
