@@ -474,11 +474,11 @@ Outcome:
 
 This section describes some details on how certain features are implemented.
 
-## SetCategoryBudgetCommand & BudgetCommand
+## SetCategoryBudgetCommand & BudgetCommand Features
 
 **Overview**:
 
-The `SetCategoryBudgetCommand` sets a budget limit for a specific expense category.
+The `SetCategoryBudgetCommand` sets a budget limit for a specific expense category:
 
 - Parameter Parsing: Extracts category and amount from command input.
 
@@ -520,13 +520,14 @@ public void execute(MoneyList moneyList) throws MTException {
     moneyList.setCategoryLimit(category, amount);
 }
 ```
+
 Rationale: Clean delegation to MoneyList, which handles validation, storage, and UI feedback.
 
-## ListCatsCommand & ListCommand
+## ListCatsCommand & ListCommand Features
 
 **Overview**:
 
-The `ListCatsCommand` displays all unique categories used in existing expense entries.
+The `ListCatsCommand` displays all unique categories used in existing expense entries:
 
 **Key Characteristics**:
 
@@ -536,11 +537,12 @@ The `ListCatsCommand` displays all unique categories used in existing expense en
 
 - Robustness: Handles empty lists and malformed entries gracefully.
 
-**Implementation**: Implements the Command interface and delegates logic to MoneyList.listCats().
+Implementation: Implements the Command interface and delegates logic to MoneyList.listCats().
 
 ![Image](diagrams/List.png)
 
 **Why this design**:
+
 - Separation of Concerns: Parsing stays in Parser, business logic in MoneyList, and output in TextUI.
 
 - User Experience: Avoids duplicate category names and maintains intuitive display order.
@@ -566,14 +568,17 @@ for (String entry : moneyList) {
     categories.add(category);
 }
 ```
+
 Rationale: Extracts category from each entry while preserving insertion order using a LinkedHashSet.
 
 ## EditExpenseCommand
+
 **Overview**:
 
 The `EditExpenseCommand` updates the details of an existing expense entry, such as description, amount, category, or date.
 
 **Key characteristics**:
+
 - 1-based index: User input is converted to 0-based internally.
 
 - Partial Updates: Supports optional editing — any missing field retains its old value.
@@ -621,7 +626,8 @@ if (newAmount <= 0.00) {
 
 Rationale: Ensures that missing fields are safely defaulted to their existing values, enabling partial updates.
 
-## FindCommand
+## FindCommand Feature
+
 **Overview**:
 
 The `FindCommand` searches for entries in the MoneyList that contain a specific keyword, case-insensitively.
@@ -646,8 +652,6 @@ The `FindCommand` searches for entries in the MoneyList that contain a specific 
 
 - Robust Edge Handling: Gracefully handles null/empty inputs and missing matches.
 
-
-
 **Key Code Snippets**:
 
 ```
@@ -669,7 +673,8 @@ for (String entry : moneyList) {
 
 Rationale: Performs a basic case-insensitive search over all stored entries and collects results.
 
-## DeleteCommand
+## DeleteCommand Feature
+
 **Overview**:
 
 The `DeleteCommand` permanently removes an entry from MoneyList based on user-specified index. 
@@ -683,7 +688,7 @@ Key characteristics:
 
 ![Image](diagrams/DeleteCommand_Class.png)
 
-**Implementation**: Encapsulates deletion logic while adhering to the Command interface.
+Implementation: Encapsulates deletion logic while adhering to the Command interface.
 
 **Workflow**:
 
