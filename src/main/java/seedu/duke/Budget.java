@@ -35,7 +35,7 @@ public class Budget {
 
     public void setAmount(double amount) throws MTException {
         if (amount < 0) {
-            throw new MTException("Budget amount cannot be negative.");
+            throw new MTException("Category amount cannot be negative.");
         }
         this.amount = amount;
     }

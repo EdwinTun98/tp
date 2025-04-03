@@ -99,6 +99,13 @@ public class Parser {
     //@@author
 
     //@@author EdwinTun98
+    /**
+     * Parses user input to create a {@link FindCommand} with the provided keyword.
+     *
+     * @param input The full user input string, expected to start with "find "
+     * @return A {@link FindCommand} object initialized with the search keyword
+     * @throws MTException If the keyword is missing or input is invalid
+     */
     private FindCommand createFindCommand(String input) throws MTException {
         String keyword = input.substring(5).trim();
 
@@ -164,6 +171,12 @@ public class Parser {
     //@@author
 
     //@@author EdwinTun98
+    /**
+     * Validates the format of the input string for adding an expense.
+     *
+     * @param input The full input string provided by the user.
+     * @throws MTException If the input format does not match the expected pattern.
+     */
     private void validateAddExpenseFormat(String input) throws MTException {
         if (!input.startsWith("addExp") || !input.contains("$/")) {
             throw new MTException("Invalid format. " +
@@ -173,6 +186,12 @@ public class Parser {
     //@@author
 
     //@@author EdwinTun98
+    /**
+     * Parses an input string into structured expense data.
+     *
+     * @param input The full input string starting with "addExp".
+     * @return An {@link ExpenseData} object containing parsed description, amount, category, and date.
+     */
     private ExpenseData parseExpenseData(String input) {
         String content = input.substring("addExp".length()).trim();
         String description = extractDescription(content);
@@ -187,6 +206,13 @@ public class Parser {
         );
     }
 
+    /**
+     * Parses the user's input to create a {@link CheckExpensesCommand}.
+     *
+     * @param input The full input string starting with "check".
+     * @return A {@link CheckExpensesCommand} with the parsed category.
+     * @throws MTException If the category is missing from the input.
+     */
     private CheckExpensesCommand parserCheckExpenses(String input) throws MTException {
         String trimmed = input.substring("check".length()).trim();
         if (trimmed.isEmpty()) {
@@ -255,7 +281,15 @@ public class Parser {
     }
     //@@author
 
+
     //@@author EdwinTun98
+    /**
+     * Parses user input and creates an {@link EditExpenseCommand} object.
+     *
+     * @param input The user input string that starts with "edit".
+     * @return An {@link EditExpenseCommand} with parsed data.
+     * @throws MTException If the input is in an invalid format or contains a number parsing error.
+     */
     private EditExpenseCommand createEditExpenseCommand(String input) throws MTException {
         try {
             EditCommandData editData = parseEditCommand(input);
