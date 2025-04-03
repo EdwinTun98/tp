@@ -1,6 +1,7 @@
 package seedu.duke;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -90,33 +91,38 @@ public class EditExpenseTest {
     // Test case 7: Invalid index should throw exception
     @Test
     public void testEditExpense_invalidIndex_throwsException() {
-        assertThrows(MTException.class, () -> moneyList.editExpense(10, "Burger", 7.50, "fastfood", "2024-04-05"));
+        assertThrows(MTException.class, () -> moneyList.editExpense(10, "Burger", 7.50,
+                "fastfood", "2024-04-05"));
     }
 
     // Test case 8: Negative index should throw exception
     @Test
     public void testEditExpense_negativeIndex_throwsException() {
-        assertThrows(MTException.class, () -> moneyList.editExpense(-1, "Noodles", 6.00, "lunch", "2024-04-06"));
+        assertThrows(MTException.class, () -> moneyList.editExpense(-1, "Noodles", 6.00,
+                "lunch", "2024-04-06"));
     }
 
     // Test case 9: Entry with random string format should throw exception
     @Test
     public void testEditExpense_corruptedFormatEntry_throwsException() {
         moneyList.getMoneyList().set(0, "Random Trash");
-        assertThrows(MTException.class, () -> moneyList.editExpense(0, "Fix", 20.00, "repair", "2024-12-10"));
+        assertThrows(MTException.class, () -> moneyList.editExpense(0, "Fix", 20.00,
+                "repair", "2024-12-10"));
     }
 
     // Test case 10: Missing category braces should throw exception
     @Test
     public void testEditExpense_missingCategoryBraces_throwsException() {
         moneyList.getMoneyList().set(0, "Expense: Phone bill $50.00 [2024-04-10]");
-        assertThrows(MTException.class, () -> moneyList.editExpense(0, "Phone Plan", 55.00, "utilities", "2024-04-11"));
+        assertThrows(MTException.class, () -> moneyList.editExpense(0, "Phone Plan",
+                55.00, "utilities", "2024-04-11"));
     }
 
     // Test case 11: Missing date brackets should throw exception
     @Test
     public void testEditExpense_missingDateBrackets_throwsException() {
         moneyList.getMoneyList().set(0, "Expense: Internet $40.00 {utilities}");
-        assertThrows(MTException.class, () -> moneyList.editExpense(0, "Internet Plan", 45.00, "utilities", "2024-04-12"));
+        assertThrows(MTException.class, () -> moneyList.editExpense(0, "Internet Plan",
+                45.00, "utilities", "2024-04-12"));
     }
 }

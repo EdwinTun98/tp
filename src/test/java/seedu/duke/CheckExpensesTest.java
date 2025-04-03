@@ -1,11 +1,13 @@
 package seedu.duke;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.HashMap;
 
 /**
  * Unit tests for checking budget validation and handling in {@link MoneyList#checkExpenses(String)}.
@@ -128,4 +130,3 @@ public class CheckExpensesTest {
     }
 
 }
-
