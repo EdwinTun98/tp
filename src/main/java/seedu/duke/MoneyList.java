@@ -28,6 +28,10 @@ public class MoneyList {
         return moneyList;
     }
 
+    public HashMap<String, Budget> getBudgetList() {
+        return budgetList;
+    }
+
     private int extractIndex(String input) {
         return Integer.parseInt(input.replaceAll("[^0-9]", ""))
                 - INDEX_OFFSET;
@@ -291,7 +295,7 @@ public class MoneyList {
 
     public void listBudgets() throws MTException {
         if (budgetList.isEmpty()) {
-            throw new MTException("No category budgets have been set.");
+            throw new MTException("No budgets have been set.");
         }
 
         ui.print("-------- Overall Budgets --------");
@@ -333,7 +337,7 @@ public class MoneyList {
         if (results.isEmpty()) {
             logger.logWarning("No matching entries found for: " + input);
             throw new MTException("No matching entries found for: " + input
-                    + "Please enter a valid keyword to search.");
+                    + ". Please enter a valid keyword to search.");
         }
 
         // Print matching entries cat
@@ -344,6 +348,26 @@ public class MoneyList {
     }
 
     public void setCategoryLimit(String category, double amount) throws MTException {
+        setCategoryLimit(category, String.valueOf(amount));
+    }
+
+    public void setCategoryLimit(String category, String amountStr) throws MTException {
+        if (isEmptyOrNull(amountStr)) {
+            throw new MTException("Budget amount cannot be empty.");
+        }
+
+        double amount;
+
+        try {
+            amount = Double.parseDouble(amountStr.trim());
+        } catch (NumberFormatException e) {
+            throw new MTException("Invalid amount. Please enter a valid number.");
+        }
+
+        if (amount < 0) {
+            throw new MTException("Category budget cannot be negative.");
+        }
+
         Budget budget = new Budget(category, amount);
         budgetList.put(category, budget);
 

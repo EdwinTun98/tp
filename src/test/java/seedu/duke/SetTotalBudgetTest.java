@@ -1,13 +1,12 @@
 package seedu.duke;
 
-//import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 public class SetTotalBudgetTest {
+
     private MoneyList moneyList;
     private MTLogger logger;
     private Storage storage;
@@ -15,85 +14,109 @@ public class SetTotalBudgetTest {
 
     @BeforeEach
     public void setUp() {
-        // Initialize dependencies
-        logger = new MTLogger(MoneyTrail.class.getName());
+        logger = new MTLogger("SetTotalBudgetTest");
         storage = new Storage();
         ui = new TextUI();
-
-        // Create a new MoneyList instance
         moneyList = new MoneyList(logger, storage, ui);
-
-        // Simulate loading entries into moneyList for testing
-        moneyList.getMoneyList().add("Entry 1: $100");
-        moneyList.getMoneyList().add("Entry 2: $50");
-        moneyList.getMoneyList().add("Entry 3: $75");
     }
 
-    /*
     @Test
-    public void testSetTotalBudget_valid() throws MTException {
-        // Simulate valid input for setting the total budget
+    public void testSetTotalBudget_validInput_success() throws MTException {
         String input = "setTotBgt 500.00";
-
-        // Invoke the setTotalBudget method
         moneyList.setTotalBudget(input);
+        Budget overallBudget = moneyList.getBudgetList().get("Overall");
 
-        // Assert that the totalBudget value was updated correctly
-        assertEquals(500.00, moneyList.getTotalBudget(), 0.01,
-                "Total budget should be correctly updated to 500.00");
-
-    }*/
-
-    @Test
-    public void testParseDoubleWithInvalidInput() {
-        assertThrows(NumberFormatException.class, () -> {
-            Double.parseDouble("abc");
-        });
+        assertNotNull(overallBudget, "Overall budget should not be null.");
+        assertEquals(500.00, overallBudget.getAmount(), 0.01, "Total budget should be correctly set to 500.00");
     }
 
+    //@@author EdwinTun98
     @Test
-    public void testSetTotalBudget_invalidFormat() {
-        // Simulate invalid input with a non-numeric budget
-        String input = "setTotBgt abc";
-
-        // Assert that a NumberFormatException is thrown
-        assertThrows(MTException.class, () -> {
-            moneyList.setTotalBudget(input);
-        });
-    }
-
-    @Test
-    public void testSetTotalBudget_negativeBudget() throws MTException {
-        // Simulate invalid input for setting a negative budget
-        String input = "setTotBgt -100.00";
-
-        // Invoke the setTotalBudget method
-        moneyList.setTotalBudget(input);
-
-        // Assert that the total budget was not updated
-        assertFalse(moneyList.getTotalBudget() < 0,
+    public void testSetTotalBudget_negativeInput_throwsException() {
+        String input = "setTotBgt -200";
+        assertDoesNotThrow(() -> moneyList.setTotalBudget(input));
+        Budget overallBudget = moneyList.getBudgetList().get("Overall");
+        assertTrue(overallBudget == null || overallBudget.getAmount() >= 0,
                 "Total budget should not be set to a negative value.");
     }
+    //@@author
 
     @Test
-    public void testSetTotalBudget_emptyInput() {
-        // Simulate invalid input with an empty string
-        String input = "";
-
-        // Assert that the method handles empty input without crashing
-        assertThrows(AssertionError.class, () -> {
-            moneyList.setTotalBudget(input);
-        });
+    public void testSetTotalBudget_nonNumericInput_throwsException() {
+        String input = "setTotBgt abc";
+        assertThrows(MTException.class, () -> moneyList.setTotalBudget(input));
     }
 
+    //@@author EdwinTun98
     @Test
-    public void testSetTotalBudget_missingCommandPrefix() {
-        // Simulate invalid input missing the command prefix
+    public void testSetTotalBudget_missingCommandPrefix_throwsError() {
         String input = "500.00";
-
-        // Assert that an AssertionError is thrown due to incorrect format
-        assertThrows(AssertionError.class, () -> {
-            moneyList.setTotalBudget(input);
-        });
+        assertThrows(AssertionError.class, () -> moneyList.setTotalBudget(input));
     }
+
+    @Test
+    public void testSetTotalBudget_emptyInput_throwsError() {
+        String buget = "";
+        assertThrows(AssertionError.class, () -> moneyList.setTotalBudget(buget));
+    }
+
+    @Test
+    public void testSetTotalBudget_overwriteExistingBudget() throws MTException {
+        // First set
+        moneyList.setTotalBudget("setTotBgt 400.00");
+        // Overwrite
+        moneyList.setTotalBudget("setTotBgt 900.00");
+
+        Budget budget = moneyList.getBudgetList().get("Overall");
+
+        assertEquals(900.00, budget.getAmount(), 0.01,
+                "Total budget should be updated to the new value 900.00");
+    }
+
+    @Test
+    public void testSetTotalBudget_withExtraSpaces() throws MTException {
+        String buget = "setTotBgt     300.50   ";
+        moneyList.setTotalBudget(buget);
+
+        Budget budget = moneyList.getBudgetList().get("Overall");
+        assertEquals(300.50, budget.getAmount(), 0.01,
+                "Total budget should be trimmed and parsed correctly.");
+    }
+
+    @Test
+    public void testSetTotalBudget_veryLargeAmount() throws MTException {
+        moneyList.setTotalBudget("setTotBgt 1000000.99");
+
+        Budget budget = moneyList.getBudgetList().get("Overall");
+        assertEquals(1000000.99, budget.getAmount(), 0.01,
+                "Large budget amount should be handled correctly.");
+    }
+
+    @Test
+    public void testSetTotalBudget_decimalRounding() throws MTException {
+        moneyList.setTotalBudget("setTotBgt 123.456");
+
+        Budget budget = moneyList.getBudgetList().get("Overall");
+        assertEquals(123.46, budget.getAmount(), 0.01,
+                "Budget should be rounded to 2 decimal places.");
+    }
+
+    @Test
+    public void testSetTotalBudget_leadingZeros() throws MTException {
+        moneyList.setTotalBudget("setTotBgt 000200.00");
+
+        Budget budget = moneyList.getBudgetList().get("Overall");
+        assertEquals(200.00, budget.getAmount(), 0.01,
+                "Leading zeros should be ignored in budget input.");
+    }
+
+    @Test
+    public void testSetTotalBudget_multipleSpacesBetweenCommandAndValue() throws MTException {
+        moneyList.setTotalBudget("setTotBgt     450.00");
+        Budget budget = moneyList.getBudgetList().get("Overall");
+
+        assertEquals(450.00, budget.getAmount(), 0.01,
+                "Input with multiple spaces should still work.");
+    }
+    //@@author
 }

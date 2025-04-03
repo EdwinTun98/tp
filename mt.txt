@@ -1,3 +1,0 @@
-Expense: lunch $5.00 {food} [2025-10-12]
-Expense: coke $5.00 {drinks} [2025-10-12]
-Expense: chicken $5.00 {food} [2025-10-12]
