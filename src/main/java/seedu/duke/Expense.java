@@ -1,6 +1,5 @@
 package seedu.duke;
 
-import java.text.ParseException;
 
 /**
  * Represents an expense with description, amount, category, and date.

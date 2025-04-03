@@ -332,7 +332,8 @@ public class MoneyList {
         // Handle the case when no matches are found
         if (results.isEmpty()) {
             logger.logWarning("No matching entries found for: " + input);
-            throw new MTException("No matching entries found for: " + input + "Please enter a valid keyword to search.");
+            throw new MTException("No matching entries found for: " + input
+                    + "Please enter a valid keyword to search.");
         }
 
         // Print matching entries cat
@@ -474,8 +475,8 @@ public class MoneyList {
             budget = Double.valueOf(df.format(budget));
 
             // Store as "TOTAL" category
-            Budget OverallBudgetSet = new Budget("Overall", budget);
-            budgetList.put("Overall", OverallBudgetSet);
+            Budget overallBudgetSet = new Budget("Overall", budget);
+            budgetList.put("Overall", overallBudgetSet);
 
             // Save budgets to file
             storage.saveBudgets(budgetList);
