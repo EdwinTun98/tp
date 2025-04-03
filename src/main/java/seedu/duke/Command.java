@@ -35,6 +35,9 @@ class ListCommand implements Command {
     }
 }
 
+/**
+ * Command to list all set budgets including overall and category-specific budgets.
+ */
 class ListBudgetCommand implements Command {
     @Override
     public void execute(MoneyList moneyList) throws MTException {
@@ -201,6 +204,9 @@ class AddIncomeCommand implements Command {
 //@@author
 
 //@@author EdwinTun98
+/**
+ * Command to edit an existing expense in the MoneyList.
+ */
 class EditExpenseCommand implements Command {
     private final int index;
     private final String newDescription;
@@ -228,6 +234,9 @@ class EditExpenseCommand implements Command {
     }
 }
 
+/**
+ * Command to set or update a category-specific budget.
+ */
 class SetCategoryBudgetCommand implements Command {
     private final String category;
     private final double amount;
@@ -248,6 +257,9 @@ class SetCategoryBudgetCommand implements Command {
     }
 }
 
+/**
+ * Command to check budget usage for a specific category or the overall budget.
+ */
 class CheckExpensesCommand implements Command {
     private final String category;
 
