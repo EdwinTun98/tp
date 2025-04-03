@@ -248,7 +248,6 @@ class SetCategoryBudgetCommand implements Command {
     }
 }
 
-// CheckBudgetCommand.java
 class CheckExpensesCommand implements Command {
     private final String category;
 
@@ -266,8 +265,6 @@ class CheckExpensesCommand implements Command {
         return false;
     }
 }
-
-
 //@@author
 
 /**

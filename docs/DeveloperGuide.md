@@ -1,35 +1,18 @@
 # Developer Guide
 
-[1. Acknowledgements](#-acknowledgements) <br>
-[2. Design](#-design) <br>
-&nbsp;&nbsp;[3.1.0 UI Class](#310-ui-class) <br>
-&nbsp;&nbsp;[3.1.1 DataStorage Class](#311-datastorage-class) <br>
-&nbsp;&nbsp;[3.1.2 GroupStorage Class](#312-groupstorage-class) <br>
-&nbsp;&nbsp;[3.1.3 Commands Class](#313-commands-class) <br>
-&nbsp;&nbsp;[3.1.4 ExpenseCommands Classes](#314-expensecommands-classes) <br>
-&nbsp;&nbsp;[3.1.5 FriendsCommands Class](#315-friendscommands-class) <br>
-&nbsp;&nbsp;[3.1.6 SplitCommand Class](#316-splitcommand-class) <br>
-&nbsp;&nbsp;[3.1.7 BudgetManager Class](#317-budgetmanager-class) <br>
-&nbsp;&nbsp;[3.1.8 Expense Class](#318-expense-class) <br>
-&nbsp;&nbsp;[3.1.9 Friend Class](#319-friend-class) <br>
-&nbsp;&nbsp;[3.2.0 Group Class](#320-group-class) <br>
-&nbsp;&nbsp;[3.2.1 GroupManager Class](#321-groupmanager-class) <br>
-&nbsp;&nbsp;[3.2.2 Messages Class](#322-messages-class) <br>
-&nbsp;&nbsp;[3.2.3 Summary Class](#323-summary-class) <br>
-&nbsp;&nbsp;[3.2.4 ExpenseClassifier Class](#324-expenseclassifier-class) <br>
-&nbsp;&nbsp;[3.2.5 Currency Class](#325-currency-class) <br>
-[4. Overall Application Architecture](#4-overall-application-architecture) <br>
-&nbsp;&nbsp;[4.1 Application Class Diagram](#41-application-class-diagram) <br>
-&nbsp;&nbsp;[4.2 Expense CRUD Feature](#42-expense-crud-feature) <br>
-&nbsp;&nbsp;[4.3 Create Group Feature](#43-create-group-feature) <br>
-&nbsp;&nbsp;[4.4 Split Expense Feature](#44-split-expense-feature) <br>
-&nbsp;&nbsp;[4.5 Change Currency Feature](#45-change-currency-feature) <br>
-&nbsp;&nbsp;[4.6 Data Visualization Feature](#46-data-visualization-feature) <br>
+[1. Acknowledgements](#1-acknowledgements) <br>
+[2. Design](#2-design) <br>
+[3. Implementations](#3-implementations) <br>
+[4. Product Scope](#4-product-scope) <br>
+[5. User Stories](#5-user-stories) <br>
+[6. Non-Functional Requirements](#6-non-functional-req) <br>
+[7. Glossary](#7-glossary) <br>
+[8. Instructions for Manual Testing](#8-testing) <br>
 
-## Acknowledgements
+## Acknowledgements <a name="1-acknowledgements"></a>
 {list here sources of all reused/adapted ideas, code, documentation, and third-party libraries -- include links to the original source as well}
 
-## Design
+## Design <a name="2-design"></a>
 
 > [!TIP]
 > Tip: The `.puml` files used to create diagrams in this document `docs/diagrams` folder.
@@ -487,11 +470,346 @@ Outcome:
 "Income: Salary $3000.00 [no date]"
 ```
 
-## Implementations
+## Implementations <a name="3-implementations"></a>
 
-## Product scope
+This section describes some details on how certain features are implemented.
+
+## SetCategoryBudgetCommand & BudgetCommand Features
+
+**Overview**:
+
+The `SetCategoryBudgetCommand` sets a budget limit for a specific expense category:
+
+- Parameter Parsing: Extracts category and amount from command input.
+
+- Validation: Ensures amount is numeric and non-negative; category is not empty. 
+
+- Persistence: Updates the stored category budgets via Storage.
+
+**Implementation**: Encapsulates logic to update category-level budgets while complying with the Command interface.
+
+**Workflow**:
+
+![Image](diagrams/Set_Category_Budget.png)
+
+**Why this design**:
+
+- Modular Parsing: Parser delegates creation of the command, isolating input handling.
+
+- Encapsulation: Category logic lives in MoneyList, not the command class.
+
+- Separation of Concerns: Each class (Parser, Command, MoneyList) handles its own role clearly.
+
+- Persistence: Ensures budget updates are immediately saved to file.
+
+**Key Code Snippets**:
+
+```
+// In Parser.java
+String[] parts = trimmed.split("\\s+", 2);
+String category = parts[0].substring(2).trim(); // removes "c/"
+double amount = Double.parseDouble(parts[1].trim());
+return new SetCategoryBudgetCommand(category, amount);
+```
+
+Rationale: Efficiently splits user input, ensures valid category and parses numeric budget.
+
+```
+// In SetCategoryBudgetCommand.java
+public void execute(MoneyList moneyList) throws MTException {
+    moneyList.setCategoryLimit(category, amount);
+}
+```
+
+Rationale: Clean delegation to MoneyList, which handles validation, storage, and UI feedback.
+
+## ListCatsCommand & ListCommand Features
+
+**Overview**:
+
+The `ListCatsCommand` displays all unique categories used in existing expense entries:
+
+**Key Characteristics**:
+
+- Extraction Logic: Parses categories from string-formatted expense entries.
+
+- User Feedback: Provides friendly output listing categories in order of appearance.
+
+- Robustness: Handles empty lists and malformed entries gracefully.
+
+Implementation: Implements the Command interface and delegates logic to MoneyList.listCats().
+
+![Image](diagrams/List.png)
+
+**Why this design**:
+
+- Separation of Concerns: Parsing stays in Parser, business logic in MoneyList, and output in TextUI.
+
+- User Experience: Avoids duplicate category names and maintains intuitive display order.
+
+- Defensive Programming: Safeguards against null entries or missing {} in expense strings.
+
+**Key Code Snippets**:
+
+```
+@Override
+public void execute(MoneyList moneyList) {
+    moneyList.listCats();
+}
+```
+
+Rationale: Simple delegation to the domain class, keeps command class clean and focused.
+
+```
+// In MoneyList.listCats()
+for (String entry : moneyList) {
+    String beforeCat = entry.substring(entry.indexOf("{") + 1).trim();
+    String category = beforeCat.split("}", 2)[0];
+    categories.add(category);
+}
+```
+
+Rationale: Extracts category from each entry while preserving insertion order using a LinkedHashSet.
+
+## EditExpenseCommand
+
+**Overview**:
+
+The `EditExpenseCommand` updates the details of an existing expense entry, such as description, amount, category, or date.
+
+**Key characteristics**:
+
+- 1-based index: User input is converted to 0-based internally.
+
+- Partial Updates: Supports optional editing — any missing field retains its old value.
+
+- Validation: Checks for proper format, entry type, and valid index.
+
+- Persistence: Saves changes immediately to storage.
+
+**Implementation**: Implements the Command interface and delegates modification logic to MoneyList.editExpense(...).
+
+**Workflow**:
+
+![Image](diagrams/EditExpenses.png)
+
+**Why this design**:
+
+- Flexible Parsing: Parser extracts only the fields that were included by the user.
+
+- Robust Update Logic: MoneyList handles the safe merging of old and new fields.
+
+- Defensive Programming: Prevents editing non-expense entries or malformed lines.
+
+- Persistence Guarantee: Changes are saved immediately to prevent data loss.
+
+**Key Code Snippets**:
+
+```
+// In EditExpenseCommand
+public void execute(MoneyList moneyList) throws MTException {
+    moneyList.editExpense(index, newDescription, newAmount, newCategory, newDate);
+}
+```
+
+Rationale: Simple execution method defers logic to the MoneyList class for clarity and separation of concerns.
+
+```
+// In MoneyList.editExpense()
+if (newDesc == null || newDesc.isEmpty()) {
+    newDesc = oldDescription;
+}
+if (newAmount <= 0.00) {
+    newAmount = oldAmount;
+}
+```
+
+Rationale: Ensures that missing fields are safely defaulted to their existing values, enabling partial updates.
+
+## FindCommand Feature
+
+**Overview**:
+
+The `FindCommand` searches for entries in the MoneyList that contain a specific keyword, case-insensitively.
+
+- Search Scope: Scans all entries (expenses and incomes) as raw strings.
+
+- Case-Insensitive: Matches regardless of capitalization.
+
+- Feedback: Notifies user of matched results or when none are found.
+
+**Implementation**: Implements the Command interface and delegates search logic to MoneyList.findEntry(keyword).
+
+**Workflow**:
+
+![Image](diagrams/FindCommand.png)
+
+**Why this design**:
+
+- Simple Matching: Leverages String.contains() and lowercasing for intuitive matching.
+
+- Feedback-Oriented: Tells user what was found or if no match exists.
+
+- Robust Edge Handling: Gracefully handles null/empty inputs and missing matches.
+
+**Key Code Snippets**:
+
+```
+// In Parser.java
+String keyword = input.substring(5).trim();
+return new FindCommand(keyword);
+```
+
+Rationale: Efficiently strips the find prefix and trims whitespace, ensuring the keyword is clean and valid.
+
+```
+// In MoneyList.findEntry()
+for (String entry : moneyList) {
+    if (entry.toLowerCase().contains(input.toLowerCase())) {
+        results.add(entry);
+    }
+}
+```
+
+Rationale: Performs a basic case-insensitive search over all stored entries and collects results.
+
+## DeleteCommand Feature
+
+**Overview**:
+
+The `DeleteCommand` permanently removes an entry from MoneyList based on user-specified index. 
+Key characteristics:
+
+- 1-based indexing (user-facing) converted to 0-based (internal)
+
+- Validation: Checks for invalid indices before deletion
+
+- Data Persistence: Automatically saves changes to storage
+
+![Image](diagrams/DeleteCommand_Class.png)
+
+Implementation: Encapsulates deletion logic while adhering to the Command interface.
+
+**Workflow**:
+
+![Image](diagrams/Delete_Seq.png)
+
+**Why this design**:
+
+- Separation of Concerns: Parsing vs execution
+
+- Validation: MoneyList handles index bounds checking
+
+- Persistence: Storage updated immediately after deletion
+
+**Key Code Snippets**:
+
+```
+// In DeleteCommand constructor
+this.index = Integer.parseInt(input.replaceAll("[^0-9]", "")) - 1;
+```
+
+Rationale: Translates user's 1-based input to 0-based list indexing while sanitizing non-numeric characters.
+
+```
+public void execute(MoneyList moneyList) throws MTException {
+    String deleteCommand = "delete " + (index + 1); // Reconstruct user command
+    moneyList.deleteEntry(deleteCommand); // Delegates to MoneyList
+}
+```
+
+Why: Reuses existing MoneyList logic while maintaining consistent command formatting.
+
+## Exit Feature
+
+**Overview**:
+
+The ExitCommand provides a controlled shutdown of MoneyTrail by:
+
+- Terminating the main processing loop
+
+- Triggering a final data save
+
+- Displaying a farewell message
+
+**Key Characteristics**:
+
+- Immediate persistence before exit
+
+- No return to command loop
+
+- Minimal dependencies
+
+**Workflow**:
+
+![Image](diagrams/Exit_Activity.png)
+
+Why: Clearly separates success/failure paths while showing system state changes.
+
+![Image](diagrams/Exit_Sequence.png)
+
+Key Interactions:
+
+- Parser active only during initial parsing
+
+- ExitCommand handles shutdown sequence
+
+- Storage activates briefly for final save
+
+**Key Code Snippets**:
+
+`ExitCommand.java`:
+
+```
+public class ExitCommand implements Command {
+    @Override
+    public void execute(MoneyList moneyList) {
+        // No operations needed beyond flagging exit
+    }
+
+    @Override
+    public boolean shouldExit() {
+        return true; // Critical termination flag
+    }
+}
+```
+
+Design Choice: Minimalist implementation since persistence is handled by MoneyTrail's main loop cleanup.
+
+`MoneyTrail.java` (snippet):
+
+```
+while (!shouldExit) {
+    Command cmd = parser.parseCommand(input);
+    cmd.execute(moneyList); // Triggers save if ExitCommand
+    shouldExit = cmd.shouldExit(); // Loop control
+}
+```
+
+Why: Centralizes shutdown logic in the main loop for consistency.
+
+**Design Rationale**:
+
+1. Safety:
+
+- Final save occurs even if user force-quits
+
+- Atomic shouldExit flag prevents partial shutdown
+
+2. User Experience:
+
+- Clear exit confirmation message
+
+- No hidden background processes
+
+3. Extensibility:
+
+- Easy to add pre-exit hooks (e.g., analytics logging)
+
+## Product scope <a name="4-product-scope"></a>
 
 ### Target user profile
+
 Tertiary students who:
 - Are budget-conscious and want to track their spending
 - Find it troublesome to log their expenses and income on pen and paper.
@@ -499,11 +817,12 @@ Tertiary students who:
 - Appreciate having flexibility to edit, categorize, and budget their expenses and income
 
 ### Value proposition
-MoneyTrail is a lightweight, user-friendly budget tracking application to help you achieve financial clarity
-and peace of mind. Say goodbye to the hassle of pen and paper logging. MoneyTrail is designed for simplicity and efficiency, it empowers users to manage expenses, track spending,
-and stay within budget — digitally and all in one place. Our tool transforms financial management into a stress-free experience.
 
-## User Stories
+"Track expenses, manage budgets, and control 
+spending—all in one simple CLI app for personal 
+finance mastery."
+
+## User Stories <a name="5-user-stories"></a>
 
 | Version | As a ... | I want to ...                                                  | So that I can ...                                            |
 |---------|----------|----------------------------------------------------------------|--------------------------------------------------------------|
@@ -518,9 +837,10 @@ and stay within budget — digitally and all in one place. Our tool transforms f
 | v2.0    | user     | list all used categories                                       | analyze spending patterns across different categories        |
 | v2.0    | user     | clear all entries                                              | reset the application entirely                               |
 
-## Non-Functional Requirements
+## Non-Functional Requirements <a name="6-non-functional-req"></a>
 
 #### Usability
+
 #### User-friendly Interface:
 The application should have an intuitive design, making it easy for users to navigate and input data.
 
@@ -528,18 +848,20 @@ The application should have an intuitive design, making it easy for users to nav
 Provide clear and actionable feedback when a user makes a mistake (e.g., invalid input format).
 
 ### Performance
+
 #### Fast Response Time:
 The application should process commands and display results within a fraction of a second
 to ensure a smooth user experience
 
 ### Reliability
+
 #### Error Recovery
 The application should gracefully handle unexpected crashes or errors, saving user data wherever possible.
 
 #### Accuracy
 Calculations (e.g., total expenses, budget limits) must be precise and error-free.
 
-## Glossary
+## Glossary <a name="7-glossary"></a>
 
 | Term           | Definition                                                                                         | 
 |----------------|----------------------------------------------------------------------------------------------------|
@@ -556,11 +878,12 @@ Calculations (e.g., total expenses, budget limits) must be precise and error-fre
 | Help Command   | A command help that provides a summary of all available commands and their formats.                |
 | Usability      | The ease with which users can navigate and use the application’s features effectively.             |
 
-## Instructions for manual testing
+## Instructions for Manual Testing <a name="8-testing"></a>
 
 {Give instructions on how to do a manual product testing e.g., how to load sample data to be used for testing}
 
 ### Testing Basic Commands
+
 #### help Command:
 1. Input the help command.
 2. Verify that a complete list of all available commands is displayed.
@@ -586,6 +909,7 @@ Calculations (e.g., total expenses, budget limits) must be precise and error-fre
 3. Check for case sensitivity and partial matches (e.g., searching "lunch" vs "Lunch").
 
 ### Testing Budget Features
+
 #### totalExp Command:
 1. Add multiple expenses and run totalExp.
 2. Verify the total sum of all expenses is calculated accurately.
@@ -600,6 +924,7 @@ Calculations (e.g., total expenses, budget limits) must be precise and error-fre
 2. Run listCat and verify that all used categories are listed without duplicates.
 
 ### Testing Data Management
+
 #### Loading Sample Data:
 1. Locate the mt.txt file in the application's home folder
 2. Edit the file to include the sample entries in the required format (e.g., `Expense: fuel $10.00 {transportation} [no date]` ).
@@ -611,6 +936,7 @@ Calculations (e.g., total expenses, budget limits) must be precise and error-fre
 3. Exit and restart the application, then confirm the changes persist
 
 ### Testing Application Behavior
+
 #### Error Messages and Validation:
 1. Provide invalid inputs for commands (e.g., non-numeric values for amounts, invalid date formats).
 2. Ensure that the application displays clear and descriptive error messages.

@@ -141,7 +141,7 @@ public class Parser {
     }
     //@@author
 
-    //@@author EdwinTun98
+    //@@author Hansel-K
     private AddExpenseCommand createAddExpenseCommand(String input) throws MTException {
         try {
             validateAddExpenseFormat(input);
@@ -379,36 +379,42 @@ public class Parser {
 
     //@@author EdwinTun98
     private SetCategoryBudgetCommand parseSetCategoryBudgetCommand(String input) throws MTException {
-        String trimmed = input.substring("setCatBgt".length()).trim();
+        final String commandPrefix = "setCatBgt";
+        final String categoryPrefix = "c/";
 
-        if (!trimmed.startsWith("c/")) {
+        String trimmedInput = input.substring(commandPrefix.length()).trim();
+
+        if (!trimmedInput.startsWith(categoryPrefix)) {
             throw new MTException("Invalid format. Use: setCatBgt c/<category> <amount>");
         }
 
-        String[] parts = trimmed.split("\\s+", 2); // Expected: [ "c/food", "100" ]
+        String[] parts = trimmedInput.split("\\s+", 2);
         if (parts.length < 2) {
-            throw new MTException("Missing budget value. Format: setCatBgt c/<category> <amount>");
+            throw new MTException("Missing amount. Use: setCatBgt c/<category> <amount>");
         }
 
-        String category = parts[0].substring(2).trim(); // removes "c/"
+        String category = parts[0].substring(categoryPrefix.length()).trim();
         String amountStr = parts[1].trim();
 
         if (category.isEmpty()) {
             throw new MTException("Category name cannot be empty.");
         }
 
-        double amount;
+        double amount = parseBudgetAmount(amountStr);
+
+        return new SetCategoryBudgetCommand(category, amount);
+    }
+
+    private double parseBudgetAmount(String amountStr) throws MTException {
         try {
-            amount = Double.parseDouble(amountStr);
+            double amount = Double.parseDouble(amountStr);
+            if (amount < 0) {
+                throw new MTException("Budget cannot be negative.");
+            }
+            return amount;
         } catch (NumberFormatException e) {
             throw new MTException("Invalid amount. Please enter a valid number.");
         }
-
-        if (amount < 0) {
-            throw new MTException("Budget cannot be negative.");
-        }
-
-        return new SetCategoryBudgetCommand(category, amount);
     }
     //@@author
 
