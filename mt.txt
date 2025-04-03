@@ -1,3 +1,1 @@
-Income: wages $3000.00 [2025-04-01]
-Expense: rent $250.00 {drink} [2025-06-05]
-Expense: lunch $40.00 {food} [2025-04-01]
+Expense: Coffee $4.50 {snack} [2024-04-03]

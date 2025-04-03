@@ -7,13 +7,22 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+/**
+ * Unit tests for the listSummary functionality in MoneyList.
+ * This test suite verifies the behavior of the method when the list is empty
+ * and when it contains entries. It ensures proper handling of exceptions and
+ * correct execution flow.
+ */
 public class ListSummaryTest {
 
-    private MoneyList moneyList;
-    private MTLogger logger;
-    private Storage storage;
-    private TextUI ui;
+    private MoneyList moneyList; // Instance of MoneyList for testing
+    private MTLogger logger; // Logger used to track events and errors
+    private Storage storage; // Storage object used by MoneyList
+    private TextUI ui; // User interface object used by MoneyList
 
+    /**
+     * Sets up the dependencies and initializes the MoneyList before each test.
+     */
     @BeforeEach
     public void setUp() {
         // Initialize dependencies
@@ -25,14 +34,23 @@ public class ListSummaryTest {
         moneyList = new MoneyList(logger, storage, ui);
     }
 
-    // Test case 1: List is empty
+    /**
+     * Test case for the listSummary method when the list is empty.
+     * Verifies that an exception is thrown indicating that no summary
+     * can be generated for an empty list.
+     */
     @Test
     void testListSummary_emptyList() {
+        // Expect an MTException when attempting to generate a summary from an empty list
         Exception exception = assertThrows(MTException.class, () -> moneyList.listSummary());
-        assertThrows(MTException.class, () -> moneyList.listSummary());
+        assertThrows(MTException.class, () -> moneyList.listSummary()); // Reconfirm exception handling
+
     }
 
-    // Test case 2L list has entries
+    /**
+     * Test case for the listSummary method when the list contains entries.
+     * Verifies that no exception is thrown and the summary is successfully displayed.
+     */
     @Test
     void testListSummary_nonEmptyList() {
         // Add sample expenses to the moneyList

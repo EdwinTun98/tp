@@ -10,22 +10,26 @@ public class MoneyList {
     private static final int INDEX_OFFSET = 1;
 
     private final ArrayList<String> moneyList;
-    private final HashMap<String, Budget> categoryBudget = new HashMap<>();
+    private final HashMap<String, Budget> budgetList = new HashMap<>();
     private final MTLogger logger;
     private final Storage storage;
     private final TextUI ui;
-    private double totalBudget;
+    //private double totalBudget;
 
     public MoneyList(MTLogger logger, Storage storage, TextUI ui) {
         this.moneyList = new ArrayList<>();
         this.logger = logger;
         this.storage = storage;
         this.ui = ui;
-        this.totalBudget = 0.0;
+        //this.totalBudget = 0.0;
     }
 
     public ArrayList<String> getMoneyList() {
         return moneyList;
+    }
+
+    public HashMap<String, Budget> getBudgetList() {
+        return budgetList;
     }
 
     private int extractIndex(String input) {
@@ -76,7 +80,7 @@ public class MoneyList {
 
         HashMap<String, Budget> loadedBudgets = storage.loadBudgets();
         if (loadedBudgets != null) {
-            categoryBudget.putAll(loadedBudgets);
+            budgetList.putAll(loadedBudgets);
         }
 
         // Assert that moneyList is not null
@@ -86,103 +90,38 @@ public class MoneyList {
         ui.print("Loaded " + moneyList.size() + " entries from file.");
     }
 
+    //@@author Hansel-K
     public void addExpense(String input) throws MTException {
         try {
-            // Check that the input is not null and trim it.
-            if (input == null) {
-                throw new MTException("Input should not be null");
-            }
-
-            input = input.trim();
+            validateInput(input);
+            input = input.trim(); // Remove unnecessary spaces
 
             // Default parameters
             String description = "";
             Double amount = 0.00;
-            String category = "Uncategorized";
-            String date = "no date"; // default date
+            String category = "Uncategorized"; // Default category
 
-            // Ensure the input contains the amount marker "$/"
+            String date = "no date"; // Default date
+
             if (input.contains("$/")) {
-                // Extract everything after "addExpense "
-                String[] parts1 = input.substring(("addExp").length()).split("\\$/", 2);
-                description = parts1[0].trim();
-                logger.logInfo("Description: " + description);
+                description = extractDescription(input);
+                String afterAmountPart = extractAfterAmountPart(input);
 
-                // Check for duplicate markers
-                String afterAmountPart = parts1[1];
-                if (afterAmountPart.split("c/").length - 1 > 1) {
-                    throw new MTException("Invalid format. Multiple category markers detected.");
-                }
+                validateMarkers(afterAmountPart);
 
-                if (afterAmountPart.split("d/").length - 1 > 1) {
-                    throw new MTException("Invalid format. Multiple date markers detected.");
-                }
+                amount = extractAmount(afterAmountPart);
+                category = extractCategory(afterAmountPart);
+                date = extractDate(afterAmountPart);
 
-                // Process the amount, category, and date as before
-                if (afterAmountPart.contains("c/")) {
-                    // Split on "c/" to separate the amount from the category (and possibly date)
-                    String[] parts2 = afterAmountPart.split("c/", 2);
-                    //@@author limleyhooi
-                    String amountString = parts2[0].trim();
-                    // Validate and parse the amount
-                    if (amountString.matches("-?\\d+(\\.\\d+)?")) {
-                        amount = Double.parseDouble(amountString);
-                    } else {
-                        throw new NumberFormatException("Invalid amount format: " + amountString);
-                    }
-
-                    // Check if the category part contains the date marker "d/"
-                    if (parts2[1].contains("d/")) {
-                        String[] parts3 = parts2[1].split("d/", 2);
-                        category = parts3[0].trim();
-                        date = parts3[1].trim();
-                    } else {
-                        // No date provided; just use the category
-                        category = parts2[1].trim();
-                    }
-                } else if (afterAmountPart.contains("d/")) {
-                    // If there's no category marker but there is a date marker,
-                    // split on "d/" to get the amount and date.
-                    String[] parts2 = afterAmountPart.split("d/", 2);
-                    String amountString = parts2[0].trim();
-                    if (amountString.matches("-?\\d+(\\.\\d+)?")) {
-                        amount = Double.parseDouble(amountString);
-                    } else {
-                        throw new NumberFormatException("Invalid amount format: " + amountString);
-                    }
-
-                    date = parts2[1].trim();
-                } else {
-                    // If neither category nor date is provided, treat the entire string as the amount.
-                    String amountString = afterAmountPart.trim();
-                    if (amountString.matches("-?\\d+(\\.\\d+)?")) {
-                        amount = Double.parseDouble(amountString);
-                    } else {
-                        throw new NumberFormatException("Invalid amount format: " + amountString);
-                    }
-                }
-
-                DecimalFormat df = new DecimalFormat("#.00");
-                amount = Double.valueOf(df.format(amount));
+                amount = formatAmount(amount);
 
                 logger.logInfo("Amount after formatting: " + amount);
             } else {
-                throw new MTException("Invalid format. Use: addExp" +
-                        " <description> $/<amount> [c/<category>] [d/<date>]");
+                throw new MTException("Invalid format. Use: addExp <description> $/<amount> [c/<category>] [d/<date>]");
             }
 
-            // amount cannot be negative
-            if (amount <= 0) {
-                throw new MTException("Amount must be greater than zero.");
-            }
-
-            Expense newExpense = new Expense(description, amount, category, date);
-
-            moneyList.add(newExpense.toString());
-            logger.logInfo("Added expense: " + newExpense);
-            ui.print("Expense added: " + newExpense);
-            storage.saveExpenses(moneyList);
-
+            validateAmount(amount);
+            saveExpense(description, amount, category, date);
         } catch (NumberFormatException error) {
             logger.logSevere("Invalid amount format: " + input, error);
             throw new MTException("Invalid amount format. Please ensure it is a numeric value.");
@@ -192,7 +131,85 @@ public class MoneyList {
         }
     }
 
+    // Validates that the input is not null
+    private void validateInput(String input) throws MTException {
+        if (input == null) {
+            throw new MTException("Input should not be null.");
+        }
+    }
+
+    // Extracts the description from the input string
+    private String extractDescription(String input) {
+        String[] parts1 = input.substring(("addExp").length()).split("\\$/", 2);
+        String description = parts1[0].trim();
+        logger.logInfo("Description: " + description);
+        return description;
+    }
+
+    // Extracts the part of the input that comes after the amount marker "$/"
+    private String extractAfterAmountPart(String input) {
+        return input.substring(("addExp").length()).split("\\$/", 2)[1];
+    }
+
+    // Validates that there are no duplicate markers (e.g., "c/" or "d/")
+    private void validateMarkers(String afterAmountPart) throws MTException {
+        if (afterAmountPart.split("c/").length - 1 > 1) {
+            throw new MTException("Invalid format. Multiple category markers detected.");
+        }
+        if (afterAmountPart.split("d/").length - 1 > 1) {
+            throw new MTException("Invalid format. Multiple date markers detected.");
+        }
+    }
+
+    // Extracts and validates the amount from the input string
+    private Double extractAmount(String afterAmountPart) throws NumberFormatException {
+        String amountString = afterAmountPart.split("c/|d/", 2)[0].trim();
+        if (amountString.matches("-?\\d+(\\.\\d+)?")) {
+            return Double.parseDouble(amountString);
+        } else {
+            throw new NumberFormatException("Invalid amount format: " + amountString);
+        }
+    }
+
+    // Extracts the category from the input string
+    private String extractCategory(String afterAmountPart) {
+        if (afterAmountPart.contains("c/")) {
+            return afterAmountPart.split("c/")[1].split("d/", 2)[0].trim();
+        }
+        return "Uncategorized"; // Default category
+    }
+
+    // Extracts the date from the input string
+    private String extractDate(String afterAmountPart) {
+        if (afterAmountPart.contains("d/")) {
+            return afterAmountPart.split("d/", 2)[1].trim();
+        }
+        return "no date"; // Default date
+    }
+
+    // Formats the amount to two decimal places
+    private Double formatAmount(Double amount) {
+        DecimalFormat df = new DecimalFormat("#.00");
+        return Double.valueOf(df.format(amount));
+    }
+
+    // Ensures the amount is greater than zero
+    private void validateAmount(Double amount) throws MTException {
+        if (amount <= 0) {
+            throw new MTException("Amount must be greater than zero.");
+        }
+    }
+
+    // Creates a new expense entry, adds it to the list, and saves it
+    private void saveExpense(String description, Double amount, String category, String date) throws MTException {
+        Expense newExpense = new Expense(description, amount, category, date);
+        moneyList.add(newExpense.toString()); // Add the expense to the money list
+        logger.logInfo("Added expense: " + newExpense); // Log the new expense
+        ui.print("Expense added: " + newExpense); // Print confirmation to the user
+        storage.saveExpenses(moneyList); // Persist the expense data
+    }
     //@@author
+
     //@@author limleyhooi
     public void addIncome(String input) throws MTException {
         try {
@@ -246,69 +263,53 @@ public class MoneyList {
     }//@@author
 
     //@@author EdwinTun98
+    /**
+     * Edits an existing expense entry in the money list.
+     *
+     * @param index     The index of the entry to be edited.
+     * @param newDesc   The new description (optional).
+     * @param newAmount The new amount (optional).
+     * @param newCat    The new category (optional).
+     * @param newDate   The new date (optional).
+     * @throws MTException If the index is invalid or the entry is corrupted.
+     */
     public void editExpense(int index, String newDesc, Double newAmount,
                             String newCat, String newDate) throws MTException {
+        // Check if the provided index is within the bounds
         validateIndex(index);
 
+        // Get the old string entry and convert it to an Expense object
         String oldEntry = moneyList.get(index);
+        Expense oldExpense = Expense.parseString(oldEntry);
 
-        if (!oldEntry.startsWith("Expense: ")) {
-            throw new MTException("Entry not in expected format!");
-        }
-
-        String stripped = oldEntry.substring("Expense: ".length()).trim();
-        int dollarIndex = stripped.indexOf('$');
-
-        if (dollarIndex < 1) {
-            throw new MTException("Corrupted old entry: missing $ for amount.");
-        }
-
-        String oldDescription = stripped.substring(0, dollarIndex).trim();
-
-        int openBrace = stripped.indexOf('{', dollarIndex);
-        if (openBrace == -1) {
-            throw new MTException("Corrupted old entry: missing { for category.");
-        }
-
-        String amountPart = stripped.substring(dollarIndex + 1, openBrace).trim();
-        double oldAmount = Double.parseDouble(amountPart);
-
-        int closeBrace = stripped.indexOf('}', openBrace);
-        if (closeBrace == -1) {
-            throw new MTException("Corrupted old entry: missing } for category.");
-        }
-
-        String oldCategory = stripped.substring(openBrace + 1, closeBrace).trim();
-
-        int openBracket = stripped.indexOf('[', closeBrace);
-        int closeBracket = stripped.indexOf(']', openBracket);
-        if (openBracket == -1 || closeBracket == -1) {
-            throw new MTException("Corrupted old entry: missing [ or ] for date.");
-        }
-
-        String oldDate = stripped.substring(openBracket + 1, closeBracket).trim();
-
+        // If no new description is provided, use the old one
         if (newDesc == null || newDesc.isEmpty()) {
-            newDesc = oldDescription;
+            newDesc = oldExpense.getDescription();
         }
         if (newAmount <= 0.00) {
-            newAmount = oldAmount;
+            newAmount = oldExpense.getAmount();
         }
         if (newCat == null || newCat.isEmpty()) {
-            newCat = oldCategory;
+            newCat = oldExpense.getCategory();
         }
         if (newDate == null || newDate.isEmpty()) {
-            newDate = oldDate;
+            newDate = oldExpense.getDate();
         }
 
-        String updatedStr = String.format("Expense: %s $%.2f {%s} [%s]",
-                newDesc, newAmount, newCat, newDate);
+        Expense updatedExpense = new Expense(newDesc, newAmount, newCat, newDate);
+        moneyList.set(index, updatedExpense.toString());
 
-        moneyList.set(index, updatedStr);
-        ui.print("Entry updated. " + updatedStr);
+        moneyList.set(index, updatedExpense.toString());
+        ui.print("Entry updated. " + updatedExpense);
+        logger.logInfo("Entry updated: " + updatedExpense);
         storage.saveExpenses(moneyList);
     }
 
+    /**
+     * Lists all expense entries with formatted output.
+     *
+     * @throws MTException If the money list is empty.
+     */
     public void listSummary() throws MTException {
         if (moneyList.isEmpty()) {
             logger.logWarning("Expense list is empty.");
@@ -322,13 +323,26 @@ public class MoneyList {
     }
 
     public void listBudgets() throws MTException {
-        if (categoryBudget.isEmpty()) {
-            throw new MTException("No category budgets have been set.");
+        if (budgetList.isEmpty()) {
+            throw new MTException("No budgets have been set.");
         }
 
-        ui.print("Category Budgets:");
-        for (Map.Entry<String, Budget> entry : categoryBudget.entrySet()) {
-            ui.print("- " + entry.getValue().toString());
+        ui.print("-------- Overall Budgets --------");
+
+        // 1. Print the total budget first if it exists
+        Budget total = budgetList.get("Overall");
+        if (total != null) {
+            ui.print("- " + total.toString());
+            ui.print(" ");
+        }
+
+        ui.print("-------- Category Budgets: --------");
+        // 2. Print the other budgets (skip "total")
+        for (Map.Entry<String, Budget> entry : budgetList.entrySet()) {
+            if (!entry.getKey().equalsIgnoreCase("Overall")) {
+                ui.print("- " + entry.getValue().toString());
+                ui.print(" ");
+            }
         }
     }
 
@@ -351,10 +365,11 @@ public class MoneyList {
         // Handle the case when no matches are found
         if (results.isEmpty()) {
             logger.logWarning("No matching entries found for: " + input);
-            throw new MTException("Please enter a valid keyword to search.");
+            throw new MTException("No matching entries found for: " + input
+                    + ". Please enter a valid keyword to search.");
         }
 
-        // Print matching entries
+        // Print matching entries cat
         ui.print("Found Matching entries for: " + input);
         for (int i = 0; i < results.size(); i++) {
             ui.print((i + INDEX_OFFSET) + ": " + results.get(i));
@@ -362,84 +377,112 @@ public class MoneyList {
     }
 
     public void setCategoryLimit(String category, double amount) throws MTException {
+        setCategoryLimit(category, String.valueOf(amount));
+    }
+
+    public void setCategoryLimit(String category, String amountStr) throws MTException {
+        if (isEmptyOrNull(amountStr)) {
+            throw new MTException("Budget amount cannot be empty.");
+        }
+
+        double amount;
+
+        try {
+            amount = Double.parseDouble(amountStr.trim());
+        } catch (NumberFormatException e) {
+            throw new MTException("Invalid amount. Please enter a valid number.");
+        }
+
         if (amount < 0) {
             throw new MTException("Category budget cannot be negative.");
         }
 
         Budget budget = new Budget(category, amount);
-        categoryBudget.put(category, budget);
+        budgetList.put(category, budget);
 
         ui.print("Budget for category '" + category + "' set to $" + String.format("%.2f", amount));
         logger.logInfo("Set budget: " + category + " = " + amount);
-        storage.saveBudgets(categoryBudget); // You’ll add this in Storage.java
+
+        storage.saveBudgets(budgetList);
     }
 
-    public void checkExpenses(String categoryInput) throws MTException {
-        if (categoryInput == null || categoryInput.trim().isEmpty()) {
-            throw new MTException("Please specify a category or use 'Total'.");
+    public void checkExpenses(String budgetInput) throws MTException {
+        if (isEmptyOrNull(budgetInput)) {
+            throw new MTException("Please specify a category or use 'Overall'.");
         }
 
-        boolean isTotal = categoryInput.equalsIgnoreCase("Total");
-
-        if (isTotal) {
-            double totalExpense = getTotalExpenseValue(null); // All expenses
-            printTotalBudgetSummary(totalExpense);
+        if (isTotalBudgetCheck(budgetInput)) {
+            handleTotalBudgetCheck();
         } else {
-            String targetCategory = categoryInput.trim().toLowerCase();
-            Budget budget = categoryBudget.get(targetCategory);
-
-            if (budget == null) {
-                throw new MTException("No budget set for category: " + categoryInput);
-            }
-
-            double categoryExpense = getTotalExpenseValue(targetCategory);
-            printCategoryBudgetSummary(budget, categoryExpense);
+            handleCategoryBudgetCheck(budgetInput.trim().toLowerCase());
         }
     }
 
-    public double getTotalExpenseValue(String category) throws MTException {
+    private boolean isEmptyOrNull(String input) {
+        return input == null || input.trim().isEmpty();
+    }
+
+    private boolean isTotalBudgetCheck(String input) {
+        return input.equalsIgnoreCase("Overall");
+    }
+
+    private void handleTotalBudgetCheck() throws MTException {
+        Budget overAllBudget = budgetList.get("Overall");
+        if (overAllBudget == null) {
+            logger.logWarning("No Overall budget set.");
+            throw new MTException("No Overall budget set.");
+        }
+        double overallExpense = getTotalExpenseValue(null);
+        printTotalBudgetSummary(overAllBudget, overallExpense);
+    }
+
+    private void handleCategoryBudgetCheck(String category) throws MTException {
+        Budget categoryBudget = budgetList.get(category);
+        if (categoryBudget == null) {
+            logger.logWarning("No category budget set.");
+            throw new MTException("No category budget set.");
+        }
+
+        double expenses = getTotalExpenseValue(category);
+        printCategoryBudgetSummary(categoryBudget, expenses);
+    }
+
+    public double getTotalExpenseValue(String category) {
         double totalExpenses = 0.0;
+
         for (String entry : moneyList) {
             if (entry.startsWith("Expense: ")) {
                 try {
-                    String[] entryPart1 = entry.split("\\$");
-                    String[] entryPart2 = entryPart1[1].split("\\{");
-                    double expensesAmount = Double.parseDouble(entryPart2[0].trim());
-
-                    if (category == null) {
-                        totalExpenses += expensesAmount;
-                    } else {
-                        String[] categorySplit = entryPart2[1].split("}", 2);
-                        String categoryName = categorySplit[0].trim().toLowerCase();
-
-                        if (categoryName.equals(category.toLowerCase())) {
-                            totalExpenses += expensesAmount;
-                        }
+                    Expense expense = Expense.parseString(entry);
+                    if (category == null || expense.getCategory().equalsIgnoreCase(category)) {
+                        totalExpenses += expense.getAmount();
                     }
-                } catch (Exception e) {
-                    logger.logWarning("Error parsing entry for expense: " + entry);
+                } catch (MTException e) {
+                    logger.logWarning("Skipping malformed expense entry: " + entry);
                 }
             }
         }
+
         return totalExpenses;
     }
 
-    private void printTotalBudgetSummary(double overallExpenses) {
-        ui.print("-------- TOTAL BUDGET EXPENSES SUMMARY --------");
-        //ui.print(String.format("Total Budget: %.2f", overallExpenses));
-        ui.print(String.format("Total Expenses: %.2f", overallExpenses));
+    private void printTotalBudgetSummary(Budget totalBudget, double totalExpenses) {
+        ui.print("-------- OVERALL BUDGET EXPENSES SUMMARY --------");
+        ui.print(String.format(totalBudget.toString()));
+        ui.print(String.format("Overall Expenses: $%.2f", totalExpenses));
+        ui.print(String.format("Remaining: $%.2f", totalBudget.getAmount() - totalExpenses));
     }
 
     private void printCategoryBudgetSummary(Budget budget, double spent) {
         ui.print("-------- CATEGORY EXPENSES BUDGET CHECK --------");
-        ui.print("Category: " + budget.getCategory());
-        ui.print(String.format("Budget: $%.2f", budget.getAmount()));
+        ui.print(budget.toString());
+        //ui.print(String.format("Budget: $%.2f", budget.getAmount()));
         ui.print(String.format("Total Spent: $%.2f", spent));
         ui.print(String.format("Remaining: $%.2f", budget.getAmount() - spent));
     }
-
     //@@author
 
+    //@@author Hansel-K
     public void getTotalExpense() {
         double total = 0.0;
 
@@ -464,34 +507,35 @@ public class MoneyList {
         logger.logInfo("Total expense calculated: " + String.format("%.2f", total));
     }
 
-    //@@author Hansel-K
     public void setTotalBudget(String input) throws MTException {
         try {
             assert input != null : "Input should not be null";
-            assert input.startsWith("setTotBgt") : "Input should start with 'setBgt'";
+            assert input.startsWith("setTotBgt") : "Input should start with 'setTotBgt'";
 
-            // Remove the command and extract the budget value
+            // Extract the budget value after the command
             String budgetString = input.substring("setTotBgt".length()).trim();
-
-            // Parse the budget value from the string
             Double budget = Double.parseDouble(budgetString);
 
-            // Format the budget to 2 decimal places
-            DecimalFormat df = new DecimalFormat("#.00");
-            budget = Double.valueOf(df.format(budget));
-            logger.logInfo("Total budget after df formatting: " + budget);
-
-            // Validate that the budget is not negative
+            // Validate amount
             if (budget < 0) {
                 logger.logWarning("Attempted to set a negative budget: " + budget);
                 ui.print("Budget cannot be negative.");
                 return;
             }
 
-            // Set the total budget
-            this.totalBudget = budget;
-            logger.logInfo(String.format("Total budget set to: $%.2f", totalBudget));
-            ui.print(String.format("Total budget set to: $%.2f", totalBudget));
+            // Format to 2 decimal places
+            DecimalFormat df = new DecimalFormat("#.00");
+            budget = Double.valueOf(df.format(budget));
+
+            // Store as "TOTAL" category
+            Budget overallBudgetSet = new Budget("Overall", budget);
+            budgetList.put("Overall", overallBudgetSet);
+
+            // Save budgets to file
+            storage.saveBudgets(budgetList);
+
+            logger.logInfo(String.format("Total budget set to: $%.2f", budget));
+            ui.print(String.format("Total budget set to: $%.2f", budget));
         } catch (NumberFormatException e) {
             logger.logSevere("Invalid budget format: " + input, e);
             throw new MTException("Invalid amount format. Please ensure it is a numeric value.");
@@ -502,67 +546,119 @@ public class MoneyList {
     }
 
     public double getTotalBudget() {
-        return this.totalBudget;
+        Budget total = budgetList.get("Overall");
+        return (total == null) ? 0.0 : total.getAmount();
     }
     //@@author
 
+    //@@author Hansel-K
     public void listCats() {
         try {
+            // Check if the money list is empty
             if (moneyList.isEmpty()) {
-                ui.print("No entries available to display categories.");
-                logger.logWarning("The money list is empty. No categories to display.");
+                handleEmptyMoneyList(); // Handle empty money list scenario
                 return;
             }
 
-            // Use a LinkedHashSet to store unique categories while preserving order
-            LinkedHashSet<String> categories = new LinkedHashSet<>();
+            // Extract unique categories from the money list
+            LinkedHashSet<String> categories = extractUniqueCategories();
 
-            for (String entry : moneyList) {
-                try {
-                    // Filter off the string value until after {
-                    String beforeCat = entry.substring(entry.indexOf("{") + 1).trim();
-
-                    // Extract the string value before }
-                    String[] parts = beforeCat.split("}", 2);
-
-                    String category = parts[0];
-
-                    categories.add(category);
-
-                } catch (Exception e) {
-                    logger.logWarning("Error extracting category from entry: " + entry);
-                }
-            }
-
+            // Check if no categories were found
             if (categories.isEmpty()) {
-                ui.print("No categories found.");
-                logger.logWarning("No categories could be extracted from the money list.");
+                handleNoCategoriesFound(); // Handle no categories scenario
                 return;
             }
 
-            // Display the unique categories in the order they were added
-            ui.print("Categories (in order of appearance):");
-            for (String category : categories) {
-                ui.print("- " + category);
-            }
-
-            logger.logInfo("Displayed " + categories.size() + " unique categories.");
+            // Display the unique categories to the user
+            displayCategories(categories);
         } catch (Exception e) {
-            logger.logSevere("An error occurred while listing categories: " + e.getMessage(), e);
-            ui.print("An error occurred while listing categories. Please try again.");
+            // Handle any exceptions that occur while listing categories
+            handleListCategoriesError(e);
         }
     }
 
-    public void clearEntries() throws MTException {
-        if (moneyList.isEmpty()) {
-            ui.print("No entries to clear");
-            return;
-        }
+    // Handles the case where the money list is empty
+    private void handleEmptyMoneyList() {
+        ui.print("No entries available to display categories."); // Inform user
+        logger.logWarning("The money list is empty. No categories to display."); // Log warning
+    }
 
+    // Extracts unique categories from the money list
+    private LinkedHashSet<String> extractUniqueCategories() {
+        LinkedHashSet<String> categories = new LinkedHashSet<>(); // To preserve order and ensure uniqueness
+
+        // Iterate through each entry in the money list
+        for (String entry : moneyList) {
+            try {
+                // Extract the category from the entry string
+                String category = extractCategoryFromEntry(entry);
+                categories.add(category); // Add the category to the set
+            } catch (Exception e) {
+                // Log a warning if category extraction fails
+                logger.logWarning("Error extracting category from entry: " + entry);
+            }
+        }
+        return categories; // Return the unique categories
+    }
+
+    // Extracts the category from a single entry in the money list
+    private String extractCategoryFromEntry(String entry) {
+        // Extract the substring after "{" and trim any leading/trailing spaces
+        String beforeCat = entry.substring(entry.indexOf("{") + 1).trim();
+
+        // Split the string at "}" to get the category
+        String[] parts = beforeCat.split("}", 2);
+
+        return parts[0]; // Return the extracted category
+    }
+
+    // Handles the case where no categories could be extracted
+    private void handleNoCategoriesFound() {
+        ui.print("No categories found."); // Inform user
+        logger.logWarning("No categories could be extracted from the money list."); // Log warning
+    }
+
+    // Displays the unique categories to the user in the order of appearance
+    private void displayCategories(LinkedHashSet<String> categories) {
+        ui.print("Categories (in order of appearance):"); // Inform user
+
+        // Iterate through and print each category
+        for (String category : categories) {
+            ui.print("- " + category);
+        }
+        logger.logInfo("Displayed " + categories.size() + " unique categories."); // Log number of categories displayed
+    }
+
+    private void handleListCategoriesError(Exception e) {
+        logger.logSevere("An error occurred while listing categories: " + e.getMessage(), e); // Log severe error
+        ui.print("An error occurred while listing categories. Please try again."); // Inform user
+    }
+
+    /**
+     * Clears all entries from the money list.
+     * If the money list is empty, it notifies the user and skips the clearing process.
+     * Otherwise, it clears the list, saves the updated list to storage, and logs the action.
+     *
+     * @throws MTException if an error occurs while saving the cleared list to storage.
+     */
+    public void clearEntries() throws MTException {
+        // Check if the money list is empty
+        if (moneyList.isEmpty()) {
+            // Notify the user that there are no entries to clear
+            ui.print("No entries to clear");
+            return; // Exit the method as there is nothing to do
+        }
+        // Clear all entries from the money list
         moneyList.clear();
+
+        // Save the updated (now empty) money list to storage
         storage.saveExpenses(moneyList);
 
+        // Log the action of clearing all entries for debugging and tracking purposes
         logger.logInfo("All entries have been cleared from the money list.");
+
+        // Notify the user that all entries have been successfully cleared
         ui.print("All entries cleared");
     }
+    //@@author
 }

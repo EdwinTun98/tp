@@ -108,9 +108,10 @@ public class TextUI {
         print("9. listCat: Lists out all entry categories in order of appearance.");
         print("10. del <index>: Deletes an entry.");
         print("11. find <keyword>: Finds an entry based on the keyword.");
-        print("12. edit <index> [<description>] [$/<amount>] [c/<category>] [d/<date>]: Edits an entry.");
-        print("13. check c/<Total or category>: Shows total expense or total expense for searched category and " +
-                "show set budget and total expenditure of respective category.");
+        print("12. edit <index> [<description>] [$/<amount>] [c/<category>] [d/<date>]: " +
+                "Modify the full entry or just selected details.");
+        print("13. check <Overall> or <Category>: Shows overall expense or total expense for searched category\n" +
+                "    and show set budget and total expenditure of respective category.");
         print("14. clear: Clears all entries.");
         print("15. exit: Exits the program.");
     }

@@ -1,2 +1,2 @@
-food 150.0
-drink 150.0
+transport 50.0
+food 100.0
