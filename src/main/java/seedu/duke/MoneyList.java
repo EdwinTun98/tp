@@ -252,13 +252,26 @@ public class MoneyList {
     }//@@author
 
     //@@author EdwinTun98
+    /**
+     * Edits an existing expense entry in the money list.
+     *
+     * @param index     The index of the entry to be edited.
+     * @param newDesc   The new description (optional).
+     * @param newAmount The new amount (optional).
+     * @param newCat    The new category (optional).
+     * @param newDate   The new date (optional).
+     * @throws MTException If the index is invalid or the entry is corrupted.
+     */
     public void editExpense(int index, String newDesc, Double newAmount,
                             String newCat, String newDate) throws MTException {
+        // Check if the provided index is within the bounds
         validateIndex(index);
 
+        // Get the old string entry and convert it to an Expense object
         String oldEntry = moneyList.get(index);
         Expense oldExpense = Expense.parseString(oldEntry);
 
+        // If no new description is provided, use the old one
         if (newDesc == null || newDesc.isEmpty()) {
             newDesc = oldExpense.getDescription();
         }
@@ -281,6 +294,11 @@ public class MoneyList {
         storage.saveExpenses(moneyList);
     }
 
+    /**
+     * Lists all expense entries with formatted output.
+     *
+     * @throws MTException If the money list is empty.
+     */
     public void listSummary() throws MTException {
         if (moneyList.isEmpty()) {
             logger.logWarning("Expense list is empty.");

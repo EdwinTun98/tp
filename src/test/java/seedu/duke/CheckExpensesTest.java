@@ -7,6 +7,10 @@ import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
 
+/**
+ * Unit tests for checking budget validation and handling in {@link MoneyList#checkExpenses(String)}.
+ * Covers overall and category-specific expense checks, budget validity, and input error handling.
+ */
 public class CheckExpensesTest {
 
     private MoneyList moneyList;
@@ -14,6 +18,9 @@ public class CheckExpensesTest {
     private Storage storage;
     private TextUI ui;
 
+    /**
+     * Sets up a new MoneyList with dummy data before each test.
+     */
     @BeforeEach
     public void setUp() {
         logger = new MTLogger(MoneyTrail.class.getName());
@@ -22,20 +29,20 @@ public class CheckExpensesTest {
 
         moneyList = new MoneyList(logger, storage, ui);
 
-        // Add some dummy expenses
+        // Add dummy expenses
         moneyList.getMoneyList().add("Expense: taxi $30.00 {transport} [2024-12-01]");
         moneyList.getMoneyList().add("Expense: movie $15.00 {entertainment} [2024-12-02]");
     }
 
+    // Test case 1: Check for successful processing of "Overall" budget
     @Test
     public void testCheckOverallBudget_success() throws MTException {
-        // Set an overall budget
         moneyList.setTotalBudget("setTotBgt 100.00");
 
-        // No exception should be thrown when checking "Overall"
         assertDoesNotThrow(() -> moneyList.checkExpenses("Overall"));
     }
 
+    // Test case 2: Category budget check should succeed if set
     @Test
     public void testCheckCategoryBudget_success() throws MTException {
         // Set category budget
@@ -45,15 +52,17 @@ public class CheckExpensesTest {
         assertDoesNotThrow(() -> moneyList.checkExpenses("entertainment"));
     }
 
+    // Test case 3: Throws exception if budget for category does not exist
     @Test
     public void testCheckExpenses_missingBudget_throwsException() {
         MTException ex = assertThrows(MTException.class, () -> {
-            moneyList.checkExpenses("groceries"); // not set
+            moneyList.checkExpenses("groceries");
         });
 
         assertEquals("No category budget set.", ex.getMessage());
     }
 
+    // Test case 4: Throws exception for empty string input
     @Test
     public void testCheckExpenses_emptyInput_throwsException() {
         MTException ex = assertThrows(MTException.class, () -> {
@@ -63,6 +72,7 @@ public class CheckExpensesTest {
         assertEquals("Please specify a category or use 'Overall'.", ex.getMessage());
     }
 
+    // Test case 5: Throws exception for null input
     @Test
     public void testCheckExpenses_nullInput_throwsException() {
         MTException ex = assertThrows(MTException.class, () -> {
@@ -72,30 +82,32 @@ public class CheckExpensesTest {
         assertEquals("Please specify a category or use 'Overall'.", ex.getMessage());
     }
 
+    // Test case 6: Throws exception if no overall budget was set
     @Test
     public void testCheckOverallBudget_missing_throwsException() {
         MTException ex = assertThrows(MTException.class, () -> {
-            moneyList.checkExpenses("Overall"); // No budget set yet
+            moneyList.checkExpenses("Overall");
         });
 
         assertEquals("No Overall budget set.", ex.getMessage());
     }
 
+    // Test case 7: A 0.00 overall budget is still valid and accepted
     @Test
     public void testCheckExpenses_zeroBudget_stillValid() throws MTException {
-        // Set a zero-value overall budget
         moneyList.setTotalBudget("setTotBgt 0.00");
 
-        // Should not throw an exception, but remaining = -spent
         assertDoesNotThrow(() -> moneyList.checkExpenses("Overall"));
     }
 
+    // Test case 8: Large budgets should be handled correctly
     @Test
     public void testCheckExpenses_largeBudget() throws MTException {
         moneyList.setTotalBudget("setTotBgt 1000000.00");
         assertDoesNotThrow(() -> moneyList.checkExpenses("Overall"));
     }
 
+    // Test case 9: Input with special symbols should throw parsing exception
     @Test
     public void testSetCategoryLimit_withSymbols_throwsException() {
         MTException exception = assertThrows(MTException.class, () -> {
@@ -105,6 +117,7 @@ public class CheckExpensesTest {
         assertEquals("Invalid amount. Please enter a valid number.", exception.getMessage());
     }
 
+    // Test case 10: Rejects large negative numbers for budget
     @Test
     public void testSetCategoryLimit_negativeLargeValue() {
         Exception exception = assertThrows(MTException.class, () -> {
