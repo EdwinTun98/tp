@@ -1,3 +1,4 @@
-Transport 500.0
-Overall 1000.0
+overall 300.0
+transport 500.0
 drink 5000.0
+food 20.0

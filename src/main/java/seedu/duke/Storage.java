@@ -69,7 +69,6 @@ public class Storage {
     //@@author
 
     //@@author rchlai
-
     /**
      * Loads all entries from the storage file.
      *

@@ -4,6 +4,8 @@ package seedu.duke;
  * Represents a budget, either total or category-specific.
  */
 public class Budget {
+    public static final String OVERALL = "Overall";
+
     private final String category;
     private double amount;
 
@@ -18,7 +20,8 @@ public class Budget {
         if (amount < 0) {
             throw new MTException("Budget amount cannot be negative.");
         }
-        this.category = (category == null || category.trim().isEmpty()) ? "Uncategorized" : category;
+        this.category = (category == null || category.trim().isEmpty())
+                ? "Uncategorized" : category.trim().toLowerCase();
         this.amount = amount;
     }
 
