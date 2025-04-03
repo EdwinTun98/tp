@@ -1,1 +1,0 @@
-Expense: Coffee $4.50 {snack} [2024-04-03]
