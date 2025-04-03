@@ -7,12 +7,24 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class DukeTest {
-    private MoneyList moneyList;
-    private MTLogger logger;
-    private Storage storage;
-    private TextUI ui;
+//@@author rchlai
 
+/**
+ * Unit tests for the deleteEntry functionality in MoneyList.
+ * This test suite verifies that:
+ * - Valid indices result in the correct deletion of entries from the money list.
+ * - Invalid indices throw the appropriate exception with clear messages.
+ */
+class DeleteEntryTest {
+    private MoneyList moneyList; // Instance of MoneyList for testing
+    private MTLogger logger; // Logger to track events and errors
+    private Storage storage; // Storage for persisting data
+    private TextUI ui; // Text-based user interface for interacting with MoneyList
+
+    /**
+     * Sets up the test environment before each test.
+     * Initializes a MoneyList instance with dependencies and simulates loading test data.
+     */
     @BeforeEach
     public void setUp() {
         // Initialize dependencies
@@ -29,9 +41,15 @@ class DukeTest {
         moneyList.getMoneyList().add("Entry 3: $75");
     }
 
+    /**
+     * Test case for deleting an entry with a valid index.
+     * Verifies that the entry is correctly removed from the money list.
+     *
+     * @throws MTException If the deleteEntry method throws an exception.
+     */
     @Test
     public void testDeleteEntry_validIndex() throws MTException {
-        // Initial size of moneyList
+        // Capture the initial size of moneyList
         int initialSize = moneyList.getMoneyList().size();
 
         // Delete the second entry (index 1)
@@ -46,6 +64,10 @@ class DukeTest {
                 "Entry 2 should be deleted from moneyList.");
     }
 
+    /**
+     * Test case for deleting an entry with an invalid index.
+     * Verifies that an MTException is thrown with the correct error message.
+     */
     @Test
     public void testDeleteEntry_invalidIndex() {
         // Attempt to delete an entry with an invalid index

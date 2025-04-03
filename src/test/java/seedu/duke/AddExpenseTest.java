@@ -70,7 +70,7 @@ public class AddExpenseTest {
     void testAddExpense_nullInput() {
         MoneyList moneyList = new MoneyList(logger, storage, ui);
         Exception exception = assertThrows(MTException.class, () -> moneyList.addExpense(null));
-        assertEquals("Failed to add expense: Input should not be null", exception.getMessage());
+        assertEquals("Failed to add expense: Input should not be null.", exception.getMessage());
     }
 
     @Test
