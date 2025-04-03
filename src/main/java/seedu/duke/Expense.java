@@ -1,5 +1,7 @@
 package seedu.duke;
 
+import java.text.ParseException;
+
 /**
  * Represents an expense with description, amount, category, and date.
  */
@@ -64,6 +66,31 @@ public class Expense {
     public String toString() {
         return String.format("Expense: %s $%.2f {%s} [%s]",
                 this.getDescription(), this.getAmount(), this.getCategory(), this.getDate());
+    }
+    //@@author
+
+    //@@author EdwinTun98
+    public static Expense parseString(String expense) throws MTException {
+        if (!expense.startsWith("Expense: ")) {
+            throw new MTException("Invalid expense format");
+        }
+        try {
+            String stripped = expense.substring("Expense: ".length()).trim();
+            int dollarIndex = stripped.indexOf('$');
+            int openBrace = stripped.indexOf('{', dollarIndex);
+            int closeBrace = stripped.indexOf('}', openBrace);
+            int openBracket = stripped.indexOf('[', closeBrace);
+            int closeBracket = stripped.indexOf(']', openBracket);
+
+            String desc = stripped.substring(0, dollarIndex).trim();
+            double amount = Double.parseDouble(stripped.substring(dollarIndex + 1, openBrace).trim());
+            String cat = stripped.substring(openBrace + 1, closeBrace).trim();
+            String date = stripped.substring(openBracket + 1, closeBracket).trim();
+
+            return new Expense(desc, amount, cat, date);
+        } catch (Exception e) {
+            throw new MTException("Invalid expense format");
+        }
     }
     //@@author
 }
