@@ -14,7 +14,6 @@ public class MoneyTrail {
     private final Parser parser;
 
     //@@author rchlai
-
     /**
      * Initializes the core program components.
      */

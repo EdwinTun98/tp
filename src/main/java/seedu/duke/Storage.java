@@ -50,6 +50,12 @@ public class Storage {
     //@@author
 
     //@@author EdwinTun98
+    /**
+     * Saves the given budget list to a file.
+     *
+     * @param budgetList A HashMap containing budget categories and their corresponding Budget objects.
+     * @throws MTException If an I/O error occurs while saving the budgets.
+     */
     public void saveBudgets(HashMap<String, Budget> budgetList) throws MTException {
         if (budgetList == null || budgetList.isEmpty()) {
             logger.logWarning("No budgets to save.");
@@ -97,6 +103,12 @@ public class Storage {
     }
 
     //@@author EdwinTun98
+    /**
+     * Loads budgets from a file and returns them as a HashMap.
+     *
+     * @return A HashMap where keys are budget categories and values are Budget objects.
+     * @throws MTException If the budget file is not found or contains corrupted entries.
+     */
     public HashMap<String, Budget> loadBudgets() throws MTException {
         HashMap<String, Budget> budgets = new HashMap<>();
         File file = new File(BUDGET_FILE_PATH);
