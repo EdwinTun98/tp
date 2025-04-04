@@ -173,6 +173,9 @@ class AddExpenseCommand implements Command {
 }
 
 //@@author limleyhooi
+/**
+ * Adds a new income entry.
+ */
 class AddIncomeCommand implements Command {
     private final String description;
     private final double amount;
@@ -323,6 +326,7 @@ class ExitCommand implements Command {
         return true;
     }
 }
+
 //@@author rchlai
 /**
  * Clears the entry list.

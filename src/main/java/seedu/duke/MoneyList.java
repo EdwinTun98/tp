@@ -14,29 +14,42 @@ public class MoneyList {
     private final MTLogger logger;
     private final Storage storage;
     private final TextUI ui;
-    //private double totalBudget;
 
+    /**
+     * Creates a MoneyList instance with the specified logger, storage, and UI handler.
+     */
     public MoneyList(MTLogger logger, Storage storage, TextUI ui) {
         this.moneyList = new ArrayList<>();
         this.logger = logger;
         this.storage = storage;
         this.ui = ui;
-        //this.totalBudget = 0.0;
     }
 
+    /** @return The list of all money entries (expenses/incomes) */
     public ArrayList<String> getMoneyList() {
         return moneyList;
     }
 
+    /** @return The map of budget categories to their Budget objects */
     public HashMap<String, Budget> getBudgetList() {
         return budgetList;
     }
 
+    /**
+     * Extracts index number from user input.
+     * @param input Raw user input (e.g., "delete 1")
+     * @return Zero-based index number
+     */
     private int extractIndex(String input) {
         return Integer.parseInt(input.replaceAll("[^0-9]", ""))
                 - INDEX_OFFSET;
     }
 
+    /**
+     * Validates if index exists in money list.
+     * @param index Index to validate
+     * @throws MTException If index is out of bounds
+     */
     private void validateIndex(int index) throws MTException {
         if (index < 0 || index >= moneyList.size()) {
             logger.logWarning("Invalid index provided: " + index);
@@ -44,6 +57,11 @@ public class MoneyList {
         }
     }
 
+    /**
+     * Deletes an entry by its index number.
+     * @param input The delete command with index (e.g., "delete 1")
+     * @throws MTException If index is invalid or entry doesn't exist
+     */
     public void deleteEntry(String input) throws MTException {
         try {
             // Assert that the input is not null and starts with "delete"
@@ -72,6 +90,10 @@ public class MoneyList {
         }
     }
 
+    /**
+     * Loads all entries and budgets from storage file.
+     * @throws MTException If file loading fails
+     */
     public void loadEntriesFromFile() throws MTException {
         ArrayList<String> loadedEntries = storage.loadEntries();
         if (loadedEntries != null) {
@@ -91,6 +113,11 @@ public class MoneyList {
     }
 
     //@@author Hansel-K
+    /**
+     * Adds a new expense entry from user input.
+     * @param input Expense details in format: "addExp desc $/amt c/cat d/date"
+     * @throws MTException If input format is invalid
+     */
     public void addExpense(String input) throws MTException {
         try {
             validateInput(input);
@@ -131,14 +158,22 @@ public class MoneyList {
         }
     }
 
-    // Validates that the input is not null
+    /**
+     * Validates expense input isn't null/empty.
+     * @param input User input to validate
+     * @throws MTException If input is invalid
+     */
     private void validateInput(String input) throws MTException {
         if (input == null) {
             throw new MTException("Input should not be null.");
         }
     }
 
-    // Extracts the description from the input string
+    /**
+     * Extracts description from expense input.
+     * @param input Raw user input
+     * @return Isolated description text
+     */
     private String extractDescription(String input) {
         String[] parts1 = input.substring(("addExp").length()).split("\\$/", 2);
         String description = parts1[0].trim();
@@ -146,12 +181,20 @@ public class MoneyList {
         return description;
     }
 
-    // Extracts the part of the input that comes after the amount marker "$/"
+    /**
+     * Gets portion of input after amount marker.
+     * @param input Raw user input
+     * @return Substring after "$/"
+     */
     private String extractAfterAmountPart(String input) {
         return input.substring(("addExp").length()).split("\\$/", 2)[1];
     }
 
-    // Validates that there are no duplicate markers (e.g., "c/" or "d/")
+    /**
+     * Checks for duplicate category/date markers.
+     * @param afterAmountPart Input portion after amount
+     * @throws MTException If duplicate markers found
+     */
     private void validateMarkers(String afterAmountPart) throws MTException {
         if (afterAmountPart.split("c/").length - 1 > 1) {
             throw new MTException("Invalid format. Multiple category markers detected.");
@@ -161,7 +204,12 @@ public class MoneyList {
         }
     }
 
-    // Extracts and validates the amount from the input string
+    /**
+     * Parses amount value from input segment.
+     * @param afterAmountPart Input portion containing amount
+     * @return Parsed double value
+     * @throws NumberFormatException If amount format invalid
+     */
     private Double extractAmount(String afterAmountPart) throws NumberFormatException {
         String amountString = afterAmountPart.split("c/|d/", 2)[0].trim();
         if (amountString.matches("-?\\d+(\\.\\d+)?")) {
@@ -171,7 +219,11 @@ public class MoneyList {
         }
     }
 
-    // Extracts the category from the input string
+    /**
+     * Extracts category from input segment.
+     * @param afterAmountPart Input portion after amount
+     * @return Category name or "Uncategorized"
+     */
     private String extractCategory(String afterAmountPart) {
         if (afterAmountPart.contains("c/")) {
             return afterAmountPart.split("c/")[1].split("d/", 2)[0].trim();
@@ -179,7 +231,11 @@ public class MoneyList {
         return "Uncategorized"; // Default category
     }
 
-    // Extracts the date from the input string
+    /**
+     * Extracts date from input segment.
+     * @param afterAmountPart Input portion after amount
+     * @return Date string or "no date"
+     */
     private String extractDate(String afterAmountPart) {
         if (afterAmountPart.contains("d/")) {
             return afterAmountPart.split("d/", 2)[1].trim();
@@ -187,20 +243,35 @@ public class MoneyList {
         return "no date"; // Default date
     }
 
-    // Formats the amount to two decimal places
+    /**
+     * Formats amount to 2 decimal places.
+     * @param amount Raw amount value
+     * @return Formatted double value
+     */
     private Double formatAmount(Double amount) {
         DecimalFormat df = new DecimalFormat("#.00");
         return Double.valueOf(df.format(amount));
     }
 
-    // Ensures the amount is greater than zero
+    /**
+     * Validates amount is positive.
+     * @param amount Value to check
+     * @throws MTException If amount ≤ 0
+     */
     private void validateAmount(Double amount) throws MTException {
         if (amount <= 0) {
             throw new MTException("Amount must be greater than zero.");
         }
     }
 
-    // Creates a new expense entry, adds it to the list, and saves it
+    /**
+     * Creates and saves new expense entry.
+     * @param description Expense description
+     * @param amount Formatted amount
+     * @param category Expense category
+     * @param date Expense date
+     * @throws MTException If save fails
+     */
     private void saveExpense(String description, Double amount, String category, String date) throws MTException {
         Expense newExpense = new Expense(description, amount, category, date);
         moneyList.add(newExpense.toString()); // Add the expense to the money list
@@ -211,6 +282,11 @@ public class MoneyList {
     //@@author
 
     //@@author limleyhooi
+    /**
+     * Adds a new income entry from user input.
+     * @param input Income details in format: "addIncome desc $/amt d/date"
+     * @throws MTException If input format is invalid
+     */
     public void addIncome(String input) throws MTException {
         try {
             if (input == null) {
@@ -218,14 +294,11 @@ public class MoneyList {
             }
             input = input.trim();
 
-            //  input format: addIncome <description> $/<amount> [d/<date>]
             if (!input.startsWith("addIncome") || !input.contains("$/")) {
                 throw new MTException("Invalid format. Use: addIncome <description> $/<amount> [d/<date>]");
             }
 
-
             String content = input.substring("addIncome".length()).trim();
-
 
             String[] parts = content.split("\\$/", 2);
             String description = parts[0].trim();
@@ -322,6 +395,10 @@ public class MoneyList {
         }
     }
 
+    /**
+     * Displays all budget categories and their limits.
+     * @throws MTException If no budgets exist
+     */
     public void listBudgets() throws MTException {
         if (budgetList.isEmpty()) {
             throw new MTException("No budgets have been set.");
@@ -346,6 +423,11 @@ public class MoneyList {
         }
     }
 
+    /**
+     * Finds entries containing the search term.
+     * @param input The keyword to search for
+     * @throws MTException If no matches found
+     */
     public void findEntry(String input) throws MTException {
         // Validate the input for null, empty, or whitespace-only
         if (input == null || input.trim().isEmpty()) {
@@ -380,6 +462,12 @@ public class MoneyList {
         setCategoryLimit(category, String.valueOf(amount));
     }
 
+    /**
+     * Sets spending limit for a specific category.
+     * @param category The budget category name
+     * @param amountStr The limit amount as string
+     * @throws MTException If amount is invalid
+     */
     public void setCategoryLimit(String category, String amountStr) throws MTException {
         if (isEmptyOrNull(amountStr)) {
             throw new MTException("Budget amount cannot be empty.");
@@ -406,6 +494,11 @@ public class MoneyList {
         storage.saveBudgets(budgetList);
     }
 
+    /**
+     * Compares expenses against budget for a category.
+     * @param budgetInput Category name or "Overall" for total budget
+     * @throws MTException If budget isn't set
+     */
     public void checkExpenses(String budgetInput) throws MTException {
         if (isEmptyOrNull(budgetInput)) {
             throw new MTException("Please specify a category or use 'Overall'.");
@@ -418,14 +511,28 @@ public class MoneyList {
         }
     }
 
+    /**
+     * Checks if string is null/empty.
+     * @param input String to check
+     * @return True if null or whitespace
+     */
     private boolean isEmptyOrNull(String input) {
         return input == null || input.trim().isEmpty();
     }
 
+    /**
+     * Determines if checking total budget.
+     * @param input User input to check
+     * @return True if input is "Overall"
+     */
     private boolean isTotalBudgetCheck(String input) {
         return input.equalsIgnoreCase("Overall");
     }
 
+    /**
+     * Handles total budget expense check.
+     * @throws MTException If no total budget set
+     */
     private void handleTotalBudgetCheck() throws MTException {
         Budget overAllBudget = budgetList.get("Overall");
         if (overAllBudget == null) {
@@ -436,6 +543,11 @@ public class MoneyList {
         printTotalBudgetSummary(overAllBudget, overallExpense);
     }
 
+    /**
+     * Handles category-specific budget check.
+     * @param category Budget category to check
+     * @throws MTException If category budget not set
+     */
     private void handleCategoryBudgetCheck(String category) throws MTException {
         Budget categoryBudget = budgetList.get(category);
         if (categoryBudget == null) {
@@ -447,6 +559,11 @@ public class MoneyList {
         printCategoryBudgetSummary(categoryBudget, expenses);
     }
 
+    /**
+     * Calculates total expenses for a category.
+     * @param category Specific category or null for all expenses
+     * @return The summed expense amount
+     */
     public double getTotalExpenseValue(String category) {
         double totalExpenses = 0.0;
 
@@ -466,6 +583,11 @@ public class MoneyList {
         return totalExpenses;
     }
 
+    /**
+     * Prints total budget summary comparison.
+     * @param totalBudget Overall Budget object
+     * @param totalExpenses Calculated expense total
+     */
     private void printTotalBudgetSummary(Budget totalBudget, double totalExpenses) {
         ui.print("-------- OVERALL BUDGET EXPENSES SUMMARY --------");
         ui.print(String.format(totalBudget.toString()));
@@ -473,16 +595,21 @@ public class MoneyList {
         ui.print(String.format("Remaining: $%.2f", totalBudget.getAmount() - totalExpenses));
     }
 
+    /**
+     * Prints category budget summary.
+     * @param budget Category Budget object
+     * @param spent Calculated spending amount
+     */
     private void printCategoryBudgetSummary(Budget budget, double spent) {
         ui.print("-------- CATEGORY EXPENSES BUDGET CHECK --------");
         ui.print(budget.toString());
-        //ui.print(String.format("Budget: $%.2f", budget.getAmount()));
         ui.print(String.format("Total Spent: $%.2f", spent));
         ui.print(String.format("Remaining: $%.2f", budget.getAmount() - spent));
     }
     //@@author
 
     //@@author Hansel-K
+    /** Displays the sum of all expenses */
     public void getTotalExpense() {
         double total = 0.0;
 
@@ -545,6 +672,7 @@ public class MoneyList {
         }
     }
 
+    /** @return The current total budget amount */
     public double getTotalBudget() {
         Budget total = budgetList.get("Overall");
         return (total == null) ? 0.0 : total.getAmount();
@@ -552,6 +680,7 @@ public class MoneyList {
     //@@author
 
     //@@author Hansel-K
+    /** Displays all unique expense categories */
     public void listCats() {
         try {
             // Check if the money list is empty
@@ -577,13 +706,18 @@ public class MoneyList {
         }
     }
 
-    // Handles the case where the money list is empty
+    /**
+     * Handles empty money list case for categories.
+     */
     private void handleEmptyMoneyList() {
         ui.print("No entries available to display categories."); // Inform user
         logger.logWarning("The money list is empty. No categories to display."); // Log warning
     }
 
-    // Extracts unique categories from the money list
+    /**
+     * Extracts unique categories from entries.
+     * @return Set of unique category names
+     */
     private LinkedHashSet<String> extractUniqueCategories() {
         LinkedHashSet<String> categories = new LinkedHashSet<>(); // To preserve order and ensure uniqueness
 
@@ -601,7 +735,11 @@ public class MoneyList {
         return categories; // Return the unique categories
     }
 
-    // Extracts the category from a single entry in the money list
+    /**
+     * Parses category from entry string.
+     * @param entry Full entry string
+     * @return Extracted category name
+     */
     private String extractCategoryFromEntry(String entry) {
         // Extract the substring after "{" and trim any leading/trailing spaces
         String beforeCat = entry.substring(entry.indexOf("{") + 1).trim();
@@ -612,13 +750,18 @@ public class MoneyList {
         return parts[0]; // Return the extracted category
     }
 
-    // Handles the case where no categories could be extracted
+    /**
+     * Handles no-categories case.
+     */
     private void handleNoCategoriesFound() {
         ui.print("No categories found."); // Inform user
         logger.logWarning("No categories could be extracted from the money list."); // Log warning
     }
 
-    // Displays the unique categories to the user in the order of appearance
+    /**
+     * Displays categories to user.
+     * @param categories Set of categories to display
+     */
     private void displayCategories(LinkedHashSet<String> categories) {
         ui.print("Categories (in order of appearance):"); // Inform user
 
@@ -629,6 +772,10 @@ public class MoneyList {
         logger.logInfo("Displayed " + categories.size() + " unique categories."); // Log number of categories displayed
     }
 
+    /**
+     * Handles category listing errors.
+     * @param e Exception that occurred
+     */
     private void handleListCategoriesError(Exception e) {
         logger.logSevere("An error occurred while listing categories: " + e.getMessage(), e); // Log severe error
         ui.print("An error occurred while listing categories. Please try again."); // Inform user

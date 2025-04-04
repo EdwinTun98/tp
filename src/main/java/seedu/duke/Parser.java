@@ -7,12 +7,19 @@ public class Parser {
     private final MTLogger logger;
 
     //@@author limleyhooi
+    /** Initializes a new Parser with a logger instance. */
     public Parser() {
         this.logger = new MTLogger(Parser.class.getName());
     }
     //@@author
 
     //@@author limleyhooi
+    /**
+     * Parses raw user input into executable commands.
+     * @param input User input string
+     * @return Corresponding Command object
+     * @throws MTException If input is invalid/unsupported
+     */
     public Command parseCommand(String input) throws MTException {
         logger.logInfo("Parsing input: " + input);
 
@@ -27,12 +34,23 @@ public class Parser {
     //@@author
 
     //@@author limleyhooi
+    /**
+     * Checks if input string is null or empty.
+     * @param input The string to check
+     * @return true if input is null or whitespace, false otherwise
+     */
     private boolean isNullOrEmpty(String input) {
         return input == null || input.trim().isEmpty();
     }
     //@@author
 
     //@@author limleyhooi
+    /**
+     * Creates the appropriate Command object based on input.
+     * @param input The trimmed user input
+     * @return Specific Command implementation
+     * @throws MTException If no matching command is found
+     */
     private Command createCommandFromInput(String input) throws MTException {
         if (input.equalsIgnoreCase("list")) {
             return new ListCommand();
@@ -45,9 +63,11 @@ public class Parser {
         if (input.equalsIgnoreCase("listCat")) {
             return new ListCatsCommand();
         }
+
         if (input.equalsIgnoreCase("listBgt")) {
             return new ListBudgetCommand();
         }
+
         if (input.equalsIgnoreCase("help")) {
             return new HelpCommand();
         }
@@ -118,6 +138,12 @@ public class Parser {
     //@@author
 
     //@@author limleyhooi
+    /**
+     * Creates a DeleteCommand with entry index.
+     * @param input The full input string starting with "del"
+     * @return Configured DeleteCommand
+     * @throws MTException If index format is invalid
+     */
     private DeleteCommand createDeleteCommand(String input) throws MTException {
         try {
             int index = Integer.parseInt(input.replaceAll(
@@ -131,6 +157,12 @@ public class Parser {
     //@@author
 
     //@@author limleyhooi
+    /**
+     * Creates a BudgetCommand for total budget.
+     * @param input The full input string starting with "setTotBgt"
+     * @return Configured BudgetCommand
+     * @throws MTException If amount is negative or invalid
+     */
     private BudgetCommand createBudgetCommand(String input) throws MTException {
         try {
             String budgetString = input.substring("setTotBdt".length()).trim();
@@ -149,6 +181,12 @@ public class Parser {
     //@@author
 
     //@@author Hansel-K
+    /**
+     * Creates an AddExpenseCommand.
+     * @param input The full input string starting with "addExp"
+     * @return Configured AddExpenseCommand
+     * @throws MTException If format is invalid or amount is non-numeric
+     */
     private AddExpenseCommand createAddExpenseCommand(String input) throws MTException {
         try {
             validateAddExpenseFormat(input);
@@ -224,6 +262,11 @@ public class Parser {
     //@@author
 
     //@@author limleyhooi, EdwinTun98
+    /**
+     * Extracts description from input segment.
+     * @param content The input segment containing description
+     * @return Extracted description string
+     */
     private String extractDescription(String content) {
         int amountIndex = content.indexOf("$/");
 
@@ -233,6 +276,11 @@ public class Parser {
     //@@author
 
     //@@author limleyhooi, EdwinTun98
+    /**
+     * Extracts numerical amount from input.
+     * @param remainder The input segment containing amount
+     * @return Parsed double value
+     */
     private double extractAmount(String remainder) {
         int categoryIndex = remainder.indexOf("c/");
         int dateIndex = remainder.indexOf("d/");
@@ -250,6 +298,11 @@ public class Parser {
     //@@author
 
     //@@author EdwinTun98, limleyhooi
+    /**
+     * Extracts category from input.
+     * @param remainder The input segment containing category
+     * @return Extracted category string ("Uncategorized" if missing)
+     */
     private String extractCategory(String remainder) {
         int categoryIndex = remainder.indexOf("c/");
 
@@ -266,6 +319,11 @@ public class Parser {
     //@@author
 
     //@@author EdwinTun98
+    /**
+     * Extracts date from input.
+     * @param remainder The input segment containing date
+     * @return Extracted date string ("no date" if missing)
+     */
     private String extractDate(String remainder) {
         int dateIndex = remainder.indexOf("d/");
 
@@ -312,6 +370,12 @@ public class Parser {
     //@@author
 
     //@@author EdwinTun98
+    /**
+     * Parses edit command components.
+     * @param input The full input string starting with "edit"
+     * @return EditCommandData containing parsed components
+     * @throws MTException If format is invalid
+     */
     private EditCommandData parseEditCommand(String input) throws MTException {
         String afterEdit = input.substring("edit".length()).trim();
         int firstSpace = afterEdit.indexOf(' ');
@@ -335,6 +399,11 @@ public class Parser {
     //@@author
 
     //@@author EdwinTun98
+    /**
+     * Parses description for edit commands.
+     * @param input The edit command segment
+     * @return Extracted description or null if not specified
+     */
     private String parseEditDescription(String input) {
         if (!input.contains("$/")) {
             int cIndex = input.indexOf("c/");
@@ -357,6 +426,11 @@ public class Parser {
     //@@author EdwinTun98
 
     //@@author EdwinTun98
+    /**
+     * Parses amount for edit commands.
+     * @param input The edit command segment
+     * @return Parsed amount or 0.00 if not specified
+     */
     private double parseEditAmount(String input) {
         if (!input.contains("$/")) {
             return 0.00;
@@ -380,6 +454,11 @@ public class Parser {
     //@@author
 
     //@@author EdwinTun98
+    /**
+     * Parses category for edit commands.
+     * @param input The edit command segment
+     * @return Extracted category or null if not specified
+     */
     private String parseEditCategory(String input) {
         if (!input.contains("c/")) {
             return null;
@@ -396,6 +475,11 @@ public class Parser {
     //@@author
 
     //@@author EdwinTun98
+    /**
+     * Parses date for edit commands.
+     * @param input The edit command segment
+     * @return Extracted date or null if not specified
+     */
     private String parseEditDate(String input) {
         if (!input.contains("d/")) {
             return null;
@@ -412,6 +496,12 @@ public class Parser {
     //@@author
 
     //@@author EdwinTun98
+    /**
+     * Creates a SetCategoryBudgetCommand.
+     * @param input The full input string starting with "setCatBgt"
+     * @return Configured SetCategoryBudgetCommand
+     * @throws MTException If format is invalid or amount is negative
+     */
     private SetCategoryBudgetCommand parseSetCategoryBudgetCommand(String input) throws MTException {
         final String commandPrefix = "setCatBgt";
         final String categoryPrefix = "c/";
@@ -439,6 +529,12 @@ public class Parser {
         return new SetCategoryBudgetCommand(category, amount);
     }
 
+    /**
+     * Parses and validates budget amount.
+     * @param amountStr The amount string to parse
+     * @return Parsed double value
+     * @throws MTException If amount is negative or non-numeric
+     */
     private double parseBudgetAmount(String amountStr) throws MTException {
         try {
             double amount = Double.parseDouble(amountStr);
@@ -453,6 +549,12 @@ public class Parser {
     //@@author
 
     //@@author limleyhooi
+    /**
+     * Creates an AddIncomeCommand.
+     * @param input The full input string starting with "addIncome"
+     * @return Configured AddIncomeCommand
+     * @throws MTException If format is invalid or amount is non-numeric
+     */
     private AddIncomeCommand createAddIncomeCommand(String input) throws MTException {
         try {
             IncomeData incomeData = parseIncomeData(input);
@@ -470,6 +572,12 @@ public class Parser {
     //@@author
 
     //@@author limleyhooi
+    /**
+     * Parses income components from input.
+     * @param input The full input string starting with "addIncome"
+     * @return IncomeData containing parsed components
+     * @throws MTException If format is invalid
+     */
     private IncomeData parseIncomeData(String input) throws MTException {
         String content = input.substring("addIncome".length()).trim();
         String[] parts = content.split("\\$/", 2);
@@ -497,17 +605,37 @@ public class Parser {
     //@@author
 
     //@@author EdwinTun98, limleyhooi
-    // Helper data classes for parsing results
+    /**
+     * Immutable record holding parsed expense data.
+     * @param description The expense description
+     * @param amount The expense amount
+     * @param category The expense category
+     * @param date The expense date
+     */
     private record ExpenseData(String description, double amount, String category, String date) {
     }
     //@@author
 
     //@@author EdwinTun98
+    /**
+     * Immutable record holding parsed edit command data.
+     * @param index The entry index to edit
+     * @param description The new description (optional)
+     * @param amount The new amount (optional)
+     * @param category The new category (optional)
+     * @param date The new date (optional)
+     */
     private record EditCommandData(int index, String description, double amount, String category, String date) {
     }
     //@@author
 
     //@@author limleyhooi
+    /**
+     * Immutable record holding parsed income data.
+     * @param description The income description
+     * @param amount The income amount
+     * @param date The income date
+     */
     private record IncomeData(String description, double amount, String date) {
     }
     //@@author limleyhooi
