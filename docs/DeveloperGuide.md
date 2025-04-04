@@ -10,7 +10,8 @@
 [8. Instructions for Manual Testing](#8-testing) <br>
 
 ## Acknowledgements <a name="1-acknowledgements"></a>
-{list here sources of all reused/adapted ideas, code, documentation, and third-party libraries -- include links to the original source as well}
+
+{NONE AT THE MOMENT}
 
 ## Design <a name="2-design"></a>
 
@@ -879,8 +880,6 @@ Calculations (e.g., total expenses, budget limits) must be precise and error-fre
 | Usability      | The ease with which users can navigate and use the application’s features effectively.             |
 
 ## Instructions for Manual Testing <a name="8-testing"></a>
-
-{Give instructions on how to do a manual product testing e.g., how to load sample data to be used for testing}
 
 ### Testing Basic Commands
 
