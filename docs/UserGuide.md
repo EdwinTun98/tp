@@ -223,27 +223,12 @@ Outcome:
 ```
 
 ```
-### Exiting the program: `Setting a Category Budget`
 
-Exits the MoneyTrail Budget Tracker application.
+### Setting a budget for a category: `setCatBgt`
 
-Format: `setCatBgt c/<CATEGORY> <AMOUNT>`
+Specifies a budget value for a specific expense/income category.
 
-Outcome:
-```
-What do you want to do next?
-setCatBgt c/food 100
-Budget for category 'food' set to $100.00
--------------------------------------------------------------------------------
-What do you want to do next?
-```
-
-
-### Setting a Category Budget: `setCatBgt`
-
-{TO BE ADDED}
-
-Format: setCatBgt c/<CATEGORY> <AMOUNT>
+Format: `setCatBgt c/CATEGORY VALUE`
 
 Outcome:
 ```
@@ -274,6 +259,7 @@ any command that changes the data. You can copy this file in a pen drive.
 | `setTotBgt` | `setTotBgt <amount>`                            | `setTotBgt 500.00`                         | Sets spending limit                      |
 | `listCat`   | `listCat`                                       | `listCat`                                  | Shows all used categories                |
 | `clear`     | `clear`                                         | `clear`                                    | Clears all entries                       |
+| `setCatBgt` | `setCatBgt c/CATEGORY VALUE`                    | `setCatBgt c/food 100`                     | Sets a budget for a category             |
 | `edit`      | `edit INDEX DESCRIPTION [options]`              | `edit 1 $/15 d/2024-05-08`                 | Edits an entry                           |
 | `exit`      | `exit`                                          | `exit`                                     | Closes the application                   |
 
