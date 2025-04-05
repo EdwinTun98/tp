@@ -14,5 +14,5 @@ class MoneyList {
   + loadEntriesFromFile()
 }
 
-Storage <- MoneyList : "uses"
+Storage <- MoneyList : uses <
 @enduml

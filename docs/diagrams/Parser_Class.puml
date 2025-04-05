@@ -14,5 +14,5 @@ interface Command {
   + shouldExit()
 }
 
-Parser ..> Command : creates
+Parser ..> Command : creates >
 @enduml

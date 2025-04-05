@@ -11,7 +11,8 @@
 
 ## Acknowledgements <a name="1-acknowledgements"></a>
 
-{NONE AT THE MOMENT}
+Some codes are adopted and later modified from the repo
+of rchlai, Hansel-K, EdwinTun98, and limleyhooi.
 
 ## Design <a name="2-design"></a>
 
