@@ -1,9 +1,9 @@
 @startuml MoneyList_Sequence_Fixed
 actor User
-participant Parser
-participant MoneyList
-participant Storage
-participant TextUI
+participant Parser as ":Parser"
+participant MoneyList as ":MoneyList"
+participant Storage as ":Storage"
+participant TextUI as ":TextUI"
 
 User -> Parser : "addExp Lunch $/10"
 activate Parser

@@ -45,14 +45,26 @@ Given below are my contributions to the project:
 
 - **Enhancements made**:
   - Applied the SLAP concept on the Parser class [PR #73](https://github.com/AY2425S2-CS2113-W12-4/tp/pull/73)
-  - Provided author tags for teammates [PR #73](https://github.com/AY2425S2-CS2113-W12-4/tp/pull/73)
   - Shortened the command inputs (e.g., from `delete` to `del`) for optimization [PR #68](https://github.com/AY2425S2-CS2113-W12-4/tp/pull/68)
   - Done some JUnit testing on the `ClearListCommand` and `TotalExpenseCommand` classes [PR #68](https://github.com/AY2425S2-CS2113-W12-4/tp/pull/68)
-  - Added JavaDoc comments in the `MoneyTrail`, `Storage`, `MTLogger`, `Expense`, and `Command` classes. [PR #63](https://github.com/AY2425S2-CS2113-W12-4/tp/pull/63)
   - Performed JUnit tests on `Storage` and `TextUI` classes [PR #57](https://github.com/AY2425S2-CS2113-W12-4/tp/pull/57)
   - Encapsulated all printed available commands in a method in `TextUI` class [PR #45](https://github.com/AY2425S2-CS2113-W12-4/tp/pull/45)
   - Moved the file path constant variable from the main class to the `Storage` class [PR #36](https://github.com/AY2425S2-CS2113-W12-4/tp/pull/36)
   - Added assertions in the `Storage` class [PR #35](https://github.com/AY2425S2-CS2113-W12-4/tp/pull/35)
+
+- **Contributions to team-based tasks**:
+  - Provided author tags for teammates [PR #73](https://github.com/AY2425S2-CS2113-W12-4/tp/pull/73)
+  - Added JavaDoc comments in the `MoneyTrail`, `Storage`, `MTLogger`, `Expense`, and `Command` classes. [PR #63](https://github.com/AY2425S2-CS2113-W12-4/tp/pull/63)
+  - Managed `v1.0` - `v2.0c` releases (3 releases) on GitHub
+  - Built the JAR files for each version release
+  - Released the user guide (UG) and developer guide (DG) as PDF files
+  - Set up the GitHub team organization and added members with their assigned roles
+  - Set up the tP team repository
+  - Maintained the issue tracker
+    - Created issues from the user stories
+    - Created milestones
+    - Closed issues once completed
+    - Deleted unnecessary/excessive issues
 
 - **Documentation**:
   - User Guide:

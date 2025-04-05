@@ -1,11 +1,11 @@
 @startuml
 actor User
-participant MoneyTrail
-participant Parser
-participant EditExpenseCommand
-participant MoneyList
-participant Storage
-participant TextUI
+participant MoneyTrail as ":MoneyTrail"
+participant Parser as ":Parser"
+participant EditExpenseCommand as ":EditExpenseCommand"
+participant MoneyList as ":MoneyList"
+participant Storage as ":Storage"
+participant TextUI as ":TextUI"
 
 == User Input ==
 User -> MoneyTrail : "edit 2 newdesc $/50 c/food d/2024-04-01"

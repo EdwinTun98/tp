@@ -1,8 +1,8 @@
 @startuml Parser_Sequence_Activation
 actor User
-participant MoneyTrail
-participant Parser
-participant AddExpenseCommand
+participant MoneyTrail as ":MoneyTrail"
+participant Parser as ":Parser"
+participant AddExpenseCommand as ":AddExpenseCommand"
 
 User -> MoneyTrail : "addExp Lunch $/10 c/Food"
 activate MoneyTrail

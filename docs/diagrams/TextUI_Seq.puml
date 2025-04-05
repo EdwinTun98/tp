@@ -1,7 +1,7 @@
 @startuml TextUI_Sequence
 actor User
-participant MoneyTrail
-participant TextUI
+participant MoneyTrail as ":MoneyTrail"
+participant TextUI as ":TextUI"
 
 User -> MoneyTrail : "help"
 activate MoneyTrail

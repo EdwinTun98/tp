@@ -1,6 +1,6 @@
 @startuml Storage_Sequence_Corrected
-participant MoneyList
-participant Storage
+participant MoneyList as ":MoneyList"
+participant Storage as ":Storage"
 
 activate MoneyList
 MoneyList -> Storage : "loadEntries()"

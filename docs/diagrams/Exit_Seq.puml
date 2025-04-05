@@ -1,5 +1,11 @@
 @startuml
 actor User
+participant Parser as ":Parser"
+participant CommandExecutor as ":CommandExecutor"
+participant MoneyTrail as ":MoneyTrail"
+participant Storage as ":Storage"
+participant TextUI as ":TextUI"
+
 User -> Parser : Input "exit"
 Parser -> CommandExecutor : Parse "exit"
 CommandExecutor -> MoneyTrail : Terminate Loop
