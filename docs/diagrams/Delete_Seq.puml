@@ -1,10 +1,10 @@
 @startuml Delete_Sequence_Activation
 actor User
-participant MoneyTrail
-participant Parser
-participant DeleteCommand
-participant MoneyList
-participant Storage
+participant MoneyTrail as ":MoneyTrail"
+participant Parser as ":Parser"
+participant DeleteCommand as ":DeleteCommand"
+participant MoneyList as ":MoneyList"
+participant Storage as ":Storage"
 
 User -> MoneyTrail : "delete 2"
 activate MoneyTrail

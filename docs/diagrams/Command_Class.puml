@@ -1,5 +1,4 @@
 @startuml Command_Relationships
-skinparam monochrome true
 hide circle
 skinparam classAttributeIconSize 0
 
@@ -30,9 +29,9 @@ class MoneyList {
 }
 
 ' Key Connections
-MoneyTrail --> Parser : Creates
-Parser ..> Command : Instantiates
-Command --> MoneyList : Executes on
+MoneyTrail --> Parser : Creates >
+Parser ..> Command : Instantiates >
+Command --> MoneyList : Executes on >
 
 note top of Command
   **Design Notes**:

@@ -15,7 +15,7 @@ class MoneyList {
 
 note top: "Omitted: Helper methods, getters/setters, and exception handling"
 
-MoneyList --> Storage : saves/loads
-MoneyList --> TextUI : outputs
+MoneyList --> Storage : saves/loads >
+MoneyList --> TextUI : outputs >
 
 @enduml
