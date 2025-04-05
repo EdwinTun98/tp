@@ -17,8 +17,8 @@ deactivate Parser
 MoneyTrail -> MoneyList : "execute(command)"
 activate MoneyList
 MoneyList --> MoneyTrail : "Expense added"
-MoneyTrail --> TextUI
 deactivate MoneyList
+MoneyTrail --> TextUI
 deactivate MoneyTrail
 deactivate TextUI
 @enduml
