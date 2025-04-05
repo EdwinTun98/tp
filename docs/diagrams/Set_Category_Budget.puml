@@ -1,11 +1,11 @@
 @startuml
 actor User
-participant MoneyTrail
-participant Parser
-participant SetCategoryBudgetCommand
-participant MoneyList
-participant Storage
-participant TextUI
+participant MoneyTrail as ":MoneyTrail"
+participant Parser as ":Parser"
+participant SetCategoryBudgetCommand as ":SetCategoryBudgetCommand"
+participant MoneyList as ":MoneyList"
+participant Storage as ":Storage"
+participant TextUI as ":TextUI"
 
 User -> MoneyTrail : "setCatBgt c/food 100"
 activate MoneyTrail

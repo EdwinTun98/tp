@@ -1,6 +1,6 @@
 @startuml Expense_Creation
-participant MoneyList
-participant Expense
+participant MoneyList as ":MoneyList"
+participant Expense as ":Expense"
 
 activate MoneyList
 MoneyList -> Expense : **new**("Lunch", 10.50, "Food", "2023-09-01")

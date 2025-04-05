@@ -1,8 +1,8 @@
 @startuml Command_Execution_Activation
-participant MoneyTrail
-participant Parser
-participant "AddExpenseCommand" as AEC
-participant MoneyList
+participant MoneyTrail as ":MoneyTrail"
+participant Parser as ":Parser"
+participant ":AddExpenseCommand" as AEC
+participant MoneyList as ":MoneyList"
 
 activate MoneyTrail
 MoneyTrail -> Parser : "parseCommand(input)"

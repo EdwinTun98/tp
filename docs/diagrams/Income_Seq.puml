@@ -1,4 +1,7 @@
 @startuml Income_Creation
+participant MoneyList as ":MoneyList"
+participant Income as ":Income"
+
 activate MoneyList
 MoneyList -> Income : **new**("Salary", 3000.00, "2023-10-01")
 activate Income
