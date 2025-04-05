@@ -1,12 +1,15 @@
-@startuml Income_Creation
+@startuml Expense_Creation
 participant MoneyList as ":MoneyList"
-participant Income as ":Income"
+create Income as ":Income"
 
-activate MoneyList
-MoneyList -> Income : **new**("Salary", 3000.00, "2023-10-01")
+MoneyList -> Income : **new**("Salary", 3000, "2023-10-01")
 activate Income
-Income --> Income : Set default date if null
-Income --> MoneyList : Income instance
+
+Income -> Income : setDefaultsIfNull()
+activate Income
+Income --> Income:
 deactivate Income
-deactivate MoneyList
+
+Income --> MoneyList : Expense instance
+deactivate Income
 @enduml

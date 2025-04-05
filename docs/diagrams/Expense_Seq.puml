@@ -1,12 +1,15 @@
 @startuml Expense_Creation
 participant MoneyList as ":MoneyList"
-participant Expense as ":Expense"
+create Expense as ":Expense"
 
-activate MoneyList
 MoneyList -> Expense : **new**("Lunch", 10.50, "Food", "2023-09-01")
 activate Expense
-Expense --> Expense : Set defaults if null
+
+Expense -> Expense : setDefaultsIfNull()
+activate Expense
+Expense --> Expense:
+deactivate Expense
+
 Expense --> MoneyList : Expense instance
 deactivate Expense
-deactivate MoneyList
 @enduml
