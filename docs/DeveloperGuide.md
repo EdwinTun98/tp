@@ -19,6 +19,9 @@ of rchlai, Hansel-K, EdwinTun98, and limleyhooi.
 > [!TIP]
 > Tip: The `.puml` files used to create diagrams in this document `docs/diagrams` folder.
 
+>[!NOTES]
+> Note: All <amount> inputs will be formatted to 2 d.p. with no rounding
+
 ### Architecture Overview
 
 ![Image](diagrams/Architecture.png)
