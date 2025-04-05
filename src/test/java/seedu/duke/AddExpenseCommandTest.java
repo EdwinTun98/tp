@@ -82,13 +82,17 @@ class AddExpenseCommandTest {
         public void saveExpenses(ArrayList<String> expenses) {}
 
         @Override
-        public ArrayList<String> loadEntries() { return null; }
+        public ArrayList<String> loadEntries() {
+            return null;
+        }
 
         @Override
         public void saveBudgets(HashMap<String, Budget> budgets) {}
 
         @Override
-        public HashMap<String, Budget> loadBudgets() { return null; }
+        public HashMap<String, Budget> loadBudgets() {
+            return null;
+        }
     }
 
     @Test

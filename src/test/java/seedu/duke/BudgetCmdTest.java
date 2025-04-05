@@ -31,6 +31,7 @@ class BudgetCommandTest {
 
         assertEquals(1,
                 moneyListStub.getCommandsReceived().size());
+
         assertEquals("setTotBgt 1000.5",
                 moneyListStub.getCommandsReceived().get(0));
     }
@@ -42,6 +43,7 @@ class BudgetCommandTest {
 
         assertEquals(1,
                 moneyListStub.getCommandsReceived().size());
+
         assertEquals("setTotBgt 0.0",
                 moneyListStub.getCommandsReceived().get(0));
     }
@@ -60,6 +62,7 @@ class BudgetCommandTest {
 
         assertEquals(1,
                 moneyListStub.getCommandsReceived().size());
+
         assertEquals("setTotBgt 999999.99",
                 moneyListStub.getCommandsReceived().get(0));
     }
@@ -71,6 +74,7 @@ class BudgetCommandTest {
 
         assertEquals(1,
                 moneyListStub.getCommandsReceived().size());
+
         assertEquals("setTotBgt 123.456789",
                 moneyListStub.getCommandsReceived().get(0));
     }
@@ -78,6 +82,7 @@ class BudgetCommandTest {
     @Test
     void shouldExit_alwaysReturnsFalse() {
         BudgetCommand command = new BudgetCommand(100.00);
+
         assertFalse(command.shouldExit());
     }
 

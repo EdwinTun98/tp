@@ -28,32 +28,46 @@ class AddIncomeCommandTest {
 
     @Test
     void execute_validIncomeWithoutDate_addsCorrectly() throws MTException {
-        AddIncomeCommand command = new AddIncomeCommand("Salary", 5000.00, "no date");
+        AddIncomeCommand command =
+                new AddIncomeCommand("Salary", 5000.00, "no date");
         command.execute(moneyListStub);
 
-        assertEquals(1, moneyListStub.getCommandsReceived().size());
-        assertEquals("addIncome Salary $/5000.0", moneyListStub.getCommandsReceived().get(0));
+        assertEquals(1,
+                moneyListStub.getCommandsReceived().size());
+
+        assertEquals("addIncome Salary $/5000.0",
+                moneyListStub.getCommandsReceived().get(0));
     }
 
     @Test
     void execute_validIncomeWithDate_addsCorrectly() throws MTException {
-        AddIncomeCommand command = new AddIncomeCommand("Bonus", 1000.50, "2023-10-15");
+        AddIncomeCommand command =
+                new AddIncomeCommand("Bonus", 1000.50, "2023-10-15");
         command.execute(moneyListStub);
 
-        assertEquals(1, moneyListStub.getCommandsReceived().size());
-        assertEquals("addIncome Bonus $/1000.5 d/2023-10-15", moneyListStub.getCommandsReceived().get(0));
+        assertEquals(1,
+                moneyListStub.getCommandsReceived().size());
+
+        assertEquals("addIncome Bonus $/1000.5 " +
+                "d/2023-10-15", moneyListStub.getCommandsReceived().get(0));
     }
 
     @Test
     void execute_zeroAmount_throwsException() {
-        AddIncomeCommand command = new AddIncomeCommand("Gift", 0.00, "no date");
-        assertThrows(MTException.class, () -> command.execute(moneyListStub));
+        AddIncomeCommand command = new AddIncomeCommand(
+                "Gift", 0.00, "no date");
+
+        assertThrows(MTException.class,
+                () -> command.execute(moneyListStub));
     }
 
     @Test
     void execute_negativeAmount_throwsException() {
-        AddIncomeCommand command = new AddIncomeCommand("Refund", -50.00, "2023-10-16");
-        assertThrows(MTException.class, () -> command.execute(moneyListStub));
+        AddIncomeCommand command = new AddIncomeCommand(
+                "Refund", -50.00, "2023-10-16");
+
+        assertThrows(MTException.class,
+                () -> command.execute(moneyListStub));
     }
 
     /*
@@ -72,13 +86,16 @@ class AddIncomeCommandTest {
 
     @Test
     void shouldExit_alwaysReturnsFalse() {
-        AddIncomeCommand command = new AddIncomeCommand("Test", 1.00, "no date");
+        AddIncomeCommand command = new AddIncomeCommand(
+                "Test", 1.00, "no date");
+
         assertFalse(command.shouldExit());
     }
 
     // Stub classes for testing isolation
     private static class MoneyListStub extends MoneyList {
-        private final ArrayList<String> commandsReceived = new ArrayList<>();
+        private final ArrayList<String> commandsReceived =
+                new ArrayList<>();
 
         public MoneyListStub() {
             super(new MTLoggerStub(), new StorageStub(), new TextUIStub());
@@ -104,7 +121,8 @@ class AddIncomeCommandTest {
     }
 
     private static class TextUIStub extends TextUI {
-        private final ArrayList<String> printedMessages = new ArrayList<>();
+        private final ArrayList<String> printedMessages =
+                new ArrayList<>();
 
         @Override
         public void print(String str) {
@@ -147,7 +165,7 @@ class AddIncomeCommandTest {
         }
 
         @Override
-        public void saveExpenses(ArrayList<String> moneyList) throws MTException {
+        public void saveExpenses(ArrayList<String> moneyList) {
             // Do nothing for tests
         }
     }

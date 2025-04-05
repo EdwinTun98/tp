@@ -34,6 +34,7 @@ class CheckExpCmdTest {
 
         assertEquals(1,
                 moneyListStub.getCategoriesChecked().size());
+
         assertEquals("Overall",
                 moneyListStub.getCategoriesChecked().get(0));
     }
@@ -46,6 +47,7 @@ class CheckExpCmdTest {
 
         assertEquals(1,
                 moneyListStub.getCategoriesChecked().size());
+
         assertEquals("Food",
                 moneyListStub.getCategoriesChecked().get(0));
     }
@@ -54,6 +56,7 @@ class CheckExpCmdTest {
     void execute_emptyCategory_throwsException() {
         CheckExpensesCommand command =
                 new CheckExpensesCommand("");
+
         assertThrows(MTException.class,
                 () -> command.execute(moneyListStub));
     }
@@ -62,6 +65,7 @@ class CheckExpCmdTest {
     void execute_nullCategory_throwsException() {
         CheckExpensesCommand command =
                 new CheckExpensesCommand(null);
+
         assertThrows(MTException.class,
                 () -> command.execute(moneyListStub));
     }
@@ -74,6 +78,7 @@ class CheckExpCmdTest {
 
         assertEquals(1,
                 moneyListStub.getCategoriesChecked().size());
+
         assertEquals("NonExisting",
                 moneyListStub.getCategoriesChecked().get(0));
     }
@@ -82,6 +87,7 @@ class CheckExpCmdTest {
     void shouldExit_alwaysReturnsFalse() {
         CheckExpensesCommand command =
                 new CheckExpensesCommand("Overall");
+
         assertFalse(command.shouldExit());
     }
 
