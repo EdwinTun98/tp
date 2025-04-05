@@ -12,21 +12,39 @@ activate MoneyTrail
 
 MoneyTrail -> Parser : parseCommand("setCatBgt c/food 100")
 activate Parser
+
 Parser -> Parser : parseSetCategoryBudgetCommand()
+activate Parser
+Parser --> Parser
 deactivate Parser
+
 Parser --> MoneyTrail : SetCategoryBudgetCommand
+deactivate Parser
 
 MoneyTrail -> SetCategoryBudgetCommand : execute(moneyList)
 activate SetCategoryBudgetCommand
+
+SetCategoryBudgetCommand -> SetCategoryBudgetCommand: validateBudget(100)
+activate SetCategoryBudgetCommand
+SetCategoryBudgetCommand --> SetCategoryBudgetCommand
+deactivate SetCategoryBudgetCommand
+
 SetCategoryBudgetCommand -> MoneyList : setCategoryLimit("food", 100)
 activate MoneyList
 
+MoneyList -> MoneyList: validateCategory("food")
+activate MoneyList
+MoneyList --> MoneyList
+deactivate MoneyList
+
 MoneyList -> Storage : saveBudgets(categoryBudget)
 activate Storage
+Storage --> MoneyList :
 deactivate Storage
 
 MoneyList -> TextUI : print("Budget for category 'food' set to $100.00")
 activate TextUI
+TextUI --> MoneyList :
 deactivate TextUI
 
 deactivate MoneyList
