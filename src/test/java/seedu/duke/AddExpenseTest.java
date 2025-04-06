@@ -172,7 +172,8 @@ public class AddExpenseTest {
         Exception exception = assertThrows(MTException.class, () -> {
             moneyList.addExpense("addExp Apple $/1.111 d/date c/category /c /d /c /d");
         });
-        assertEquals("Failed to add expense: Invalid format. Use: addExp <description> $/<amount> [c/<category>] [d/<date>]",
+        assertEquals("Failed to add expense: Invalid format. " +
+                        "Use: addExp <description> $/<amount> [c/<category>] [d/<date>]",
                 exception.getMessage(),
                 "Should throw exception for invalid format with multiple separated markers.");
     }

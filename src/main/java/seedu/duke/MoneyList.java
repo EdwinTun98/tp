@@ -229,8 +229,7 @@ public class MoneyList {
      * "c/" appears before "d/" in the input string.
      *
      * @param afterAmountPart The string to be validated, part of the user's input after specifying the amount.
-     * @throws MTException If "c/" appears after "d/", indicating an invalid format.
-     *                      Expected format: addExp <description> $/<amount> [c/<category>] [d/<date>]
+     * @throws MTException If "c/" appears after "d/", indicating an invalid format
      */
 
     private void validateFormatOrder(String afterAmountPart) throws MTException {
@@ -293,7 +292,8 @@ public class MoneyList {
         if (categoryMarkerCount > 0 && dateMarkerCount > 0) {
             String afterDate = afterAmountPart.split("d/", 2)[1].trim();
             if (afterDate.contains("/")) {
-                throw new MTException("Invalid format. Markers detected after 'd/' when both 'c/' and 'd/' are present.");
+                throw new MTException("Invalid format. " +
+                        "Markers detected after 'd/' when both 'c/' and 'd/' are present.");
             }
         }
     }
