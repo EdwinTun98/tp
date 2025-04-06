@@ -1,3 +1,1 @@
-rent 3000.0
 overall 200.0
-overall 100.0
