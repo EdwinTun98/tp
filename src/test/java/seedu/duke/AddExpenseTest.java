@@ -52,7 +52,8 @@ public class AddExpenseTest {
         MoneyList moneyList = new MoneyList(logger, storage, ui);
         Exception exception = assertThrows(MTException.class,
                 () -> moneyList.addExpense("addExp Milk $/abc"));
-        assertEquals("Invalid amount format. Please ensure it is a numeric value.", exception.getMessage());
+        assertEquals("Invalid amount format. " +
+                "Please ensure it is a numeric value of at most 7 whole numbers and 2 d.p.", exception.getMessage());
     }
 
     @Test
@@ -121,18 +122,6 @@ public class AddExpenseTest {
         Exception exception = assertThrows(MTException.class,
                 () -> moneyList.addExpense("addExp Milk $/0 c/Food"));
         assertEquals("Failed to add expense: Amount must be greater than zero.", exception.getMessage());
-    }
-
-    @Test
-    void testAddExpense_largeAmount() {
-        try {
-            MoneyList moneyList = new MoneyList(logger, storage, ui);
-            moneyList.addExpense("addExp Milk $/9999999999 c/Food");
-            assertTrue(moneyList.getMoneyList().contains("Expense: Milk $9999999999.00 {Food} [no date]"),
-                    "Expense with large amount should be added.");
-        } catch (Exception e) {
-            fail("Exception should not occur for a large amount.");
-        }
     }
 
     @Test

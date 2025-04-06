@@ -21,6 +21,7 @@ of rchlai, Hansel-K, EdwinTun98, and limleyhooi.
 
 >[!NOTES]
 > Note: All <amount> inputs will be formatted to 2 d.p. with no rounding
+> Note: All <amount> inputs will be limited to 7 digits including decimal places
 
 ### Architecture Overview
 

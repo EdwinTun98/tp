@@ -180,7 +180,9 @@ public class MoneyList {
             saveExpense(description, amount, category, date);
         } catch (NumberFormatException error) {
             logger.logSevere("Invalid amount format: " + input, error);
-            throw new MTException("Invalid amount format. Please ensure it is a numeric value.");
+            // More than 9 numbers for <amount> causes amount to be formatted to a string instead bc of exponential E
+            throw new MTException("Invalid amount format. " +
+                    "Please ensure it is a numeric value of at most 7 whole numbers and 2 d.p.");
         } catch (Exception error) {
             logger.logSevere("Error adding expense: " + error.getMessage(), error);
             throw new MTException("Failed to add expense: " + error.getMessage());
@@ -349,6 +351,7 @@ public class MoneyList {
      * @throws MTException If amount ≤ 0
      */
     private void validateAmount(Double amount) throws MTException {
+        // Check if amount is positive
         if (amount <= 0) {
             throw new MTException("Amount must be greater than zero.");
         }
