@@ -12,7 +12,7 @@ and achieve your financial goals.
 Here are the steps to get started quickly:
 
 1. Ensure that you have Java 17 or above installed.
-2. Download the latest version of `MoneyTrail` from [here](https://github.com/AY2425S2-CS2113-W12-4/tp/releases/download/v1.0/tp.jar).
+2. Download the latest version of `MoneyTrail` from [here](https://github.com/AY2425S2-CS2113-W12-4/tp/releases/download/v2.0c/tp.jar).
 3. Copy the file to the folder you want to use as the *home folder* for your application.
 4. Open a command terminal, `cd`, into the folder you put the jar file in, and use the `java -jar tp.jar` command to run the application.
 

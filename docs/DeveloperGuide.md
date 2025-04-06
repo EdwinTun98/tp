@@ -17,7 +17,13 @@ of rchlai, Hansel-K, EdwinTun98, and limleyhooi.
 ## Design <a name="2-design"></a>
 
 > [!TIP]
-> Tip: The `.puml` files used to create diagrams in this document `docs/diagrams` folder.
+> The `.puml` files used to create diagrams in this document `docs/diagrams` folder.
+
+> [!NOTE]
+> The arrowheads in **sequence diagrams** may be in **lined** style which indicates the 
+> use of asynchronous method calls.
+> Rest assured that this is not the case because this is the syntax used by PlantUML to 
+> construct **FILLED** arrowheads.
 
 ### Architecture Overview
 
@@ -476,7 +482,7 @@ Outcome:
 
 This section describes some details on how certain features are implemented.
 
-## SetCategoryBudgetCommand & BudgetCommand Features
+## SetCategoryBudgetCommand & BudgetCommand Classes
 
 **Overview**:
 
@@ -525,11 +531,11 @@ public void execute(MoneyList moneyList) throws MTException {
 
 Rationale: Clean delegation to MoneyList, which handles validation, storage, and UI feedback.
 
-## ListCatsCommand & ListCommand Features
+## ListCatsCommand & ListCommand Classes
 
 **Overview**:
 
-The `ListCatsCommand` displays all unique categories used in existing expense entries:
+The `ListCatsCommand` class displays all unique categories used in existing expense entries:
 
 **Key Characteristics**:
 
@@ -542,6 +548,9 @@ The `ListCatsCommand` displays all unique categories used in existing expense en
 Implementation: Implements the Command interface and delegates logic to MoneyList.listCats().
 
 ![Image](diagrams/List.png)
+
+>[!NOTE]
+> To reduce clutter, optional elements (e.g, activation bars, return arrows) are omitted in this diagram.
 
 **Why this design**:
 
@@ -573,7 +582,7 @@ for (String entry : moneyList) {
 
 Rationale: Extracts category from each entry while preserving insertion order using a LinkedHashSet.
 
-## EditExpenseCommand
+## EditExpenseCommand Class
 
 **Overview**:
 
@@ -594,6 +603,9 @@ The `EditExpenseCommand` updates the details of an existing expense entry, such 
 **Workflow**:
 
 ![Image](diagrams/EditExpenses.png)
+
+>[!NOTE]
+> To reduce clutter, optional elements (e.g, activation bars, return arrows) are omitted in this diagram.
 
 **Why this design**:
 
@@ -628,7 +640,7 @@ if (newAmount <= 0.00) {
 
 Rationale: Ensures that missing fields are safely defaulted to their existing values, enabling partial updates.
 
-## FindCommand Feature
+## FindCommand Class
 
 **Overview**:
 
@@ -645,6 +657,9 @@ The `FindCommand` searches for entries in the MoneyList that contain a specific 
 **Workflow**:
 
 ![Image](diagrams/FindCommand.png)
+
+>[!NOTE]
+> To reduce clutter, optional elements (e.g, activation bars, return arrows) are omitted in this diagram.
 
 **Why this design**:
 
@@ -675,7 +690,7 @@ for (String entry : moneyList) {
 
 Rationale: Performs a basic case-insensitive search over all stored entries and collects results.
 
-## DeleteCommand Feature
+## DeleteCommand Class
 
 **Overview**:
 
@@ -722,11 +737,11 @@ public void execute(MoneyList moneyList) throws MTException {
 
 Why: Reuses existing MoneyList logic while maintaining consistent command formatting.
 
-## Exit Feature
+## ExitCommand Class
 
 **Overview**:
 
-The ExitCommand provides a controlled shutdown of MoneyTrail by:
+The `ExitCommand` provides a controlled shutdown of MoneyTrail by:
 
 - Terminating the main processing loop
 
@@ -749,6 +764,10 @@ The ExitCommand provides a controlled shutdown of MoneyTrail by:
 Why: Clearly separates success/failure paths while showing system state changes.
 
 ![Image](diagrams/Exit_Sequence.png)
+
+>[!NOTE]
+> Optional elements (e.g, activation bars, return arrows) are omitted in this diagram since their omission 
+> does not result in ambiguities or loss of relevant information.
 
 Key Interactions:
 

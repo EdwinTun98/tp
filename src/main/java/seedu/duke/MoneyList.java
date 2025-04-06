@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
 
+import seedu.duke.ui.TextUI;
+
 public class MoneyList {
     private static final int INDEX_OFFSET = 1;
 
@@ -295,7 +297,8 @@ public class MoneyList {
             input = input.trim();
 
             if (!input.startsWith("addIncome") || !input.contains("$/")) {
-                throw new MTException("Invalid format. Use: addIncome <description> $/<amount> [d/<date>]");
+                throw new MTException("Invalid format. " +
+                        "Use: addIncome <description> $/<amount> [d/<date>]");
             }
 
             String content = input.substring("addIncome".length()).trim();

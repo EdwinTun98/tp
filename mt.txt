@@ -1,0 +1,2 @@
+Expense: rent $200.00 {rent} [2023-5-7]
+Expense: fuel $20.00 {transportation} [no date]

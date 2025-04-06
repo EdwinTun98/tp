@@ -2,6 +2,8 @@ package seedu.duke;
 
 import java.util.Scanner;
 
+import seedu.duke.ui.TextUI;
+
 /**
  * Serves as the Main class for the MoneyTrail budget tracking application.
  * Handles program initialization and the main command loop.

@@ -2,6 +2,7 @@
 participant MoneyList as ":MoneyList"
 create Income as ":Income"
 
+activate MoneyList
 MoneyList -> Income : **new**("Salary", 3000, "2023-10-01")
 activate Income
 
@@ -12,4 +13,5 @@ deactivate Income
 
 Income --> MoneyList : Expense instance
 deactivate Income
+deactivate MoneyList
 @enduml

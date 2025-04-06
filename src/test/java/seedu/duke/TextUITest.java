@@ -1,6 +1,8 @@
 package seedu.duke;
 
 import org.junit.jupiter.api.Test;
+import seedu.duke.ui.TextUI;
+
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
@@ -8,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
- * Test class for {@link seedu.duke.TextUI}.
+ * Test class for {@link TextUI}.
  * Contains unit tests for the text-based user interface components.
  */
 public class TextUITest {
