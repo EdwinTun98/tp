@@ -225,11 +225,21 @@ public class MoneyList {
      * @throws MTException If duplicate markers found
      */
     private void validateMarkers(String afterAmountPart) throws MTException {
-        if (afterAmountPart.split("c/").length - 1 > 1) {
+        // Check for duplicate "c/" markers
+        int categoryMarkerCount = afterAmountPart.split("c/").length - 1;
+        if (categoryMarkerCount > 1) {
             throw new MTException("Invalid format. Multiple category markers detected.");
         }
-        if (afterAmountPart.split("d/").length - 1 > 1) {
+
+        // Check for duplicate "d/" markers
+        int dateMarkerCount = afterAmountPart.split("d/").length - 1;
+        if (dateMarkerCount > 1) {
             throw new MTException("Invalid format. Multiple date markers detected.");
+        }
+
+        // Catch any invalid markers "/"
+        if (afterAmountPart.contains("/")) {
+            throw new MTException("Invalid format. Detected invalid or misplaced markers (/c or /d).");
         }
     }
 
