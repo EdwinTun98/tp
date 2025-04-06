@@ -26,6 +26,7 @@ Here are the steps to get started quickly:
     e.g. if the command specifies `c/CATEGORY d/DATE`, `d/DATE c/CATEGORY` is unacceptable.
 > - **Extraneous parameters** for commands that do not take in parameters (such as `list`) will generate an error.
     e.g. `list 123` is unacceptable.
+> *BEWARE:* All *<amount>* inputs will be formatted to *2 d.p.* with *no rounding*
 
 ### Listing all tasks: `list`
 

@@ -96,7 +96,7 @@ public class Parser {
             return createBudgetCommand(input);
         }
 
-        if (input.startsWith("setCatBgt")) {
+        if (input.startsWith("setCatBgt ")) {
             return parseSetCategoryBudgetCommand(input);
         }
 

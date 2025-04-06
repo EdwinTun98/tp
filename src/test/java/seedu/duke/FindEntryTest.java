@@ -57,7 +57,7 @@ public class FindEntryTest {
     @Test
     void testFindEntry_noMatchesFound() {
         Exception exception = assertThrows(MTException.class, () -> moneyList.findEntry("Gym"));
-        assertTrue(exception.getMessage().contains("enter a valid keyword to search."));
+        assertTrue(exception.getMessage().contains("No matching entries found for keyword:"));
     }
 
     /**
@@ -105,7 +105,7 @@ public class FindEntryTest {
     @Test
     void testFindEntry_specialCharacterKeyword() {
         Exception exception = assertThrows(MTException.class, () -> moneyList.findEntry("$$$"));
-        assertTrue(exception.getMessage().contains("Please enter a valid keyword to search."));
+        assertTrue(exception.getMessage().contains("No matching entries found for keyword:"));
     }
 
     /**

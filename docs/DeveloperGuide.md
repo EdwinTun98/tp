@@ -25,6 +25,9 @@ of rchlai, Hansel-K, EdwinTun98, and limleyhooi.
 > Rest assured that this is not the case because this is the syntax used by PlantUML to 
 > construct **FILLED** arrowheads.
 
+>[!NOTES]
+> Note: All <amount> inputs will be formatted to 2 d.p. with no rounding
+
 ### Architecture Overview
 
 ![Image](diagrams/Architecture.png)
