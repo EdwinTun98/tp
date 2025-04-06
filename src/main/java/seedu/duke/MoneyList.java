@@ -162,6 +162,7 @@ public class MoneyList {
                 description = extractDescription(input);
                 String afterAmountPart = extractAfterAmountPart(input);
 
+                validateFormatOrder(afterAmountPart); // Ensure proper order of c/ and d/
                 validateMarkers(afterAmountPart);
 
                 amount = extractAmount(afterAmountPart);
@@ -219,27 +220,77 @@ public class MoneyList {
     }
 
     /**
-     * Checks for duplicate category/date markers.
+     * Validates the order of format specifiers in the input string.
+     * Ensures that if both "c/" (category) and "d/" (date) are present,
+     * "c/" appears before "d/" in the input string.
+     *
+     * @param afterAmountPart The string to be validated, part of the user's input after specifying the amount.
+     * @throws MTException If "c/" appears after "d/", indicating an invalid format.
+     *                      Expected format: addExp <description> $/<amount> [c/<category>] [d/<date>]
+     */
+
+    private void validateFormatOrder(String afterAmountPart) throws MTException {
+        // Ensure "c/" appears before "d/" if both are present
+        int categoryIndex = afterAmountPart.indexOf("c/");
+        int dateIndex = afterAmountPart.indexOf("d/");
+
+        if (categoryIndex != -1 && dateIndex != -1 && categoryIndex > dateIndex) {
+            throw new MTException("Invalid format. Use: addExp <description> $/<amount> [c/<category>] [d/<date>]");
+        }
+    }
+
+    /**
+     * Checks for invalid markers based on the presence or absence of "c/" and "d/" markers.
+     * Ensures that markers follow the correct format and detects multiple "c/" or "d/"
      * No need to check for amount marker because of extractAmount checks
+     *
      * @param afterAmountPart Input portion after amount
-     * @throws MTException If duplicate markers found
+     * @throws MTException If invalid or misplaced markers are detected
      */
     private void validateMarkers(String afterAmountPart) throws MTException {
-        // Check for duplicate "c/" markers
+        // Count occurrences of "c/" and "d/" markers
         int categoryMarkerCount = afterAmountPart.split("c/").length - 1;
+        int dateMarkerCount = afterAmountPart.split("d/").length - 1;
+
+        // Throw error if there are multiple "c/" markers
         if (categoryMarkerCount > 1) {
             throw new MTException("Invalid format. Multiple category markers detected.");
         }
 
-        // Check for duplicate "d/" markers
-        int dateMarkerCount = afterAmountPart.split("d/").length - 1;
+        // Throw error if there are multiple "d/" markers
         if (dateMarkerCount > 1) {
             throw new MTException("Invalid format. Multiple date markers detected.");
         }
 
-        // Catch any invalid markers "/"
-        if (afterAmountPart.contains("/")) {
-            throw new MTException("Invalid format. Detected invalid or misplaced markers (/c or /d).");
+        // Scenario 1: No "c/" and "d/" markers
+        if (categoryMarkerCount == 0 && dateMarkerCount == 0) {
+            if (afterAmountPart.contains("/")) {
+                throw new MTException("Invalid format. Markers detected after amount without 'c/' or 'd/'.");
+            }
+        }
+
+        // Scenario 2: "c/" present but no "d/"
+        if (categoryMarkerCount > 0 && dateMarkerCount == 0) {
+            String afterCategory = afterAmountPart.split("c/", 2)[1].trim();
+            if (afterCategory.contains("/")) {
+                throw new MTException("Invalid format. Markers detected after 'c/' without 'd/'.");
+            }
+        }
+
+        // Scenario 3: "d/" present but no "c/"
+        if (categoryMarkerCount == 0 && dateMarkerCount > 0) {
+            String afterDate = afterAmountPart.split("d/", 2)[1].trim();
+            if (afterDate.contains("/")) {
+                throw new MTException("Invalid format. Markers detected after 'd/' without 'c/'.");
+            }
+        }
+
+        // Scenario 4: Both "c/" and "d/" present
+        if (categoryMarkerCount > 0 && dateMarkerCount > 0) {
+            String afterDate = afterAmountPart.split("d/", 2)[1].trim();
+            if (afterDate.contains("/")) {
+                throw new MTException("Invalid format. Markers detected after 'd/' when both 'c/' and 'd/' are present.");
+            }
         }
     }
 
