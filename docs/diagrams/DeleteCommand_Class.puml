@@ -7,5 +7,6 @@ class DeleteCommand {
   + execute(MoneyList)
   + shouldExit(): boolean
 }
-DeleteCommand --> MoneyList : "deleteEntry()"
+
+DeleteCommand --> MoneyList : delete from >
 @enduml

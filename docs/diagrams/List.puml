@@ -1,10 +1,10 @@
 @startuml
 actor User
-participant MoneyTrail
-participant Parser
-participant ListCatsCommand
-participant MoneyList
-participant TextUI
+participant MoneyTrail as ":MoneyTrail"
+participant Parser as ":Parser"
+participant ListCatsCommand as ":ListCatsCommand"
+participant MoneyList as ":MoneyList"
+participant TextUI as ":TextUI"
 
 == User Input ==
 User -> MoneyTrail : "listCat"
