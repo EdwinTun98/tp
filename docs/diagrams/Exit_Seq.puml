@@ -7,9 +7,17 @@ participant Storage as ":Storage"
 participant TextUI as ":TextUI"
 
 User -> Parser : Input "exit"
+activate Parser
 Parser -> CommandExecutor : Parse "exit"
+deactivate Parser
+activate CommandExecutor
 CommandExecutor -> MoneyTrail : Terminate Loop
 CommandExecutor -> Storage : Save Data
 CommandExecutor -> TextUI : Display Exit Message
+deactivate CommandExecutor
+activate TextUI
 User <-- TextUI : "Thank you for using MoneyTrail!"
+deactivate TextUI
+destroy TextUI
+
 @enduml

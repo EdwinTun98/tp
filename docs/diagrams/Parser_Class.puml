@@ -14,5 +14,13 @@ interface Command {
   + shouldExit()
 }
 
+Command <|.. AddExpenseCommand
+
 Parser ..> Command : creates >
+
+note right of Command
+  **Design Notes**:
+  1. All commands implement the same Command interface
+  2. Other commands are omitted for brevity
+end note
 @enduml
