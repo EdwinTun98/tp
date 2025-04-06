@@ -8,20 +8,20 @@ participant Storage as ":Storage"
 
 User -> MoneyTrail : "delete 2"
 activate MoneyTrail
-MoneyTrail -> Parser : "parseCommand()"
+MoneyTrail -> Parser : parseCommand()
 activate Parser
-Parser -> DeleteCommand : "new(index=1)"
+Parser -> DeleteCommand : new(index=1)
 activate DeleteCommand
 DeleteCommand --> Parser
 deactivate DeleteCommand
 Parser --> MoneyTrail : DeleteCommand
 deactivate Parser
 
-MoneyTrail -> DeleteCommand : "execute()"
+MoneyTrail -> DeleteCommand : execute()
 activate DeleteCommand
-DeleteCommand -> MoneyList : "deleteEntry()"
+DeleteCommand -> MoneyList : deleteEntry()
 activate MoneyList
-MoneyList -> Storage : "saveEntries()"
+MoneyList -> Storage : saveEntries()
 activate Storage
 Storage --> MoneyList
 deactivate Storage

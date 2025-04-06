@@ -17,10 +17,19 @@ of rchlai, Hansel-K, EdwinTun98, and limleyhooi.
 ## Design <a name="2-design"></a>
 
 > [!TIP]
-> Tip: The `.puml` files used to create diagrams in this document `docs/diagrams` folder.
+> The `.puml` files used to create diagrams in this document `docs/diagrams` folder.
+
+> [!NOTE]
+> The arrowheads in **sequence diagrams** may be in **lined** style which indicates the 
+> use of asynchronous method calls.
+> Rest assured that this is not the case because this is the syntax used by PlantUML to 
+> construct **FILLED** arrowheads.
+> 
+> Some diagrams have optional elements (e.g, activation bars, return arrows) omitted since their omission
+> does not result in ambiguities or loss of relevant information.
 
 >[!NOTES]
-> Note: All <amount> inputs will be formatted to 2 d.p. with no rounding
+> Note: All <amount> inputs will be formatted to 2 d.p.
 
 ### Architecture Overview
 
@@ -211,8 +220,6 @@ This method shows simplified parsing logic for expense commands:
 
 - Core data manager for all financial entries (expenses/incomes)
 
-- Central hub for business logic operations
-
 - Bridge between commands and storage
 
 Here is the simplified UML class diagram of `MoneyList.java`:
@@ -363,7 +370,7 @@ This sequence diagram illustrates:
 
 - The command's execute() method activates to modify the MoneyList.
 
-Here are the self-explanatory Java code snippets:
+Here are the Java code snippets:
 
 ```
 public interface Command {
@@ -406,7 +413,7 @@ Models financial expenditure entries with:
 
 - Date (default: "no date")
 
-Here is a self-explanatory UML class diagram:
+Here is a UML class diagram for `Expense.java`:
 
 ![Image](diagrams/Expense_Class.png)
 
@@ -452,7 +459,7 @@ Models financial income entries with::
 
 - Date (default: "no date")
 
-Here is a self-explanatory UML class diagram:
+Here is a UML class diagram for `Income.java`:
 
 ![Image](diagrams/Income_Class.png)
 
@@ -463,7 +470,7 @@ Here is a simplified UML sequence diagram:
 The sequence diagram of `Income.java` shares the same underlying 
 explanations as the sequence diagram of `Expense.java`.
 
-Here is a self-explanatory Java code snippet and its sample output:
+Here is a Java code snippet and its sample output:
 
 ```
 Income salary = new Income("Salary", 3000.00, null);
@@ -479,7 +486,7 @@ Outcome:
 
 This section describes some details on how certain features are implemented.
 
-## SetCategoryBudgetCommand & BudgetCommand Features
+## SetCategoryBudgetCommand & BudgetCommand Classes
 
 **Overview**:
 
@@ -528,11 +535,11 @@ public void execute(MoneyList moneyList) throws MTException {
 
 Rationale: Clean delegation to MoneyList, which handles validation, storage, and UI feedback.
 
-## ListCatsCommand & ListCommand Features
+## ListCatsCommand & ListCommand Classes
 
 **Overview**:
 
-The `ListCatsCommand` displays all unique categories used in existing expense entries:
+The `ListCatsCommand` class displays all unique categories used in existing expense entries:
 
 **Key Characteristics**:
 
@@ -545,6 +552,9 @@ The `ListCatsCommand` displays all unique categories used in existing expense en
 Implementation: Implements the Command interface and delegates logic to MoneyList.listCats().
 
 ![Image](diagrams/List.png)
+
+>[!NOTE]
+> To reduce clutter, optional elements (e.g, activation bars, return arrows) are omitted in this diagram.
 
 **Why this design**:
 
@@ -576,7 +586,7 @@ for (String entry : moneyList) {
 
 Rationale: Extracts category from each entry while preserving insertion order using a LinkedHashSet.
 
-## EditExpenseCommand
+## EditExpenseCommand Class
 
 **Overview**:
 
@@ -597,6 +607,9 @@ The `EditExpenseCommand` updates the details of an existing expense entry, such 
 **Workflow**:
 
 ![Image](diagrams/EditExpenses.png)
+
+>[!NOTE]
+> To reduce clutter, optional elements (e.g, activation bars, return arrows) are omitted in this diagram.
 
 **Why this design**:
 
@@ -631,7 +644,7 @@ if (newAmount <= 0.00) {
 
 Rationale: Ensures that missing fields are safely defaulted to their existing values, enabling partial updates.
 
-## FindCommand Feature
+## FindCommand Class
 
 **Overview**:
 
@@ -648,6 +661,9 @@ The `FindCommand` searches for entries in the MoneyList that contain a specific 
 **Workflow**:
 
 ![Image](diagrams/FindCommand.png)
+
+>[!NOTE]
+> To reduce clutter, optional elements (e.g, activation bars, return arrows) are omitted in this diagram.
 
 **Why this design**:
 
@@ -678,7 +694,7 @@ for (String entry : moneyList) {
 
 Rationale: Performs a basic case-insensitive search over all stored entries and collects results.
 
-## DeleteCommand Feature
+## DeleteCommand Class
 
 **Overview**:
 
@@ -725,11 +741,11 @@ public void execute(MoneyList moneyList) throws MTException {
 
 Why: Reuses existing MoneyList logic while maintaining consistent command formatting.
 
-## Exit Feature
+## ExitCommand Class
 
 **Overview**:
 
-The ExitCommand provides a controlled shutdown of MoneyTrail by:
+The `ExitCommand` provides a controlled shutdown of MoneyTrail by:
 
 - Terminating the main processing loop
 

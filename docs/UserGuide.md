@@ -12,7 +12,7 @@ and achieve your financial goals.
 Here are the steps to get started quickly:
 
 1. Ensure that you have Java 17 or above installed.
-2. Download the latest version of `MoneyTrail` from [here](https://github.com/AY2425S2-CS2113-W12-4/tp/releases/download/v1.0/tp.jar).
+2. Download the latest version of `MoneyTrail` from [here](https://github.com/AY2425S2-CS2113-W12-4/tp/releases/download/v2.0c/tp.jar).
 3. Copy the file to the folder you want to use as the *home folder* for your application.
 4. Open a command terminal, `cd`, into the folder you put the jar file in, and use the `java -jar tp.jar` command to run the application.
 
@@ -71,23 +71,35 @@ Displays all available commands and their descriptions.
 Format: `help`
 
 Outcome:
+
+> [!NOTE]
+> The code snippet below is formatted to ensure that the command 
+> descriptions do not get "cut off" across the screen and omit crucial 
+> details. 
+
 ```
-What do you want to do next?
+What do you want to do today?
 help
+Parameters in brackets (i.e., []) are optional.
 List of available commands:
 1. help: Displays this list of available commands.
 2. list: Lists out all entries.
-3. addExp <description> $/<value> [c/<category>] [d/<date>]: Adds a new expense entry.
-4. addIncome <description> $/<value> [d/<date>]: Adds a new income entry.
+3. addExp <description> $/<value> [c/<category>] [d/<date>]: 
+   Adds a new expense entry.
+4. addIncome <description> $/<value> [d/<date>]: 
+   Adds a new income entry.
 5. totalExp: Displays the total expense accumulated.
 6. setTotBgt <value>: Sets a total spending budget.
-7. setCatBgt c/<category> <value>: Sets a budget for a specific category.
+7. setCatBgt c/<category> <value>: 
+   Sets a budget for a specific category.
 8. listBgt: Lists out all category budgets.
 9. listCat: Lists out all entry categories in order of appearance.
 10. del <index>: Deletes an entry.
 11. find <keyword>: Finds an entry based on the keyword.
-12. edit <index> [<description>] [$/<amount>] [c/<category>] [d/<date>]: Modify the full entry or just selected details.
-13. check <Overall> or <Category>: Shows overall expense or total expense for searched category
+12. edit <index> <description> [$/<amount>] [c/<category>] [d/<date>]: 
+    Modify the full entry or just selected details.
+13. check Overall / check Category: 
+    Shows overall expense or total expense for searched category
     and show set budget and total expenditure of respective category.
 14. clear: Clears all entries.
 15. exit: Exits the program.
