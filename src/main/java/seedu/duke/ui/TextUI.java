@@ -98,6 +98,7 @@ public class TextUI {
      * Prints all available commands required by the MT program in a list.
      */
     public void showAllAvailableCommands() {
+        print("Parameters in brackets (i.e., []) are optional.");
         print("List of available commands:");
         print("1. help: Displays this list of available commands.");
         print("2. list: Lists out all entries.");
@@ -110,9 +111,9 @@ public class TextUI {
         print("9. listCat: Lists out all entry categories in order of appearance.");
         print("10. del <index>: Deletes an entry.");
         print("11. find <keyword>: Finds an entry based on the keyword.");
-        print("12. edit <index> [<description>] [$/<amount>] [c/<category>] [d/<date>]: " +
+        print("12. edit <index> <description> [$/<amount>] [c/<category>] [d/<date>]: " +
                 "Modify the full entry or just selected details.");
-        print("13. check <Overall> or <Category>: Shows overall expense or total expense for searched category\n" +
+        print("13. check Overall / check Category: Shows overall expense or total expense for searched category\n" +
                 "    and show set budget and total expenditure of respective category.");
         print("14. clear: Clears all entries.");
         print("15. exit: Exits the program.");

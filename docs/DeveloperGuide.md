@@ -24,9 +24,12 @@ of rchlai, Hansel-K, EdwinTun98, and limleyhooi.
 > use of asynchronous method calls.
 > Rest assured that this is not the case because this is the syntax used by PlantUML to 
 > construct **FILLED** arrowheads.
+> 
+> Some diagrams have optional elements (e.g, activation bars, return arrows) omitted since their omission
+> does not result in ambiguities or loss of relevant information.
 
 >[!NOTES]
-> Note: All <amount> inputs will be formatted to 2 d.p. with no rounding
+> Note: All <amount> inputs will be formatted to 2 d.p.
 
 ### Architecture Overview
 
@@ -217,8 +220,6 @@ This method shows simplified parsing logic for expense commands:
 
 - Core data manager for all financial entries (expenses/incomes)
 
-- Central hub for business logic operations
-
 - Bridge between commands and storage
 
 Here is the simplified UML class diagram of `MoneyList.java`:
@@ -369,7 +370,7 @@ This sequence diagram illustrates:
 
 - The command's execute() method activates to modify the MoneyList.
 
-Here are the self-explanatory Java code snippets:
+Here are the Java code snippets:
 
 ```
 public interface Command {
@@ -412,7 +413,7 @@ Models financial expenditure entries with:
 
 - Date (default: "no date")
 
-Here is a self-explanatory UML class diagram:
+Here is a UML class diagram for `Expense.java`:
 
 ![Image](diagrams/Expense_Class.png)
 
@@ -458,7 +459,7 @@ Models financial income entries with::
 
 - Date (default: "no date")
 
-Here is a self-explanatory UML class diagram:
+Here is a UML class diagram for `Income.java`:
 
 ![Image](diagrams/Income_Class.png)
 
@@ -469,7 +470,7 @@ Here is a simplified UML sequence diagram:
 The sequence diagram of `Income.java` shares the same underlying 
 explanations as the sequence diagram of `Expense.java`.
 
-Here is a self-explanatory Java code snippet and its sample output:
+Here is a Java code snippet and its sample output:
 
 ```
 Income salary = new Income("Salary", 3000.00, null);
@@ -767,10 +768,6 @@ The `ExitCommand` provides a controlled shutdown of MoneyTrail by:
 Why: Clearly separates success/failure paths while showing system state changes.
 
 ![Image](diagrams/Exit_Sequence.png)
-
->[!NOTE]
-> Optional elements (e.g, activation bars, return arrows) are omitted in this diagram since their omission 
-> does not result in ambiguities or loss of relevant information.
 
 Key Interactions:
 

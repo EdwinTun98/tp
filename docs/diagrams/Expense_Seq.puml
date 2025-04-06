@@ -13,5 +13,6 @@ deactivate Expense
 
 Expense --> MoneyList : Expense instance
 deactivate Expense
+destroy Expense
 deactivate MoneyList
 @enduml
