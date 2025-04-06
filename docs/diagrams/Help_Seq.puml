@@ -1,17 +1,29 @@
 @startuml
 actor User
-User -> Parser : Input "help"
+participant Parser as ":Parser"
+participant CommandExecutor as ":CommandExecutor"
+participant TextUI as ":TextUI"
+
+User -> Parser : "help"
 activate Parser
 
-Parser -> CommandExecutor : Parse "help"
+Parser -> CommandExecutor : parse("help")
 activate CommandExecutor
 
-CommandExecutor -> TextUI : Retrieve List of Commands
+CommandExecutor -> TextUI : getCommandList()
 activate TextUI
 
-TextUI -> User : Display List of Commands
+TextUI --> CommandExecutor : commandList
 deactivate TextUI
 
+CommandExecutor --> Parser : parsedCommand
 deactivate CommandExecutor
+
+Parser --> User :
 deactivate Parser
+
+User -> TextUI :
+activate TextUI
+TextUI -> User : Display Command List
+deactivate TextUI
 @enduml

@@ -76,39 +76,39 @@ public class Parser {
             return new ClearListCommand();
         }
 
-        if (input.startsWith("totalExp")) {
+        if (input.startsWith("totalExp ")) {
             return new TotalExpenseCommand();
         }
 
-        if (input.startsWith("find")) {
+        if (input.startsWith("find ")) {
             return createFindCommand(input);
         }
 
-        if (input.startsWith("check")) {
+        if (input.startsWith("check ")) {
             return parserCheckExpenses(input);
         }
 
-        if (input.startsWith("del")) {
+        if (input.startsWith("del ")) {
             return createDeleteCommand(input);
         }
 
-        if (input.startsWith("setTotBgt")) {
+        if (input.startsWith("setTotBgt ")) {
             return createBudgetCommand(input);
         }
 
-        if (input.startsWith("setCatBgt")) {
+        if (input.startsWith("setCatBgt ")) {
             return parseSetCategoryBudgetCommand(input);
         }
 
-        if (input.startsWith("addExp")) {
+        if (input.startsWith("addExp ")) {
             return createAddExpenseCommand(input);
         }
 
-        if (input.startsWith("edit")) {
+        if (input.startsWith("edit ")) {
             return createEditExpenseCommand(input);
         }
 
-        if (input.startsWith("addIncome")) {
+        if (input.startsWith("addIncome ")) {
             return createAddIncomeCommand(input);
         }
 

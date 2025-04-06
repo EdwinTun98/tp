@@ -11,12 +11,16 @@
 
 ## Acknowledgements <a name="1-acknowledgements"></a>
 
-{NONE AT THE MOMENT}
+Some codes are adopted and later modified from the repo
+of rchlai, Hansel-K, EdwinTun98, and limleyhooi.
 
 ## Design <a name="2-design"></a>
 
 > [!TIP]
 > Tip: The `.puml` files used to create diagrams in this document `docs/diagrams` folder.
+
+>[!NOTES]
+> Note: All <amount> inputs will be formatted to 2 d.p. with no rounding
 
 ### Architecture Overview
 
@@ -313,7 +317,7 @@ Here is the UML sequence diagram of `Storage.java`:
 
 ![Image](diagrams/Storage_Seq.png)
 
-**Warning**: Due to unexplained image exportation issues, some activation bars will have missing lines.
+**Warning**: Due to unexplained image exportation issues, some activation bars will have missing lines at the top.
 The original `.puml` files have complete activation bars.
 
 This UML sequence diagram illustrates the file read/write workflow:

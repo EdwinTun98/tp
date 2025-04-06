@@ -431,7 +431,7 @@ public class MoneyList {
     public void findEntry(String input) throws MTException {
         // Validate the input for null, empty, or whitespace-only
         if (input == null || input.trim().isEmpty()) {
-            logger.logWarning("Invalid entry provided.");
+            logger.logWarning("Invalid substring provided.");
             throw new MTException("Please enter a keyword to search.");
         }
 
@@ -446,9 +446,8 @@ public class MoneyList {
 
         // Handle the case when no matches are found
         if (results.isEmpty()) {
-            logger.logWarning("No matching entries found for: " + input);
-            throw new MTException("No matching entries found for: " + input
-                    + ". Please enter a valid keyword to search.");
+            logger.logWarning("No matching entries found for keyword: " + input);
+            throw new MTException("No matching entries found for keyword: " + input);
         }
 
         // Print matching entries cat

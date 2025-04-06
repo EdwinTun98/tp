@@ -26,6 +26,7 @@ Here are the steps to get started quickly:
     e.g. if the command specifies `c/CATEGORY d/DATE`, `d/DATE c/CATEGORY` is unacceptable.
 > - **Extraneous parameters** for commands that do not take in parameters (such as `list`) will generate an error.
     e.g. `list 123` is unacceptable.
+> *BEWARE:* All *<amount>* inputs will be formatted to *2 d.p.* with *no rounding*
 
 ### Listing all tasks: `list`
 
@@ -76,16 +77,20 @@ help
 List of available commands:
 1. help: Displays this list of available commands.
 2. list: Lists out all entries.
-3. addExp <description> $/<value> c/<category> <: Adds a new expense entry. Category is optional.
-4. totalExp: Displays the total expense accumulated from all entries.
-5. setTotBgt <value>: Sets a total spending budget to adhere to.
-6. del <index>: Deletes an entry.
-7. find <keyword>: Finds an entry based on the given keyword.
-8. listCat: Lists out all entry categories in order of appearance.
-9. clear: Clear all existing entries.
-10. exit: Exits the program.
-11. edit <index> <description> $/<value> c/<category> d/<date>: Edits an entry.
-You can select a metric to edit.
+3. addExp <description> $/<value> [c/<category>] [d/<date>]: Adds a new expense entry.
+4. addIncome <description> $/<value> [d/<date>]: Adds a new income entry.
+5. totalExp: Displays the total expense accumulated.
+6. setTotBgt <value>: Sets a total spending budget.
+7. setCatBgt c/<category> <value>: Sets a budget for a specific category.
+8. listBgt: Lists out all category budgets.
+9. listCat: Lists out all entry categories in order of appearance.
+10. del <index>: Deletes an entry.
+11. find <keyword>: Finds an entry based on the keyword.
+12. edit <index> [<description>] [$/<amount>] [c/<category>] [d/<date>]: Modify the full entry or just selected details.
+13. check <Overall> or <Category>: Shows overall expense or total expense for searched category
+    and show set budget and total expenditure of respective category.
+14. clear: Clears all entries.
+15. exit: Exits the program.
 -------------------------------------------------------------------------------
 What do you want to do next?
 ```
@@ -215,20 +220,98 @@ Options:
 > - However, INDEX must always come after `edit`, followed by DESCRIPTION.
     e.g. if the command specifies `edit INDEX DESCRIPTION`, `edit DESCRIPTION INDEX` is unacceptable.
 
-Examples:
-
-- `edit 1 $/20`
+Example: `edit 1 $/20`
 
 Outcome:
 ```
-
+What do you want to do next?
+edit 1 $/20
+Entry updated. Expense: Milk $20.00 {Uncategorized} [no date]
+-------------------------------------------------------------------------------
+What do you want to do next?
 ```
 
-### Setting a budget for a category: `setCatBgt`
+### Setting a Category Budget: `setCatBgt`
 
 Specifies a budget value for a specific expense/income category.
 
-Format: `setCatBgt c/CATEGORY VALUE`
+Format: `setCatBgt c/<CATEGORY> <AMOUNT>`
+
+Example: `setCatBgt c/Uncategorized 200`
+
+Outcome:
+```
+What do you want to do next?
+setCatBgt c/Uncategorized 200
+Budget for category 'Uncategorized' set to $200.00
+-------------------------------------------------------------------------------
+What do you want to do next?
+```
+
+### Listing all category budgets: `listBgt`
+
+Displays the respective budget limits for all categories.
+
+Format: `listBgt`
+
+Example: `listBgt`
+
+Outcome:
+```
+What do you want to do next?
+listBgt
+-------- Overall Budgets --------
+- Overall Budget: $5000.00
+
+-------- Category Budgets: --------
+- Budget for uncategorized: $200.00
+
+-------------------------------------------------------------------------------
+What do you want to do next?
+```
+
+### Listing all used categories: `listCat`
+
+Displays all used categories in order of appearance in money list.
+
+Format: `listCat`
+
+Example: `listCat`
+
+Outcome:
+```
+Categories (in order of appearance):
+- Uncategorized
+- Food
+```
+
+### Listing the overall expense or expense for a specific category: `check`
+
+Displays overall expense or expense for a specified category
+
+Format: `check <Overall or Category>`
+
+Example: `check Food`
+
+Outcome:
+```
+What do you want to do next?
+check Food
+-------- CATEGORY EXPENSES BUDGET CHECK --------
+Budget for food: $1000.00
+Total Spent: $10.00
+Remaining: $990.00
+-------------------------------------------------------------------------------
+What do you want to do next?
+```
+
+### Clearing all entries: `clear`
+
+Clear all entries stored in money list.
+
+Format: `clear`
+
+Example: `clear`
 
 Outcome:
 ```
@@ -248,20 +331,23 @@ any command that changes the data. You can copy this file in a pen drive.
 
 ## 💰 MoneyTrail Command Summary
 
-| Command     | Format                                          | Example                                    | Description                              |
-|-------------|-------------------------------------------------|--------------------------------------------|------------------------------------------|
-| `help`      | `help`                                          | `help`                                     | Shows all available commands             |
-| `list`      | `list`                                          | `list`                                     | Displays all expense entries             |
-| `addExp`    | `addExp <desc> $/<amount> [c/<cat>] [d/<date>]` | `addExp Lunch $/12.50 c/Food d/2023-10-15` | Add new expense (category/date optional) |
-| `del`       | `del <index>`                                   | `del 3`                                    | Removes entry #3 from list               |
-| `find`      | `find <keyword>`                                | `find coffee`                              | Searches entries by keyword              |
-| `totalExp`  | `totalExp`                                      | `totalExp`                                 | Shows sum of all expenses                |
-| `setTotBgt` | `setTotBgt <amount>`                            | `setTotBgt 500.00`                         | Sets spending limit                      |
-| `listCat`   | `listCat`                                       | `listCat`                                  | Shows all used categories                |
-| `clear`     | `clear`                                         | `clear`                                    | Clears all entries                       |
-| `setCatBgt` | `setCatBgt c/CATEGORY VALUE`                    | `setCatBgt c/food 100`                     | Sets a budget for a category             |
-| `edit`      | `edit INDEX DESCRIPTION [options]`              | `edit 1 $/15 d/2024-05-08`                 | Edits an entry                           |
-| `exit`      | `exit`                                          | `exit`                                     | Closes the application                   |
+| Command     | Format                                        | Example                                    | Description                                                |
+|-------------|-----------------------------------------------|--------------------------------------------|------------------------------------------------------------|
+| `help`      | `help`                                        | `help`                                     | Shows all available commands                               |
+| `list`      | `list`                                        | `list`                                     | Displays all expense entries                               |
+| `addExp`    | `addExp <desc> $/<amount> [c/<cat>] [d/<date>]` | `addExp Lunch $/12.50 c/Food d/2023-10-15` | Add new expense (category/date optional)                   |
+| `addIncome` | `addIncome <desc> $/<amount> [d/date]`        | `addIncome Salary $/2500.00 d/2023-10-15`  | Adds a new income entry (date optional)                    |
+| `del`       | `del <index>`                                 | `del 3`                                    | Removes entry #3 from list                                 |
+| `find`      | `find <keyword>`                              | `find coffee`                              | Searches entries by keyword                                |
+| `edit`      | `edit <index> [options]`                      | `edit 1 $/15 d/2024-05-08`                 | Modifies full entry or selected details                    | 
+| `totalExp`  | `totalExp`                                    | `totalExp`                                 | Shows sum of all expenses                                  |
+| `setTotBgt` | `setTotBgt <amount>`                          | `setTotBgt 500.00`                         | Sets total spending budget                                 |
+| `setCatBgt` | `setCatBgt c/<category> <amount>`             | `setCatBgt c/Food 200.00`                  | Sets budget for a specific category                        |
+| `listBgt`   | `listBgt`                                     | `listBgt`                                  | Shows all category budgets                                 |
+| `listCat`   | `listCat`                                     | `listCat`                                  | Shows all used categories                                  |
+| `check`     | `check <Overall or Category>`                 | `check Food`                               | Shows overall expenses of expenses for a specific category |
+| `clear`     | `clear`                                       | `clear`                                    | Clears all entries                                         |
+| `exit`      | `exit`                                        | `exit`                                     | Closes the application                                     |
 
 #### 📝 Usage Notes
 ```bash
