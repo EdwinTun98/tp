@@ -36,13 +36,41 @@ public class MoneyList {
     }
 
     /**
-     * Extracts index number from user input.
-     * @param input Raw user input (e.g., "delete 1")
-     * @return Zero-based index number
+     * Extracts and returns the index from the input string.
+     * Ensures the index is valid, including negative numbers.
+     *
+     * @param input The input string to extract the index from.
+     * @return The extracted index after applying the offset.
+     * @throws NumberFormatException If the input contains an invalid index format.
      */
-    private int extractIndex(String input) {
-        return Integer.parseInt(input.replaceAll("[^0-9]", ""))
-                - INDEX_OFFSET;
+    private int extractIndex(String input) throws MTException {
+
+        // Filter out the del command
+        String numberString = input.substring(3).trim();
+
+        // Check for garbage inputs
+        if (!numberString.matches("-?\\d+")) {
+            throw new MTException("Invalid index: Please input a valid index.");
+        }
+
+        // Check for negative indexes
+        if (numberString.matches("-\\d+")) {
+            throw new MTException("Invalid index: Negative indexes are not allowed.");
+        }
+
+        // Check for index 0
+        if (numberString.matches(".*0.*")) {
+            throw new MTException("Invalid index: An index of 0 is not allowed.");
+        }
+
+        // Parse the number and apply the offset
+        int extractedIndex = Integer.parseInt(numberString) - INDEX_OFFSET;
+
+        if (extractedIndex < 0) {
+            throw new IllegalArgumentException("Invalid index: Negative indexes are not allowed.");
+        }
+
+        return extractedIndex;
     }
 
     /**
@@ -64,9 +92,9 @@ public class MoneyList {
      */
     public void deleteEntry(String input) throws MTException {
         try {
-            // Assert that the input is not null and starts with "delete"
+            // Assert that the input is not null and starts with "del"
             assert input != null : "Input should not be null";
-            assert input.startsWith("delete") : "Input should start with 'delete'";
+            assert input.startsWith("del") : "Input should start with 'del'";
 
             // obtain the index to search for entry to be deleted
             int deleteIndex = extractIndex(input);
@@ -86,7 +114,7 @@ public class MoneyList {
             ui.printNumItems(moneyList.size());
         } catch (NumberFormatException error) {
             logger.logSevere("Invalid delete command format: " + input, error);
-            throw new MTException("Use: delete <ENTRY_NUMBER>");
+            throw new MTException("Use: del <ENTRY_NUMBER>");
         }
     }
 
@@ -192,6 +220,7 @@ public class MoneyList {
 
     /**
      * Checks for duplicate category/date markers.
+     * No need to check for amount marker because of extractAmount checks
      * @param afterAmountPart Input portion after amount
      * @throws MTException If duplicate markers found
      */
@@ -317,9 +346,7 @@ public class MoneyList {
                 amount = Double.parseDouble(remainder.trim());
             }
 
-            if (amount <= 0) {
-                throw new MTException("Amount must be greater than zero.");
-            }
+            validateAmount(amount);
 
             Income newIncome = new Income(description, amount, date);
             moneyList.add(newIncome.toString());

@@ -137,7 +137,7 @@ public class Parser {
     }
     //@@author
 
-    //@@author limleyhooi
+    //@@author limleyhooi, Hansel-K
     /**
      * Creates a DeleteCommand with entry index.
      * @param input The full input string starting with "del"
@@ -146,12 +146,27 @@ public class Parser {
      */
     private DeleteCommand createDeleteCommand(String input) throws MTException {
         try {
-            int index = Integer.parseInt(input.replaceAll(
-                    "[^0-9]", "")) - 1;
+            String numberString = input.substring(3).trim();
+
+            if (!numberString.matches("-?\\d+")) {
+                throw new MTException("Invalid index: Please input a valid index.");
+            }
+
+            if (numberString.matches("-\\d+")) {
+                throw new MTException("Invalid index: Negative indexes are not allowed.");
+            }
+
+            if (numberString.matches(".*0.*")) {
+                throw new MTException("Invalid index: An index of 0 is not allowed.");
+            }
+
+            // Parse the number and apply the index offset
+            int index = Integer.parseInt(numberString) - 1;
 
             return new DeleteCommand(index);
+
         } catch (NumberFormatException error) {
-            throw new MTException("Use: delete <ENTRY_NUMBER>");
+            throw new MTException("Use: del <ENTRY_NUMBER>");
         }
     }
     //@@author
@@ -165,7 +180,7 @@ public class Parser {
      */
     private BudgetCommand createBudgetCommand(String input) throws MTException {
         try {
-            String budgetString = input.substring("setTotBdt".length()).trim();
+            String budgetString = input.substring("setTotBgt".length()).trim();
             double budget = Double.parseDouble(budgetString);
 
             if (budget < 0) {
