@@ -76,7 +76,7 @@ public class Parser {
             return new ClearListCommand();
         }
 
-        if (input.startsWith("totalExp ")) {
+        if (input.equalsIgnoreCase("totalExp")) {
             return new TotalExpenseCommand();
         }
 
