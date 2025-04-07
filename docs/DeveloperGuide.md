@@ -30,6 +30,7 @@ of rchlai, Hansel-K, EdwinTun98, and limleyhooi.
 
 >[!NOTES]
 > Note: All <amount> inputs will be formatted to 2 d.p.
+> Note: All <amount> inputs will be limited to 7 digits including decimal places
 
 ### Architecture Overview
 
@@ -219,6 +220,8 @@ This method shows simplified parsing logic for expense commands:
 **Role**:
 
 - Core data manager for all financial entries (expenses/incomes)
+
+- Central hub for business logic operations
 
 - Bridge between commands and storage
 

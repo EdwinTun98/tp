@@ -103,7 +103,7 @@ class DeleteCmdTest {
 
         cmd.execute(moneyListStub);
 
-        assertEquals("delete 4",
+        assertEquals("del 4",
                 moneyListStub.lastDeleteCommand);
     }
 
@@ -113,7 +113,7 @@ class DeleteCmdTest {
 
         cmd.execute(moneyListStub);
 
-        assertEquals("delete 1",
+        assertEquals("del 1",
                 moneyListStub.lastDeleteCommand);
     }
 
@@ -124,7 +124,7 @@ class DeleteCmdTest {
         DeleteCommand cmd = new DeleteCommand(5);
 
         assertThrows(MTException.class, () -> cmd.execute(moneyListStub));
-        assertEquals("delete 6",
+        assertEquals("del 6",
                 moneyListStub.lastDeleteCommand);
     }
 
@@ -135,7 +135,7 @@ class DeleteCmdTest {
         DeleteCommand cmd = new DeleteCommand(2);
 
         assertThrows(MTException.class, () -> cmd.execute(moneyListStub));
-        assertEquals("delete 3",
+        assertEquals("del 3",
                 moneyListStub.lastDeleteCommand);
     }
 
@@ -150,7 +150,7 @@ class DeleteCmdTest {
         // Should this be allowed? Depends on business logic
         DeleteCommand cmd = new DeleteCommand(-1);
         assertDoesNotThrow(() -> cmd.execute(moneyListStub));
-        assertEquals("delete 0",
+        assertEquals("del 0",
                 moneyListStub.lastDeleteCommand);
     }
 
@@ -158,7 +158,7 @@ class DeleteCmdTest {
     void execute_veryLargeIndex() {
         DeleteCommand cmd = new DeleteCommand(Integer.MAX_VALUE);
         assertDoesNotThrow(() -> cmd.execute(moneyListStub));
-        assertEquals("delete " + (Integer.MAX_VALUE + 1),
+        assertEquals("del " + (Integer.MAX_VALUE + 1),
                 moneyListStub.lastDeleteCommand);
     }
 }
