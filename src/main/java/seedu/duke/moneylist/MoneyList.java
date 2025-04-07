@@ -663,14 +663,16 @@ public class MoneyList {
 
         double overallBudgetAmount = getTotalBudget();
         if (overallBudgetAmount == 0.0) {
-            throw new MTException("Overall budget not set! Please set the Overall budget first before setting category budgets.");
+            throw new MTException("Overall budget not set! " +
+                    "Please set the Overall budget first before setting category budgets.");
         }
 
         double totalCategoryBudget = getTotalCategoryBudgets(); // Helper below
 
         if (totalCategoryBudget + amount > overallBudgetAmount) {
             logger.logWarning("Total category budgets exceed overall budget.");
-            throw new MTException("Category budget exceeds the overall budget. Please enter a smaller value or increase the overall budget.");
+            throw new MTException("Category budget exceeds the overall budget. " +
+                    "Please enter a smaller value or increase the overall budget.");
         }
 
         Budget budget = new Budget(category, amount);
