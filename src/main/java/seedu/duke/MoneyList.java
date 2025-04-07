@@ -27,12 +27,16 @@ public class MoneyList {
         this.ui = ui;
     }
 
-    /** @return The list of all money entries (expenses/incomes) */
+    /**
+     * @return The list of all money entries (expenses/incomes)
+     */
     public ArrayList<String> getMoneyList() {
         return moneyList;
     }
 
-    /** @return The map of budget categories to their Budget objects */
+    /**
+     * @return The map of budget categories to their Budget objects
+     */
     public HashMap<String, Budget> getBudgetList() {
         return budgetList;
     }
@@ -77,6 +81,7 @@ public class MoneyList {
 
     /**
      * Validates if index exists in money list.
+     *
      * @param index Index to validate
      * @throws MTException If index is out of bounds
      */
@@ -89,6 +94,7 @@ public class MoneyList {
 
     /**
      * Deletes an entry by its index number.
+     *
      * @param input The delete command with index (e.g., "delete 1")
      * @throws MTException If index is invalid or entry doesn't exist
      */
@@ -122,6 +128,7 @@ public class MoneyList {
 
     /**
      * Loads all entries and budgets from storage file.
+     *
      * @throws MTException If file loading fails
      */
     public void loadEntriesFromFile() throws MTException {
@@ -143,8 +150,10 @@ public class MoneyList {
     }
 
     //@@author Hansel-K
+
     /**
      * Adds a new expense entry from user input.
+     *
      * @param input Expense details in format: "addExp desc $/amt c/cat d/date"
      * @throws MTException If input format is invalid
      */
@@ -193,6 +202,7 @@ public class MoneyList {
 
     /**
      * Validates expense input isn't null/empty.
+     *
      * @param input User input to validate
      * @throws MTException If input is invalid
      */
@@ -204,6 +214,7 @@ public class MoneyList {
 
     /**
      * Extracts description from expense input.
+     *
      * @param input Raw user input
      * @return Isolated description text
      */
@@ -216,6 +227,7 @@ public class MoneyList {
 
     /**
      * Gets portion of input after amount marker.
+     *
      * @param input Raw user input
      * @return Substring after "$/"
      */
@@ -300,6 +312,7 @@ public class MoneyList {
 
     /**
      * Parses amount value from input segment.
+     *
      * @param afterAmountPart Input portion containing amount
      * @return Parsed double value
      * @throws NumberFormatException If amount format invalid
@@ -315,6 +328,7 @@ public class MoneyList {
 
     /**
      * Extracts category from input segment.
+     *
      * @param afterAmountPart Input portion after amount
      * @return Category name or "Uncategorized"
      */
@@ -327,6 +341,7 @@ public class MoneyList {
 
     /**
      * Extracts date from input segment.
+     *
      * @param afterAmountPart Input portion after amount
      * @return Date string or "no date"
      */
@@ -339,6 +354,7 @@ public class MoneyList {
 
     /**
      * Formats amount to 2 decimal places.
+     *
      * @param amount Raw amount value
      * @return Formatted double value
      */
@@ -349,6 +365,7 @@ public class MoneyList {
 
     /**
      * Validates amount is positive.
+     *
      * @param amount Value to check
      * @throws MTException If amount ≤ 0
      */
@@ -361,10 +378,11 @@ public class MoneyList {
 
     /**
      * Creates and saves new expense entry.
+     *
      * @param description Expense description
-     * @param amount Formatted amount
-     * @param category Expense category
-     * @param date Expense date
+     * @param amount      Formatted amount
+     * @param category    Expense category
+     * @param date        Expense date
      * @throws MTException If save fails
      */
     private void saveExpense(String description, Double amount, String category, String date) throws MTException {
@@ -377,8 +395,10 @@ public class MoneyList {
     //@@author
 
     //@@author limleyhooi
+
     /**
      * Adds a new income entry from user input.
+     *
      * @param input Income details in format: "addIncome desc $/amt d/date"
      * @throws MTException If input format is invalid
      */
@@ -430,6 +450,7 @@ public class MoneyList {
     }//@@author
 
     //@@author EdwinTun98
+
     /**
      * Edits an existing expense entry in the money list.
      *
@@ -496,6 +517,7 @@ public class MoneyList {
 
     /**
      * Displays all budget categories and their limits.
+     *
      * @throws MTException If no budgets exist
      */
     public void listBudgets() throws MTException {
@@ -522,12 +544,8 @@ public class MoneyList {
     }
 
     /**
-     * Finds entries containing the search term.
-     * @param input The keyword to search for
-     * @throws MTException If no matches found
-     */
-    /**
      * Finds entries that match the provided keyword in description, category, or date.
+     *
      * @param input The search keyword (can be part of description, category, or date)
      * @throws MTException If no matching entries are found
      */
@@ -541,8 +559,8 @@ public class MoneyList {
         String keyword = input.trim().toLowerCase();
         ArrayList<String> results = new ArrayList<>();
 
-        for(String entry : moneyList){
-            if (matchesKeyword(entry,keyword)){
+        for (String entry : moneyList) {
+            if (matchesKeyword(entry, keyword)) {
                 results.add(entry);
             }
         }
@@ -562,7 +580,7 @@ public class MoneyList {
                 return containsIgnoreCase(expense.getDescription(), keyword)
                         || containsIgnoreCase(expense.getCategory(), keyword)
                         || containsIgnoreCase(expense.getDate(), keyword);
-                } else if (entry.startsWith("Income: ")) {
+            } else if (entry.startsWith("Income: ")) {
                 Income income = Income.parseString(entry);
                 return containsIgnoreCase(income.getDescription(), keyword)
                         || containsIgnoreCase(income.getDate(), keyword);
@@ -590,7 +608,8 @@ public class MoneyList {
 
     /**
      * Sets spending limit for a specific category.
-     * @param category The budget category name
+     *
+     * @param category  The budget category name
      * @param amountStr The limit amount as string
      * @throws MTException If amount is invalid
      */
@@ -622,6 +641,7 @@ public class MoneyList {
 
     /**
      * Compares expenses against budget for a category.
+     *
      * @param budgetInput Category name or "Overall" for total budget
      * @throws MTException If budget isn't set
      */
@@ -639,6 +659,7 @@ public class MoneyList {
 
     /**
      * Checks if string is null/empty.
+     *
      * @param input String to check
      * @return True if null or whitespace
      */
@@ -648,6 +669,7 @@ public class MoneyList {
 
     /**
      * Determines if checking total budget.
+     *
      * @param input User input to check
      * @return True if input is "Overall"
      */
@@ -657,6 +679,7 @@ public class MoneyList {
 
     /**
      * Handles total budget expense check.
+     *
      * @throws MTException If no total budget set
      */
     private void handleTotalBudgetCheck() throws MTException {
@@ -671,6 +694,7 @@ public class MoneyList {
 
     /**
      * Handles category-specific budget check.
+     *
      * @param category Budget category to check
      * @throws MTException If category budget not set
      */
@@ -687,6 +711,7 @@ public class MoneyList {
 
     /**
      * Calculates total expenses for a category.
+     *
      * @param category Specific category or null for all expenses
      * @return The summed expense amount
      */
@@ -711,7 +736,8 @@ public class MoneyList {
 
     /**
      * Prints total budget summary comparison.
-     * @param totalBudget Overall Budget object
+     *
+     * @param totalBudget   Overall Budget object
      * @param totalExpenses Calculated expense total
      */
     private void printTotalBudgetSummary(Budget totalBudget, double totalExpenses) {
@@ -723,8 +749,9 @@ public class MoneyList {
 
     /**
      * Prints category budget summary.
+     *
      * @param budget Category Budget object
-     * @param spent Calculated spending amount
+     * @param spent  Calculated spending amount
      */
     private void printCategoryBudgetSummary(Budget budget, double spent) {
         ui.print("-------- CATEGORY EXPENSES BUDGET CHECK --------");
@@ -735,7 +762,10 @@ public class MoneyList {
     //@@author
 
     //@@author Hansel-K
-    /** Displays the sum of all expenses */
+
+    /**
+     * Displays the sum of all expenses
+     */
     public void getTotalExpense() {
         double total = 0.0;
 
@@ -798,7 +828,9 @@ public class MoneyList {
         }
     }
 
-    /** @return The current total budget amount */
+    /**
+     * @return The current total budget amount
+     */
     public double getTotalBudget() {
         Budget total = budgetList.get("Overall");
         return (total == null) ? 0.0 : total.getAmount();
@@ -806,7 +838,10 @@ public class MoneyList {
     //@@author
 
     //@@author Hansel-K
-    /** Displays all unique expense categories */
+
+    /**
+     * Displays all unique expense categories
+     */
     public void listCats() {
         try {
             // Check if the money list is empty
@@ -842,6 +877,7 @@ public class MoneyList {
 
     /**
      * Extracts unique categories from entries.
+     *
      * @return Set of unique category names
      */
     private LinkedHashSet<String> extractUniqueCategories() {
@@ -863,6 +899,7 @@ public class MoneyList {
 
     /**
      * Parses category from entry string.
+     *
      * @param entry Full entry string
      * @return Extracted category name
      */
@@ -886,6 +923,7 @@ public class MoneyList {
 
     /**
      * Displays categories to user.
+     *
      * @param categories Set of categories to display
      */
     private void displayCategories(LinkedHashSet<String> categories) {
@@ -900,6 +938,7 @@ public class MoneyList {
 
     /**
      * Handles category listing errors.
+     *
      * @param e Exception that occurred
      */
     private void handleListCategoriesError(Exception e) {
