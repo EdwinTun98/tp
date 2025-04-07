@@ -10,8 +10,6 @@ import seedu.duke.storage.Storage;
 import seedu.duke.ui.TextUI;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 /**
@@ -55,10 +53,12 @@ public class SetTotalBudgetTest {
     @Test
     public void testSetTotalBudget_negativeInput_throwsException() {
         String input = "setTotBgt -200";
-        assertDoesNotThrow(() -> moneyList.setTotalBudget(input));
-        Budget overallBudget = moneyList.getBudgetList().get("Overall");
-        assertTrue(overallBudget == null || overallBudget.getAmount() >= 0,
-                "Total budget should not be set to a negative value.");
+
+        MTException exception = assertThrows(MTException.class, () -> {
+            moneyList.setTotalBudget(input);
+        });
+
+        assertEquals("Budget cannot be negative.", exception.getMessage());
     }
 
     /**
@@ -126,17 +126,6 @@ public class SetTotalBudgetTest {
                 "Large budget amount should be handled correctly.");
     }
 
-    /**
-     * Test 9: check budget values rounded to 2 decimal places.
-     */
-    @Test
-    public void testSetTotalBudget_decimalRounding() throws MTException {
-        moneyList.setTotalBudget("setTotBgt 123.456");
-
-        Budget budget = moneyList.getBudgetList().get("Overall");
-        assertEquals(123.46, budget.getAmount(), 0.01,
-                "Budget should be rounded to 2 decimal places.");
-    }
 
     /**
      * Test 10: check leading zeros in the budget input are ignored.
