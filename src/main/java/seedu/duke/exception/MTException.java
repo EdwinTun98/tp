@@ -1,4 +1,4 @@
-package seedu.duke;
+package seedu.duke.exception;
 
 //@@author rchlai
 public class MTException extends Exception {

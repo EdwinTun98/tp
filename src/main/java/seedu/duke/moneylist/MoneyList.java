@@ -1,4 +1,4 @@
-package seedu.duke;
+package seedu.duke.moneylist;
 
 import java.util.ArrayList;
 import java.text.DecimalFormat;
@@ -6,6 +6,12 @@ import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
 
+import seedu.duke.logger.MTLogger;
+import seedu.duke.entries.Budget;
+import seedu.duke.entries.Expense;
+import seedu.duke.entries.Income;
+import seedu.duke.exception.MTException;
+import seedu.duke.storage.Storage;
 import seedu.duke.ui.TextUI;
 
 public class MoneyList {

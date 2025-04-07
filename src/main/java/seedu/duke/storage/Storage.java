@@ -1,4 +1,4 @@
-package seedu.duke;
+package seedu.duke.storage;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -8,6 +8,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
+
+import seedu.duke.entries.Budget;
+import seedu.duke.exception.MTException;
+import seedu.duke.logger.MTLogger;
 
 /**
  * Handles loading and saving of entries to a text file.

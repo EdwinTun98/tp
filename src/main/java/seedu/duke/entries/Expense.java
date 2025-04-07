@@ -1,5 +1,7 @@
-package seedu.duke;
+package seedu.duke.entries;
 
+
+import seedu.duke.exception.MTException;
 
 /**
  * Represents an expense with description, amount, category, and date.

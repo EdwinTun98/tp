@@ -36,3 +36,31 @@ Apr 07, 2025 8:32:58 PM seedu.duke.MTLogger logInfo
 INFO: Starting CLI program.
 Apr 07, 2025 8:32:58 PM seedu.duke.MTLogger logInfo
 INFO: Loaded 3 entries from file.
+Apr 07, 2025 8:56:51 PM seedu.duke.logger.MTLogger logInfo
+INFO: Starting CLI program.
+Apr 07, 2025 8:56:51 PM seedu.duke.logger.MTLogger logInfo
+INFO: Loaded 3 entries from file.
+Apr 07, 2025 8:57:04 PM seedu.duke.logger.MTLogger logInfo
+INFO: Expense amount: 20.0
+Apr 07, 2025 8:57:04 PM seedu.duke.logger.MTLogger logInfo
+INFO: Expense amount: 30.0
+Apr 07, 2025 8:57:04 PM seedu.duke.logger.MTLogger logInfo
+INFO: Expense amount: 200.0
+Apr 07, 2025 8:57:04 PM seedu.duke.logger.MTLogger logInfo
+INFO: Total expense calculated: 250.00
+Apr 07, 2025 8:57:34 PM seedu.duke.logger.MTLogger logInfo
+INFO: Set budget: food = 200.0
+Apr 07, 2025 8:57:43 PM seedu.duke.logger.MTLogger logWarning
+WARNING: No Overall budget set.
+Apr 07, 2025 8:57:43 PM seedu.duke.logger.MTLogger logWarning
+WARNING: Error processing command: No Overall budget set.
+Apr 07, 2025 8:57:53 PM seedu.duke.logger.MTLogger logWarning
+WARNING: No category budget set.
+Apr 07, 2025 8:57:53 PM seedu.duke.logger.MTLogger logWarning
+WARNING: Error processing command: No category budget set.
+Apr 07, 2025 8:58:16 PM seedu.duke.logger.MTLogger logInfo
+INFO: Total budget set to: $3000.00
+Apr 07, 2025 8:59:04 PM seedu.duke.logger.MTLogger logWarning
+WARNING: No category budget set.
+Apr 07, 2025 8:59:04 PM seedu.duke.logger.MTLogger logWarning
+WARNING: Error processing command: No category budget set.

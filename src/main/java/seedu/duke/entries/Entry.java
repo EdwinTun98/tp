@@ -1,4 +1,4 @@
-package seedu.duke;
+package seedu.duke.entries;
 
 public class Entry {
     protected String type; // income or expense

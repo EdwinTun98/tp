@@ -1,4 +1,6 @@
-package seedu.duke;
+package seedu.duke.entries;
+
+import seedu.duke.exception.MTException;
 
 /**
  * Represents a budget, either total or category-specific.

@@ -3,7 +3,7 @@ package seedu.duke.ui;
 import java.util.List;
 import java.util.ArrayList;
 
-import seedu.duke.MTException;
+import seedu.duke.exception.MTException;
 
 public class TextUI {
     private static final String LINE_DIVIDER = "----------------------" +

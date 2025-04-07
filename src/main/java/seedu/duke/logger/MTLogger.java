@@ -1,4 +1,4 @@
-package seedu.duke;
+package seedu.duke.logger;
 
 import java.util.logging.FileHandler;
 import java.util.logging.Level;

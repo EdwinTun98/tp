@@ -1,6 +1,9 @@
-package seedu.duke;
+package seedu.duke.entries;
 
 //@@author limleyhooi
+
+import seedu.duke.exception.MTException;
+
 /**
  * Represents an income with description, amount and date.
  */
