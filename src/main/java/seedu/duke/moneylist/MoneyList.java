@@ -7,7 +7,8 @@ import java.util.LinkedHashSet;
 import java.util.Map;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
+import java.time.DateTimeException;
+import java.time.format.ResolverStyle;
 
 import seedu.duke.logger.MTLogger;
 import seedu.duke.entries.Budget;
@@ -208,9 +209,15 @@ public class MoneyList {
      * @throws MTException If input is invalid
      */
     private void validateInput(String input) throws MTException {
-        if (input == null) {
-            throw new MTException("Input should not be null.");
+        if (input == null || input.trim().isEmpty()) {
+            throw new MTException("Input should not be null or empty.");
         }
+
+        String[] parts1 = input.substring(("addExp").length()).split("\\$/", 2);
+        if (parts1.length < 2 || parts1[0].trim().isEmpty() || !input.contains("$/")) {
+            throw new MTException("Invalid format. Use: addExp <description> $/<amount> [c/<category>] [d/<date>]");
+        }
+
     }
 
     /**
@@ -343,36 +350,26 @@ public class MoneyList {
      * @throws MTException If the date format is incorrect or contains a non-existent day/month combination.
      */
     private String validateAndFormatDate(String date) throws MTException {
+
         // Check for default or empty input values
         if (date == null || date.isEmpty() || date.equals("no date")) {
             return "no date"; // Return default value
         }
 
         // Define the expected date format
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+                .withResolverStyle(ResolverStyle.STRICT);;
 
         try {
-            // Attempt to parse the provided date string
+            // Attempt to parse the provided date string with STRICT ResolverStyle
             LocalDate parsedDate = LocalDate.parse(date, formatter);
 
-            // Extract year, month, and day components
-            int year = parsedDate.getYear();
-            int month = parsedDate.getMonthValue();
-            int day = parsedDate.getDayOfMonth();
-
-            // Ensure leap year correctness (e.g., February 29 is valid only for leap years)
-            if (month == 2 && day == 29 && !parsedDate.isLeapYear()) {
-                throw new MTException("Invalid date. " + year + " is not a leap year, so "
-                        + year + "-02-29 is invalid.");
-            }
-
-            //  Check if the provided date is valid
-            LocalDate validDate = LocalDate.of(year, month, day);
+            System.out.println("Parsed date: " + parsedDate);
 
             // Return the properly formatted date
-            return validDate.format(formatter);
+            return parsedDate.format(formatter);
 
-        } catch (DateTimeParseException | IllegalArgumentException e) {
+        } catch (DateTimeException | IllegalArgumentException e) {
             // Catch both format errors and invalid calendar dates
             throw new MTException("Invalid date format or nonexistent day/month. " +
                     "Please use YYYY-MM-DD with valid values.");
