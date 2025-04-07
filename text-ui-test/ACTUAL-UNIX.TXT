@@ -1,4 +1,4 @@
-Loaded 14 entries from file.
+Loaded 0 entries from file.
 Welcome user to
  __  __ _______ 
 |  \/  |__  __|
@@ -31,36 +31,20 @@ What do you want to do next?
 Unknown command. Type 'help' for a list of available commands.
 -------------------------------------------------------------------------------
 What do you want to do next?
-Warning: This expense exceeds your overall budget of $100.00
-Consider reviewing your expenses.
+Overall budget not set. You should set it before adding expenses.
 Expense added: Expense: groceries $20.00 {food stuff} [2025]
 -------------------------------------------------------------------------------
 What do you want to do next?
-Warning: This expense exceeds your overall budget of $100.00
-Consider reviewing your expenses.
+Overall budget not set. You should set it before adding expenses.
 Expense added: Expense: fuel $30.00 {transportation} [no date]
 -------------------------------------------------------------------------------
 What do you want to do next?
-Total expenses: $400.00
+Total expenses: $50.00
 -------------------------------------------------------------------------------
 What do you want to do next?
 Expense list:
 1: Expense: groceries $20.00 {food stuff} [2025]
 2: Expense: fuel $30.00 {transportation} [no date]
-3: Expense: groceries $20.00 {food stuff} [2025]
-4: Expense: fuel $30.00 {transportation} [no date]
-5: Expense: groceries $20.00 {food stuff} [2025]
-6: Expense: fuel $30.00 {transportation} [no date]
-7: Expense: groceries $20.00 {food stuff} [2025]
-8: Expense: fuel $30.00 {transportation} [no date]
-9: Expense: groceries $20.00 {food stuff} [2025]
-10: Expense: fuel $30.00 {transportation} [no date]
-11: Expense: groceries $20.00 {food stuff} [2025]
-12: Expense: fuel $30.00 {transportation} [no date]
-13: Expense: groceries $20.00 {food stuff} [2025]
-14: Expense: fuel $30.00 {transportation} [no date]
-15: Expense: groceries $20.00 {food stuff} [2025]
-16: Expense: fuel $30.00 {transportation} [no date]
 -------------------------------------------------------------------------------
 What do you want to do next?
 Total budget set to: $100.00
@@ -75,31 +59,10 @@ What do you want to do next?
 Expense list:
 1: Expense: groceries $20.00 {food stuff} [2025]
 2: Expense: fuel $30.00 {transportation} [no date]
-3: Expense: groceries $20.00 {food stuff} [2025]
-4: Expense: fuel $30.00 {transportation} [no date]
-5: Expense: groceries $20.00 {food stuff} [2025]
-6: Expense: fuel $30.00 {transportation} [no date]
-7: Expense: groceries $20.00 {food stuff} [2025]
-8: Expense: fuel $30.00 {transportation} [no date]
-9: Expense: groceries $20.00 {food stuff} [2025]
-10: Expense: fuel $30.00 {transportation} [no date]
-11: Expense: groceries $20.00 {food stuff} [2025]
-12: Expense: fuel $30.00 {transportation} [no date]
-13: Expense: groceries $20.00 {food stuff} [2025]
-14: Expense: fuel $30.00 {transportation} [no date]
-15: Expense: groceries $20.00 {food stuff} [2025]
-16: Expense: fuel $30.00 {transportation} [no date]
 -------------------------------------------------------------------------------
 What do you want to do next?
 Found Matching entries for: fuel
 1: Expense: fuel $30.00 {transportation} [no date]
-2: Expense: fuel $30.00 {transportation} [no date]
-3: Expense: fuel $30.00 {transportation} [no date]
-4: Expense: fuel $30.00 {transportation} [no date]
-5: Expense: fuel $30.00 {transportation} [no date]
-6: Expense: fuel $30.00 {transportation} [no date]
-7: Expense: fuel $30.00 {transportation} [no date]
-8: Expense: fuel $30.00 {transportation} [no date]
 -------------------------------------------------------------------------------
 What do you want to do next?
 Categories (in order of appearance):

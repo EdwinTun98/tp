@@ -209,7 +209,7 @@ public class MoneyList {
     private void checkIfExceedsOverallBudget(Double amount) {
         Budget overallBudget = budgetList.get("Overall");
         if (overallBudget == null) {
-            ui.print("Overall budget not set. Please set it before adding expenses.");
+            ui.print("Overall budget not set. You should set it before adding expenses.");
             return;
         }
 
