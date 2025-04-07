@@ -6,6 +6,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -17,18 +18,54 @@ public class Storage {
     private static final String BUDGET_FILE_PATH = "budgets.txt";
     private final MTLogger logger;
 
-    //@@author rchlai
+    private List<String> lastKnownState = new ArrayList<>();
 
+    //@@author rchlai
     /**
      * Initializes a new Storage instance with a logger.
      */
     public Storage() {
         this.logger = new MTLogger(Storage.class.getName());
+        // Initialize last known state
+        try {
+            this.lastKnownState = loadFileState(FILE_PATH);
+        } catch (MTException error) {
+            logger.logWarning("Could not initialize last known " +
+                    "state: " + error.getMessage());
+        }
     }
     //@@author
 
-    //@@author rchlai
+    /**
+     * Loads the current state of a file.
+     *
+     * @param filePath Path to the file to load
+     * @return List of lines in the file
+     * @throws MTException If there's an error reading the file
+     */
+    private List<String> loadFileState(String filePath) throws MTException {
+        List<String> currentState = new ArrayList<>();
+        File file = new File(filePath);
 
+        if (!file.exists()) {
+            return currentState;
+        }
+
+        try (Scanner scanner = new Scanner(file)) {
+            while (scanner.hasNextLine()) {
+                currentState.add(scanner.nextLine());
+            }
+        } catch (FileNotFoundException error) {
+            logger.logSevere("Failed to find file at " + filePath,
+                    error);
+            throw new MTException("File not found while loading " +
+                    "state.");
+        }
+
+        return currentState;
+    }
+
+    //@@author rchlai
     /**
      * Saves all entries to the storage file.
      *
@@ -42,9 +79,13 @@ public class Storage {
             for (String entry : moneyList) {
                 writer.write(entry + "\n");
             }
+            // Update last known state after saving
+            lastKnownState = new ArrayList<>(moneyList);
         } catch (IOException error) {
-            logger.logSevere("Error saving entries into " + FILE_PATH, error);
-            throw new MTException("Error saving entries: " + error.getMessage());
+            logger.logSevere("Error saving entries into " + FILE_PATH,
+                    error);
+            throw new MTException("Error saving entries: " +
+                    error.getMessage());
         }
     }
     //@@author
@@ -95,8 +136,11 @@ public class Storage {
             while (scanner.hasNextLine()) {
                 entries.add(scanner.nextLine());
             }
+            // Update last known state after loading
+            lastKnownState = new ArrayList<>(entries);
         } catch (FileNotFoundException error) {
-            logger.logSevere("Failed to find file at " + FILE_PATH, error);
+            logger.logSevere("Failed to find file at " + FILE_PATH,
+                    error);
             throw new MTException("File not found. Starting with an empty list.");
         }
         return entries;
@@ -127,11 +171,11 @@ public class Storage {
                     budgets.put(category, new Budget(category, amount));
                 }
             }
-        } catch (FileNotFoundException e) {
-            logger.logSevere("Budget file not found", e);
+        } catch (FileNotFoundException error) {
+            logger.logSevere("Budget file not found", error);
             throw new MTException("Budgets file not found.");
-        } catch (NumberFormatException e) {
-            throw new MTException("Corrupted budget entry: " + e.getMessage());
+        } catch (NumberFormatException error) {
+            throw new MTException("Corrupted budget entry: " + error.getMessage());
         }
 
         return budgets;

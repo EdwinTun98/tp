@@ -3,14 +3,10 @@ hide circle
 skinparam classAttributeIconSize 0
 
 class MoneyList {
-  - moneyList: ArrayList<String>
-  - storage: Storage
-  - ui: TextUI
   + addExpense(String)
   + addIncome(String)
   + deleteEntry(String)
   + editExpense(...)
-  ...
 }
 
 note top: "Omitted: Helper methods, getters/setters, and exception handling"

@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import seedu.duke.ui.TextUI;
 
 //@@author rchlai
 
@@ -53,7 +54,7 @@ class DeleteEntryTest {
         int initialSize = moneyList.getMoneyList().size();
 
         // Delete the second entry (index 1)
-        moneyList.deleteEntry("delete 2");
+        moneyList.deleteEntry("del 2");
 
         // Verify the size has decreased by 1
         assertEquals(moneyList.getMoneyList().size(), initialSize - 1,
@@ -72,11 +73,41 @@ class DeleteEntryTest {
     public void testDeleteEntry_invalidIndex() {
         // Attempt to delete an entry with an invalid index
         MTException thrown = assertThrows(MTException.class, () -> {
-            moneyList.deleteEntry("delete 5"); // Index 5 does not exist
+            moneyList.deleteEntry("del 5"); // Index 5 does not exist
         });
 
         // Verify the exception message
         assertEquals("Invalid or unavailable entry number.", thrown.getMessage(),
                 "The exception message should indicate an invalid entry number.");
+    }
+
+    @Test
+    public void testDeleteEntry_negativeIndex() {
+        MTException thrown = assertThrows(MTException.class, () -> {
+            moneyList.deleteEntry("del -123"); // Negative index
+        });
+
+        assertEquals("Invalid index: Negative indexes are not allowed.", thrown.getMessage(),
+                "Correct error message for negative index.");
+    }
+
+    @Test
+    public void testDeleteEntry_indexZero() {
+        MTException thrown = assertThrows(MTException.class, () -> {
+            moneyList.deleteEntry("del 00000"); // Index 0 is not allowed
+        });
+
+        assertEquals("Invalid index: An index of 0 is not allowed.", thrown.getMessage(),
+                "Correct error message for index 0.");
+    }
+
+    @Test
+    public void testDeleteEntry_garbageIndex() {
+        MTException thrown = assertThrows(MTException.class, () -> {
+            moneyList.deleteEntry("delete abc123"); // Invalid, garbage input
+        });
+
+        assertEquals("Invalid index: Please input a valid index.", thrown.getMessage(),
+                "Correct error message for garbage index.");
     }
 }

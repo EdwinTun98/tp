@@ -84,9 +84,9 @@ class DeleteCommand implements Command {
 
     @Override
     public void execute(MoneyList moneyList) throws MTException {
-        // Since MoneyList.deleteEntry expects the original "delete X" string,
+        // Since MoneyList.deleteEntry expects the original "del X" string,
         // need to recreate it based on the parsed index
-        String deleteCommand = "delete " + (index + 1);
+        String deleteCommand = "del " + (index + 1);
         moneyList.deleteEntry(deleteCommand);
     }
 

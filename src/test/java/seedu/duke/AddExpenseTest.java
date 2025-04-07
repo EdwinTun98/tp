@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import seedu.duke.ui.TextUI;
 
 public class AddExpenseTest {
     private MoneyList moneyList;
@@ -52,7 +53,8 @@ public class AddExpenseTest {
         MoneyList moneyList = new MoneyList(logger, storage, ui);
         Exception exception = assertThrows(MTException.class,
                 () -> moneyList.addExpense("addExp Milk $/abc"));
-        assertEquals("Invalid amount format. Please ensure it is a numeric value.", exception.getMessage());
+        assertEquals("Invalid amount format. " +
+                "Please ensure it is a numeric value of at most 7 whole numbers and 2 d.p.", exception.getMessage());
     }
 
     @Test
@@ -124,18 +126,6 @@ public class AddExpenseTest {
     }
 
     @Test
-    void testAddExpense_largeAmount() {
-        try {
-            MoneyList moneyList = new MoneyList(logger, storage, ui);
-            moneyList.addExpense("addExp Milk $/999999999 c/Food");
-            assertTrue(moneyList.getMoneyList().contains("Expense: Milk $999999999.00 {Food} [no date]"),
-                    "Expense with large amount should be added.");
-        } catch (Exception e) {
-            fail("Exception should not occur for a large amount.");
-        }
-    }
-
-    @Test
     void testAddExpense_multipleCategories() {
         MoneyList moneyList = new MoneyList(logger, storage, ui);
         Exception exception = assertThrows(MTException.class,
@@ -174,5 +164,17 @@ public class AddExpenseTest {
         assertEquals("Failed to add expense: Invalid format. " +
                         "Use: addExp <description> $/<amount> [c/<category>] [d/<date>]",
                 exception.getMessage());
+    }
+
+    @Test
+    void testAddExpense_multipleSeparatedMarkers() {
+        MoneyList moneyList = new MoneyList(logger, storage, ui);
+        Exception exception = assertThrows(MTException.class, () -> {
+            moneyList.addExpense("addExp Apple $/1.111 d/date c/category /c /d /c /d");
+        });
+        assertEquals("Failed to add expense: Invalid format. " +
+                        "Use: addExp <description> $/<amount> [c/<category>] [d/<date>]",
+                exception.getMessage(),
+                "Should throw exception for invalid format with multiple separated markers.");
     }
 }

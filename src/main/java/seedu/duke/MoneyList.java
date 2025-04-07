@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
 
+import seedu.duke.ui.TextUI;
+
 public class MoneyList {
     private static final int INDEX_OFFSET = 1;
 
@@ -36,13 +38,41 @@ public class MoneyList {
     }
 
     /**
-     * Extracts index number from user input.
-     * @param input Raw user input (e.g., "delete 1")
-     * @return Zero-based index number
+     * Extracts and returns the index from the input string.
+     * Ensures the index is valid, including negative numbers.
+     *
+     * @param input The input string to extract the index from.
+     * @return The extracted index after applying the offset.
+     * @throws NumberFormatException If the input contains an invalid index format.
      */
-    private int extractIndex(String input) {
-        return Integer.parseInt(input.replaceAll("[^0-9]", ""))
-                - INDEX_OFFSET;
+    private int extractIndex(String input) throws MTException {
+
+        // Filter out the del command
+        String numberString = input.substring(3).trim();
+
+        // Check for garbage inputs
+        if (!numberString.matches("-?\\d+")) {
+            throw new MTException("Invalid index: Please input a valid index.");
+        }
+
+        // Check for negative indexes
+        if (numberString.matches("-\\d+")) {
+            throw new MTException("Invalid index: Negative indexes are not allowed.");
+        }
+
+        // Check for index 0
+        if (numberString.matches(".*0.*")) {
+            throw new MTException("Invalid index: An index of 0 is not allowed.");
+        }
+
+        // Parse the number and apply the offset
+        int extractedIndex = Integer.parseInt(numberString) - INDEX_OFFSET;
+
+        if (extractedIndex < 0) {
+            throw new IllegalArgumentException("Invalid index: Negative indexes are not allowed.");
+        }
+
+        return extractedIndex;
     }
 
     /**
@@ -64,9 +94,9 @@ public class MoneyList {
      */
     public void deleteEntry(String input) throws MTException {
         try {
-            // Assert that the input is not null and starts with "delete"
+            // Assert that the input is not null and starts with "del"
             assert input != null : "Input should not be null";
-            assert input.startsWith("delete") : "Input should start with 'delete'";
+            assert input.startsWith("del") : "Input should start with 'del'";
 
             // obtain the index to search for entry to be deleted
             int deleteIndex = extractIndex(input);
@@ -86,7 +116,7 @@ public class MoneyList {
             ui.printNumItems(moneyList.size());
         } catch (NumberFormatException error) {
             logger.logSevere("Invalid delete command format: " + input, error);
-            throw new MTException("Use: delete <ENTRY_NUMBER>");
+            throw new MTException("Use: del <ENTRY_NUMBER>");
         }
     }
 
@@ -134,6 +164,7 @@ public class MoneyList {
                 description = extractDescription(input);
                 String afterAmountPart = extractAfterAmountPart(input);
 
+                validateFormatOrder(afterAmountPart); // Ensure proper order of c/ and d/
                 validateMarkers(afterAmountPart);
 
                 amount = extractAmount(afterAmountPart);
@@ -151,7 +182,9 @@ public class MoneyList {
             saveExpense(description, amount, category, date);
         } catch (NumberFormatException error) {
             logger.logSevere("Invalid amount format: " + input, error);
-            throw new MTException("Invalid amount format. Please ensure it is a numeric value.");
+            // More than 9 numbers for <amount> causes amount to be formatted to a string instead bc of exponential E
+            throw new MTException("Invalid amount format. " +
+                    "Please ensure it is a numeric value of at most 7 whole numbers and 2 d.p.");
         } catch (Exception error) {
             logger.logSevere("Error adding expense: " + error.getMessage(), error);
             throw new MTException("Failed to add expense: " + error.getMessage());
@@ -191,16 +224,77 @@ public class MoneyList {
     }
 
     /**
-     * Checks for duplicate category/date markers.
+     * Validates the order of format specifiers in the input string.
+     * Ensures that if both "c/" (category) and "d/" (date) are present,
+     * "c/" appears before "d/" in the input string.
+     *
+     * @param afterAmountPart The string to be validated, part of the user's input after specifying the amount.
+     * @throws MTException If "c/" appears after "d/", indicating an invalid format
+     */
+
+    private void validateFormatOrder(String afterAmountPart) throws MTException {
+        // Ensure "c/" appears before "d/" if both are present
+        int categoryIndex = afterAmountPart.indexOf("c/");
+        int dateIndex = afterAmountPart.indexOf("d/");
+
+        if (categoryIndex != -1 && dateIndex != -1 && categoryIndex > dateIndex) {
+            throw new MTException("Invalid format. Use: addExp <description> $/<amount> [c/<category>] [d/<date>]");
+        }
+    }
+
+    /**
+     * Checks for invalid markers based on the presence or absence of "c/" and "d/" markers.
+     * Ensures that markers follow the correct format and detects multiple "c/" or "d/"
+     * No need to check for amount marker because of extractAmount checks
+     *
      * @param afterAmountPart Input portion after amount
-     * @throws MTException If duplicate markers found
+     * @throws MTException If invalid or misplaced markers are detected
      */
     private void validateMarkers(String afterAmountPart) throws MTException {
-        if (afterAmountPart.split("c/").length - 1 > 1) {
+        // Count occurrences of "c/" and "d/" markers
+        int categoryMarkerCount = afterAmountPart.split("c/").length - 1;
+        int dateMarkerCount = afterAmountPart.split("d/").length - 1;
+
+        // Throw error if there are multiple "c/" markers
+        if (categoryMarkerCount > 1) {
             throw new MTException("Invalid format. Multiple category markers detected.");
         }
-        if (afterAmountPart.split("d/").length - 1 > 1) {
+
+        // Throw error if there are multiple "d/" markers
+        if (dateMarkerCount > 1) {
             throw new MTException("Invalid format. Multiple date markers detected.");
+        }
+
+        // Scenario 1: No "c/" and "d/" markers
+        if (categoryMarkerCount == 0 && dateMarkerCount == 0) {
+            if (afterAmountPart.contains("/")) {
+                throw new MTException("Invalid format. Markers detected after amount without 'c/' or 'd/'.");
+            }
+        }
+
+        // Scenario 2: "c/" present but no "d/"
+        if (categoryMarkerCount > 0 && dateMarkerCount == 0) {
+            String afterCategory = afterAmountPart.split("c/", 2)[1].trim();
+            if (afterCategory.contains("/")) {
+                throw new MTException("Invalid format. Markers detected after 'c/' without 'd/'.");
+            }
+        }
+
+        // Scenario 3: "d/" present but no "c/"
+        if (categoryMarkerCount == 0 && dateMarkerCount > 0) {
+            String afterDate = afterAmountPart.split("d/", 2)[1].trim();
+            if (afterDate.contains("/")) {
+                throw new MTException("Invalid format. Markers detected after 'd/' without 'c/'.");
+            }
+        }
+
+        // Scenario 4: Both "c/" and "d/" present
+        if (categoryMarkerCount > 0 && dateMarkerCount > 0) {
+            String afterDate = afterAmountPart.split("d/", 2)[1].trim();
+            if (afterDate.contains("/")) {
+                throw new MTException("Invalid format. " +
+                        "Markers detected after 'd/' when both 'c/' and 'd/' are present.");
+            }
         }
     }
 
@@ -259,6 +353,7 @@ public class MoneyList {
      * @throws MTException If amount ≤ 0
      */
     private void validateAmount(Double amount) throws MTException {
+        // Check if amount is positive
         if (amount <= 0) {
             throw new MTException("Amount must be greater than zero.");
         }
@@ -295,7 +390,8 @@ public class MoneyList {
             input = input.trim();
 
             if (!input.startsWith("addIncome") || !input.contains("$/")) {
-                throw new MTException("Invalid format. Use: addIncome <description> $/<amount> [d/<date>]");
+                throw new MTException("Invalid format. " +
+                        "Use: addIncome <description> $/<amount> [d/<date>]");
             }
 
             String content = input.substring("addIncome".length()).trim();
@@ -317,9 +413,7 @@ public class MoneyList {
                 amount = Double.parseDouble(remainder.trim());
             }
 
-            if (amount <= 0) {
-                throw new MTException("Amount must be greater than zero.");
-            }
+            validateAmount(amount);
 
             Income newIncome = new Income(description, amount, date);
             moneyList.add(newIncome.toString());
