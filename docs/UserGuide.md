@@ -32,6 +32,9 @@ Here are the steps to get started quickly:
 > - Only positive `<amount>` inputs will be accepted
 > - All `<amount>` inputs will be limited to *7 digits including decimal places*
 > - All `<amount>` inputs will be formatted to *2 d.p.* with *no rounding*
+>
+> Useful information about the `<date>` inputs:
+> - Dates only use the `YYYY-MM-DD` format
 
 ### Listing all tasks: `list`
 
@@ -310,11 +313,14 @@ Categories (in order of appearance):
 
 Displays overall expense or expense for a specified category
 
+> [!NOTE]
+> Overall budget refers to total budget
+
 Format: `check <Overall or Category>`
 
-Example: `check Food`
+Example 1: `check Food`
 
-Outcome:
+Outcome 1:
 ```
 What do you want to do next?
 check Food
@@ -322,6 +328,20 @@ check Food
 Budget for food: $1000.00
 Total Spent: $10.00
 Remaining: $990.00
+-------------------------------------------------------------------------------
+What do you want to do next?
+```
+
+Example 2: `check Overall`
+
+Outcome 2:
+```
+What do you want to do next?
+check Overall
+-------- OVERALL BUDGET EXPENSES SUMMARY --------
+Overall Budget: $400.00
+Overall Expenses: $250.00
+Remaining: $150.00
 -------------------------------------------------------------------------------
 What do you want to do next?
 ```
