@@ -64,3 +64,241 @@ Apr 07, 2025 8:59:04 PM seedu.duke.logger.MTLogger logWarning
 WARNING: No category budget set.
 Apr 07, 2025 8:59:04 PM seedu.duke.logger.MTLogger logWarning
 WARNING: Error processing command: No category budget set.
+<<<<<<< HEAD
+=======
+Apr 06, 2025 9:53:48 PM seedu.duke.MTLogger logInfo
+INFO: Starting CLI program.
+Apr 06, 2025 9:53:49 PM seedu.duke.MTLogger logInfo
+INFO: Loaded 3 entries from file.
+Apr 06, 2025 10:24:18 PM seedu.duke.MTLogger logInfo
+INFO: Starting CLI program.
+Apr 06, 2025 10:24:19 PM seedu.duke.MTLogger logInfo
+INFO: Loaded 3 entries from file.
+Apr 06, 2025 10:26:09 PM seedu.duke.MTLogger logInfo
+INFO: Starting CLI program.
+Apr 06, 2025 10:26:09 PM seedu.duke.MTLogger logInfo
+INFO: Loaded 3 entries from file.
+Apr 06, 2025 10:26:37 PM seedu.duke.MTLogger logInfo
+INFO: Starting CLI program.
+Apr 06, 2025 10:26:37 PM seedu.duke.MTLogger logInfo
+INFO: Loaded 2 entries from file.
+Apr 06, 2025 10:27:06 PM seedu.duke.MTLogger logInfo
+INFO: Starting CLI program.
+Apr 06, 2025 10:27:06 PM seedu.duke.MTLogger logInfo
+INFO: Loaded 1 entries from file.
+Apr 06, 2025 10:29:32 PM seedu.duke.MTLogger logInfo
+INFO: Starting CLI program.
+Apr 06, 2025 10:29:32 PM seedu.duke.MTLogger logInfo
+INFO: Loaded 1 entries from file.
+Apr 06, 2025 10:30:53 PM seedu.duke.MTLogger logInfo
+INFO: Starting CLI program.
+Apr 06, 2025 10:30:53 PM seedu.duke.MTLogger logInfo
+INFO: Loaded 1 entries from file.
+Apr 06, 2025 10:31:01 PM seedu.duke.MTLogger logWarning
+WARNING: Error processing command: Unknown command. Type 'help' for a list of available commands.
+Apr 07, 2025 4:56:35 PM seedu.duke.MTLogger logInfo
+INFO: Entry updated: Expense: Latte $6.50 {beverages} [2024-04-02]
+Apr 07, 2025 4:56:35 PM seedu.duke.MTLogger logInfo
+INFO: Entry updated: Expense: Cake $8.00 {DESSERT} [2024-04-04]
+Apr 07, 2025 4:56:35 PM seedu.duke.MTLogger logWarning
+WARNING: Invalid index provided: -1
+Apr 07, 2025 4:56:35 PM seedu.duke.MTLogger logWarning
+WARNING: Invalid index provided: 10
+Apr 07, 2025 4:56:35 PM seedu.duke.MTLogger logInfo
+INFO: Entry updated: Expense: Coke $3.00 {drink} [2024-04-01]
+Apr 07, 2025 4:56:35 PM seedu.duke.MTLogger logInfo
+INFO: Entry updated: Expense: Chips $5.00 {snack} [2024-04-03]
+Apr 07, 2025 4:56:35 PM seedu.duke.MTLogger logInfo
+INFO: Entry updated: Expense: Coffee $4.50 {snack} [2024-04-03]
+Apr 07, 2025 5:00:25 PM seedu.duke.MTLogger logInfo
+INFO: Entry updated: Expense: Latte $6.50 {beverages} [2024-04-02]
+Apr 07, 2025 5:00:25 PM seedu.duke.MTLogger logInfo
+INFO: Entry updated: Expense: Cake $8.00 {DESSERT} [2024-04-04]
+Apr 07, 2025 5:00:25 PM seedu.duke.MTLogger logWarning
+WARNING: Invalid index provided: -1
+Apr 07, 2025 5:00:25 PM seedu.duke.MTLogger logWarning
+WARNING: Invalid index provided: 10
+Apr 07, 2025 5:00:25 PM seedu.duke.MTLogger logInfo
+INFO: Entry updated: Expense: Coke $3.00 {drink} [2024-04-01]
+Apr 07, 2025 5:00:25 PM seedu.duke.MTLogger logInfo
+INFO: Entry updated: Expense: Chips $5.00 {snack} [2024-04-03]
+Apr 07, 2025 5:00:25 PM seedu.duke.MTLogger logInfo
+INFO: Entry updated: Expense: Coffee $4.50 {snack} [2024-04-03]
+Apr 07, 2025 5:06:21 PM seedu.duke.MTLogger logWarning
+WARNING: Invalid substring provided.
+Apr 07, 2025 5:06:21 PM seedu.duke.MTLogger logWarning
+WARNING: No matching entries found for keyword$$$
+Apr 07, 2025 5:06:21 PM seedu.duke.MTLogger logWarning
+WARNING: No matching entries found for keywordren
+Apr 07, 2025 5:06:21 PM seedu.duke.MTLogger logWarning
+WARNING: No matching entries found for keywordmilk
+Apr 07, 2025 5:06:21 PM seedu.duke.MTLogger logWarning
+WARNING: Invalid substring provided.
+Apr 07, 2025 5:06:21 PM seedu.duke.MTLogger logWarning
+WARNING: No matching entries found for keywordgym
+Apr 07, 2025 5:06:21 PM seedu.duke.MTLogger logWarning
+WARNING: No matching entries found for keywordmilk
+Apr 07, 2025 5:06:21 PM seedu.duke.MTLogger logWarning
+WARNING: No matching entries found for keywordfood
+Apr 07, 2025 5:08:10 PM seedu.duke.MTLogger logInfo
+INFO: Entry updated: Expense: Latte $6.50 {beverages} [2024-04-02]
+Apr 07, 2025 5:08:10 PM seedu.duke.MTLogger logInfo
+INFO: Entry updated: Expense: Cake $8.00 {DESSERT} [2024-04-04]
+Apr 07, 2025 5:08:10 PM seedu.duke.MTLogger logWarning
+WARNING: Invalid index provided: -1
+Apr 07, 2025 5:08:10 PM seedu.duke.MTLogger logWarning
+WARNING: Invalid index provided: 10
+Apr 07, 2025 5:08:10 PM seedu.duke.MTLogger logInfo
+INFO: Entry updated: Expense: Coke $3.00 {drink} [2024-04-01]
+Apr 07, 2025 5:08:10 PM seedu.duke.MTLogger logInfo
+INFO: Entry updated: Expense: Chips $5.00 {snack} [2024-04-03]
+Apr 07, 2025 5:08:10 PM seedu.duke.MTLogger logInfo
+INFO: Entry updated: Expense: Coffee $4.50 {snack} [2024-04-03]
+Apr 07, 2025 5:08:39 PM seedu.duke.MTLogger logWarning
+WARNING: Invalid substring provided.
+Apr 07, 2025 5:08:39 PM seedu.duke.MTLogger logWarning
+WARNING: No matching entries found for keyword$$$
+Apr 07, 2025 5:08:39 PM seedu.duke.MTLogger logWarning
+WARNING: No matching entries found for keywordren
+Apr 07, 2025 5:08:39 PM seedu.duke.MTLogger logWarning
+WARNING: No matching entries found for keywordmilk
+Apr 07, 2025 5:08:39 PM seedu.duke.MTLogger logWarning
+WARNING: Invalid substring provided.
+Apr 07, 2025 5:08:39 PM seedu.duke.MTLogger logWarning
+WARNING: No matching entries found for keywordgym
+Apr 07, 2025 5:08:39 PM seedu.duke.MTLogger logWarning
+WARNING: No matching entries found for keywordmilk
+Apr 07, 2025 5:08:39 PM seedu.duke.MTLogger logWarning
+WARNING: No matching entries found for keywordfood
+Apr 07, 2025 5:09:34 PM seedu.duke.MTLogger logWarning
+WARNING: Invalid substring provided.
+Apr 07, 2025 5:09:34 PM seedu.duke.MTLogger logWarning
+WARNING: No matching entries found for keyword$$$
+Apr 07, 2025 5:09:34 PM seedu.duke.MTLogger logWarning
+WARNING: Invalid substring provided.
+Apr 07, 2025 5:09:34 PM seedu.duke.MTLogger logWarning
+WARNING: No matching entries found for keywordgym
+Apr 07, 2025 5:13:06 PM seedu.duke.MTLogger logWarning
+WARNING: Invalid substring provided.
+Apr 07, 2025 5:13:06 PM seedu.duke.MTLogger logWarning
+WARNING: No matching entries found for keyword$$$
+Apr 07, 2025 5:13:06 PM seedu.duke.MTLogger logWarning
+WARNING: Invalid substring provided.
+Apr 07, 2025 5:13:06 PM seedu.duke.MTLogger logWarning
+WARNING: No matching entries found for keywordgym
+Apr 07, 2025 5:13:15 PM seedu.duke.MTLogger logWarning
+WARNING: Invalid substring provided.
+Apr 07, 2025 5:13:15 PM seedu.duke.MTLogger logWarning
+WARNING: No matching entries found for keyword$$$
+Apr 07, 2025 5:13:15 PM seedu.duke.MTLogger logWarning
+WARNING: Invalid substring provided.
+Apr 07, 2025 5:13:15 PM seedu.duke.MTLogger logWarning
+WARNING: No matching entries found for keywordgym
+Apr 07, 2025 9:09:44 PM seedu.duke.MTLogger logInfo
+INFO: Saving entries into mt.txt
+Apr 07, 2025 9:09:44 PM seedu.duke.MTLogger logSevere
+SEVERE: Error saving entries into mt.txt
+java.io.FileNotFoundException: mt.txt (Access is denied)
+	at java.base/java.io.FileOutputStream.open0(Native Method)
+	at java.base/java.io.FileOutputStream.open(FileOutputStream.java:293)
+	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:235)
+	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:123)
+	at java.base/java.io.FileWriter.<init>(FileWriter.java:66)
+	at seedu.duke.Storage.saveExpenses(Storage.java:78)
+	at seedu.duke.StorageTest.lambda$saveEntries_invalidFile_throwsException$2(StorageTest.java:123)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:53)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:35)
+	at org.junit.jupiter.api.Assertions.assertThrows(Assertions.java:3111)
+	at seedu.duke.StorageTest.saveEntries_invalidFile_throwsException(StorageTest.java:122)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.junit.platform.commons.util.ReflectionUtils.invokeMethod(ReflectionUtils.java:728)
+	at org.junit.jupiter.engine.execution.MethodInvocation.proceed(MethodInvocation.java:60)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain$ValidatingInvocation.proceed(InvocationInterceptorChain.java:131)
+	at org.junit.jupiter.engine.extension.TimeoutExtension.intercept(TimeoutExtension.java:156)
+	at org.junit.jupiter.engine.extension.TimeoutExtension.interceptTestableMethod(TimeoutExtension.java:147)
+	at org.junit.jupiter.engine.extension.TimeoutExtension.interceptTestMethod(TimeoutExtension.java:86)
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker$ReflectiveInterceptorCall.lambda$ofVoidMethod$0(InterceptingExecutableInvoker.java:103)
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.lambda$invoke$0(InterceptingExecutableInvoker.java:93)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain$InterceptedInvocation.proceed(InvocationInterceptorChain.java:106)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.proceed(InvocationInterceptorChain.java:64)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.chainAndInvoke(InvocationInterceptorChain.java:45)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.invoke(InvocationInterceptorChain.java:37)
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.invoke(InterceptingExecutableInvoker.java:92)
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.invoke(InterceptingExecutableInvoker.java:86)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.lambda$invokeTestMethod$7(TestMethodTestDescriptor.java:218)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.invokeTestMethod(TestMethodTestDescriptor.java:214)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:139)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:69)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:151)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:141)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:139)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:138)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:155)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:141)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:139)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:138)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:155)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:141)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:139)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:138)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.submit(SameThreadHierarchicalTestExecutorService.java:35)
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor.execute(HierarchicalTestExecutor.java:57)
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestEngine.execute(HierarchicalTestEngine.java:54)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:107)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:88)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.lambda$execute$0(EngineExecutionOrchestrator.java:54)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.withInterceptedStreams(EngineExecutionOrchestrator.java:67)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:52)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:114)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:86)
+	at org.junit.platform.launcher.core.DefaultLauncherSession$DelegatingLauncher.execute(DefaultLauncherSession.java:86)
+	at org.gradle.api.internal.tasks.testing.junitplatform.JUnitPlatformTestClassProcessor$CollectAllTestClassesExecutor.processAllTestClasses(JUnitPlatformTestClassProcessor.java:124)
+	at org.gradle.api.internal.tasks.testing.junitplatform.JUnitPlatformTestClassProcessor$CollectAllTestClassesExecutor.access$000(JUnitPlatformTestClassProcessor.java:99)
+	at org.gradle.api.internal.tasks.testing.junitplatform.JUnitPlatformTestClassProcessor.stop(JUnitPlatformTestClassProcessor.java:94)
+	at org.gradle.api.internal.tasks.testing.SuiteTestClassProcessor.stop(SuiteTestClassProcessor.java:63)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.gradle.internal.dispatch.ReflectionDispatch.dispatch(ReflectionDispatch.java:36)
+	at org.gradle.internal.dispatch.ReflectionDispatch.dispatch(ReflectionDispatch.java:24)
+	at org.gradle.internal.dispatch.ContextClassLoaderDispatch.dispatch(ContextClassLoaderDispatch.java:33)
+	at org.gradle.internal.dispatch.ProxyDispatchAdapter$DispatchingInvocationHandler.invoke(ProxyDispatchAdapter.java:92)
+	at jdk.proxy1/jdk.proxy1.$Proxy4.stop(Unknown Source)
+	at org.gradle.api.internal.tasks.testing.worker.TestWorker$3.run(TestWorker.java:200)
+	at org.gradle.api.internal.tasks.testing.worker.TestWorker.executeAndMaintainThreadName(TestWorker.java:132)
+	at org.gradle.api.internal.tasks.testing.worker.TestWorker.execute(TestWorker.java:103)
+	at org.gradle.api.internal.tasks.testing.worker.TestWorker.execute(TestWorker.java:63)
+	at org.gradle.process.internal.worker.child.ActionExecutionWorker.execute(ActionExecutionWorker.java:56)
+	at org.gradle.process.internal.worker.child.SystemApplicationClassLoaderWorker.call(SystemApplicationClassLoaderWorker.java:121)
+	at org.gradle.process.internal.worker.child.SystemApplicationClassLoaderWorker.call(SystemApplicationClassLoaderWorker.java:71)
+	at worker.org.gradle.process.internal.worker.GradleWorkerMain.run(GradleWorkerMain.java:69)
+	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
+
+Apr 07, 2025 9:09:44 PM seedu.duke.MTLogger logInfo
+INFO: Saving entries into mt.txt
+Apr 07, 2025 9:09:44 PM seedu.duke.MTLogger logInfo
+INFO: Loading previous entries from mt.txt
+Apr 07, 2025 9:09:44 PM seedu.duke.MTLogger logInfo
+INFO: Loading previous entries from mt.txt
+>>>>>>> master
