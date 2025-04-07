@@ -217,7 +217,8 @@ public class AddExpenseTest {
         MoneyList moneyList = new MoneyList(logger, storage, ui);
         Exception exception = assertThrows(MTException.class,
                 () -> moneyList.addExpense("addExp Bread $/10 c/Food d/2025-13-10"));
-        assertEquals("Failed to add expense: Invalid date format or nonexistent day/month. Please use YYYY-MM-DD with valid values.",
+        assertEquals("Failed to add expense: Invalid date format or nonexistent day/month. " +
+                        "Please use YYYY-MM-DD with valid values.",
                 exception.getMessage());
     }
 
@@ -226,7 +227,8 @@ public class AddExpenseTest {
         MoneyList moneyList = new MoneyList(logger, storage, ui);
         Exception exception = assertThrows(MTException.class,
                 () -> moneyList.addExpense("addExp Bread $/10 c/Food d/2025-04-40"));
-        assertEquals("Failed to add expense: Invalid date format or nonexistent day/month. Please use YYYY-MM-DD with valid values.",
+        assertEquals("Failed to add expense: Invalid date format or nonexistent day/month. " +
+                        "Please use YYYY-MM-DD with valid values.",
                 exception.getMessage());
     }
 }

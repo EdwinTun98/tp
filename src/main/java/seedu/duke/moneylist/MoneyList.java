@@ -173,7 +173,9 @@ public class MoneyList {
             validateInput(input);
             input = input.trim(); // Remove unnecessary spaces
 
-            String description = "", category = "Uncategorized", date = "no date"; // Default parameters
+            String description = "";
+            String category = "Uncategorized";
+            String date = "no date"; // Default parameters
             Double amount = 0.00;
 
             if (input.contains("$/")) {
@@ -313,8 +315,12 @@ public class MoneyList {
         int categoryMarkerCount = afterAmountPart.split("c/").length - 1;
         int dateMarkerCount = afterAmountPart.split("d/").length - 1;
 
-        if (categoryMarkerCount > 1) throw new MTException("Invalid format. Multiple category markers detected.");
-        if (dateMarkerCount > 1) throw new MTException("Invalid format. Multiple date markers detected.");
+        if (categoryMarkerCount > 1) {
+            throw new MTException("Invalid format. Multiple category markers detected.");
+        }
+        if (dateMarkerCount > 1) {
+            throw new MTException("Invalid format. Multiple date markers detected.");
+        }
 
         if (categoryMarkerCount == 0 && dateMarkerCount == 0 && afterAmountPart.contains("/")) {
             throw new MTException("Invalid format. Markers detected after amount without 'c/' or 'd/'.");
@@ -333,7 +339,8 @@ public class MoneyList {
                 throw new MTException("Invalid format. Markers detected after 'd/' without 'c/'.");
             }
             if (categoryMarkerCount > 0 && afterDate.contains("/")) {
-                throw new MTException("Invalid format. Markers detected after 'd/' when both 'c/' and 'd/' are present.");
+                throw new MTException("Invalid format. " +
+                        "Markers detected after 'd/' when both 'c/' and 'd/' are present.");
             }
         }
     }
