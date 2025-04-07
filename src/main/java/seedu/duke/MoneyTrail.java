@@ -2,6 +2,10 @@ package seedu.duke;
 
 import java.util.Scanner;
 
+import seedu.duke.exception.MTException;
+import seedu.duke.logger.MTLogger;
+import seedu.duke.moneylist.MoneyList;
+import seedu.duke.storage.Storage;
 import seedu.duke.ui.TextUI;
 
 /**

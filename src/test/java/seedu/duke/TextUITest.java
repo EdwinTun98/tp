@@ -1,6 +1,7 @@
 package seedu.duke;
 
 import org.junit.jupiter.api.Test;
+import seedu.duke.exception.MTException;
 import seedu.duke.ui.TextUI;
 
 import java.io.ByteArrayOutputStream;
