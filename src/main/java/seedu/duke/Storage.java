@@ -220,7 +220,7 @@ public class Storage {
             logger.logSevere("Failed to find file", error);
             throw new MTException("File not found while loading state.");
         }
-        
+
         return currentState;
     }
 }
