@@ -1,5 +1,8 @@
 package seedu.duke;
 
+import seedu.duke.exception.MTException;
+import seedu.duke.logger.MTLogger;
+
 /**
  * Handles the parsing of user input and converts it into commands to be executed by MoneyTrail.
  */
