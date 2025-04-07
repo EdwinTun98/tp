@@ -5,6 +5,9 @@ import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 import seedu.duke.ui.TextUI;
 
@@ -144,21 +147,20 @@ public class MoneyList {
 
     //@@author Hansel-K
     /**
-     * Adds a new expense entry from user input.
-     * @param input Expense details in format: "addExp desc $/amt c/cat d/date"
-     * @throws MTException If input format is invalid
+     * Parses and adds an expense entry from the user input.
+     * Validates the input format, extracts relevant details, ensures proper formatting,
+     * and saves the expense entry.
+     *
+     * @param input User-provided expense entry in a predefined format.
+     * @throws MTException If the input format is invalid or any extracted values are incorrect.
      */
     public void addExpense(String input) throws MTException {
         try {
             validateInput(input);
-            input = input.trim(); // Remove unnecessary spaces
+            input = input.trim();
 
-            // Default parameters
-            String description = "";
+            String description = "", category = "Uncategorized", date = "no date";
             Double amount = 0.00;
-            String category = "Uncategorized"; // Default category
-
-            String date = "no date"; // Default date
 
             if (input.contains("$/")) {
                 description = extractDescription(input);
@@ -167,11 +169,9 @@ public class MoneyList {
                 validateFormatOrder(afterAmountPart); // Ensure proper order of c/ and d/
                 validateMarkers(afterAmountPart);
 
-                amount = extractAmount(afterAmountPart);
+                amount = formatAmount(extractAmount(afterAmountPart));
                 category = extractCategory(afterAmountPart);
-                date = extractDate(afterAmountPart);
-
-                amount = formatAmount(amount);
+                date = validateAndFormatDate(extractDate(afterAmountPart));
 
                 logger.logInfo("Amount after formatting: " + amount);
             } else {
@@ -180,14 +180,10 @@ public class MoneyList {
 
             validateAmount(amount);
             saveExpense(description, amount, category, date);
-        } catch (NumberFormatException error) {
-            logger.logSevere("Invalid amount format: " + input, error);
-            // More than 9 numbers for <amount> causes amount to be formatted to a string instead bc of exponential E
-            throw new MTException("Invalid amount format. " +
-                    "Please ensure it is a numeric value of at most 7 whole numbers and 2 d.p.");
-        } catch (Exception error) {
-            logger.logSevere("Error adding expense: " + error.getMessage(), error);
-            throw new MTException("Failed to add expense: " + error.getMessage());
+        } catch (NumberFormatException e) {
+            throw new MTException("Invalid amount format. Input at most 7 whole numbers and 2 decimal places.");
+        } catch (Exception e) {
+            throw new MTException("Failed to add expense: " + e.getMessage());
         }
     }
 
@@ -251,49 +247,30 @@ public class MoneyList {
      * @throws MTException If invalid or misplaced markers are detected
      */
     private void validateMarkers(String afterAmountPart) throws MTException {
-        // Count occurrences of "c/" and "d/" markers
         int categoryMarkerCount = afterAmountPart.split("c/").length - 1;
         int dateMarkerCount = afterAmountPart.split("d/").length - 1;
 
-        // Throw error if there are multiple "c/" markers
-        if (categoryMarkerCount > 1) {
-            throw new MTException("Invalid format. Multiple category markers detected.");
+        if (categoryMarkerCount > 1) throw new MTException("Invalid format. Multiple category markers detected.");
+        if (dateMarkerCount > 1) throw new MTException("Invalid format. Multiple date markers detected.");
+
+        if (categoryMarkerCount == 0 && dateMarkerCount == 0 && afterAmountPart.contains("/")) {
+            throw new MTException("Invalid format. Markers detected after amount without 'c/' or 'd/'.");
         }
 
-        // Throw error if there are multiple "d/" markers
-        if (dateMarkerCount > 1) {
-            throw new MTException("Invalid format. Multiple date markers detected.");
-        }
-
-        // Scenario 1: No "c/" and "d/" markers
-        if (categoryMarkerCount == 0 && dateMarkerCount == 0) {
-            if (afterAmountPart.contains("/")) {
-                throw new MTException("Invalid format. Markers detected after amount without 'c/' or 'd/'.");
-            }
-        }
-
-        // Scenario 2: "c/" present but no "d/"
-        if (categoryMarkerCount > 0 && dateMarkerCount == 0) {
+        if (categoryMarkerCount > 0) {
             String afterCategory = afterAmountPart.split("c/", 2)[1].trim();
-            if (afterCategory.contains("/")) {
+            if (dateMarkerCount == 0 && afterCategory.contains("/")) {
                 throw new MTException("Invalid format. Markers detected after 'c/' without 'd/'.");
             }
         }
 
-        // Scenario 3: "d/" present but no "c/"
-        if (categoryMarkerCount == 0 && dateMarkerCount > 0) {
+        if (dateMarkerCount > 0) {
             String afterDate = afterAmountPart.split("d/", 2)[1].trim();
-            if (afterDate.contains("/")) {
+            if (categoryMarkerCount == 0 && afterDate.contains("/")) {
                 throw new MTException("Invalid format. Markers detected after 'd/' without 'c/'.");
             }
-        }
-
-        // Scenario 4: Both "c/" and "d/" present
-        if (categoryMarkerCount > 0 && dateMarkerCount > 0) {
-            String afterDate = afterAmountPart.split("d/", 2)[1].trim();
-            if (afterDate.contains("/")) {
-                throw new MTException("Invalid format. " +
-                        "Markers detected after 'd/' when both 'c/' and 'd/' are present.");
+            if (categoryMarkerCount > 0 && afterDate.contains("/")) {
+                throw new MTException("Invalid format. Markers detected after 'd/' when both 'c/' and 'd/' are present.");
             }
         }
     }
@@ -335,6 +312,51 @@ public class MoneyList {
             return afterAmountPart.split("d/", 2)[1].trim();
         }
         return "no date"; // Default date
+    }
+
+    /**
+     * Validates and formats a date string to ensure it adheres to the YYYY-MM-DD format.
+     * Additionally, it checks whether the given month and day values correspond to actual calendar dates.
+     *
+     * @param date The date string to validate and format.
+     * @return A properly formatted date string if valid, or "no date" if the input is null or empty.
+     * @throws MTException If the date format is incorrect or contains a non-existent day/month combination.
+     */
+    private String validateAndFormatDate(String date) throws MTException {
+        // Check for default or empty input values
+        if (date == null || date.isEmpty() || date.equals("no date")) {
+            return "no date"; // Return default value
+        }
+
+        // Define the expected date format
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+        try {
+            // Attempt to parse the provided date string
+            LocalDate parsedDate = LocalDate.parse(date, formatter);
+
+            // Extract year, month, and day components
+            int year = parsedDate.getYear();
+            int month = parsedDate.getMonthValue();
+            int day = parsedDate.getDayOfMonth();
+
+            // Ensure leap year correctness (e.g., February 29 is valid only for leap years)
+            if (month == 2 && day == 29 && !parsedDate.isLeapYear()) {
+                throw new MTException("Invalid date. " + year + " is not a leap year, so "
+                        + year + "-02-29 is invalid.");
+            }
+
+            //  Check if the provided date is valid
+            LocalDate validDate = LocalDate.of(year, month, day);
+
+            // Return the properly formatted date
+            return validDate.format(formatter);
+
+        } catch (DateTimeParseException | IllegalArgumentException e) {
+            // Catch both format errors and invalid calendar dates
+            throw new MTException("Invalid date format or nonexistent day/month. " +
+                    "Please use YYYY-MM-DD with valid values.");
+        }
     }
 
     /**
