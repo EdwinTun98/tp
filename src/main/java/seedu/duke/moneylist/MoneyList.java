@@ -491,7 +491,6 @@ public class MoneyList {
     }//@@author
 
     //@@author EdwinTun98
-
     /**
      * Edits an existing expense entry in the money list.
      *
