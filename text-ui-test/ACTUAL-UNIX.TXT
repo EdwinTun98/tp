@@ -1,0 +1,74 @@
+Loaded 0 entries from file.
+Welcome user to
+ __  __ _______ 
+|  \/  |__  __|
+| \  / |  | |  
+| |\/| |  | |  
+| |  | |  | |  
+|_|  |_|  |_|  
+
+What do you want to do today?
+Parameters in brackets (i.e., []) are optional.
+List of available commands:
+1. help: Displays this list of available commands.
+2. list: Lists out all entries.
+3. addExp <description> $/<value> [c/<category>] [d/<date>]: Adds a new expense entry.
+4. addIncome <description> $/<value> [d/<date>]: Adds a new income entry.
+5. totalExp: Displays the total expense accumulated.
+6. setTotBgt <value>: Sets a total spending budget.
+7. setCatBgt c/<category> <value>: Sets a budget for a specific category.
+8. listBgt: Lists out all category budgets.
+9. listCat: Lists out all entry categories in order of appearance.
+10. del <index>: Deletes an entry.
+11. find <keyword>: Finds an entry based on the keyword.
+12. edit <index> <description> [$/<amount>] [c/<category>] [d/<date>]: Modify the full entry or just selected details.
+13. check Overall / check Category: Shows overall expense or total expense for searched category
+    and show set budget and total expenditure of respective category.
+14. clear: Clears all entries.
+15. exit: Exits the program.
+-------------------------------------------------------------------------------
+What do you want to do next?
+Unknown command. Type 'help' for a list of available commands.
+-------------------------------------------------------------------------------
+What do you want to do next?
+Overall budget not set. You should set it before adding expenses.
+Expense added: Expense: groceries $20.00 {food stuff} [2025]
+-------------------------------------------------------------------------------
+What do you want to do next?
+Overall budget not set. You should set it before adding expenses.
+Expense added: Expense: fuel $30.00 {transportation} [no date]
+-------------------------------------------------------------------------------
+What do you want to do next?
+Total expenses: $50.00
+-------------------------------------------------------------------------------
+What do you want to do next?
+Expense list:
+1: Expense: groceries $20.00 {food stuff} [2025]
+2: Expense: fuel $30.00 {transportation} [no date]
+-------------------------------------------------------------------------------
+What do you want to do next?
+Total budget set to: $100.00
+-------------------------------------------------------------------------------
+What do you want to do next?
+-------- Overall Budgets --------
+- Overall Budget: $100.00
+ 
+-------- Category Budgets: --------
+-------------------------------------------------------------------------------
+What do you want to do next?
+Expense list:
+1: Expense: groceries $20.00 {food stuff} [2025]
+2: Expense: fuel $30.00 {transportation} [no date]
+-------------------------------------------------------------------------------
+What do you want to do next?
+Found Matching entries for: fuel
+1: Expense: fuel $30.00 {transportation} [no date]
+-------------------------------------------------------------------------------
+What do you want to do next?
+Categories (in order of appearance):
+- food stuff
+- transportation
+-------------------------------------------------------------------------------
+What do you want to do next?
+-------------------------------------------------------------------------------
+Exiting program... Thank you for using MoneyTrail! :)

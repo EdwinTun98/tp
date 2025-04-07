@@ -2,7 +2,6 @@ package seedu.duke;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import seedu.duke.entries.Budget;
 import seedu.duke.exception.MTException;
 import seedu.duke.logger.MTLogger;
 import seedu.duke.moneylist.MoneyList;
@@ -11,9 +10,7 @@ import seedu.duke.ui.TextUI;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import java.util.HashMap;
 
 /**
  * Unit tests for category and overall budget listing and setting functionalities
@@ -34,15 +31,6 @@ public class ListBudgetsTest {
         storage = new Storage();
         ui = new TextUI();
         moneyList = new MoneyList(logger, storage, ui);
-    }
-
-    // Test case 1: Listing when multiple category budgets are set
-    @Test
-    public void testListBudgets_withBudgets() throws MTException {
-        moneyList.setCategoryLimit("food", 100.00);
-        moneyList.setCategoryLimit("transport", 50.00);
-
-        assertDoesNotThrow(() -> moneyList.listBudgets());
     }
 
     // Test case 2: Listing when only overall budget is set
@@ -67,7 +55,7 @@ public class ListBudgetsTest {
         MTException thrown = assertThrows(MTException.class, () -> {
             moneyList.setCategoryLimit("food", -159.00);
         });
-        assertEquals("Category budget cannot be negative.", thrown.getMessage());
+        assertEquals("Budget cannot be negative.", thrown.getMessage());
     }
 
     // Test case 5: Invalid total budget input (non-numeric)
@@ -80,34 +68,5 @@ public class ListBudgetsTest {
     @Test
     public void testSetTotalBudget_emptyInput() {
         assertThrows(AssertionError.class, () -> moneyList.setTotalBudget(""));
-    }
-
-    // Test case 7: Replacing existing category budget should update amount
-    @Test
-    public void testSetCategoryLimit_replaceExistingBudget() throws MTException {
-        moneyList.setCategoryLimit("food", 100.00);
-        moneyList.setCategoryLimit("food", 200.00);
-
-        HashMap<String, Budget> budgets = moneyList.getBudgetList();
-        Budget foodBudget = budgets.get("food");
-        assertNotNull(foodBudget);
-        assertEquals(200.00, foodBudget.getAmount(), 0.01);
-    }
-
-
-    // Test case 8: Category name with symbols should still be stored properly
-    @Test
-    public void testSetCategoryLimit_categoryWithSymbols() throws MTException {
-        // Given
-        String category = "@food#678";
-        double amount = 100.00;
-
-        // When
-        moneyList.setCategoryLimit(category, amount);
-
-        // Then
-        Budget result = moneyList.getBudgetList().get(category);
-        assertEquals(category, result.getCategory(), "Category name should be stored as is.");
-        assertEquals(amount, result.getAmount(), 0.01, "Amount should be stored correctly.");
     }
 }

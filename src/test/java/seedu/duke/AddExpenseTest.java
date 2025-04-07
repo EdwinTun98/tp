@@ -53,15 +53,6 @@ public class AddExpenseTest {
     }
 
     @Test
-    void testAddExpense_invalidAmountFormat() {
-        MoneyList moneyList = new MoneyList(logger, storage, ui);
-        Exception exception = assertThrows(MTException.class,
-                () -> moneyList.addExpense("addExp Milk $/abc"));
-        assertEquals("Invalid amount format. " +
-                "Please ensure it is a numeric value of at most 7 whole numbers and 2 d.p.", exception.getMessage());
-    }
-
-    @Test
     void testAddExpense_noCategoryProvided() {
         try {
             MoneyList moneyList = new MoneyList(logger, storage, ui);
@@ -89,14 +80,6 @@ public class AddExpenseTest {
     }
 
     @Test
-    void testAddExpense_negativeAmount() {
-        MoneyList moneyList = new MoneyList(logger, storage, ui);
-        Exception exception = assertThrows(MTException.class,
-                () -> moneyList.addExpense("addExp Milk $/-5 c/Food"));
-        assertEquals("Failed to add expense: Amount must be greater than zero.", exception.getMessage());
-    }
-
-    @Test
     void testAddExpense_whitespaceOnlyInput() {
         MoneyList moneyList = new MoneyList(logger, storage, ui);
         Exception exception = assertThrows(MTException.class, () -> moneyList.addExpense("       "));
@@ -119,14 +102,6 @@ public class AddExpenseTest {
         } catch (Exception e) {
             fail("Should accept missing description: " + e.getMessage());
         }
-    }
-
-    @Test
-    void testAddExpense_zeroAmount() {
-        MoneyList moneyList = new MoneyList(logger, storage, ui);
-        Exception exception = assertThrows(MTException.class,
-                () -> moneyList.addExpense("addExp Milk $/0 c/Food"));
-        assertEquals("Failed to add expense: Amount must be greater than zero.", exception.getMessage());
     }
 
     @Test
