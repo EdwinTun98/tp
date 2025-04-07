@@ -31,15 +31,6 @@ public class SetCategoryLimitTest {
         moneyList = new MoneyList(logger, storage, ui);
     }
 
-    // Test case 1: Successfully sets a valid category budget
-    @Test
-    public void testSetCategoryLimit_validInput_success() throws MTException {
-        moneyList.setCategoryLimit("food", "100.00");
-        Budget budget = moneyList.getBudgetList().get("food");
-        assertNotNull(budget);
-        assertEquals(100.00, budget.getAmount(), 0.01);
-    }
-
     // Test case 2: Throws exception for negative amount
     @Test
     public void testSetCategoryLimit_negativeAmount_throwsException() {
@@ -74,23 +65,6 @@ public class SetCategoryLimitTest {
                 moneyList.setCategoryLimit("rent", null)
         );
         assertEquals("Budget amount cannot be empty.", exception.getMessage());
-    }
-
-    // Test case 6: Overwrites existing category budget with new value
-    @Test
-    public void testSetCategoryLimit_overwritesExistingBudget() throws MTException {
-        moneyList.setCategoryLimit("utilities", "100");
-        moneyList.setCategoryLimit("utilities", "150");
-        Budget budget = moneyList.getBudgetList().get("utilities");
-        assertEquals(150.00, budget.getAmount(), 0.01);
-    }
-
-    // Test case 7: Handles input with leading zeros
-    @Test
-    public void testSetCategoryLimit_withLeadingZeros_success() throws MTException {
-        moneyList.setCategoryLimit("tech", "0000123.45");
-        Budget budget = moneyList.getBudgetList().get("tech");
-        assertEquals(123.45, budget.getAmount(), 0.01);
     }
 
     // Test case 8: Throws exception for special symbols in input

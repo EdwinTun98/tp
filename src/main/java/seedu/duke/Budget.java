@@ -21,7 +21,7 @@ public class Budget {
             throw new MTException("Budget amount cannot be negative.");
         }
         this.category = (category == null || category.trim().isEmpty())
-                ? "Uncategorized" : category.trim().toLowerCase();
+                ? "Uncategorized" : category.trim();
         this.amount = amount;
     }
 
