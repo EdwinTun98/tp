@@ -10,8 +10,13 @@ cd text-ui-test
 
 java  -jar $(find ../build/libs/ -mindepth 1 -print -quit) < input.txt > ACTUAL.TXT
 
-cp EXPECTED.TXT EXPECTED-UNIX.TXT
-dos2unix EXPECTED-UNIX.TXT ACTUAL.TXT
+#cp EXPECTED.TXT EXPECTED-UNIX.TXT
+#dos2unix EXPECTED-UNIX.TXT ACTUAL.TXT
+
+# Normalize line endings (Windows → Unix) using tr instead of dos2unix
+tr -d '\r' < EXPECTED.TXT > EXPECTED-UNIX.TXT
+tr -d '\r' < ACTUAL.TXT > ACTUAL-UNIX.TXT
+
 diff EXPECTED-UNIX.TXT ACTUAL.TXT
 if [ $? -eq 0 ]
 then
