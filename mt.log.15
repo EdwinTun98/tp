@@ -39404,3 +39404,23 @@ Apr 07, 2025 9:04:40 PM seedu.duke.MTLogger logInfo
 INFO: Saving entries into mt.txt
 Apr 07, 2025 9:04:40 PM seedu.duke.MTLogger logInfo
 INFO: Saving entries into mt.txt
+Apr 08, 2025 2:06:31 AM seedu.duke.logger.MTLogger logInfo
+INFO: Saving entries into mt.txt
+Apr 08, 2025 2:06:31 AM seedu.duke.logger.MTLogger logInfo
+INFO: Saving entries into mt.txt
+Apr 08, 2025 2:06:31 AM seedu.duke.logger.MTLogger logInfo
+INFO: Saving entries into mt.txt
+Apr 08, 2025 2:06:31 AM seedu.duke.logger.MTLogger logInfo
+INFO: Saving entries into mt.txt
+Apr 08, 2025 2:06:31 AM seedu.duke.logger.MTLogger logInfo
+INFO: Saving entries into mt.txt
+Apr 08, 2025 2:06:31 AM seedu.duke.logger.MTLogger logWarning
+WARNING: Attempted to save invalid entry: Income: Salary $1000.00 [15 march]
+Apr 08, 2025 2:06:31 AM seedu.duke.logger.MTLogger logInfo
+INFO: Saving entries into mt.txt
+Apr 08, 2025 2:06:31 AM seedu.duke.logger.MTLogger logWarning
+WARNING: Attempted to save invalid entry: Income:  $750.00 [no date]
+Apr 08, 2025 2:06:31 AM seedu.duke.logger.MTLogger logInfo
+INFO: Saving entries into mt.txt
+Apr 08, 2025 2:06:31 AM seedu.duke.logger.MTLogger logWarning
+WARNING: Attempted to save invalid entry: Income: Bonus $500.00 [no date]

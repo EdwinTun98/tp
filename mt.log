@@ -302,3 +302,13 @@ INFO: Loading previous entries from mt.txt
 Apr 07, 2025 9:09:44 PM seedu.duke.MTLogger logInfo
 INFO: Loading previous entries from mt.txt
 >>>>>>> master
+Apr 08, 2025 2:04:20 AM seedu.duke.logger.MTLogger logInfo
+INFO: Starting CLI program.
+Apr 08, 2025 2:04:20 AM seedu.duke.logger.MTLogger logInfo
+INFO: Loaded 3 entries from file.
+Apr 08, 2025 2:04:50 AM seedu.duke.logger.MTLogger logInfo
+INFO: Description: lunch
+Apr 08, 2025 2:04:50 AM seedu.duke.logger.MTLogger logInfo
+INFO: Amount after formatting: 4.0
+Apr 08, 2025 2:04:50 AM seedu.duke.logger.MTLogger logInfo
+INFO: Added expense: Expense: lunch $4.00 {food} [2025-04-11]
