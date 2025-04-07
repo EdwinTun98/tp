@@ -68,3 +68,5 @@ Categories (in order of appearance):
 - transportation
 -------------------------------------------------------------------------------
 What do you want to do next?
+-------------------------------------------------------------------------------
+Exiting program... Thank you for using MoneyTrail! :)

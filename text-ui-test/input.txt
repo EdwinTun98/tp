@@ -9,3 +9,4 @@ listBgt
 list
 find fuel
 listCat
+exit
