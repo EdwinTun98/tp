@@ -63,5 +63,33 @@ public class Income {
                 this.getDescription(), this.getAmount(),this.getDate());
     }
     //@@author
+
+    //@@author EdwinTun98
+    public static Income parseString(String line) throws MTException {
+        if (!line.startsWith("Income: ")) {
+            throw new MTException("Invalid income entry format.");
+        }
+
+        try {
+            String trimmed = line.substring("Income: ".length()).trim();
+            int dollarIndex = trimmed.lastIndexOf('$');
+            int bracketIndex = trimmed.lastIndexOf('[');
+
+            if (dollarIndex == -1 || bracketIndex == -1) {
+                throw new MTException("Missing amount or date in income entry.");
+            }
+
+            String description = trimmed.substring(0, dollarIndex).trim();
+            String amountStr = trimmed.substring(dollarIndex + 1, bracketIndex).trim();
+            String date = trimmed.substring(bracketIndex + 1, trimmed.length() - 1).trim();
+
+            double amount = Double.parseDouble(amountStr);
+
+            return new Income(description, amount, date);
+        } catch (Exception e) {
+            throw new MTException("Failed to parse income entry: " + e.getMessage());
+        }
+    }
+    //@@author
 }
 //@@author

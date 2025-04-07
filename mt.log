@@ -34511,3 +34511,69 @@ Apr 05, 2025 10:02:23 PM seedu.duke.MTLogger logWarning
 WARNING: Expense list is empty.
 Apr 05, 2025 10:02:23 PM seedu.duke.MTLogger logWarning
 WARNING: Expense list is empty.
+Apr 06, 2025 8:01:37 PM seedu.duke.MTLogger logInfo
+INFO: Starting CLI program.
+Apr 06, 2025 8:01:37 PM seedu.duke.MTLogger logInfo
+INFO: Loaded 0 entries from file.
+Apr 06, 2025 8:01:42 PM seedu.duke.MTLogger logWarning
+WARNING: Error processing command: Unknown command. Type 'help' for a list of available commands.
+Apr 06, 2025 8:01:47 PM seedu.duke.MTLogger logWarning
+WARNING: Error processing command: Unknown command. Type 'help' for a list of available commands.
+Apr 06, 2025 8:02:00 PM seedu.duke.MTLogger logWarning
+WARNING: Error processing command: Unknown command. Type 'help' for a list of available commands.
+Apr 06, 2025 11:53:53 PM seedu.duke.MTLogger logInfo
+INFO: Starting CLI program.
+Apr 06, 2025 11:53:53 PM seedu.duke.MTLogger logInfo
+INFO: Loaded 0 entries from file.
+Apr 06, 2025 11:54:02 PM seedu.duke.MTLogger logWarning
+WARNING: No matching entries found for keyword: food
+Apr 06, 2025 11:54:02 PM seedu.duke.MTLogger logWarning
+WARNING: Error processing command: No matching entries found for keyword: food
+Apr 06, 2025 11:54:05 PM seedu.duke.MTLogger logWarning
+WARNING: Expense list is empty.
+Apr 06, 2025 11:54:05 PM seedu.duke.MTLogger logWarning
+WARNING: Error processing command: No entries available to display.
+Apr 06, 2025 11:54:55 PM seedu.duke.MTLogger logInfo
+INFO: Description: lunch
+Apr 06, 2025 11:54:55 PM seedu.duke.MTLogger logInfo
+INFO: Amount after formatting: 4.0
+Apr 06, 2025 11:54:55 PM seedu.duke.MTLogger logInfo
+INFO: Added expense: Expense: lunch $4.00 {food} [2024-05-12]
+Apr 06, 2025 11:55:09 PM seedu.duke.MTLogger logWarning
+WARNING: No matching entries found for keyword: d/2024-05-12
+Apr 06, 2025 11:55:09 PM seedu.duke.MTLogger logWarning
+WARNING: Error processing command: No matching entries found for keyword: d/2024-05-12
+Apr 06, 2025 11:56:14 PM seedu.duke.MTLogger logWarning
+WARNING: Error processing command: Please enter a valid command.
+Apr 07, 2025 3:43:33 PM seedu.duke.MTLogger logInfo
+INFO: Starting CLI program.
+Apr 07, 2025 3:43:33 PM seedu.duke.MTLogger logInfo
+INFO: Loaded 1 entries from file.
+Apr 07, 2025 3:43:37 PM seedu.duke.MTLogger logWarning
+WARNING: Error processing command: Unknown command. Type 'help' for a list of available commands.
+Apr 07, 2025 3:44:02 PM seedu.duke.MTLogger logWarning
+WARNING: No matching entries found for keywordfind 2024-05-12
+Apr 07, 2025 3:44:02 PM seedu.duke.MTLogger logWarning
+WARNING: Error processing command: No matching entries found for keywordfind 2024-05-12
+Apr 07, 2025 3:44:18 PM seedu.duke.MTLogger logWarning
+WARNING: No matching entries found for keywordincome
+Apr 07, 2025 3:44:18 PM seedu.duke.MTLogger logWarning
+WARNING: Error processing command: No matching entries found for keywordincome
+Apr 07, 2025 3:48:33 PM seedu.duke.MTLogger logInfo
+INFO: Starting CLI program.
+Apr 07, 2025 3:48:33 PM seedu.duke.MTLogger logInfo
+INFO: Loaded 1 entries from file.
+Apr 07, 2025 3:48:43 PM seedu.duke.MTLogger logInfo
+INFO: Total budget set to: $400.00
+Apr 07, 2025 4:10:39 PM seedu.duke.MTLogger logInfo
+INFO: Starting CLI program.
+Apr 07, 2025 4:10:39 PM seedu.duke.MTLogger logInfo
+INFO: Loaded 1 entries from file.
+Apr 07, 2025 4:10:59 PM seedu.duke.MTLogger logWarning
+WARNING: Error processing command: Amount cannot be negative.
+Apr 07, 2025 4:14:33 PM seedu.duke.MTLogger logInfo
+INFO: Starting CLI program.
+Apr 07, 2025 4:14:33 PM seedu.duke.MTLogger logInfo
+INFO: Loaded 1 entries from file.
+Apr 07, 2025 4:14:46 PM seedu.duke.MTLogger logInfo
+INFO: Entry updated: Expense: lunch $5.00 {food} [2024-05-12]

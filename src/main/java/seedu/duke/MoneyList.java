@@ -359,8 +359,10 @@ public class MoneyList {
         if (newDesc == null || newDesc.isEmpty()) {
             newDesc = oldExpense.getDescription();
         }
-        if (newAmount <= 0.00) {
-            newAmount = oldExpense.getAmount();
+        if (newAmount < 0) {
+            throw new MTException("Amount cannot be negative.");
+        } else if (newAmount == 0.0) {
+            newAmount = oldExpense.getAmount(); // no new input
         }
         if (newCat == null || newCat.isEmpty()) {
             newCat = oldExpense.getCategory();
@@ -372,10 +374,13 @@ public class MoneyList {
         Expense updatedExpense = new Expense(newDesc, newAmount, newCat, newDate);
         moneyList.set(index, updatedExpense.toString());
 
-        moneyList.set(index, updatedExpense.toString());
+        printEditedExpense(updatedExpense);
+        storage.saveExpenses(moneyList);
+    }
+
+    private void printEditedExpense(Expense updatedExpense) {
         ui.print("Entry updated. " + updatedExpense);
         logger.logInfo("Entry updated: " + updatedExpense);
-        storage.saveExpenses(moneyList);
     }
 
     /**
@@ -405,7 +410,6 @@ public class MoneyList {
         }
 
         ui.print("-------- Overall Budgets --------");
-
         // 1. Print the total budget first if it exists
         Budget total = budgetList.get("Overall");
         if (total != null) {
@@ -428,29 +432,57 @@ public class MoneyList {
      * @param input The keyword to search for
      * @throws MTException If no matches found
      */
+    /**
+     * Finds entries that match the provided keyword in description, category, or date.
+     * @param input The search keyword (can be part of description, category, or date)
+     * @throws MTException If no matching entries are found
+     */
     public void findEntry(String input) throws MTException {
-        // Validate the input for null, empty, or whitespace-only
-        if (input == null || input.trim().isEmpty()) {
+        // Validate input
+        if (isEmptyOrNull(input)) {
             logger.logWarning("Invalid substring provided.");
             throw new MTException("Please enter a keyword to search.");
         }
 
+        String keyword = input.trim().toLowerCase();
         ArrayList<String> results = new ArrayList<>();
 
-        // Iterate through the moneyList to find case-insensitive matches
-        for (String entry : moneyList) {
-            if (entry.toLowerCase().contains(input.toLowerCase())) {
+        for(String entry : moneyList){
+            if (matchesKeyword(entry,keyword)){
                 results.add(entry);
             }
         }
 
-        // Handle the case when no matches are found
         if (results.isEmpty()) {
-            logger.logWarning("No matching entries found for keyword: " + input);
-            throw new MTException("No matching entries found for keyword: " + input);
+            logger.logWarning("No matching entries found for keyword" + keyword);
+            throw new MTException("No matching entries found for keyword" + keyword);
         }
 
-        // Print matching entries cat
+        printResult(results, input);
+    }
+    private boolean matchesKeyword(String entry, String keyword) {
+        try {
+            if (entry.startsWith("Expense: ")) {
+                Expense expense = Expense.parseString(entry);
+                return containsIgnoreCase(expense.getDescription(), keyword)
+                        || containsIgnoreCase(expense.getCategory(), keyword)
+                        || containsIgnoreCase(expense.getDate(), keyword);
+                } else if (entry.startsWith("Income: ")) {
+                Income income = Income.parseString(entry);
+                return containsIgnoreCase(income.getDescription(), keyword)
+                        || containsIgnoreCase(income.getDate(), keyword);
+            }
+        } catch (MTException e) {
+            logger.logWarning("Skipping malformed keyword: " + keyword);
+        }
+        return false;
+    }
+
+    private boolean containsIgnoreCase(String str, String search) {
+        return str != null && str.toLowerCase().contains(search.toLowerCase());
+    }
+
+    private void printResult(ArrayList<String> results, String input) {
         ui.print("Found Matching entries for: " + input);
         for (int i = 0; i < results.size(); i++) {
             ui.print((i + INDEX_OFFSET) + ": " + results.get(i));
