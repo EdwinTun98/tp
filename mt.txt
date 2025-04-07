@@ -1,0 +1,2 @@
+Expense: groceries $20.00 {food stuff} [2025]
+Expense: fuel $30.00 {transportation} [no date]

@@ -34645,3 +34645,35 @@ Apr 06, 2025 10:30:53 PM seedu.duke.MTLogger logInfo
 INFO: Loaded 1 entries from file.
 Apr 06, 2025 10:31:01 PM seedu.duke.MTLogger logWarning
 WARNING: Error processing command: Unknown command. Type 'help' for a list of available commands.
+Apr 07, 2025 9:55:48 AM seedu.duke.MTLogger logInfo
+INFO: Starting CLI program.
+Apr 07, 2025 9:55:48 AM seedu.duke.MTLogger logInfo
+INFO: Loaded 0 entries from file.
+Apr 07, 2025 9:57:18 AM seedu.duke.MTLogger logInfo
+INFO: Starting CLI program.
+Apr 07, 2025 9:57:18 AM seedu.duke.MTLogger logInfo
+INFO: Loaded 0 entries from file.
+Apr 07, 2025 9:57:27 AM seedu.duke.MTLogger logWarning
+WARNING: Error processing command: Unknown command. Type 'help' for a list of available commands.
+Apr 07, 2025 9:57:55 AM seedu.duke.MTLogger logInfo
+INFO: Description: groceries
+Apr 07, 2025 9:57:55 AM seedu.duke.MTLogger logInfo
+INFO: Amount after formatting: 20.0
+Apr 07, 2025 9:57:55 AM seedu.duke.MTLogger logInfo
+INFO: Added expense: Expense: groceries $20.00 {food stuff} [2025]
+Apr 07, 2025 9:58:23 AM seedu.duke.MTLogger logInfo
+INFO: Description: fuel
+Apr 07, 2025 9:58:23 AM seedu.duke.MTLogger logInfo
+INFO: Amount after formatting: 30.0
+Apr 07, 2025 9:58:23 AM seedu.duke.MTLogger logInfo
+INFO: Added expense: Expense: fuel $30.00 {transportation} [no date]
+Apr 07, 2025 9:58:28 AM seedu.duke.MTLogger logInfo
+INFO: Expense amount: 20.0
+Apr 07, 2025 9:58:28 AM seedu.duke.MTLogger logInfo
+INFO: Expense amount: 30.0
+Apr 07, 2025 9:58:28 AM seedu.duke.MTLogger logInfo
+INFO: Total expense calculated: 50.00
+Apr 07, 2025 9:58:47 AM seedu.duke.MTLogger logInfo
+INFO: Total budget set to: $100.00
+Apr 07, 2025 9:59:48 AM seedu.duke.MTLogger logInfo
+INFO: Displayed 2 unique categories.

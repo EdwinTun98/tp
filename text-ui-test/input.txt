@@ -1,0 +1,11 @@
+help
+addExp
+addExp groceries $/20 c/food stuff d/2025
+addExp fuel $/30 c/transportation
+totalExp
+list
+setTotBgt 100
+listBgt
+list
+find fuel
+listCat
