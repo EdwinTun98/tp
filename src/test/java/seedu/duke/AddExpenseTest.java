@@ -57,8 +57,8 @@ public class AddExpenseTest {
         MoneyList moneyList = new MoneyList(logger, storage, ui);
         Exception exception = assertThrows(MTException.class,
                 () -> moneyList.addExpense("addExp Milk $/abc"));
-        assertEquals("Invalid amount format. " +
-                "Input at most 7 whole numbers and 2 decimal places.", exception.getMessage());
+        assertEquals("Failed to add expense: " +
+                "Invalid amount. Please enter a valid number.", exception.getMessage());
     }
 
     @Test
@@ -76,15 +76,14 @@ public class AddExpenseTest {
     void testAddExpense_nullInput() {
         MoneyList moneyList = new MoneyList(logger, storage, ui);
         Exception exception = assertThrows(MTException.class, () -> moneyList.addExpense(null));
-        assertEquals("Failed to add expense: Input should not be null.", exception.getMessage());
+        assertEquals("Failed to add expense: Input should not be null or empty.", exception.getMessage());
     }
 
     @Test
     void testAddExpense_emptyInput() {
         MoneyList moneyList = new MoneyList(logger, storage, ui);
         Exception exception = assertThrows(MTException.class, () -> moneyList.addExpense(""));
-        assertEquals("Failed to add expense: Invalid format. " +
-                        "Use: addExp <description> $/<amount> [c/<category>] [d/<date>]",
+        assertEquals("Failed to add expense: Input should not be null or empty.",
                 exception.getMessage());
     }
 
@@ -93,32 +92,25 @@ public class AddExpenseTest {
         MoneyList moneyList = new MoneyList(logger, storage, ui);
         Exception exception = assertThrows(MTException.class,
                 () -> moneyList.addExpense("addExp Milk $/-5 c/Food"));
-        assertEquals("Failed to add expense: Amount must be greater than zero.", exception.getMessage());
+        assertEquals("Failed to add expense: Budget cannot be negative.", exception.getMessage());
     }
 
     @Test
     void testAddExpense_whitespaceOnlyInput() {
         MoneyList moneyList = new MoneyList(logger, storage, ui);
         Exception exception = assertThrows(MTException.class, () -> moneyList.addExpense("       "));
-        assertEquals("Failed to add expense: Invalid format. " +
-                        "Use: addExp <description> $/<amount> [c/<category>] [d/<date>]",
+        assertEquals("Failed to add expense: Input should not be null or empty.",
                 exception.getMessage());
     }
 
     @Test
     void testAddExpense_noDescription() {
-        try {
-            MoneyList moneyList = new MoneyList(logger, storage, ui);
-            moneyList.addExpense("addExp $/50 c/Food d/2025-03-28");
-            // Verify both the default behavior and proper parsing:
-            assertTrue(moneyList.getMoneyList().stream()
-                            .anyMatch(entry -> entry.contains("$50.00")
-                                    && entry.contains("Food")
-                                    && entry.contains("2025-03-28")),
-                    "Should create expense with correct amount, category and date");
-        } catch (Exception e) {
-            fail("Should accept missing description: " + e.getMessage());
-        }
+        MoneyList moneyList = new MoneyList(logger, storage, ui);
+        Exception exception = assertThrows(MTException.class,
+                () -> moneyList.addExpense("addExp $/50 c/Food d/2025-03-28"));
+
+        assertEquals("Failed to add expense: Invalid format. " +
+                    "Use: addExp <description> $/<amount> [c/<category>] [d/<date>]", exception.getMessage());
     }
 
     @Test

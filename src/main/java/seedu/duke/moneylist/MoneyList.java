@@ -187,6 +187,7 @@ public class MoneyList {
 
                 String amountStr = extractAmount(afterAmountPart);
                 amount = parseAndValidateAmount(amountStr);
+                validateAmount(amount);
                 category = extractCategory(afterAmountPart);
                 date = validateAndFormatDate(extractDate(afterAmountPart));;
 
