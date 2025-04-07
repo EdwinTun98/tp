@@ -8,7 +8,6 @@ Welcome user to
 |_|  |_|  |_|
 
 What do you want to do today?
-help
 Parameters in brackets (i.e., []) are optional.
 List of available commands:
 1. help: Displays this list of available commands.
@@ -29,51 +28,41 @@ List of available commands:
 15. exit: Exits the program.
 -------------------------------------------------------------------------------
 What do you want to do next?
-addExp
 Unknown command. Type 'help' for a list of available commands.
 -------------------------------------------------------------------------------
 What do you want to do next?
-addExp groceries $/20 c/food stuff d/2025
 Expense added: Expense: groceries $20.00 {food stuff} [2025]
 -------------------------------------------------------------------------------
 What do you want to do next?
-addExp fuel $/30 c/transportation
 Expense added: Expense: fuel $30.00 {transportation} [no date]
 -------------------------------------------------------------------------------
 What do you want to do next?
-totalExp
 Total expenses: $50.00
 -------------------------------------------------------------------------------
 What do you want to do next?
-list
 Expense list:
 1: Expense: groceries $20.00 {food stuff} [2025]
 2: Expense: fuel $30.00 {transportation} [no date]
 -------------------------------------------------------------------------------
 What do you want to do next?
-setTotBgt 100
 Total budget set to: $100.00
 -------------------------------------------------------------------------------
 What do you want to do next?
-listBgt
 -------- Overall Budgets --------
 - Overall Budget: $100.00
 
 -------- Category Budgets: --------
 -------------------------------------------------------------------------------
 What do you want to do next?
-list
 Expense list:
 1: Expense: groceries $20.00 {food stuff} [2025]
 2: Expense: fuel $30.00 {transportation} [no date]
 -------------------------------------------------------------------------------
 What do you want to do next?
-find fuel
 Found Matching entries for: fuel
 1: Expense: fuel $30.00 {transportation} [no date]
 -------------------------------------------------------------------------------
 What do you want to do next?
-listCat
 Categories (in order of appearance):
 - food stuff
 - transportation
