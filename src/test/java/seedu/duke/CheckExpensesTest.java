@@ -127,7 +127,7 @@ public class CheckExpensesTest {
             moneyList.setCategoryLimit("groceries", -999999.99);
         });
 
-        assertEquals("Category budget cannot be negative.", exception.getMessage());
+        assertEquals("Budget cannot be negative.", exception.getMessage());
     }
 
 }

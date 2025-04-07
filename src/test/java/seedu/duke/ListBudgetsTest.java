@@ -63,7 +63,7 @@ public class ListBudgetsTest {
         MTException thrown = assertThrows(MTException.class, () -> {
             moneyList.setCategoryLimit("food", -159.00);
         });
-        assertEquals("Category budget cannot be negative.", thrown.getMessage());
+        assertEquals("Budget cannot be negative.", thrown.getMessage());
     }
 
     // Test case 5: Invalid total budget input (non-numeric)

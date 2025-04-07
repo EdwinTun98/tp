@@ -46,7 +46,7 @@ public class SetCategoryLimitTest {
         MTException exception = assertThrows(MTException.class, () ->
                 moneyList.setCategoryLimit("groceries", "-25.00")
         );
-        assertEquals("Category budget cannot be negative.", exception.getMessage());
+        assertEquals("Budget cannot be negative.", exception.getMessage());
     }
 
     // Test case 3: Throws exception for non-numeric string input

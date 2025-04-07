@@ -618,17 +618,7 @@ public class MoneyList {
             throw new MTException("Budget amount cannot be empty.");
         }
 
-        double amount;
-
-        try {
-            amount = Double.parseDouble(amountStr.trim());
-        } catch (NumberFormatException e) {
-            throw new MTException("Invalid amount. Please enter a valid number.");
-        }
-
-        if (amount < 0) {
-            throw new MTException("Category budget cannot be negative.");
-        }
+        double amount = parseAndValidateAmount(amountStr);
 
         Budget budget = new Budget(category, amount);
         budgetList.put(category, budget);
@@ -638,6 +628,41 @@ public class MoneyList {
 
         storage.saveBudgets(budgetList);
     }
+
+    /**
+     * Parses and validates the budget amount string.
+     * Ensures the format has up to 7 whole digits and up to 2 decimal places.
+     * @param amountStr The input string representing the budget amount.
+     * @return The parsed double value if valid.
+     * @throws MTException If the format is invalid or the amount is negative.
+     */
+    private double parseAndValidateAmount(String amountStr) throws MTException {
+        amountStr = amountStr.trim();
+
+        double amount;
+
+        try {
+            amount = Double.parseDouble(amountStr);
+        } catch (NumberFormatException error) {
+            logger.logWarning("Invalid number format: " + amountStr);
+            throw new MTException("Invalid amount. Please enter a valid number.");
+        }
+
+        if (amount < 0) {
+            logger.logWarning("Budget cannot be negative: " + amount);
+            throw new MTException("Budget cannot be negative.");
+        }
+
+        // Regex: allow max 7 digits before decimal and up to 2 after
+        if (!amountStr.matches("^\\d{1,7}(\\.\\d{1,2})?$")) {
+            logger.logWarning("Invalid amount format: " + amountStr);
+            throw new MTException("Invalid amount format. Please use up to 7 whole digits and 2 decimal places (e.g., 1234567.89).");
+        }
+
+        return amount;
+    }
+
+
 
     /**
      * Compares expenses against budget for a category.
@@ -795,22 +820,13 @@ public class MoneyList {
             assert input != null : "Input should not be null";
             assert input.startsWith("setTotBgt") : "Input should start with 'setTotBgt'";
 
-            // Extract the budget value after the command
+            // Extract the budget string after the command
             String budgetString = input.substring("setTotBgt".length()).trim();
-            Double budget = Double.parseDouble(budgetString);
 
-            // Validate amount
-            if (budget < 0) {
-                logger.logWarning("Attempted to set a negative budget: " + budget);
-                ui.print("Budget cannot be negative.");
-                return;
-            }
+            // Validate and parse amount using helper method
+            double budget = parseAndValidateAmount(budgetString);
 
-            // Format to 2 decimal places
-            DecimalFormat df = new DecimalFormat("#.00");
-            budget = Double.valueOf(df.format(budget));
-
-            // Store as "TOTAL" category
+            // Store as "Overall" category
             Budget overallBudgetSet = new Budget("Overall", budget);
             budgetList.put("Overall", overallBudgetSet);
 
@@ -819,9 +835,9 @@ public class MoneyList {
 
             logger.logInfo(String.format("Total budget set to: $%.2f", budget));
             ui.print(String.format("Total budget set to: $%.2f", budget));
-        } catch (NumberFormatException e) {
-            logger.logSevere("Invalid budget format: " + input, e);
-            throw new MTException("Invalid amount format. Please ensure it is a numeric value.");
+
+        } catch (MTException e) {
+            throw e; // Already has a clean message
         } catch (Exception e) {
             logger.logSevere("Error setting budget: " + e.getMessage(), e);
             ui.print("An error occurred while setting the budget.");
