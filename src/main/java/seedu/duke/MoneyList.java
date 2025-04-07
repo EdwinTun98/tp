@@ -554,6 +554,7 @@ public class MoneyList {
 
         printResult(results, input);
     }
+
     private boolean matchesKeyword(String entry, String keyword) {
         try {
             if (entry.startsWith("Expense: ")) {
