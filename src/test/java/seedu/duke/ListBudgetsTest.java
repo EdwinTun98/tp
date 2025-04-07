@@ -12,8 +12,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 
-import java.util.HashMap;
-
 /**
  * Unit tests for category and overall budget listing and setting functionalities
  * in the {@link MoneyList} class.

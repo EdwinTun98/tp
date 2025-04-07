@@ -712,7 +712,8 @@ public class MoneyList {
         // Regex: allow max 7 digits before decimal and up to 2 after
         if (!amountStr.matches("^\\d{1,7}(\\.\\d{1,2})?$")) {
             logger.logWarning("Invalid amount format: " + amountStr);
-            throw new MTException("Invalid amount format. Please use up to 7 whole digits and 2 decimal places (e.g., 1234567.89).");
+            throw new MTException("Invalid amount format. " +
+                    "Please use up to 7 whole digits and 2 decimal places (e.g., 1234567.89).");
         }
 
         return amount;
