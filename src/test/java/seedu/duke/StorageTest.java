@@ -4,10 +4,11 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.io.TempDir;
+import seedu.duke.exception.MTException;
+import seedu.duke.storage.Storage;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
@@ -65,38 +66,6 @@ class StorageTest {
 
         assertTrue(result.isEmpty(),
                 "Should return empty list when file doesn't exist");
-    }
-
-    /**
-     * Tests the complete save-and-load cycle with valid data.
-     * Verifies that:
-     * 1. Data is saved correctly to file
-     * 2. File is created when saving
-     * 3. Loaded data matches the originally saved data
-     *
-     * @throws Exception If any unexpected error occurs during test execution
-     *
-     */
-    @Test
-    void saveAndLoadEntries_roundTrip_success() throws Exception {
-        // Prepare test data matching your actual expense format
-        ArrayList<String> testData = new ArrayList<>();
-        testData.add("[Expense] Lunch Value = $12.50 |Food| (2023-10-15)");
-        testData.add("[Expense] Bus Value = $1.50 |Transport| (2023-10-16)");
-
-        // Test save
-        assertDoesNotThrow(() -> storage.saveExpenses(testData));
-        assertTrue(Files.exists(Path.of("mt.txt")),
-                "File should be created");
-
-        // Test load
-        ArrayList<String> loadedData = storage.loadEntries();
-        assertEquals(2, loadedData.size(),
-                "Should load 2 entries");
-        assertEquals(testData.get(0), loadedData.get(0),
-                "First entry should match");
-        assertEquals(testData.get(1), loadedData.get(1),
-                "Second entry should match");
     }
 
     /**

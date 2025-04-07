@@ -1,5 +1,8 @@
 package seedu.duke;
 
+import seedu.duke.exception.MTException;
+import seedu.duke.moneylist.MoneyList;
+
 /**
  * Represents a command to be executed by the MoneyTrail application.
  * Commands can perform actions and indicate if they should terminate

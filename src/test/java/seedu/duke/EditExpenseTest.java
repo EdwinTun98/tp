@@ -1,11 +1,16 @@
 package seedu.duke;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import seedu.duke.exception.MTException;
+import seedu.duke.logger.MTLogger;
+import seedu.duke.moneylist.MoneyList;
+import seedu.duke.storage.Storage;
 import seedu.duke.ui.TextUI;
+
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * Unit tests for the {@link MoneyList#editExpense(int, String, Double, String, String)} method.
@@ -44,13 +49,16 @@ public class EditExpenseTest {
 
     // Test case 2: Leaving all fields as defaults retains original values
     @Test
-    public void testEditExpense_partialUpdate_preservesOldValues() throws MTException {
-        moneyList.editExpense(0, null, -1.0, "", "");
-        String entry = moneyList.getMoneyList().get(0);
-        assertTrue(entry.contains("Coffee"));
-        assertTrue(entry.contains("$5.00"));
-        assertTrue(entry.contains("{food}"));
-        assertTrue(entry.contains("[2024-04-01]"));
+    public void testEditExpense_negativeAmount_throwsException() {
+        // Setup: Add an initial valid expense to the list
+        moneyList.getMoneyList().add("Expense: Coffee $5.00 {food} [2024-04-01]");
+
+        // Attempt to edit it with a negative amount, expect MTException
+        MTException thrown = assertThrows(MTException.class, () -> {
+            moneyList.editExpense(0, "Latte", -10.0, "beverages", "2024-04-02");
+        });
+
+        assertEquals("Amount cannot be negative.", thrown.getMessage());
     }
 
     // Test case 3: Blank description should not override the original one
