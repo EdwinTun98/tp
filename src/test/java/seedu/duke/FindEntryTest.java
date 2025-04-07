@@ -30,15 +30,19 @@ public class FindEntryTest {
     @BeforeEach
     public void setUp() {
         // Initialize dependencies
-        logger = new MTLogger(MoneyTrail.class.getName());
+        logger = new MTLogger("FindEntryTest");
         storage = new Storage();
         ui = new TextUI();
+        moneyList = new MoneyList(logger, storage, ui);
 
         // Create a new MoneyList instance and populate it with sample data
-        moneyList = new MoneyList(logger, storage, ui);
-        moneyList.getMoneyList().add("[Expense] Milk $10.00 |Food| (2025-03-28)");
-        moneyList.getMoneyList().add("[Expense] Rent $500.00 |Housing| (2025-03-01)");
-        moneyList.getMoneyList().add("[Expense] Coffee $5.00 |Food| (2025-03-29)");
+        Expense milk = new Expense("Milk", 3.50, "food", "2024-04-01");
+        Expense rent = new Expense("Rent", 1200.00, "housing", "2024-04-01");
+        Income salary = new Income("Salary", 3000.00, "2024-04-01");
+
+        moneyList.getMoneyList().add(milk.toString());
+        moneyList.getMoneyList().add(rent.toString());
+        moneyList.getMoneyList().add(salary.toString());
     }
 
     /**
@@ -57,7 +61,7 @@ public class FindEntryTest {
     @Test
     void testFindEntry_noMatchesFound() {
         Exception exception = assertThrows(MTException.class, () -> moneyList.findEntry("Gym"));
-        assertTrue(exception.getMessage().contains("No matching entries found for keyword:"));
+        assertTrue(exception.getMessage().contains("No matching entries found for keyword"));
     }
 
     /**
@@ -105,7 +109,7 @@ public class FindEntryTest {
     @Test
     void testFindEntry_specialCharacterKeyword() {
         Exception exception = assertThrows(MTException.class, () -> moneyList.findEntry("$$$"));
-        assertTrue(exception.getMessage().contains("No matching entries found for keyword:"));
+        assertTrue(exception.getMessage().contains("No matching entries found for keyword"));
     }
 
     /**
