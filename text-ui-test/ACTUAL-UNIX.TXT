@@ -1,11 +1,11 @@
 Loaded 0 entries from file.
 Welcome user to
- __  __ _______ 
+ __  __ _______
 |  \/  |__  __|
-| \  / |  | |  
-| |\/| |  | |  
-| |  | |  | |  
-|_|  |_|  |_|  
+| \  / |  | |
+| |\/| |  | |
+| |  | |  | |
+|_|  |_|  |_|
 
 What do you want to do today?
 Parameters in brackets (i.e., []) are optional.
@@ -52,7 +52,7 @@ Total budget set to: $100.00
 What do you want to do next?
 -------- Overall Budgets --------
 - Overall Budget: $100.00
- 
+
 -------- Category Budgets: --------
 -------------------------------------------------------------------------------
 What do you want to do next?
