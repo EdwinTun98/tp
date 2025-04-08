@@ -656,5 +656,5 @@ public class Parser {
      */
     private record IncomeData(String description, double amount, String date) {
     }
-    //@@author limleyhooi
+    //@@author
 }
