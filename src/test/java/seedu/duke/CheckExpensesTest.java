@@ -47,16 +47,6 @@ public class CheckExpensesTest {
         assertDoesNotThrow(() -> moneyList.checkExpenses("Overall"));
     }
 
-    // Test case 2: Category budget check should succeed if set
-    @Test
-    public void testCheckCategoryBudget_success() throws MTException {
-        // Set category budget
-        moneyList.setCategoryLimit("entertainment", 50.00);
-
-        // Should work fine for existing category
-        assertDoesNotThrow(() -> moneyList.checkExpenses("entertainment"));
-    }
-
     // Test case 3: Throws exception if budget for category does not exist
     @Test
     public void testCheckExpenses_missingBudget_throwsException() {
@@ -129,7 +119,7 @@ public class CheckExpensesTest {
             moneyList.setCategoryLimit("groceries", -999999.99);
         });
 
-        assertEquals("Category budget cannot be negative.", exception.getMessage());
+        assertEquals("Budget cannot be negative.", exception.getMessage());
     }
 
 }

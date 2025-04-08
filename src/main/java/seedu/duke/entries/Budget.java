@@ -2,6 +2,7 @@ package seedu.duke.entries;
 
 import seedu.duke.exception.MTException;
 
+//@@author EdwinTun98
 /**
  * Represents a budget, either total or category-specific.
  */
@@ -23,7 +24,7 @@ public class Budget {
             throw new MTException("Budget amount cannot be negative.");
         }
         this.category = (category == null || category.trim().isEmpty())
-                ? "Uncategorized" : category.trim().toLowerCase();
+                ? "Uncategorized" : category.trim();
         this.amount = amount;
     }
 
@@ -50,3 +51,4 @@ public class Budget {
         return String.format("Budget for %s: $%.2f", category, amount);
     }
 }
+//@@author

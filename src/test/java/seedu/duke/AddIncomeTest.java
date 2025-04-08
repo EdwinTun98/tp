@@ -32,9 +32,9 @@ public class AddIncomeTest {
     @Test
     void testAddIncome_validInputWithDate() {
         try {
-            moneyList.addIncome("addIncome Salary $/1000 d/15 march");
+            moneyList.addIncome("addIncome Salary $/1000 d/2025-04-08");
             ArrayList<String> list = moneyList.getMoneyList();
-            assertTrue(list.contains("Income: Salary $1000.00 [15 march]"),
+            assertTrue(list.contains("Income: Salary $1000.00 [2025-04-08]"),
                     "Income with date should be added.");
         } catch (Exception e) {
             fail("Exception should not occur for valid input with date.");

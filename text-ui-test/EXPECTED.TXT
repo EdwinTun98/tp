@@ -31,9 +31,11 @@ What do you want to do next?
 Unknown command. Type 'help' for a list of available commands.
 -------------------------------------------------------------------------------
 What do you want to do next?
-Expense added: Expense: groceries $20.00 {food stuff} [2025]
+Overall budget not set. You should set it before adding expenses.
+Expense added: Expense: groceries $20.00 {food stuff} [2025-04-08]
 -------------------------------------------------------------------------------
 What do you want to do next?
+Overall budget not set. You should set it before adding expenses.
 Expense added: Expense: fuel $30.00 {transportation} [no date]
 -------------------------------------------------------------------------------
 What do you want to do next?
@@ -41,7 +43,7 @@ Total expenses: $50.00
 -------------------------------------------------------------------------------
 What do you want to do next?
 Expense list:
-1: Expense: groceries $20.00 {food stuff} [2025]
+1: Expense: groceries $20.00 {food stuff} [2025-04-08]
 2: Expense: fuel $30.00 {transportation} [no date]
 -------------------------------------------------------------------------------
 What do you want to do next?
@@ -55,7 +57,7 @@ What do you want to do next?
 -------------------------------------------------------------------------------
 What do you want to do next?
 Expense list:
-1: Expense: groceries $20.00 {food stuff} [2025]
+1: Expense: groceries $20.00 {food stuff} [2025-04-08]
 2: Expense: fuel $30.00 {transportation} [no date]
 -------------------------------------------------------------------------------
 What do you want to do next?

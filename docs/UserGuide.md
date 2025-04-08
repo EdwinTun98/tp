@@ -18,7 +18,8 @@ Here are the steps to get started quickly:
 
 ## Features
 
-> [!NOTE]
+> [NOTES]
+> 
 > Useful information about the command format:
 > - Words in `UPPER_CASE` are the parameters to be supplied by the user.
     e.g. in `find KEYWORD`, `KEYWORD` is a parameter which can be used as `find rent`.
@@ -26,9 +27,14 @@ Here are the steps to get started quickly:
     e.g. if the command specifies `c/CATEGORY d/DATE`, `d/DATE c/CATEGORY` is unacceptable.
 > - **Extraneous parameters** for commands that do not take in parameters (such as `list`) will generate an error.
     e.g. `list 123` is unacceptable.
-> Useful information about the <amount> inputs:
-> - All <amount> inputs will be formatted to *2 d.p.* with *no rounding*
-> - All <amount> inputs will be limited to *7 digits including decimal places*
+> 
+> Useful information about the `<amount>` inputs:
+> - Only positive `<amount>` inputs will be accepted
+> - All `<amount>` inputs will be limited to *7 digits including decimal places*
+> - All `<amount>` inputs will be formatted to *2 d.p.* with *no rounding*
+>
+> Useful information about the `<date>` inputs:
+> - Dates only use the `YYYY-MM-DD` format
 
 ### Listing all tasks: `list`
 
@@ -86,13 +92,13 @@ Parameters in brackets (i.e., []) are optional.
 List of available commands:
 1. help: Displays this list of available commands.
 2. list: Lists out all entries.
-3. addExp <description> $/<value> [c/<category>] [d/<date>]: 
+3. addExp <description> $/<amount> [c/<category>] [d/<date>]: 
    Adds a new expense entry.
-4. addIncome <description> $/<value> [d/<date>]: 
+4. addIncome <description> $/<amount> [d/<date>]: 
    Adds a new income entry.
 5. totalExp: Displays the total expense accumulated.
-6. setTotBgt <value>: Sets a total spending budget.
-7. setCatBgt c/<category> <value>: 
+6. setTotBgt <amount>: Sets a total spending budget.
+7. setCatBgt c/<category> <amount>: 
    Sets a budget for a specific category.
 8. listBgt: Lists out all category budgets.
 9. listCat: Lists out all entry categories in order of appearance.
@@ -111,9 +117,9 @@ What do you want to do next?
 
 ### Setting the total budget: `setTotBgt`
 
-Specifies the intended value of the total budget.
+Specifies the intended amount for the total budget.
 
-Format: `setTotBgt VALUE`
+Format: `setTotBgt <amount>`
 
 Example: `setTotBgt 500`
 
@@ -135,13 +141,14 @@ Format: `addExp <description> $/<amount> c/<category> d/<date>`
 #### Notes:
 - Category and date parameters are optional!
     * If no category is given, the expense will be tagged as "uncategorized".
-    * Similarly, if no date is given, the expense will be tagged as "no date".
+    * Similarly, if no date is given, the expense will be tagged as "no date". 
+- If both category and date are entered in the same input, category must come before date (`c/` before `/d`)
 
 Example 1: `addExp Honey $/20.25 c/Food d/30-03-25`
 
-Example 2: `addExp Honey $/20.25` 
+Example 2: `addExp Honey $/20.2532` 
 
-Example 3: `addExp Honey $/20.25 d/30-03-25`
+Example 3: `addExp Honey $/20.2590 d/30-03-25`
 
 Outcome 1: `Expense added: Expense: Honey $20.25 {Food} [2025-03-30]`
 
@@ -166,6 +173,9 @@ Total expenses: $660.00
 ### Deleting a task: `del`
 
 Removes an entry from the list based on the list index given.
+
+#### 🔍 Tips
+- View entry indexes first with `list` before using `del`
 
 Format: `del INDEX`
 
@@ -213,23 +223,23 @@ Exiting program... Thank you for using MoneyTrail! :)
 
 ### Editing an entry: `edit`
 
-Modifies an existing entry's description, amount, 
+Modifies an existing entry's description, monetary value, 
 category, or date.
 
-Format: `edit INDEX DESCRIPTION [options]`
+Format: `edit <INDEX> <DESCRIPTION> [options]`
 
 Options:
 
-- `$/VALUE`: Updates the entry's amount.
+- `$/amount`: Updates the entry's monetary value.
 
-- `c/CATEGORY`: Updates the entry's category.
+- `c/category`: Updates the entry's category.
 
-- `d/DATE`: Updates the entry's date.
+- `d/date`: Updates the entry's date.
 
 > [!NOTE]
 > Useful information about the command format:
 > - Parameters need not be in a **specific order**.
-    e.g. if the command specifies `$/VALUE c/CATEGORY`, `c/CATEGORY $/VALUE` is acceptable.
+    e.g. if the command specifies `$/<amount> c/<category>`, `c/<category> $/<amount>` is acceptable.
 > - Options need not be updated all at once. Users can select which options they want to update and leave the rest. 
 > - However, INDEX must always come after `edit`, followed by DESCRIPTION.
     e.g. if the command specifies `edit INDEX DESCRIPTION`, `edit DESCRIPTION INDEX` is unacceptable.
@@ -247,9 +257,9 @@ What do you want to do next?
 
 ### Setting a Category Budget: `setCatBgt`
 
-Specifies a budget value for a specific expense/income category.
+Specifies a budget amount for a specific expense/income category.
 
-Format: `setCatBgt c/<CATEGORY> <AMOUNT>`
+Format: `setCatBgt c/<category> <amount>`
 
 Example: `setCatBgt c/Uncategorized 200`
 
@@ -303,11 +313,14 @@ Categories (in order of appearance):
 
 Displays overall expense or expense for a specified category
 
+> [!NOTE]
+> Overall budget refers to total budget
+
 Format: `check <Overall or Category>`
 
-Example: `check Food`
+Example 1: `check Food`
 
-Outcome:
+Outcome 1:
 ```
 What do you want to do next?
 check Food
@@ -315,6 +328,20 @@ check Food
 Budget for food: $1000.00
 Total Spent: $10.00
 Remaining: $990.00
+-------------------------------------------------------------------------------
+What do you want to do next?
+```
+
+Example 2: `check Overall`
+
+Outcome 2:
+```
+What do you want to do next?
+check Overall
+-------- OVERALL BUDGET EXPENSES SUMMARY --------
+Overall Budget: $400.00
+Overall Expenses: $250.00
+Remaining: $150.00
 -------------------------------------------------------------------------------
 What do you want to do next?
 ```
