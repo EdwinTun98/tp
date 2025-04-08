@@ -519,11 +519,11 @@ public class MoneyList {
             if (input == null) {
                 throw new MTException("Input should not be null");
             }
+
             input = input.trim();
 
             if (!input.startsWith("addIncome") || !input.contains("$/")) {
-                throw new MTException("Invalid format. " +
-                        "Use: addIncome <description> $/<amount> [d/<date>]");
+                throw new MTException("Invalid format. Use: addIncome <description> $/<amount> [d/<date>]");
             }
 
             String content = input.substring("addIncome".length()).trim();
@@ -539,27 +539,40 @@ public class MoneyList {
             if (remainder.contains("d/")) {
                 String[] parts2 = remainder.split("d/", 2);
                 String amountString = parts2[0].trim();
-                amount = Double.parseDouble(amountString);
-                date = parts2[1].trim();
+                try {
+                    amount = Double.parseDouble(amountString);
+                } catch (NumberFormatException e) {
+                    throw new NumberFormatException("Invalid amount format. Please ensure it is a numeric value.");
+                }
+                date = validateAndFormatDate(parts2[1].trim());
             } else {
-                amount = Double.parseDouble(remainder.trim());
+                try {
+                    amount = Double.parseDouble(remainder.trim());
+                } catch (NumberFormatException e) {
+                    throw new NumberFormatException("Invalid amount format. Please ensure it is a numeric value.");
+                }
             }
 
-            validateAmount(amount);
+            // Validate amount cannot be negative
+            if (amount <= 0) {
+                throw new MTException("Amount must be greater than zero.");
+            }
 
             Income newIncome = new Income(description, amount, date);
             moneyList.add(newIncome.toString());
             logger.logInfo("Added income: " + newIncome);
             ui.print("Income added: " + newIncome);
             storage.saveExpenses(moneyList);
+
         } catch (NumberFormatException error) {
             logger.logSevere("Invalid amount format in addIncome: " + input, error);
-            throw new MTException("Invalid amount format. Please ensure it is a numeric value.");
+            throw new MTException(error.getMessage());
         } catch (Exception error) {
             logger.logSevere("Error adding income: " + error.getMessage(), error);
             throw new MTException("Failed to add income: " + error.getMessage());
         }
-    }//@@author
+    }
+    //@@author
 
     //@@author EdwinTun98
 
