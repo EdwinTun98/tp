@@ -4,7 +4,7 @@
 
 Managing your finances has never been easier. MoneyTrail is a 
 lightweight, user-friendly budget tracking application designed to 
-help you keep track of your expenses, monitor your spending habits, 
+help you keep track of your expenses/income, monitor your spending habits, 
 and achieve your financial goals.
 
 ## Quick Start
@@ -106,7 +106,7 @@ List of available commands:
 11. find <keyword>: Finds an entry based on the keyword.
 12. edit <index> <description> [$/<amount>] [c/<category>] [d/<date>]: 
     Modify the full entry or just selected details.
-13. check Overall / check Category: 
+13. check Overall / check <category>: 
     Shows overall expense or total expense for searched category
     and show set budget and total expenditure of respective category.
 14. clear: Clears all entries.
@@ -136,7 +136,7 @@ What do you want to do next?
 
 Adds an expense entry to the list.
 
-Format: `addExp <description> $/<amount> c/<category> d/<date>`
+Format: `addExp DESCRIPTION $/<amount> c/CATEGORY d/DATE`
 
 #### Notes:
 - Category and date parameters are optional!
@@ -169,6 +169,26 @@ What do you want to do next?
 totalExp
 Total expenses: $660.00
 -------------------------------------------------------------------------------
+```
+
+### Adding income entries: `addIncome`
+
+Adds an income entry to the list.
+
+Format: `addIncome DESCRIPTION $/<amount> d/DATE`
+
+> ![NOTE]
+> DATE parameter is optional.
+
+Example: `addIncome salary $/2000`
+
+Outcome:
+```
+What do you want to do next?
+addIncome salary $/2000
+Income added: Income: salary $2000.00 [no date]
+-------------------------------------------------------------------------------
+What do you want to do next?
 ```
 
 ### Deleting a task: `del`
@@ -227,20 +247,20 @@ Exiting program... Thank you for using MoneyTrail! :)
 Modifies an existing entry's description, monetary value, 
 category, or date.
 
-Format: `edit <INDEX> <DESCRIPTION> [options]`
+Format: `edit INDEX DESCRIPTION [options]`
 
 Options:
 
-- `$/amount`: Updates the entry's monetary value.
+- `$/<amount>`: Updates the entry's monetary value.
 
-- `c/category`: Updates the entry's category.
+- `c/CATEGORY`: Updates the entry's category.
 
-- `d/date`: Updates the entry's date.
+- `d/DATE`: Updates the entry's date.
 
 > [!NOTE]
 > Useful information about the command format:
 > - Parameters need not be in a **specific order**.
-    e.g. if the command specifies `$/<amount> c/<category>`, `c/<category> $/<amount>` is acceptable.
+    e.g. if the command specifies `$/<amount> c/CATEGORY`, `c/CATEGORY $/<amount>` is acceptable.
 > - Options need not be updated all at once. Users can select which options they want to update and leave the rest. 
 > - However, INDEX must always come after `edit`, followed by DESCRIPTION.
     e.g. if the command specifies `edit INDEX DESCRIPTION`, `edit DESCRIPTION INDEX` is unacceptable.
@@ -260,7 +280,7 @@ What do you want to do next?
 
 Specifies a budget amount for a specific expense/income category.
 
-Format: `setCatBgt c/<category> <amount>`
+Format: `setCatBgt c/CATEGORY <amount>`
 
 Example: `setCatBgt c/Uncategorized 200`
 
@@ -317,7 +337,7 @@ Displays overall expense or expense for a specified category
 > [!NOTE]
 > Overall budget refers to total budget
 
-Format: `check <Overall or Category>`
+Format: `check Overall / check CATEGORY`
 
 Example 1: `check Food`
 
