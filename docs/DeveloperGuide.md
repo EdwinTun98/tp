@@ -1076,7 +1076,12 @@ Calculations (e.g., total expenses, budget limits) must be precise and error-fre
 #### addExp Command:
 1. Use the addExp command with valid input (e.g., addExp Lunch $/12.50 c/Food d/2023-10-15 ).
 2. Verify the expense is added to the list with the correct details.
-3. Try invalid inputs (e.g., missing the description or amount) and ensure the application provides proper error messages.
+3. Try invalid inputs (e.g., missing description or amount) and ensure the application provides proper error messages.
+
+#### addIncome Command:
+1. Use the addIncome command with valid input (e.g., addIncome wages $/2000 d/2023-10-15 ).
+2. Verify the income is added to the list with the correct details.
+3. Try invalid inputs (e.g., missing description or amount) and ensure the application provides proper error messages.
 
 #### listAll Command:
 1. Add a few test entries to the application (e.g., expenses like "Lunch" and "Coffee")
