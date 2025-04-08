@@ -34,7 +34,7 @@ Given below are my contributions to the project:
 - **Streamlined Storage Logic:**
   - Enhanced file persistence by ensuring consistent loading and saving of budget data.
 - **Pull Request Contributions:**
-  - Multiple pull requests (e.g., PR #38, #67, #78, #86, #168, #170) supported these enhancements.
+  - Multiple pull requests (PR #38, #67, #78, #86, #168, #170) supported these enhancements.
 
 ### Testing & Documentation
 - **JUnit Testing:**
