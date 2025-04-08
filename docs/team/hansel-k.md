@@ -9,7 +9,7 @@ It is written in Java and is designed specifically for CLI users.
 
 Given below are my contributions to the project.
 
-- **Code contributed**: [RepoSense Link](https://nus-cs2113-ay2425s2.github.io/tp-dashboard/?search=hansel-k&breakdown=true&sort=groupTitle%20dsc&sortWithin=title&since=2025-02-21&timeframe=commit&mergegroup=&groupSelect=groupByRepos&checkedFileTypes=docs~functional-code~test-code~other)
+- **Code contributed**: [RepoSense Link](https://nus-cs2113-ay2425s2.github.io/tp-dashboard/?search=hansel-k&breakdown=true&sort=groupTitle%20dsc&sortWithin=title&since=2025-02-21&timeframe=commit&mergegroup=&groupSelect=groupByRepos&checkedFileTypes=test-code~other~functional-code~docs)
 
 ---
 ### Implementations:
@@ -60,18 +60,18 @@ Justification: Provides a critical functionality to allow users to monitor and l
   - Designed error handling for edge cases like invalid formats or negative values.
 - **Credits:** Utilized Java's `DecimalFormat` for budget formatting and managed persistent storage integration.
 
-
 ---
 
 ### Enhancements to Existing Features
 - Shortened some command inputs (e.g., from `addExpense` to `addExp`) for optimization. [PR #64](https://github.com/AY2425S2-CS2113-W12-4/tp/pull/64) [PR #66](https://github.com/AY2425S2-CS2113-W12-4/tp/pull/66)
-- Performed and added JUnit tests on `addExpense` and other methods [PR #53](https://github.com/AY2425S2-CS2113-W12-4/tp/pull/53) [PR #59](https://github.com/AY2425S2-CS2113-W12-4/tp/pull/59)
+- Performed and added JUnit tests on `addExpense` and other methods [PR #53](https://github.com/AY2425S2-CS2113-W12-4/tp/pull/53) [PR #59](https://github.com/AY2425S2-CS2113-W12-4/tp/pull/59) [PR #164](https://github.com/AY2425S2-CS2113-W12-4/tp/pull/164)
 - Applied the SLAP concept on the `addExpense` and `listCats` methods. [PR #88](https://github.com/AY2425S2-CS2113-W12-4/tp/pull/88)
 
 ---
 ### Documentation
 #### User Guide:
-- Regularly updated User Guide to reflect new features across the versions. [PR #54](https://github.com/AY2425S2-CS2113-W12-4/tp/pull/54) [PR #64](https://github.com/AY2425S2-CS2113-W12-4/tp/pull/64) [PR #79](https://github.com/AY2425S2-CS2113-W12-4/tp/pull/79) [PR #92](https://github.com/AY2425S2-CS2113-W12-4/tp/pull/92)
+- Focused on adding and updating `addExp`, `totalExp` and `del` commands, and the Command Cheat Sheet. [PR #54](https://github.com/AY2425S2-CS2113-W12-4/tp/pull/54) [PR #64](https://github.com/AY2425S2-CS2113-W12-4/tp/pull/64) [PR #79](https://github.com/AY2425S2-CS2113-W12-4/tp/pull/79) 
+- Majorly updated User Guide with new features for V2.0 [PR #92](https://github.com/AY2425S2-CS2113-W12-4/tp/pull/92)
 
 #### Developer Guide:
 - Provided UML diagrams illustrating the workflow of the `help` and `exit` commands. [PR #79](https://github.com/AY2425S2-CS2113-W12-4/tp/pull/79)
@@ -79,8 +79,9 @@ Justification: Provides a critical functionality to allow users to monitor and l
 ---
 ### Project Management
 - Occasionally assigned and coordinated feature development.
+- Reviewed numerous issues from Practical Exam dry run and assigned them to team members best suited to resolve them.
 ---
-### Community Contributions
+### Team-Based Contributions
 - Shared insights and suggestions with team members to enhance the project (e.g. shortening user inputs for better UX).
-- Manually tested for bugs and rectified them or raised the issue to team members. [PR #56](https://github.com/AY2425S2-CS2113-W12-4/tp/pull/56) [PR #66](https://github.com/AY2425S2-CS2113-W12-4/tp/pull/66) [PR #92](https://github.com/AY2425S2-CS2113-W12-4/tp/pull/92)
-
+- Manually tested for bugs before Practical Examination dry run and rectified them or raised the issue to team members. [PR #56](https://github.com/AY2425S2-CS2113-W12-4/tp/pull/56) [PR #66](https://github.com/AY2425S2-CS2113-W12-4/tp/pull/66) [PR #92](https://github.com/AY2425S2-CS2113-W12-4/tp/pull/92)
+- Resolved Parser input bugs, Double formatting bugs across multiple methods, and `addExp` date formatting bugs after Practical Examination dry run. [PR #164](https://github.com/AY2425S2-CS2113-W12-4/tp/pull/164) [PR #166](https://github.com/AY2425S2-CS2113-W12-4/tp/pull/166) [PR #171](https://github.com/AY2425S2-CS2113-W12-4/tp/pull/171)
