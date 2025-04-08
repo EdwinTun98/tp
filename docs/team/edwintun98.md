@@ -1,6 +1,6 @@
-# EdwinTun98's MoneyTrail Portfolio Overview
+# EdwinTun98's Project PortFolio Page
 
-## Project Description
+## Project: MoneyTrail v1.0 - v2.1
 MoneyTrail is a Java-based CLI budget tracker that helps users manage expenses, enforce spending limits, and build better financial habits.
 
 ## Key Contributions
