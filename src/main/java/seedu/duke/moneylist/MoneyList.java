@@ -752,7 +752,7 @@ public class MoneyList {
                     "Please set the Overall budget first before setting category budgets.");
         }
 
-        double totalCategoryBudget = getTotalCategoryBudgets(); // Helper below
+        double totalCategoryBudget = getTotalCategoryBudgets();
 
         if (totalCategoryBudget + amount > overallBudgetAmount) {
             logger.logWarning("Total category budgets exceed overall budget.");
