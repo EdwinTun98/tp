@@ -141,7 +141,8 @@ Format: `addExp <description> $/<amount> c/<category> d/<date>`
 #### Notes:
 - Category and date parameters are optional!
     * If no category is given, the expense will be tagged as "uncategorized".
-    * Similarly, if no date is given, the expense will be tagged as "no date". 
+    * Similarly, if no date is given, the expense will be tagged as "no date".
+    * If overall Budget is not set when adding expenses, will prompt user to set overall budget.
 - If both category and date are entered in the same input, category must come before date (`c/` before `/d`)
 
 Example 1: `addExp Honey $/20.25 c/Food d/30-03-25`
