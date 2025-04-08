@@ -14,16 +14,12 @@ Given below are my contributions to the project.
 ---
 ### Implementations:
 #### New Feature: Add Expense Entry [PR #46](https://github.com/AY2425S2-CS2113-W12-4/tp/pull/46)
-  
 - **What it does**: Enables users to add new expense entries by specifying details like description, amount, category, and date.
-
 - **Justification**: Provides a core functionality for users to track their expenses efficiently within the application
-    
 - **Highlights:**
   - Designed a flexible input format allowing optional fields (e.g., category and date).
   - Implemented validation mechanisms to ensure input correctness, prevent invalid markers, and handle edge cases like non-numeric amounts or negative values.
   - Enhanced usability with default values for optional fields (e.g., "Uncategorized" for category and "no date" for date).
-      
 - **Credits:** Utilized Java's standard libraries for string manipulation and error handling. Developed a comprehensive validation pipeline to parse and save expense data.
 
 #### New Feature: Display All Unique Expense Categories [PR #50](https://github.com/AY2425S2-CS2113-W12-4/tp/pull/50)
@@ -31,33 +27,20 @@ Given below are my contributions to the project.
 - **Justification:** Helps users organize and understand their spending habits by categorizing expenses effectively
 - **Highlights:**
   - Implemented a mechanism to extract unique categories while maintaining their order of appearance within the money list.
-  - Developed handling for edge cases like empty entries and invalid data formats.
-  - Ensured reliability with comprehensive error logging.
 - **Credits:** Custom implementation utilizing Java's `LinkedHashSet` for maintaining uniqueness and order.
 
 #### New Feature: Clear All Expense Entries
 - **What it does:** Provides users with the ability to clear all entries from the money list in one command.
 - **Justification:** Adds a convenient way for users to reset their financial data when starting anew or correcting errors.
-- **Highlights:**
-  - Integrated persistent storage updates to maintain data integrity after clearing entries.
-  - Designed error handling to manage scenarios like saving failure or attempting to clear an empty list.
 
 #### New Feature: Display Total Expenses [PR #41](https://github.com/AY2425S2-CS2113-W12-4/tp/pull/41)
 - **What it does:** Calculates and displays the total sum of expenses recorded by the user.
 - **Justification:** Provides users with an essential overview of their spending habits, enabling better financial tracking and decision-making.
-- **Highlights:**
-  - Designed a reliable mechanism to parse and sum expense amounts from user input.
-  - Developed error handling to manage invalid or malformed entries gracefully.
-  - Integrated detailed logging for debugging and tracking purposes.
 - **Credits:** Custom implementation using standard Java libraries.
 
 #### New Feature: Set Total Budget [PR #41](https://github.com/AY2425S2-CS2113-W12-4/tp/pull/41)
 What it does: Enables users to set a total budget for their financial tracking. The budget is validated and formatted to ensure accuracy.
 Justification: Provides a critical functionality to allow users to monitor and limit their expenses within a predefined budget.
-- **Highlights:**
-  - Implemented assertions to validate input and prevent misuse of commands.
-  - Added persistent storage for budget information, ensuring data integrity across sessions.
-  - Designed error handling for edge cases like invalid formats or negative values.
 - **Credits:** Utilized Java's `DecimalFormat` for budget formatting and managed persistent storage integration.
 
 ---
@@ -87,8 +70,8 @@ Justification: Provides a critical functionality to allow users to monitor and l
 ---
 
 ### Project Management
-- Occasionally assigned and coordinated feature development.
-- Reviewed numerous issues from Practical Exam dry run and assigned them to team members best suited to resolve them.
+- Assigned and coordinated feature development.
+- Reviewed numerous issues from Practical Exam dry run and delegated them to team members best suited to resolve them.
 
 ---
 
