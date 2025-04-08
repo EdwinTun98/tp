@@ -5,10 +5,6 @@ import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.DateTimeException;
-import java.time.format.ResolverStyle;
 
 import seedu.duke.logger.MTLogger;
 import seedu.duke.entries.Budget;
