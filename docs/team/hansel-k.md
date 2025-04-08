@@ -68,6 +68,13 @@ Justification: Provides a critical functionality to allow users to monitor and l
 - Applied the SLAP concept on the `addExpense` and `listCats` methods. [PR #88](https://github.com/AY2425S2-CS2113-W12-4/tp/pull/88)
 
 ---
+
+### Issues and Bug Fixes
+- Manually tested for bugs before Practical Examination dry run and rectified them or raised the issue to team members. [PR #56](https://github.com/AY2425S2-CS2113-W12-4/tp/pull/56) [PR #66](https://github.com/AY2425S2-CS2113-W12-4/tp/pull/66) [PR #92](https://github.com/AY2425S2-CS2113-W12-4/tp/pull/92)
+- Resolved Parser input bugs, Double formatting bugs across multiple methods, and `addExp` date formatting bugs after Practical Examination dry run. [PR #164](https://github.com/AY2425S2-CS2113-W12-4/tp/pull/164) [PR #166](https://github.com/AY2425S2-CS2113-W12-4/tp/pull/166) [PR #171](https://github.com/AY2425S2-CS2113-W12-4/tp/pull/171)
+
+---
+
 ### Documentation
 #### User Guide:
 - Focused on adding and updating `addExp`, `totalExp` and `del` commands, and the Command Cheat Sheet. [PR #54](https://github.com/AY2425S2-CS2113-W12-4/tp/pull/54) [PR #64](https://github.com/AY2425S2-CS2113-W12-4/tp/pull/64) [PR #79](https://github.com/AY2425S2-CS2113-W12-4/tp/pull/79) 
@@ -83,5 +90,4 @@ Justification: Provides a critical functionality to allow users to monitor and l
 ---
 ### Team-Based Contributions
 - Shared insights and suggestions with team members to enhance the project (e.g. shortening user inputs for better UX).
-- Manually tested for bugs before Practical Examination dry run and rectified them or raised the issue to team members. [PR #56](https://github.com/AY2425S2-CS2113-W12-4/tp/pull/56) [PR #66](https://github.com/AY2425S2-CS2113-W12-4/tp/pull/66) [PR #92](https://github.com/AY2425S2-CS2113-W12-4/tp/pull/92)
-- Resolved Parser input bugs, Double formatting bugs across multiple methods, and `addExp` date formatting bugs after Practical Examination dry run. [PR #164](https://github.com/AY2425S2-CS2113-W12-4/tp/pull/164) [PR #166](https://github.com/AY2425S2-CS2113-W12-4/tp/pull/166) [PR #171](https://github.com/AY2425S2-CS2113-W12-4/tp/pull/171)
+
