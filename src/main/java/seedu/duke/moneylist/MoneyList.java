@@ -388,15 +388,7 @@ public class MoneyList {
     }
 
     /**
-     * Validates and formats a date string to ensure it adheres to the YYYY-MM-DD format.
-     * Additionally, it checks whether the given month and day values correspond to actual calendar dates.
-     *
-     * @param date The date string to validate and format.
-     * @return A properly formatted date string if valid, or "no date" if the input is null or empty.
-     * @throws MTException If the date format is incorrect or contains a non-existent day/month combination.
-     */
-    /**
-     * Validates and formats a date string to ensure it adheres to the YYYY-MM-DD format and represents a valid calendar date.
+     * Validates and formats a date string to ensure it adheres to the YYYY-MM-DD format and is a valid calendar date.
      *
      * @param date The date string to validate and format.
      * @return A properly formatted date string if valid, or "no date" if the input is null or empty.
