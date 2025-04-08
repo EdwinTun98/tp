@@ -83,11 +83,15 @@ Justification: Provides a critical functionality to allow users to monitor and l
 #### Developer Guide:
 - Provided UML diagrams illustrating the workflow of the `help` and `exit` commands. [PR #79](https://github.com/AY2425S2-CS2113-W12-4/tp/pull/79)
 - Filled in the User Stories, Non-Functional Requirements, Glossary, and Instructions for Manual Testing sections. [PR #79](https://github.com/AY2425S2-CS2113-W12-4/tp/pull/79)
+
 ---
+
 ### Project Management
 - Occasionally assigned and coordinated feature development.
 - Reviewed numerous issues from Practical Exam dry run and assigned them to team members best suited to resolve them.
+
 ---
+
 ### Team-Based Contributions
 - Shared insights and suggestions with team members to enhance the project (e.g. shortening user inputs for better UX).
 
