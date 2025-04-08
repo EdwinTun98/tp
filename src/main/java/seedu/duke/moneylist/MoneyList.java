@@ -769,7 +769,6 @@ public class MoneyList {
         storage.saveBudgets(budgetList);
     }
 
-
     /**
      * Parses and validates the budget amount string.
      * Ensures the format has up to 7 whole digits and up to 2 decimal places.

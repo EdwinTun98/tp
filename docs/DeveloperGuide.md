@@ -20,6 +20,7 @@ of rchlai, Hansel-K, EdwinTun98, and limleyhooi.
 > The `.puml` files used to create diagrams in this document `docs/diagrams` folder.
 
 > [!NOTE]
+> 
 > The arrowheads in **sequence diagrams** may be in **lined** style which indicates the 
 > use of asynchronous method calls.
 > Rest assured that this is not the case because this is the syntax used by PlantUML to 
@@ -29,8 +30,10 @@ of rchlai, Hansel-K, EdwinTun98, and limleyhooi.
 > does not result in ambiguities or loss of relevant information.
 
 >[!NOTES]
-> Note: All <amount> inputs will be formatted to 2 d.p.
-> Note: All <amount> inputs will be limited to 7 digits including decimal places
+> 
+> All <amount> inputs will be formatted to 2 d.p.
+> 
+> All <amount> inputs will be limited to 7 digits including decimal places
 
 ### Architecture Overview
 
@@ -744,6 +747,165 @@ public void execute(MoneyList moneyList) throws MTException {
 
 Why: Reuses existing MoneyList logic while maintaining consistent command formatting.
 
+## checkExpensesCommand class
+
+**Overview**:
+
+The checkExpense command allows users to:
+
+- Check spending against the overall budget (`check Overall`)
+
+- Check spending against a specific category budget (`check Category>`)
+
+**Workflow**:
+
+![Image](diagrams/CheckExpense_Seq.png)
+
+Here are some code snippets:
+
+**Parser implementation**:
+
+```
+private CheckExpensesCommand parserCheckExpenses(String input) throws MTException {
+    String trimmed = input.substring("check".length()).trim();
+    if (trimmed.isEmpty()) {
+        throw new MTException("Missing category name. Usage: check c/<category or Total>");
+    }
+    return new CheckExpensesCommand(trimmed);
+}
+```
+
+The code above:
+
+- Extracts the category after check (e.g., check Food → Food).
+
+- Throws an error if no category is provided.
+
+- Returns a `CheckExpensesCommand` with the parsed category.
+
+**Command implementation**:
+
+```
+class CheckExpensesCommand implements Command {
+    private final String category;
+
+    public CheckExpensesCommand(String category) {
+        this.category = category;
+    }
+
+    @Override
+    public void execute(MoneyList moneyList) throws MTException {
+        moneyList.checkExpenses(category);
+    }
+}
+```
+
+The code above:
+
+- Stores the category (`Overall` or a specific category like Food).
+
+- Executes `checkExpenses()` in `MoneyList`.
+
+**MoneyList logic**:
+
+```
+public void checkExpenses(String budgetInput) throws MTException {
+    if (isEmptyOrNull(budgetInput)) {
+        throw new MTException("Please specify a category or use 'Overall'.");
+    }
+
+    if (isTotalBudgetCheck(budgetInput)) {
+        handleTotalBudgetCheck(); // Overall budget check
+    } else {
+        handleCategoryBudgetCheck(budgetInput.trim().toLowerCase()); // Category check
+    }
+}
+```
+
+```
+private void handleTotalBudgetCheck() throws MTException {
+    Budget overAllBudget = budgetList.get("Overall");
+    if (overAllBudget == null) {
+        throw new MTException("No Overall budget set.");
+    }
+    double overallExpense = getTotalExpenseValue(null); // Sum all expenses
+    printTotalBudgetSummary(overAllBudget, overallExpense);
+}
+```
+
+```
+private void handleCategoryBudgetCheck(String category) throws MTException {
+    Budget categoryBudget = budgetList.get(category);
+    if (categoryBudget == null) {
+        throw new MTException("No category budget set.");
+    }
+    double expenses = getTotalExpenseValue(category); // Sum expenses in category
+    printCategoryBudgetSummary(categoryBudget, expenses);
+}
+```
+
+The code above:
+
+- Validates input (ensures category is provided).
+
+- Routes to appropriate check:
+  - `handleTotalBudgetCheck()` → For Overall.
+
+  - `handleCategoryBudgetCheck()` → For specific categories.
+
+**Expense calculation**:
+
+```
+public double getTotalExpenseValue(String category) {
+    double totalExpenses = 0.0;
+    for (String entry : moneyList) {
+        if (entry.startsWith("Expense: ")) {
+            try {
+                Expense expense = Expense.parseString(entry);
+                if (category == null || expense.getCategory().equalsIgnoreCase(category)) {
+                    totalExpenses += expense.getAmount();
+                }
+            } catch (MTException e) {
+                logger.logWarning("Skipping malformed expense entry: " + entry);
+            }
+        }
+    }
+    return totalExpenses;
+}
+```
+
+The code above:
+
+- Loops through all expenses.
+
+- Filters by category (if category != null).
+
+- Sums amounts (skips malformed entries with a warning).
+
+**Display methods**:
+
+```
+private void printTotalBudgetSummary(Budget totalBudget, double totalExpenses) {
+    ui.print("-------- OVERALL BUDGET EXPENSES SUMMARY --------");
+    ui.print(String.format(totalBudget.toString()));
+    ui.print(String.format("Overall Expenses: $%.2f", totalExpenses));
+    ui.print(String.format("Remaining: $%.2f", totalBudget.getAmount() - totalExpenses));
+}
+
+private void printCategoryBudgetSummary(Budget budget, double spent) {
+    ui.print("-------- CATEGORY EXPENSES BUDGET CHECK --------");
+    ui.print(budget.toString());
+    ui.print(String.format("Total Spent: $%.2f", spent));
+    ui.print(String.format("Remaining: $%.2f", budget.getAmount() - spent));
+}
+```
+
+The code above:
+
+- Formats output for clarity.
+
+- Shows: Budget amount, total expenses, and remaining budget.
+
 ## ExitCommand Class
 
 **Overview**:
@@ -944,6 +1106,16 @@ Calculations (e.g., total expenses, budget limits) must be precise and error-fre
 #### listCat Command:
 1. Add expenses with various categories (e.g., Food, Transportation).
 2. Run listCat and verify that all used categories are listed without duplicates.
+
+#### Check overall budget:
+1. Set overall budget: `setTotBgt 500`
+2. Add expenses: `addExp Lunch $/50 c/Food`
+3. Run `check Overall
+
+#### Check category budget:
+1. Set category budget: `setCatBgt c/Food 200`
+2. Add expense: `addExp Dinner $/30 c/Food`
+3. Run `check Food`
 
 ### Testing Data Management
 

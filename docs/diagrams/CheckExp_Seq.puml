@@ -1,0 +1,40 @@
+@startuml CheckExpense Sequence Diagram
+actor User
+participant MoneyTrail as ":MoneyTrail"
+participant Parser as ":Parser"
+participant MoneyList as ":MoneyList"
+participant TextUI as ":TextUI"
+
+User -> MoneyTrail : "check Overall" or "check <category>"
+activate MoneyTrail
+
+MoneyTrail -> Parser : parseCommand(input)
+activate Parser
+
+Parser -> MoneyList : checkExpenses(category)
+activate MoneyList
+
+alt Overall budget check
+    MoneyList -> MoneyList : getTotalBudget()
+    activate MoneyList
+    MoneyList -> MoneyList : getTotalExpenseValue(null)
+    activate MoneyList
+    MoneyList -> TextUI : printTotalBudgetSummary()
+    deactivate MoneyList
+    deactivate MoneyList
+else Category budget check
+    MoneyList -> MoneyList : getBudget(category)
+    activate MoneyList
+    MoneyList -> MoneyList : getTotalExpenseValue(category)
+    activate MoneyList
+    MoneyList -> TextUI : printCategoryBudgetSummary()
+    deactivate MoneyList
+    deactivate MoneyList
+end
+
+deactivate MoneyList
+deactivate Parser
+deactivate MoneyTrail
+TextUI --> User : Display budget vs expenses
+
+@enduml

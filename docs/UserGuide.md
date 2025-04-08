@@ -12,7 +12,7 @@ and achieve your financial goals.
 Here are the steps to get started quickly:
 
 1. Ensure that you have Java 17 or above installed.
-2. Download the latest version of `MoneyTrail` from [here](https://github.com/AY2425S2-CS2113-W12-4/tp/releases/download/v2.0c/tp.jar).
+2. Download the latest version of `MoneyTrail` from [here](https://github.com/AY2425S2-CS2113-W12-4/tp/releases/download/v2.1/tp.jar).
 3. Copy the file to the folder you want to use as the *home folder* for your application.
 4. Open a command terminal, `cd`, into the folder you put the jar file in, and use the `java -jar tp.jar` command to run the application.
 
@@ -373,23 +373,23 @@ any command that changes the data. You can copy this file in a pen drive.
 
 ## 💰 MoneyTrail Command Summary
 
-| Command     | Format                                        | Example                                    | Description                                                |
-|-------------|-----------------------------------------------|--------------------------------------------|------------------------------------------------------------|
-| `help`      | `help`                                        | `help`                                     | Shows all available commands                               |
-| `list`      | `list`                                        | `list`                                     | Displays all expense entries                               |
+| Command     | Format                                          | Example                                    | Description                                                |
+|-------------|-------------------------------------------------|--------------------------------------------|------------------------------------------------------------|
+| `help`      | `help`                                          | `help`                                     | Shows all available commands                               |
+| `list`      | `list`                                          | `list`                                     | Displays all expense entries                               |
 | `addExp`    | `addExp <desc> $/<amount> [c/<cat>] [d/<date>]` | `addExp Lunch $/12.50 c/Food d/2023-10-15` | Add new expense (category/date optional)                   |
-| `addIncome` | `addIncome <desc> $/<amount> [d/date]`        | `addIncome Salary $/2500.00 d/2023-10-15`  | Adds a new income entry (date optional)                    |
-| `del`       | `del <index>`                                 | `del 3`                                    | Removes entry #3 from list                                 |
-| `find`      | `find <keyword>`                              | `find coffee`                              | Searches entries by keyword                                |
-| `edit`      | `edit <index> [options]`                      | `edit 1 $/15 d/2024-05-08`                 | Modifies full entry or selected details                    | 
-| `totalExp`  | `totalExp`                                    | `totalExp`                                 | Shows sum of all expenses                                  |
-| `setTotBgt` | `setTotBgt <amount>`                          | `setTotBgt 500.00`                         | Sets total spending budget                                 |
-| `setCatBgt` | `setCatBgt c/<category> <amount>`             | `setCatBgt c/Food 200.00`                  | Sets budget for a specific category                        |
-| `listBgt`   | `listBgt`                                     | `listBgt`                                  | Shows all category budgets                                 |
-| `listCat`   | `listCat`                                     | `listCat`                                  | Shows all used categories                                  |
-| `check`     | `check <Overall or Category>`                 | `check Food`                               | Shows overall expenses of expenses for a specific category |
-| `clear`     | `clear`                                       | `clear`                                    | Clears all entries                                         |
-| `exit`      | `exit`                                        | `exit`                                     | Closes the application                                     |
+| `addIncome` | `addIncome <desc> $/<amount> [d/date]`          | `addIncome Salary $/2500.00 d/2023-10-15`  | Adds a new income entry (date optional)                    |
+| `del`       | `del <index>`                                   | `del 3`                                    | Removes entry #3 from list                                 |
+| `find`      | `find <keyword>`                                | `find coffee`                              | Searches entries by keyword                                |
+| `edit`      | `edit <index> [options]`                        | `edit 1 $/15 d/2024-05-08`                 | Modifies full entry or selected details                    | 
+| `totalExp`  | `totalExp`                                      | `totalExp`                                 | Shows sum of all expenses                                  |
+| `setTotBgt` | `setTotBgt <amount>`                            | `setTotBgt 500.00`                         | Sets total spending budget                                 |
+| `setCatBgt` | `setCatBgt c/<category> <amount>`               | `setCatBgt c/Food 200.00`                  | Sets budget for a specific category                        |
+| `listBgt`   | `listBgt`                                       | `listBgt`                                  | Shows all category budgets                                 |
+| `listCat`   | `listCat`                                       | `listCat`                                  | Shows all used categories                                  |
+| `check`     | `check <Overall or Category>`                   | `check Food`                               | Shows overall expenses of expenses for a specific category |
+| `clear`     | `clear`                                         | `clear`                                    | Clears all entries                                         |
+| `exit`      | `exit`                                          | `exit`                                     | Closes the application                                     |
 
 #### 📝 Usage Notes
 ```bash
@@ -413,7 +413,6 @@ addExp Hotel $/200.00 c/Travel d/2023-12-15
 
 - Large datasets may slow down performance. If you have a significant number of entries, performance may degrade.
 
-#### 🔍 Tips
+#### 🔍 Reminder tips
 - View entry numbers first with `list` before using `del`
 - Amounts must be positive numbers (e.g. `$/15.50`)
-- Dates should use `YYYY-MM-DD` format
