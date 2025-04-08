@@ -35,13 +35,8 @@ MoneyTrail is a Java-based CLI budget tracker that helps users manage expenses, 
 
 ## Team Contribution
 
-- **User Experience:**  
-  Collaborative development enhanced quick search, robust editing, clear displays, and proactive budget alerts.
-- **Code Quality:**  
-  Joint modular refactoring and shared helper functions improved readability, maintainability, and testing efficiency.
-- **Data Integrity:**  
-  Unified validations and error handling ensure accurate, secure financial data.
-- **Proactive Design:**  
-  Team-designed budget alerts and spending checks empower users to manage finances effectively.
-- **Testing & Documentation:**  
-  A collective effort produced thorough tests and clear documentation, ensuring a robust, future-proof application.
+- **User Experience:** Enhanced search, editing, displays, and timely budget alerts.
+- **Code Quality:** Modular refactoring and shared helpers improved readability and testing.
+- **Data Integrity:** Unified validations and error handling protect data accuracy.
+- **Proactive Design:** Team-driven alerts and spending checks empower effective financial management.
+- **Testing & Documentation:** Thorough tests and clear guides ensure a robust application.
