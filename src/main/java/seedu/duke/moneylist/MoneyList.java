@@ -157,33 +157,35 @@ public class MoneyList {
 
     //@@author Hansel-K
     /**
-     * Adds a new expense entry from user input.
+     * Adds an expense entry from the user input.
+     * Validates the input format, extracts relevant details, ensures proper formatting,
+     * and saves the expense entry.
      *
-     * @param input Expense details in format: "addExp desc $/amt c/cat d/date"
-     * @throws MTException If input format is invalid
+     * @param input User-provided expense entry in a predefined format: "addExp desc $/amt c/cat d/date"
+     * @throws MTException If the input format is invalid or any extracted values are incorrect.
      */
     public void addExpense(String input) throws MTException {
         try {
             validateInput(input);
             input = input.trim(); // Remove unnecessary spaces
 
-            // Default parameters
             String description = "";
-            double amount = 0.00;
-            String category = "Uncategorized"; // Default category
-            String date = "no date"; // Default date
+            String category = "Uncategorized";
+            String date = "no date"; // Default parameters
+            Double amount = 0.00;
 
             if (input.contains("$/")) {
                 description = extractDescription(input);
                 String afterAmountPart = extractAfterAmountPart(input);
 
-                validateFormatOrder(afterAmountPart);
+                validateFormatOrder(afterAmountPart); // Ensure proper order of c/ and d/
                 validateMarkers(afterAmountPart);
 
                 String amountStr = extractAmount(afterAmountPart);
                 amount = parseAndValidateAmount(amountStr);
+                validateAmount(amount);
                 category = extractCategory(afterAmountPart);
-                date = extractDate(afterAmountPart);
+                date = validateAndFormatDate(extractDate(afterAmountPart));;
 
                 checkIfExceedsOverallBudget(amount);
                 checkIfExceedsCategoryBudget(amount, category);
@@ -244,9 +246,15 @@ public class MoneyList {
      * @throws MTException If input is invalid
      */
     private void validateInput(String input) throws MTException {
-        if (input == null) {
-            throw new MTException("Input should not be null.");
+        if (input == null || input.trim().isEmpty()) {
+            throw new MTException("Input should not be null or empty.");
         }
+
+        String[] parts1 = input.substring(("addExp").length()).split("\\$/", 2);
+        if (parts1.length < 2 || parts1[0].trim().isEmpty() || !input.contains("$/")) {
+            throw new MTException("Invalid format. Use: addExp <description> $/<amount> [c/<category>] [d/<date>]");
+        }
+
     }
 
     /**
@@ -304,43 +312,30 @@ public class MoneyList {
         int categoryMarkerCount = afterAmountPart.split("c/").length - 1;
         int dateMarkerCount = afterAmountPart.split("d/").length - 1;
 
-        // Throw error if there are multiple "c/" markers
         if (categoryMarkerCount > 1) {
             throw new MTException("Invalid format. Multiple category markers detected.");
         }
-
-        // Throw error if there are multiple "d/" markers
         if (dateMarkerCount > 1) {
             throw new MTException("Invalid format. Multiple date markers detected.");
         }
 
-        // Scenario 1: No "c/" and "d/" markers
-        if (categoryMarkerCount == 0 && dateMarkerCount == 0) {
-            if (afterAmountPart.contains("/")) {
-                throw new MTException("Invalid format. Markers detected after amount without 'c/' or 'd/'.");
-            }
+        if (categoryMarkerCount == 0 && dateMarkerCount == 0 && afterAmountPart.contains("/")) {
+            throw new MTException("Invalid format. Markers detected after amount without 'c/' or 'd/'.");
         }
 
-        // Scenario 2: "c/" present but no "d/"
-        if (categoryMarkerCount > 0 && dateMarkerCount == 0) {
+        if (categoryMarkerCount > 0) {
             String afterCategory = afterAmountPart.split("c/", 2)[1].trim();
-            if (afterCategory.contains("/")) {
+            if (dateMarkerCount == 0 && afterCategory.contains("/")) {
                 throw new MTException("Invalid format. Markers detected after 'c/' without 'd/'.");
             }
         }
 
-        // Scenario 3: "d/" present but no "c/"
-        if (categoryMarkerCount == 0 && dateMarkerCount > 0) {
+        if (dateMarkerCount > 0) {
             String afterDate = afterAmountPart.split("d/", 2)[1].trim();
-            if (afterDate.contains("/")) {
+            if (categoryMarkerCount == 0 && afterDate.contains("/")) {
                 throw new MTException("Invalid format. Markers detected after 'd/' without 'c/'.");
             }
-        }
-
-        // Scenario 4: Both "c/" and "d/" present
-        if (categoryMarkerCount > 0 && dateMarkerCount > 0) {
-            String afterDate = afterAmountPart.split("d/", 2)[1].trim();
-            if (afterDate.contains("/")) {
+            if (categoryMarkerCount > 0 && afterDate.contains("/")) {
                 throw new MTException("Invalid format. " +
                         "Markers detected after 'd/' when both 'c/' and 'd/' are present.");
             }
@@ -365,7 +360,6 @@ public class MoneyList {
 
         return amountStr;
     }
-
 
     /**
      * Extracts category from input segment.
@@ -392,6 +386,83 @@ public class MoneyList {
         }
         return "no date"; // Default date
     }
+
+    /**
+     * Validates and formats a date string to ensure it adheres to the YYYY-MM-DD format and is a valid calendar date.
+     *
+     * @param date The date string to validate and format.
+     * @return A properly formatted date string if valid, or "no date" if the input is null or empty.
+     * @throws MTException If the date format is incorrect or contains a non-existent day/month combination.
+     */
+    private String validateAndFormatDate(String date) throws MTException {
+        // Check for default or empty input values
+        if (date == null || date.trim().isEmpty() || date.equals("no date")) {
+            return "no date"; // Default value
+        }
+
+        // Trim and split the input to ensure proper format
+        date = date.trim();
+        String[] parts = date.split("-");
+
+        if (parts.length != 3) {
+            throw new MTException("Invalid date format. Please use YYYY-MM-DD.");
+        }
+
+        try {
+            // Parse year, month, and day as integers
+            int year = Integer.parseInt(parts[0]);
+            int month = Integer.parseInt(parts[1]);
+            int day = Integer.parseInt(parts[2]);
+
+            // Validate month range (1-12)
+            if (month < 1 || month > 12) {
+                throw new MTException("Invalid month value. It must be between 1 and 12.");
+            }
+
+            // Validate day range based on month and leap year logic
+            if (!isValidDay(year, month, day)) {
+                throw new MTException("Invalid day value for the given month and year.");
+            }
+
+            // Return the formatted date
+            return String.format("%04d-%02d-%02d", year, month, day);
+
+        } catch (NumberFormatException e) {
+            throw new MTException("Date contains non-numeric values. Ensure the format is YYYY-MM-DD.");
+        }
+    }
+
+    /**
+     * Determines if the day is valid for the given year and month, taking leap years into account.
+     *
+     * @param year  The year value.
+     * @param month The month value.
+     * @param day   The day value.
+     * @return True if the day is valid; false otherwise.
+     */
+    private boolean isValidDay(int year, int month, int day) {
+        // Define the number of days in each month
+        int[] daysInMonth = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+
+        // Adjust for leap year
+        if (month == 2 && isLeapYear(year)) {
+            daysInMonth[1] = 29; // February has 29 days in a leap year
+        }
+
+        // Validate day range
+        return day >= 1 && day <= daysInMonth[month - 1];
+    }
+
+    /**
+     * Determines if the given year is a leap year.
+     *
+     * @param year The year value.
+     * @return True if the year is a leap year; false otherwise.
+     */
+    private boolean isLeapYear(int year) {
+        return (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
+    }
+
 
     /**
      * Formats amount to 2 decimal places.
@@ -448,11 +519,11 @@ public class MoneyList {
             if (input == null) {
                 throw new MTException("Input should not be null");
             }
+
             input = input.trim();
 
             if (!input.startsWith("addIncome") || !input.contains("$/")) {
-                throw new MTException("Invalid format. " +
-                        "Use: addIncome <description> $/<amount> [d/<date>]");
+                throw new MTException("Invalid format. Use: addIncome <description> $/<amount> [d/<date>]");
             }
 
             String content = input.substring("addIncome".length()).trim();
@@ -468,29 +539,43 @@ public class MoneyList {
             if (remainder.contains("d/")) {
                 String[] parts2 = remainder.split("d/", 2);
                 String amountString = parts2[0].trim();
-                amount = Double.parseDouble(amountString);
-                date = parts2[1].trim();
+                try {
+                    amount = Double.parseDouble(amountString);
+                } catch (NumberFormatException e) {
+                    throw new NumberFormatException("Invalid amount format. Please ensure it is a numeric value.");
+                }
+                date = validateAndFormatDate(parts2[1].trim());
             } else {
-                amount = Double.parseDouble(remainder.trim());
+                try {
+                    amount = Double.parseDouble(remainder.trim());
+                } catch (NumberFormatException e) {
+                    throw new NumberFormatException("Invalid amount format. Please ensure it is a numeric value.");
+                }
             }
 
-            validateAmount(amount);
+            // Validate amount cannot be negative
+            if (amount <= 0) {
+                throw new MTException("Amount must be greater than zero.");
+            }
 
             Income newIncome = new Income(description, amount, date);
             moneyList.add(newIncome.toString());
             logger.logInfo("Added income: " + newIncome);
             ui.print("Income added: " + newIncome);
             storage.saveExpenses(moneyList);
+
         } catch (NumberFormatException error) {
             logger.logSevere("Invalid amount format in addIncome: " + input, error);
-            throw new MTException("Invalid amount format. Please ensure it is a numeric value.");
+            throw new MTException(error.getMessage());
         } catch (Exception error) {
             logger.logSevere("Error adding income: " + error.getMessage(), error);
             throw new MTException("Failed to add income: " + error.getMessage());
         }
-    }//@@author
+    }
+    //@@author
 
     //@@author EdwinTun98
+
     /**
      * Edits an existing expense entry in the money list.
      *
@@ -566,6 +651,7 @@ public class MoneyList {
         }
 
         ui.print("-------- Overall Budgets --------");
+
         // 1. Print the total budget first if it exists
         Budget total = budgetList.get("Overall");
         if (total != null) {
