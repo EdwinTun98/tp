@@ -399,32 +399,82 @@ public class MoneyList {
      * @return A properly formatted date string if valid, or "no date" if the input is null or empty.
      * @throws MTException If the date format is incorrect or contains a non-existent day/month combination.
      */
+    /**
+     * Validates and formats a date string to ensure it adheres to the YYYY-MM-DD format and represents a valid calendar date.
+     *
+     * @param date The date string to validate and format.
+     * @return A properly formatted date string if valid, or "no date" if the input is null or empty.
+     * @throws MTException If the date format is incorrect or contains a non-existent day/month combination.
+     */
     private String validateAndFormatDate(String date) throws MTException {
-
         // Check for default or empty input values
-        if (date == null || date.isEmpty() || date.equals("no date")) {
-            return "no date"; // Return default value
+        if (date == null || date.trim().isEmpty() || date.equals("no date")) {
+            return "no date"; // Default value
         }
 
-        // Define the expected date format
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
-                .withResolverStyle(ResolverStyle.STRICT);;
+        // Trim and split the input to ensure proper format
+        date = date.trim();
+        String[] parts = date.split("-");
+
+        if (parts.length != 3) {
+            throw new MTException("Invalid date format. Please use YYYY-MM-DD.");
+        }
 
         try {
-            // Attempt to parse the provided date string with STRICT ResolverStyle
-            LocalDate parsedDate = LocalDate.parse(date, formatter);
+            // Parse year, month, and day as integers
+            int year = Integer.parseInt(parts[0]);
+            int month = Integer.parseInt(parts[1]);
+            int day = Integer.parseInt(parts[2]);
 
-            System.out.println("Parsed date: " + parsedDate);
+            // Validate month range (1-12)
+            if (month < 1 || month > 12) {
+                throw new MTException("Invalid month value. It must be between 1 and 12.");
+            }
 
-            // Return the properly formatted date
-            return parsedDate.format(formatter);
+            // Validate day range based on month and leap year logic
+            if (!isValidDay(year, month, day)) {
+                throw new MTException("Invalid day value for the given month and year.");
+            }
 
-        } catch (DateTimeException | IllegalArgumentException e) {
-            // Catch both format errors and invalid calendar dates
-            throw new MTException("Invalid date format or nonexistent day/month. " +
-                    "Please use YYYY-MM-DD with valid values.");
+            // Return the formatted date
+            return String.format("%04d-%02d-%02d", year, month, day);
+
+        } catch (NumberFormatException e) {
+            throw new MTException("Date contains non-numeric values. Ensure the format is YYYY-MM-DD.");
         }
     }
+
+    /**
+     * Determines if the day is valid for the given year and month, taking leap years into account.
+     *
+     * @param year  The year value.
+     * @param month The month value.
+     * @param day   The day value.
+     * @return True if the day is valid; false otherwise.
+     */
+    private boolean isValidDay(int year, int month, int day) {
+        // Define the number of days in each month
+        int[] daysInMonth = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+
+        // Adjust for leap year
+        if (month == 2 && isLeapYear(year)) {
+            daysInMonth[1] = 29; // February has 29 days in a leap year
+        }
+
+        // Validate day range
+        return day >= 1 && day <= daysInMonth[month - 1];
+    }
+
+    /**
+     * Determines if the given year is a leap year.
+     *
+     * @param year The year value.
+     * @return True if the year is a leap year; false otherwise.
+     */
+    private boolean isLeapYear(int year) {
+        return (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
+    }
+
 
     /**
      * Formats amount to 2 decimal places.
