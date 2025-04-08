@@ -136,6 +136,7 @@ Format: `addExp <description> $/<amount> c/<category> d/<date>`
 - Category and date parameters are optional!
     * If no category is given, the expense will be tagged as "uncategorized".
     * Similarly, if no date is given, the expense will be tagged as "no date".
+    * If overall Budget is not set when adding expenses, will prompt user to set overall budget
 
 Example 1: `addExp Honey $/20.25 c/Food d/30-03-25`
 
@@ -247,7 +248,7 @@ What do you want to do next?
 
 ### Setting a Category Budget: `setCatBgt`
 
-Specifies a budget value for a specific expense/income category.
+Specifies a budget value for a specific expense/income category. Will prompt user when category budget exceed overall budget.
 
 Format: `setCatBgt c/<CATEGORY> <AMOUNT>`
 
